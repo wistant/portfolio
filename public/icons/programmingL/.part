@@ -1,0 +1,19 @@
+> wistant@1.5.0 dev /home/kali-root/Dev/Personnal Projects/www.wistant.me
+> next dev
+
+Starting content-collections content-collections.ts
+build started ...
+[CC DEPRECATED]: The implicit addition of a content property to schemas is deprecated.
+Please add an explicit content property to your schema.
+For more information, see:
+https://content-collections.dev/docs/deprecations/implicit-content-property
+... finished build of 3 collections and 39 documents in 89ms
+start watching ...
+▲ Next.js 16.1.5 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.111.239:3000
+- Environments: .env.local, .env
+
+✓ Starting...
+Error: loader /home/kali-root/Dev/Personnal Projects/www.wistant.me/node_modules/.pnpm/@next+mdx@16.2.4_@mdx-js+loader@3.1.1_@mdx-js+react@3.1.1_@types+react@19.2.14_react@19.2.4_/node_modules/@next/mdx/mdx-js-loader.js for match "{*,next-mdx-rule}" does not have serializable options. Ensure that options passed are plain JavaScript objects and values.
+    at ignore-listed frames
