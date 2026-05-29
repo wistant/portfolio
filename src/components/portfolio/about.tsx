@@ -9,11 +9,11 @@ export function About() {
   return (
     <Panel id="about">
       <PanelHeader>
-        <PanelTitle>About</PanelTitle>
+        <PanelTitle>About me 👨‍💻</PanelTitle>
       </PanelHeader>
 
       <PanelContent>
-        <Prose>
+        <Prose className="text-justify">
           <Markdown>{USER.about}</Markdown>
         </Prose>
       </PanelContent>
