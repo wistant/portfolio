@@ -2,13 +2,12 @@ blank_issues_enabled: false
 
 contact_links:
   - name: 💬 Discord Community
-    url: https://discord.gg/shoperzz
-    about: Questions, help, discussions — join the community
-
+    url: https://discord.gg/wistant
+    about: Questions, help, discussions & games
   - name: 📖 Documentation
-    url: https://docs.shoperzz.dev
-    about: Consult the documentation before opening an issue
+    url: https://wistant.me
+    about: Consult the result
 
   - name: 🔒 Security Vulnerability
-    url: mailto:security@shoperzz.dev
+    url: mailto:contact@wistant.me
     about: Security vulnerability — DO NOT open a public issue
