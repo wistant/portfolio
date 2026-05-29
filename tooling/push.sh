@@ -22,35 +22,7 @@ CURRENT_TRACK="Stable"
 # Step 0: Version & Git Audit
 header "Step 0: Version & Git Audit"
 LOCAL_VERSION=$(node -p "require('./package.json').version")
-info "Detected local version (@shoperzz/core): $LOCAL_VERSION"
-
-# Registry Check (Elite Sync Logic)
-if command -v npm &> /dev/null; then
-    info "Checking NPM registry for @shoperzz/core..."
-    NPM_VERSION=$(npm info @shoperzz/core version 2>/dev/null || echo "0.0.0")
-    
-    # Check if we are behind NPM
-    IS_BEHIND=$(node -p "require('semver').lt('$LOCAL_VERSION', '$NPM_VERSION') ? 'true' : 'false'" 2>/dev/null || echo "false")
-    
-    if [ "$IS_BEHIND" == "true" ]; then
-        warn "VERSION CONFLICT: NPM is at $NPM_VERSION while you are at $LOCAL_VERSION."
-        warn "Your release bot will fail if you try to publish an existing version."
-        echo -e "${YELLOW}Would you like to align local packages and purge old changesets? (y/N)${RESET} "
-        read -r ALIGN_RESP
-        if [[ "$ALIGN_RESP" =~ ^([yY][eE][sS]|[yY])$ ]]; then
-            info "Aligning packages to $NPM_VERSION..."
-            # Robust update of all package.json version fields
-            find . -name "package.json" -not -path "*/node_modules/*" -exec sed -i "s/\"version\": \".*\"/\"version\": \"$NPM_VERSION\"/" {} +
-            
-            info "Purging obsolete changesets..."
-            find .changeset -name "*.md" ! -name "README.md" -delete
-            
-            success "Local environment synchronized with Registry."
-            info "Please run 'pnpm push' again to declare your new intent."
-            exit 0
-        fi
-    fi
-fi
+info "Detected local version: $LOCAL_VERSION"
 
 info "Synchronizing tags from GitHub..."
 LOCAL_BRANCH=$(git branch --show-current)

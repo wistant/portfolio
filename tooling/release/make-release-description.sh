@@ -5,8 +5,8 @@
 
 set -e
 
-# Extract the version from the core package (Single Source of Truth)
-VERSION="v$(node -p "require('./packages/core/package.json').version")"
+# Determine version from package.json
+VERSION="v$(node -p "require('./package.json').version")"
 OUTPUT_FILE="RELEASE.md"
 
 echo "Generating Unified Release Notes for $VERSION..."

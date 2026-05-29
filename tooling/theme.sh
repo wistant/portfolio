@@ -21,9 +21,9 @@ logo() {
   echo -e "  ${CYAN}╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚═╝     ╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝${NC}"
   echo -e "                                                        v${CURRENT_VERSION}"
   echo -e "\n  ${GRAY}${BOLD}[ PRECISION AI ORCHESTRATION ]${NC}"
-  echo -e "  Stop building stores. Build rocket engines for e-commerce."
-  echo -e "  ${GRAY}⚙️ GitHub: https://github.com/shoperzz/shoperzz${NC}"
-  echo -e "  ${GRAY}📚 Docs:   https://shoperzz.dev/docs${NC}\n"
+  echo -e "  Wistant Kode Release Orchestrator."
+  echo -e "  ${GRAY}⚙️ GitHub: https://github.com/wistant/portfolio${NC}"
+  echo -e "  ${GRAY}📚 Docs:   https://wistant.me${NC}\n"
 }
 
 info()    { echo -e "${CYAN}│${NC}  ${BLUE}::${NC} $*"; }

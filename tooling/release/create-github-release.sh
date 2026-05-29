@@ -13,8 +13,9 @@ info()    { echo -e "${BLUE}ℹ  $*${NC}"; }
 success() { echo -e "${GREEN}✓  $*${NC}"; }
 warn()    { echo -e "${YELLOW}⚠  $*${NC}"; }
 
-# 1. Resolve current version
-VERSION="$(node -p "require('./packages/core/package.json').version")"
+# 1. Retrieve the current version dynamically
+VERSION="$(node -p "require('./package.json').version")"
+TAG_NAME="v$VERSION"
 info "Target version: $VERSION"
 
 # 2. Idempotency Guard

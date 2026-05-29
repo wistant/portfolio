@@ -1,4 +1,4 @@
-# Shoperzz Version Consistency Audit
+# Wistant Version Consistency Audit
 # This script ensures local and remote environments are synchronized.
 
 set -e
@@ -16,9 +16,9 @@ success() { echo -e "${GREEN}✓  $1${NC}"; }
 warn() { echo -e "${YELLOW}⚠  $1${NC}"; }
 error() { echo -e "${RED}✖  $1${NC}"; }
 
-# 1. Get local version (Source: @shoperzz/core)
-LOCAL_VERSION=$(node -p "require('./packages/core/package.json').version")
-info "Detected local version (@shoperzz/core): ${LOCAL_VERSION}"
+# 1. Get local version
+LOCAL_VERSION=$(node -p "require('./package.json').version")
+info "Detected local version: ${LOCAL_VERSION}"
 
 # 2. Sync remote tags
 info "Synchronizing tags from GitHub..."
