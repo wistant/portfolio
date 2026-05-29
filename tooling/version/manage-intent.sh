@@ -71,11 +71,10 @@ case $CHOICE in
     echo -e "  [1] ${GREEN}Patch${NC} (Bugs)"
     echo -e "  [2] ${GREEN}Minor${NC} (Features)"
     echo -e "  [3] ${GREEN}Major${NC} (Breaking)"
-    read -p "Choice: " LEVEL
-    LEVEL_STR="patch"; [[ "$LEVEL" == "2" ]] && LEVEL_STR="minor"; [[ "$LEVEL" == "3" ]] && LEVEL_STR="major"
-    warn "PACKAGE SELECTION: Use SPACE to toggle/select packages, then ENTER to confirm."
+    echo -e "${YELLOW}>> L'orchestrateur va ouvrir Changesets. Vous pourrez y confirmer ce choix et le lier ou non à d'autres paquets.${NC}"
+    warn "PACKAGE SELECTION: L'utilitaire officiel va s'ouvrir. Utilisez ESPACE pour sélectionner 'portfolio', puis ENTREE."
     info "Creating changeset..."
-    pnpm changeset add --$LEVEL_STR
+    pnpm changeset
     ;;
   a|b|r)
     TAG="alpha"; [[ "$CHOICE" == "b" ]] && TAG="beta"; [[ "$CHOICE" == "r" ]] && TAG="rc"
