@@ -26,7 +26,7 @@ export const TECH_STACK: TechStack[] = [
     categories: ["Frontend"],
   },
   {
-    key: "Nextjs",
+    key: "nextjs",
     title: "Next.js",
     href: "https://nextjs.org/",
     categories: ["Frontend"],
@@ -131,11 +131,11 @@ export const TECH_STACK: TechStack[] = [
     href: "https://claude.ai/",
     categories: ["Dev Tools"],
   },
-  {
-    key: "antigravity",
-    title: "Gemini Antigravity",
-    href: "https://antigravity.google/",
-    categories: ["Dev Tools"],
-    theme: true,
-  },
+  // {
+  //   key: "antigravity",
+  //   title: "Gemini Antigravity",
+  //   href: "https://antigravity.google/",
+  //   categories: ["Dev Tools"],
+  //   theme: true,
+  // },
 ]

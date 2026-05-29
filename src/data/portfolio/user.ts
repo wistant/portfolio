@@ -7,35 +7,49 @@ export const USER: User = {
   username: "wistant",
   gender: "male",
   pronouns: "he/him",
-  bio: "Creating with code. Small details matter.",
+  bio: "First : product vision, scales through rigorous system architecture, and culminates in elite code quality",
   flipSentences: [
-    "Creating with code. Small details matter.",
-    "Design Engineer",
-    "Open Source Contributor",
+    "Backend Developer",
+    "Frontend Developer",
+    "Open Source advocate",
   ],
-  address: "Yaounde , Cameroon",
-  phoneNumber: "wwwueuuAAXCV", // E.164 format, base64 encoded (https://t.io.vn/base64-string-converter)
-  email: "ZGFpQGNoYW5oZGFpLmNvbQ==", // base64 encoded
-  website: "https://wistant.me",
+  address: "Yaounde , Cameroon 🇨🇲",
+  phoneNumber: "KzIzNzY5NzEzNTM0MQ==", // E.164 format, base64 encoded (https://t.io.vn/base64-string-converter)
+  email: "d2lzdGFudGtvZGVAcHJvdG9ubWFpbC5jb20=", // base64 encoded
+  website: "https://www.wistant.me",
   jobTitle: "Software Architect/Engineer",
   jobs: [
     {
-      title: "Design Engineer",
-      company: "shadcncraft",
-      website: "https://shadcncraft.com?atp=ncdai",
-      experienceId: "shadcncraft",
-    },
-    {
-      title: "Founder",
-      company: "Quaric",
-      website: "https://quaric.com",
-      experienceId: "quaric",
+      title: "Software Engineer/Architect",
+      company: "",
+      website: "https://x.com/iamwistant",
+      experienceId: "",
     },
   ],
   about: `
-- Design Engineer with 5+ years of experience, known for pixel-perfect execution and strong attention to small details.
-- Passionate about exploring new technologies and turning ideas into reality through polished, thoughtfully crafted personal projects.
-- Creator of [chanhdai.com](https://github.com/ncdai/chanhdai.com) (1.8k stars), [React Wheel Picker](https://react-wheel-picker.chanhdai.com) (24k+ weekly downloads, ▲Vercel OSS Program), and [ZaDark](https://zadark.com) (80k+ downloads, 30k+ users) — peak metrics.
+I am **Wistant** , 20 years old.
+My methodology begins with product vision, scales through rigorous system
+architecture, and culminates in elite code quality. Deeply rooted in Open Source,
+my goal is to forge distributed infrastructures and high-end digital experiences
+designed for global impact.
+
+At the start of my career, I immersed myself in **full-stack development**
+before evolving into a **software architect**. Over the past **2+ years**,
+I've built scalable digital platforms across **Web, Mobile, and Desktop**,
+contributed heavily to **Open Source**, and competed in multiple **hackathons**
+for the thrill of building under pressure. Today, my focus is on engineering
+**resilient systems** that bridge the gap between **robust technical architecture**
+and polished user experiences.
+
+I spent my early years advocating for high-performance software and
+teaching regional developers how to leverage distributed systems. Later,
+I developed a deep passion for [TypeScrit](https://github.com/topics/typescript) ecosystems and cross-platform
+architecture.
+
+After joining and contribuated various open-source initiatives, I decided to
+created [Shoperzz](https://github.com/shoperzz/shoperzz) an Open Source, headless e-commerce
+engine with [Vendure](https;//github.com/vendurehq/vendure) and [NestJS](https://nestjs.com)
+for TypeScrit & serious builders.
 `,
   avatar: "https://assets.chanhdai.com/images/chanhdai-avatar-ghibli.webp",
   avatarVariants: {
@@ -47,18 +61,25 @@ export const USER: User = {
   ogImage:
     "https://assets.chanhdai.com/images/screenshot-og-image-dark.png?t=1778602757",
   namePronunciationUrl: "https://assets.chanhdai.com/audio/chanhdai.mp3",
-  timeZone: "Asia/Ho_Chi_Minh",
+  timeZone: "GMT",
   keywords: [
-    "ncdai",
-    "nguyenchanhdai",
-    "nguyen chanh dai",
-    "chanhdai",
-    "chanh dai",
-    "iamncdai",
-    "quaric",
-    "zadark",
-    "nguyễn chánh đại",
-    "chánh đại",
+    "Wistant",
+    "Wistant Kode",
+    "Software Engineer",
+    "Full - Stack Developer",
+    "Mobile Developer",
+    "Desktop Apps",
+    "TypeScript",
+    "Next.js",
+    "React",
+    "NestJS",
+    "Cameroon",
+    "SaaS",
+    "Microservices",
+    "Cloud Infrastructure",
+    "AWS",
+    "Azure",
+    "Performance Optimization",
   ],
   dateCreated: "2026-05-02", // YYYY-MM-DD
 }

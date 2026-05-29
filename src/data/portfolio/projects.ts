@@ -2,14 +2,19 @@ import type { Project } from "@/types/projects"
 
 export const PROJECTS: Project[] = [
   {
-    id: "react-wheel-picker",
-    title: "React Wheel Picker",
+    id: "shoperzz",
+    title: "Shoperzz : Open source e-commerce engine",
     period: {
-      start: "05.2025",
+      start: "15.05.2026",
     },
-    link: "https://react-wheel-picker.chanhdai.com",
+    link: "https://shoperzz.dev",
     skills: [
       "Open Source",
+      "E-commerce",
+      "API",
+      "GraphQL",
+      "NestJS",
+      "TypeORM",
       "React",
       "TypeScript",
       "Monorepo",
@@ -29,16 +34,22 @@ export const PROJECTS: Project[] = [
     isExpanded: true,
   },
   {
-    id: "chanhdaidotcom",
-    title: "chanhdai.com",
+    id: "wistantdotme",
+    title: "wistant.me",
     period: {
-      start: "01.2025",
+      start: "20.05.2026",
     },
-    link: "https://github.com/ncdai/chanhdai.com",
+    link: "https://github.com/wistant/portfolio",
     skills: [
       "Open Source",
+      "Portfolio",
+      "Developer Portfolio",
+      "TypeScript",
+      "Vercel",
       "Next.js 16",
       "Tailwind CSS v4",
+      "Magic UI",
+      "Premium UI",
       "Radix UI",
       "Base UI",
       "Motion",
