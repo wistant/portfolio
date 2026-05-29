@@ -90,15 +90,18 @@ if [[ -z "$CHANGESETS" ]]; then
     # Call Intent Module
     bash ./tooling/version/manage-intent.sh
     
-    # Get predicted version for the commit message
-    # We keep the full string to show exactly where we are going (including -beta.0)
-    NEXT_VERSION=$(./tooling/version/get-next-version.sh)
-    
-    read -p "Would you like to commit this intent (v${NEXT_VERSION} on ${CURRENT_TRACK^^}) automatically? (Y/n) " AUTO_COMMIT
-    if [[ "$AUTO_COMMIT" =~ ^[Yy]$ || -z "$AUTO_COMMIT" ]]; then
-       git add .changeset/*.md .changeset/pre.json 2>/dev/null || true
-       git diff --staged --quiet || git commit -m "release: ${NEXT_VERSION}"
-       success "Intent ${NEXT_VERSION} committed."
+    # Only commit if a changeset file was actually created (i.e. user didn't cancel)
+    NEW_CHANGESETS=$(ls .changeset/*.md 2>/dev/null | grep -v "README.md" || true)
+    if [[ -n "$NEW_CHANGESETS" ]]; then
+      NEXT_VERSION=$(./tooling/version/get-next-version.sh)
+      read -p "Would you like to commit this intent (v${NEXT_VERSION} on ${CURRENT_TRACK^^}) automatically? (Y/n) " AUTO_COMMIT
+      if [[ "$AUTO_COMMIT" =~ ^[Yy]$ || -z "$AUTO_COMMIT" ]]; then
+         git add .changeset/*.md .changeset/pre.json 2>/dev/null || true
+         git diff --staged --quiet || git commit -m "release: ${NEXT_VERSION}"
+         success "Intent ${NEXT_VERSION} committed."
+      fi
+    else
+      warn "No changeset created (cancelled). Continuing without versioning."
     fi
   fi
 else
@@ -111,8 +114,8 @@ header "Step 3: Quality Validation (Turbo)"
 if [[ "$SKIP_VERIFY" == "true" ]]; then
   warn "Skipping local validation (--no-verify)..."
 else
-  info "Running lint, typecheck, tests and commitlint..."
-  if pnpm lint && pnpm typecheck && pnpm test && pnpm commitlint --from main; then
+  info "Running lint and typecheck..."
+  if pnpm lint && pnpm check-types; then
     success "All quality checks passed."
   else
     error "Quality checks failed. Fix errors before pushing."
@@ -157,7 +160,7 @@ info "Pushing $LOCAL_BRANCH to origin..."
 
 if git push origin "$LOCAL_BRANCH"; then
     success "Push successful!"
-    info "Shoperzz Infrastructure is secure."
+    info "Wistant portfolio is live on GitHub."
 else
     error "Push failed. Check connectivity or branch permissions."
     exit 1

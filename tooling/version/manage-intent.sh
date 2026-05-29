@@ -71,10 +71,43 @@ case $CHOICE in
     echo -e "  [1] ${GREEN}Patch${NC} (Bugs)"
     echo -e "  [2] ${GREEN}Minor${NC} (Features)"
     echo -e "  [3] ${GREEN}Major${NC} (Breaking)"
-    echo -e "${YELLOW}>> L'orchestrateur va ouvrir Changesets. Vous pourrez y confirmer ce choix et le lier ou non à d'autres paquets.${NC}"
-    warn "PACKAGE SELECTION: L'utilitaire officiel va s'ouvrir. Utilisez ESPACE pour sélectionner 'portfolio', puis ENTREE."
-    info "Creating changeset..."
-    pnpm changeset
+    read -p "Choice: " LEVEL
+    LEVEL_STR="patch"
+    [[ "$LEVEL" == "2" ]] && LEVEL_STR="minor"
+    [[ "$LEVEL" == "3" ]] && LEVEL_STR="major"
+
+    info "Auto-collecting commits since last release tag..."
+
+    # Collect commits since last tag (or all commits if no tag)
+    LAST_TAG=$(git tag -l "v*" --sort=-v:refname | head -n 1)
+    if [[ -n "$LAST_TAG" ]]; then
+      COMMITS=$(git log "${LAST_TAG}..HEAD" --pretty=format:"- %s" --no-merges 2>/dev/null || true)
+    else
+      COMMITS=$(git log --pretty=format:"- %s" --no-merges 2>/dev/null | head -20 || true)
+    fi
+
+    if [[ -z "$COMMITS" ]]; then
+      COMMITS="- Minor updates and improvements"
+    fi
+
+    info "Creating changeset with auto-generated summary..."
+    # Snapshot which changesets exist before creation
+    BEFORE=$(ls .changeset/*.md 2>/dev/null | grep -v README || true)
+    pnpm changeset --empty > /dev/null 2>&1
+    AFTER=$(ls .changeset/*.md 2>/dev/null | grep -v README || true)
+
+    # Find the newly created file by comparing before/after
+    CHANGESET_FILE=$(comm -13 <(echo "$BEFORE" | sort) <(echo "$AFTER" | sort) | head -1)
+
+    if [[ -n "$CHANGESET_FILE" && -f "$CHANGESET_FILE" ]]; then
+      # Append commits as the summary after the frontmatter
+      echo -e "\n$COMMITS" >> "$CHANGESET_FILE"
+      success "Changeset created: $CHANGESET_FILE"
+      info "Summary (auto-generated from git log):"
+      echo -e "${GRAY}${COMMITS}${NC}"
+    else
+      warn "Could not locate changeset file. Please verify .changeset/ directory."
+    fi
     ;;
   a|b|r)
     TAG="alpha"; [[ "$CHOICE" == "b" ]] && TAG="beta"; [[ "$CHOICE" == "r" ]] && TAG="rc"
