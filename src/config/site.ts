@@ -1,5 +1,5 @@
 import type { NavItem } from "@/types/nav"
-import { USER } from "@/features/portfolio/data/user"
+import { USER } from "@/data/portfolio/user"
 
 export const SITE_INFO = {
   name: USER.displayName,
