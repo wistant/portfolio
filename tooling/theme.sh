@@ -12,16 +12,15 @@ export NC='\033[0m'
 export GRAY='\033[1;30m'
 
 logo() {
-  local CURRENT_VERSION=$(node -p "require('./packages/cli/package.json').version" 2>/dev/null || echo "0.0.0")
-  echo -e "\n  ${CYAN}███████╗██╗  ██╗ ██████╗ ██████╗ ███████╗██████╗ ███████╗███████╗"
-  echo -e "  ${CYAN}██╔════╝██║  ██║██╔═══██╗██╔══██╗██╔════╝██╔══██╗╚══███╔╝╚══███╔╝"
-  echo -e "  ${CYAN}███████╗███████║██║   ██║██████╔╝█████╗  ██████╔╝  ███╔╝   ███╔╝ "
-  echo -e "  ${CYAN}╚════██║██╔══██║██║   ██║██╔═══╝ ██╔══╝  ██╔══██╗ ███╔╝   ███╔╝  "
-  echo -e "  ${CYAN}███████║██║  ██║╚██████╔╝██║     ███████╗██║  ██║███████╗███████╗"
-  echo -e "  ${CYAN}╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚═╝     ╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝${NC}"
+  local CURRENT_VERSION=$(node -p "require('./package.json').version" 2>/dev/null || echo "0.0.0")
+  echo -e "\n  ${CYAN}██╗    ██╗██╗███████╗████████╗ █████╗ ███╗   ██╗████████╗"
+  echo -e "  ${CYAN}██║    ██║██║██╔════╝╚══██╔══╝██╔══██╗████╗  ██║╚══██╔══╝"
+  echo -e "  ${CYAN}██║ █╗ ██║██║███████╗   ██║   ███████║██╔██╗ ██║   ██║   "
+  echo -e "  ${CYAN}██║███╗██║██║╚════██║   ██║   ██╔══██║██║╚██╗██║   ██║   "
+  echo -e "  ${CYAN}╚███╔███╔╝██║███████║   ██║   ██║  ██║██║ ╚████║   ██║   "
+  echo -e "  ${CYAN} ╚══╝╚══╝ ╚═╝╚══════╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝   ╚═╝   ${NC}"
   echo -e "                                                        v${CURRENT_VERSION}"
-  echo -e "\n  ${GRAY}${BOLD}[ PRECISION AI ORCHESTRATION ]${NC}"
-  echo -e "  Wistant Kode Release Orchestrator."
+  echo -e "\n  ${GRAY}${BOLD}[ Wistant portfolio Release Orchestrator ]${NC}"
   echo -e "  ${GRAY}⚙️ GitHub: https://github.com/wistant/portfolio${NC}"
   echo -e "  ${GRAY}📚 Docs:   https://wistant.me${NC}\n"
 }
