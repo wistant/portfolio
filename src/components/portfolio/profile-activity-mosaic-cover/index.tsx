@@ -66,20 +66,26 @@ type GitHubContributionsResponse = {
 
 const getGitHubContributions = unstable_cache(
   async (username: string, cellCount: number) => {
-    const years = getYearRange(cellCount)
-    const yearQueries = years.map((year) => `y=${year}`).join("&")
+    try {
+      const years = getYearRange(cellCount)
+      const yearQueries = years.map((year) => `y=${year}`).join("&")
 
-    const res = await fetch(
-      `${process.env.GITHUB_CONTRIBUTIONS_API_URL}/v4/${username}?${yearQueries}`
-    )
+      const baseUrl =
+        process.env.GITHUB_CONTRIBUTIONS_API_URL ||
+        "https://github-contributions-api.jogruber.de"
 
-    if (!res.ok) {
-      throw new Error(`Failed to fetch GitHub Contributions: ${res.statusText}`)
+      const res = await fetch(`${baseUrl}/v4/${username}?${yearQueries}`)
+
+      if (!res.ok) {
+        return buildContributionGrid([], cellCount)
+      }
+
+      const { contributions } = (await res.json()) as GitHubContributionsResponse
+
+      return buildContributionGrid(contributions, cellCount)
+    } catch {
+      return buildContributionGrid([], cellCount)
     }
-
-    const { contributions } = (await res.json()) as GitHubContributionsResponse
-
-    return buildContributionGrid(contributions, cellCount)
   },
   ["github-contributions", "activity-mosaic"],
   { revalidate: 86400 } // Cache for 1 day (86400 seconds)
