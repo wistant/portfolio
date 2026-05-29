@@ -150,7 +150,7 @@ export default function RootLayout({
         <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID} />
       )}
 
-      <body>
+      <body suppressHydrationWarning>
         <Providers>
           <NuqsAdapter>{children}</NuqsAdapter>
         </Providers>
