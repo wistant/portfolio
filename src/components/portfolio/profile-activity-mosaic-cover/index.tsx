@@ -80,7 +80,8 @@ const getGitHubContributions = unstable_cache(
         return buildContributionGrid([], cellCount)
       }
 
-      const { contributions } = (await res.json()) as GitHubContributionsResponse
+      const { contributions } =
+        (await res.json()) as GitHubContributionsResponse
 
       return buildContributionGrid(contributions, cellCount)
     } catch {
