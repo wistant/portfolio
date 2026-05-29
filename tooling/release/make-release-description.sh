@@ -1,55 +1,52 @@
 #!/usr/bin/env bash
 
-# tooling/make-release-description.sh
-# Aggregates changelogs from all packages into a single professional RELEASE.md
+# tooling/release/make-release-description.sh
+# Generates a clean GitHub Release description from CHANGELOG and git log.
 
 set -e
 
-# Determine version from package.json
 VERSION="v$(node -p "require('./package.json').version")"
 OUTPUT_FILE="RELEASE.md"
+LAST_TAG=$(git tag -l "v*" --sort=-v:refname | grep -v "^${VERSION}$" | head -n 1)
 
-echo "Generating Unified Release Notes for $VERSION..."
+echo "Generating release notes for ${VERSION}..."
 
-cat <<EOF > "$OUTPUT_FILE"
-# Shoperzz v$VERSION
+# Header
+cat > "$OUTPUT_FILE" << EOF
+# Wistant Portfolio ${VERSION}
 
-This document provides a comprehensive overview of the changes included in the Shoperzz ecosystem for the current release.
-
-## Core Infrastructure
-All core packages are synchronized to maintain architectural integrity.
 EOF
 
-# Process Core Packages
-for pkg in packages/*; do
-    if [ -f "$pkg/CHANGELOG.md" ]; then
-        if [ -f "$pkg/package.json" ]; then
-            PKG_NAME=$(node -p "require('./$pkg/package.json').name")
-            echo "### $PKG_NAME" >> "$OUTPUT_FILE"
-            
-            # Extract content under the first H2 header
-            sed -n '/^## [0-9]/,/^## [0-9]/p' "$pkg/CHANGELOG.md" | sed '1d;$d' >> "$OUTPUT_FILE"
-            echo "" >> "$OUTPUT_FILE"
-        fi
-    fi
-done
-
-# Process Plugins
-if [ -d "plugins" ] && [ "$(ls -A plugins 2>/dev/null)" ]; then
-    echo "## Extension System (Plugins)" >> "$OUTPUT_FILE"
-    for pkg in plugins/*; do
-        if [ -f "$pkg/CHANGELOG.md" ]; then
-            if [ -f "$pkg/package.json" ]; then
-                PKG_NAME=$(node -p "require('./$pkg/package.json').name")
-                echo "### $PKG_NAME" >> "$OUTPUT_FILE"
-                sed -n '/^## [0-9]/,/^## [0-9]/p' "$pkg/CHANGELOG.md" | sed '1d;$d' >> "$OUTPUT_FILE"
-                echo "" >> "$OUTPUT_FILE"
-            fi
-        fi
-    done
+# Changelog section (extract the latest version block from CHANGELOG.md)
+if [[ -f "CHANGELOG.md" ]]; then
+  # Extract the block under the first version heading
+  CHANGELOG_BLOCK=$(awk '/^## [0-9]/{found++; if(found==2) exit} found==1' CHANGELOG.md)
+  if [[ -n "$CHANGELOG_BLOCK" ]]; then
+    echo "## What Changed" >> "$OUTPUT_FILE"
+    echo "" >> "$OUTPUT_FILE"
+    echo "$CHANGELOG_BLOCK" >> "$OUTPUT_FILE"
+    echo "" >> "$OUTPUT_FILE"
+  fi
 fi
 
-echo "---" >> "$OUTPUT_FILE"
-echo "Release management facilitated by Shoperzz CI/CD protocols." >> "$OUTPUT_FILE"
+# Commits section (all commits since last tag)
+echo "## Commits" >> "$OUTPUT_FILE"
+echo "" >> "$OUTPUT_FILE"
 
-echo "$OUTPUT_FILE generated successfully."
+if [[ -n "$LAST_TAG" ]]; then
+  git log "${LAST_TAG}..HEAD" --pretty=format:"- \`%h\` %s — by @%an" --no-merges >> "$OUTPUT_FILE"
+else
+  git log --pretty=format:"- \`%h\` %s — by @%an" --no-merges | head -30 >> "$OUTPUT_FILE"
+fi
+
+echo "" >> "$OUTPUT_FILE"
+echo "" >> "$OUTPUT_FILE"
+
+# Footer
+cat >> "$OUTPUT_FILE" << EOF
+---
+
+**Full Changelog**: https://github.com/wistant/portfolio/compare/${LAST_TAG}...${VERSION}
+EOF
+
+echo "Release notes written to $OUTPUT_FILE."
