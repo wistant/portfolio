@@ -95,6 +95,16 @@ const components: MDXRemoteProps["components"] = {
   FramedImage,
   DocSponsors,
   AutoTypeTable: (props) => <AutoTypeTable {...props} generator={generator} />,
+  Testimonial: () => null,
+  TestimonialQuote: () => null,
+  TestimonialAuthor: () => null,
+  TestimonialAvatar: () => null,
+  TestimonialAvatarImg: () => null,
+  TestimonialAvatarRing: () => null,
+  TestimonialAuthorName: () => null,
+  TestimonialVerifiedBadge: () => null,
+  TestimonialAuthorTagline: () => null,
+  TestimonialSpotlight: () => null,
 }
 
 const options: MDXRemoteProps["options"] = {
