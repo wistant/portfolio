@@ -1,0 +1,43 @@
+name: GitHub Release
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Responsible for creating GitHub Releases ONLY.
+# Independent from NPM publishing (release.yml).
+# Idempotent: skips gracefully if the release already exists.
+# ─────────────────────────────────────────────────────────────────────────────
+
+on:
+  push:
+    branches: [main]
+
+concurrency:
+  group: github-release-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  create-github-release:
+    name: Create GitHub Release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: pnpm/action-setup@v3
+        with: { version: 9.0.0 }
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Create Unified GitHub Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: bash ./tooling/release/create-github-release.sh

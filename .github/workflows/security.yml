@@ -1,0 +1,58 @@
+name: Security Audit
+
+on:
+  schedule:
+    - cron: "0 8 * * 1" # chaque lundi à 8h UTC
+  workflow_dispatch:
+
+jobs:
+  audit:
+    name: Dependency Audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v3
+        with: { version: 9.0.0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: 20, cache: pnpm }
+      - run: pnpm install --frozen-lockfile
+
+      - name: Run pnpm audit
+        id: audit
+        run: pnpm audit --audit-level=moderate
+        continue-on-error: true
+
+      - name: Open issue if vulnerabilities found
+        if: steps.audit.outcome == 'failure'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo:  context.repo.repo,
+              labels: ['security'],
+              state: 'open',
+            })
+            if (issues.length === 0) {
+              await github.rest.issues.create({
+                owner:  context.repo.owner,
+                repo:   context.repo.repo,
+                title:  '🚨 [Security] Vulnerabilities detected in dependencies',
+                labels: ['security', 'urgent'],
+                body:   `## Automatic Security Audit\n\nThe weekly audit has detected vulnerabilities.\n\n**Action:** Run \`pnpm audit\` locally for details.\n\n**Run:** ${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}\n\n*Created automatically — Security Audit workflow*`
+              })
+            }
+
+  codeql:
+    name: CodeQL Analysis
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      actions: read
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: github/codeql-action/init@v3
+        with: { languages: typescript }
+      - uses: github/codeql-action/autobuild@v3
+      - uses: github/codeql-action/analyze@v3

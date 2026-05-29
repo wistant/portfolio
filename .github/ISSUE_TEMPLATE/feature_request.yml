@@ -1,0 +1,80 @@
+name: ✨ Feature Request
+description: Propose a new feature or improvement
+labels: ["enhancement", "needs-discussion"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        A good feature request first describes the **problem** before the solution.
+
+  - type: checkboxes
+    id: prerequisites
+    attributes:
+      label: Before Submitting
+      options:
+        - label: This feature has not been proposed yet
+          required: true
+        - label: This feature is within Shoperzz scope (e-commerce / African markets)
+          required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      options:
+        - New Payment Plugin
+        - New Notification Plugin
+        - New Delivery Plugin
+        - Core Improvement
+        - CLI Improvement
+        - Dashboard Improvement
+        - New Official Template
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does it solve?
+      placeholder: |
+        As a developer building for the [country] market, I cannot...
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+
+  - type: dropdown
+    id: market
+    attributes:
+      label: Target Market
+      multiple: true
+      options:
+        - West Africa (XOF)
+        - Central Africa (XAF)
+        - East Africa
+        - North Africa
+        - All African Markets
+        - Global
+
+  - type: dropdown
+    id: contribution
+    attributes:
+      label: Can you contribute to the implementation?
+      options:
+        - "Yes — I can open a PR"
+        - "Partially — I can help"
+        - "No — I am just submitting the idea"
+    validations:
+      required: true

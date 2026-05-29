@@ -1,0 +1,108 @@
+name: 🐛 Bug Report
+description: Report a bug in Shoperzz or an official plugin
+labels: ["bug", "needs-triage"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for reporting this bug. The more precise your report, the faster we can fix it.
+
+  - type: checkboxes
+    id: prerequisites
+    attributes:
+      label: Before Submitting
+      options:
+        - label: I have searched existing issues — this bug has not been reported yet
+          required: true
+        - label: I have consulted the documentation
+          required: true
+        - label: I am on the latest version of Shoperzz
+          required: true
+
+  - type: dropdown
+    id: package
+    attributes:
+      label: Impacted Package
+      options:
+        - "@shoperzz/core"
+        - "@shoperzz/cli"
+        - "@shoperzz/plugin-payment-orange-money"
+        - "@shoperzz/plugin-payment-wave"
+        - "@shoperzz/plugin-whatsapp-notifications"
+        - Other (specify in description)
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      placeholder: "1.2.3"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to Reproduce
+      placeholder: |
+        1. Configure the plugin with...
+        2. Send a request to...
+        3. Observe the error...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual Behavior
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs / Stack trace
+      description: Remove any sensitive data
+      render: shell
+
+  - type: textarea
+    id: config
+    attributes:
+      label: Configuration (shoperzz.config.ts)
+      description: Replace sensitive values with [REDACTED]
+      render: typescript
+
+  - type: dropdown
+    id: environment
+    attributes:
+      label: Environment
+      options:
+        - Local Development
+        - Staging
+        - Production
+    validations:
+      required: true
+
+  - type: input
+    id: node-version
+    attributes:
+      label: Node.js Version
+      placeholder: "20.11.0"
+    validations:
+      required: true

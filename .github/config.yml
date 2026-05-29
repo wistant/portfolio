@@ -1,0 +1,14 @@
+blank_issues_enabled: false
+
+contact_links:
+  - name: 💬 Discord Community
+    url: https://discord.gg/shoperzz
+    about: Questions, help, discussions — join the community
+
+  - name: 📖 Documentation
+    url: https://docs.shoperzz.dev
+    about: Consult the documentation before opening an issue
+
+  - name: 🔒 Security Vulnerability
+    url: mailto:security@shoperzz.dev
+    about: Security vulnerability — DO NOT open a public issue

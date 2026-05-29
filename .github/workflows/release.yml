@@ -1,0 +1,55 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+  pull-requests: write
+  id-token: write
+
+jobs:
+  release:
+    name: Version & Publish
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: pnpm/action-setup@v3
+        with: { version: 9.0.0 }
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+
+      # 1. Extract the predicted next version for the PR title
+      - name: Get next version
+        id: next_version
+        run: |
+          VERSION=$(./tooling/version/get-next-version.sh)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      # 2. Runs versioning or generate pure GitHub release via action
+      - name: Create Release PR or Publish
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          version: pnpm changeset version
+          publish: bash tooling/release/github-release.sh
+          commit: "release: ${{ steps.next_version.outputs.version }}"
+          title: "release: ${{ steps.next_version.outputs.version }}"
+          createGithubReleases: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
