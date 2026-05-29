@@ -128,7 +128,7 @@ header "Step 4: RODIN Security Audit"
 
 # Block if there's remaining "dirty" code (uncommitted functional changes)
 # We ignore changeset files and package.json which are managed by the bot
-DIRTY_REMAINING=$(git status --porcelain | grep -vE "^( |M| ) (.changeset/|package\.json)" || true)
+DIRTY_REMAINING=$(git status --porcelain | grep -vE "^.{2} (.changeset/|package\.json)" || true)
 
 if [[ -n "$DIRTY_REMAINING" ]]; then
   error "PUSH BLOCKED: You have uncommitted functional changes."
