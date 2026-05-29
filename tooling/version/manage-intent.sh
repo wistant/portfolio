@@ -91,23 +91,24 @@ case $CHOICE in
     fi
 
     info "Creating changeset with auto-generated summary..."
-    # Snapshot which changesets exist before creation
-    BEFORE=$(ls .changeset/*.md 2>/dev/null | grep -v README || true)
-    pnpm changeset --empty > /dev/null 2>&1
-    AFTER=$(ls .changeset/*.md 2>/dev/null | grep -v README || true)
+    # Generate a unique filename (mimic Changesets naming)
+    CHANGESET_FILE=".changeset/release-$(date +%s).md"
 
-    # Find the newly created file by comparing before/after
-    CHANGESET_FILE=$(comm -13 <(echo "$BEFORE" | sort) <(echo "$AFTER" | sort) | head -1)
+    # Get package name from package.json
+    PKG_NAME=$(node -p "require('./package.json').name" 2>/dev/null || echo "portfolio")
 
-    if [[ -n "$CHANGESET_FILE" && -f "$CHANGESET_FILE" ]]; then
-      # Append commits as the summary after the frontmatter
-      echo -e "\n$COMMITS" >> "$CHANGESET_FILE"
-      success "Changeset created: $CHANGESET_FILE"
-      info "Summary (auto-generated from git log):"
-      echo -e "${GRAY}${COMMITS}${NC}"
-    else
-      warn "Could not locate changeset file. Please verify .changeset/ directory."
-    fi
+    # Write the changeset with correct frontmatter bump type
+    {
+      echo "---"
+      echo "\"${PKG_NAME}\": ${LEVEL_STR}"
+      echo "---"
+      echo ""
+      echo "${COMMITS}"
+    } > "$CHANGESET_FILE"
+
+    success "Changeset created: $CHANGESET_FILE"
+    info "Summary (auto-generated from git log):"
+    echo -e "${GRAY}${COMMITS}${NC}"
     ;;
   a|b|r)
     TAG="alpha"; [[ "$CHOICE" == "b" ]] && TAG="beta"; [[ "$CHOICE" == "r" ]] && TAG="rc"
