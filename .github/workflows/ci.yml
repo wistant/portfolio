@@ -16,34 +16,34 @@ permissions:
   id-token: write
 
 jobs:
-  # ── 1. Lint ────────────────────────────────────────────────────────────────
+  # Linting et formatage du code
   lint:
     name: Lint & Format
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v3
-        with: { version: 9.0.0 }
+        with: { version: 10.26.1 }
       - uses: actions/setup-node@v4
         with: { node-version: 20, cache: pnpm }
       - run: pnpm install --frozen-lockfile
       - run: pnpm lint
       - run: pnpm format:check
 
-  # ── 2. TypeScript ──────────────────────────────────────────────────────────
+  # Vérification des types TypeScript
   typecheck:
     name: TypeScript
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v3
-        with: { version: 9.0.0 }
+        with: { version: 10.26.1 }
       - uses: actions/setup-node@v4
         with: { node-version: 20, cache: pnpm }
       - run: pnpm install --frozen-lockfile
       - run: pnpm typecheck
 
-  # ── 3. Build ───────────────────────────────────────────────────────────────
+  # Construction du projet
   build:
     name: Build
     runs-on: ubuntu-latest
@@ -51,7 +51,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v3
-        with: { version: 9.0.0 }
+        with: { version: 10.26.1 }
       - uses: actions/setup-node@v4
         with: { node-version: 20, cache: pnpm }
       - run: pnpm install --frozen-lockfile
@@ -61,7 +61,7 @@ jobs:
           path: "**/dist"
           key: build-${{ github.sha }}
 
-  # ── 4. Tests — Détection automatique ──────────────────────────────────────
+  # Exécution des tests
   test:
     name: Run Tests
     runs-on: ubuntu-latest
@@ -69,7 +69,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v3
-        with: { version: 9.0.0 }
+        with: { version: 10.26.1 }
       - uses: actions/setup-node@v4
         with: { node-version: 20, cache: pnpm }
       - uses: actions/cache@v4
@@ -77,11 +77,9 @@ jobs:
           path: "**/dist"
           key: build-${{ github.sha }}
       - run: pnpm install --frozen-lockfile
-
-      # Use the root test script which triggers turbo for optimized execution
       - run: pnpm test
 
-  # ── 5. Commit lint ────────────────────────────────────────────────────────
+  # Vérification des messages de commit
   commitlint:
     name: Commit Lint
     runs-on: ubuntu-latest
@@ -90,7 +88,7 @@ jobs:
       - uses: actions/checkout@v4
         with: { fetch-depth: 0 }
       - uses: pnpm/action-setup@v3
-        with: { version: 9.0.0 }
+        with: { version: 10.26.1 }
       - uses: actions/setup-node@v4
         with: { node-version: 20, cache: pnpm }
       - run: pnpm install --frozen-lockfile
