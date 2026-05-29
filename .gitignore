@@ -1,44 +1,125 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-# dependencies
-node_modules
+# DEPENDENCIES
+node_modules/
 .pnp
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/versions
+.pnp.js
+.yarn/install-state.gz
 
-# testing
-coverage
+# ENVIRONMENT VARIABLES (CRITICAL - NEVER COMMIT)
+.env
+.env.local
+.env.*.local
+.env.development
+.env.staging
+.env.production
+.env.test
+.env.ci
 
-# next.js
+
+# Backup env files
+*.env.backup
+*.env.bak
+
+# BUILD OUTPUTS
 .next/
 out/
+build/
+dist/
+.turbo/
+.vercel/
 
-# production
-build
+# TESTING
+coverage/
+.nyc_output/
+*.lcov
 
-# misc
-.DS_Store
-*.pem
-
-# debug
+# LOGS
+logs/
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-.pnpm-debug.log*
+pnpm-debug.log*
+lerna-debug.log*
 
-# env files (can opt-in for committing if needed)
-.env*
+# OS FILES
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
 
-# vercel
-.vercel
+# IDE / EDITORS
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+.history/
 
-# typescript
+# CERTIFICATES & KEYS (CRITICAL - NEVER COMMIT)
+*.pem
+*.key
+*.cert
+*.crt
+*.p12
+*.pfx
+id_rsa
+id_rsa.pub
+*.asc
+.idea/
+
+# TEMPORARY FILES
+tmp/
+temp/
+*.tmp
+*.temp
+.cache/
+
+# TYPESCRIPT
 *.tsbuildinfo
 next-env.d.ts
 
-# ncdai
-.ncdai
+# MISC
+.eslintcache
+.stylelintcache
+
+# IGNORED DOCUMENTATION (MD FILES)
+*.md
+!README.md
+!CODE_OF_CONDUCT.md
+!CONTRIBUTING.md
+!LICENSE.md
+!SECURITY.md
+!LICENSE
+!PULL_REQUEST_TEMPLATE.md
+!AGENTS.md
+!CLAUDE.md
+!CHANGELOG.md
+!.github/*
+!.changeset/*
+
+# additionnals
+.protocols/
+_bmad/
+_bmad-output/
+.claude/
+.cursor/
+.agent/
+.analysis/
+.vercel
+.env*.local
+.agents/
+.agent/
