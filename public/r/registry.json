@@ -1,0 +1,1456 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "ncdai",
+  "homepage": "https://chanhdai.com/components",
+  "items": [
+    {
+      "name": "haptic",
+      "title": "Haptic Feedback",
+      "description": "Trigger haptic feedback on mobile devices.",
+      "files": [
+        {
+          "path": "src/registry/lib/haptic/haptic.ts",
+          "type": "registry:lib",
+          "target": "@lib/haptic.ts"
+        }
+      ],
+      "docs": "https://chanhdai.com/components/haptic-feedback",
+      "categories": [
+        "utilities"
+      ],
+      "type": "registry:lib",
+      "author": "ncdai <dai@chanhdai.com>"
+    },
+    {
+      "name": "use-sound",
+      "title": "useSound",
+      "description": "Hook for playing sound effects with volume, playback rate, and interrupt controls.",
+      "files": [
+        {
+          "path": "src/registry/hooks/sound/use-sound.ts",
+          "type": "registry:hook",
+          "target": "@hooks/sound/use-sound.ts"
+        },
+        {
+          "path": "src/registry/lib/sound/sound-engine.ts",
+          "type": "registry:lib",
+          "target": "@lib/sound/sound-engine.ts"
+        },
+        {
+          "path": "src/registry/lib/sound/sound-types.ts",
+          "type": "registry:lib",
+          "target": "@lib/sound/sound-types.ts"
+        }
+      ],
+      "type": "registry:hook",
+      "author": "ncdai <dai@chanhdai.com>"
+    },
+    {
+      "name": "use-controllable-state",
+      "title": "useControllableState",
+      "files": [
+        {
+          "path": "src/registry/hooks/use-controllable-state/use-controllable-state.tsx",
+          "type": "registry:hook",
+          "target": "@hooks/use-controllable-state.tsx"
+        }
+      ],
+      "type": "registry:hook",
+      "author": "ncdai <dai@chanhdai.com>"
+    },
+    {
+      "name": "theme-switcher",
+      "title": "Theme Switcher",
+      "description": "Toggle between system, light, and dark themes in Next.js apps.",
+      "dependencies": [
+        "next-themes",
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "src/registry/components/theme-switcher/theme-switcher.tsx",
+          "type": "registry:component",
+          "target": "@components/theme-switcher.tsx"
+        }
+      ],
+      "docs": "https://chanhdai.com/components/theme-switcher",
+      "categories": [
+        "controls"
+      ],
+      "type": "registry:component",
+      "author": "ncdai <dai@chanhdai.com>"
+    },
+    {
+      "name": "text-flip",
+      "title": "Text Flip",
+      "description": "Animated text that cycles through items with a smooth flip transition.",
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "src/registry/components/text-flip/text-flip.tsx",
+          "type": "registry:component",
+          "target": "@components/text-flip.tsx"
+        }
+      ],
+      "docs": "https://chanhdai.com/components/text-flip",
+      "categories": [
+        "text-effects"
+      ],
+      "type": "registry:component",
+      "author": "ncdai <dai@chanhdai.com>"
+    },
+    {
+      "name": "apple-hello-effect",
+      "title": "Apple Hello Effect",
+      "description": "SVG writing animation inspired by Apple’s Hello screen.",
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "src/registry/components/apple-hello-effect/apple-hello-effect-english.tsx",
+          "type": "registry:component",
+          "target": "@components/apple-hello-effect-english.tsx"
+        }
+      ],
+      "docs": "https://chanhdai.com/components/apple-hello-effect",
+      "categories": [
+        "text-effects"
+      ],
+      "type": "registry:component",
+      "author": "ncdai <dai@chanhdai.com>"
+    },
+    {
+      "name": "apple-hello-effect-hindi",
+      "title": "Apple Hello Effect - Hindi",
+      "description": "SVG writing animation inspired by Apple’s Hello screen.",
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "src/registry/components/apple-hello-effect/apple-hello-effect-hindi.tsx",
+          "type": "registry:component",
+          "target": "@components/apple-hello-effect-hindi.tsx"
+        }
+      ],
+      "docs": "https://chanhdai.com/components/apple-hello-effect",
+      "categories": [
+        "text-effects"
+      ],
+      "type": "registry:component",
+      "author": "ncdai <dai@chanhdai.com>"
+    },
+    {
+      "name": "apple-hello-effect-spanish",
+      "title": "Apple Hello Effect - Spanish",
+      "description": "SVG writing animation inspired by Apple’s Hello screen.",
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "src/registry/components/apple-hello-effect/apple-hello-effect-spanish.tsx",
+          "type": "registry:component",
+          "target": "@components/apple-hello-effect-spanish.tsx"
+        }
+      ],
+      "docs": "https://chanhdai.com/components/apple-hello-effect",
+      "categories": [
+        "text-effects"
+      ],
+      "type": "registry:component",
+      "author": "ncdai <dai@chanhdai.com>"
+    },
+    {
+      "name": "apple-hello-effect-vietnamese",
+      "title": "Apple Hello Effect - Vietnamese",
+      "description": "SVG writing animation inspired by Apple’s Hello screen.",
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "src/registry/components/apple-hello-effect/apple-hello-effect-vietnamese.tsx",
+          "type": "registry:component",
+          "target": "@components/apple-hello-effect-vietnamese.tsx"
+        }
+      ],
+      "docs": "https://chanhdai.com/components/apple-hello-effect",
+      "categories": [
+        "text-effects"
+      ],
+      "type": "registry:component",
+      "author": "ncdai <dai@chanhdai.com>"
+    },
+    {
+      "name": "wheel-picker",
+      "title": "Wheel Picker",
+      "description": "iOS-like wheel picker for React with smooth inertia scrolling and infinite loop support.",
+      "dependencies": [
+        "@ncdai/react-wheel-picker"
+      ],
+      "files": [
+        {
+          "path": "src/registry/components/wheel-picker/wheel-picker.tsx",
+          "type": "registry:component",
+          "target": "@components/wheel-picker.tsx"
+        }
+      ],
+      "docs": "https://chanhdai.com/components/react-wheel-picker",
+      "categories": [
+        "controls"
+      ],
+      "type": "registry:component",
+      "author": "ncdai <dai@chanhdai.com>"
+    },
+    {
+      "name": "chevrons-up-down-icon",
+      "description": "TBD",
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "src/registry/components/chevrons-up-down-icon/chevrons-up-down-icon.tsx",
+          "type": "registry:component",
+          "target": "@components/chevrons-up-down-icon.tsx"
+        }
+      ],
+      "categories": [
+        "effects"
+      ],
+      "type": "registry:component",
+      "author": "ncdai <dai@chanhdai.com>"
+    },
+    {
+      "name": "typography",
+      "title": "Typography",
+      "description": "Custom prose styles for headings, links, inline code, and emphasis.",
+      "devDependencies": [
+        "@tailwindcss/typography"
+      ],
+      "css": {
+        "@plugin @tailwindcss/typography": {},
+        "@custom-variant retina": {
+          "@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2x)": {
+            "@slot": {}
+          }
+        },
+        "@utility link": {
+          "@apply decoration-1 underline-offset-3 hover:underline": {}
+        },
+        "@utility link-underline": {
+          "@apply underline decoration-current/30 decoration-1 underline-offset-3 transition-colors hover:decoration-current": {}
+        },
+        "@utility prose-ncdai": {
+          "@apply prose-headings:font-medium prose-headings:tracking-tight prose-headings:text-pretty md:prose-headings:text-balance": {},
+          "@apply prose-a:font-normal prose-a:wrap-break-word prose-a:text-foreground prose-a:link-underline": {},
+          "@apply prose-code:rounded-md prose-code:border prose-code:bg-muted/50 prose-code:px-1 prose-code:py-px prose-code:text-sm prose-code:font-normal prose-code:before:content-none prose-code:after:content-none retina:prose-code:border-[0.5px]": {},
+          "@apply prose-strong:font-medium": {},
+          "@apply prose-blockquote:border-l prose-blockquote:font-normal prose-blockquote:text-muted-foreground prose-blockquote:not-italic prose-blockquote:[&_p:first-of-type]:before:content-none prose-blockquote:[&_p:last-of-type]:after:content-none": {}
+        }
+      },
+      "categories": [
+        "typography"
+      ],
+      "type": "registry:component",
+      "author": "ncdai <dai@chanhdai.com>",
+      "files": []
+    },
+    {
+      "name": "work-experience",
+      "title": "Work Experience",
+      "description": "Display work experiences with role details, company logos, and durations.",
+      "dependencies": [
+        "react-markdown"
+      ],
+      "registryDependencies": [
+        "collapsible",
+        "separator",
+        "https://chanhdai.com/r/chevrons-up-down-icon.json",
+        "https://chanhdai.com/r/typography.json"
+      ],
+      "files": [
+        {
+          "path": "src/registry/components/work-experience/work-experience.tsx",
+          "type": "registry:component",
+          "target": "@components/work-experience.tsx"
+        }
+      ],
+      "docs": "https://chanhdai.com/components/work-experience-component",
+      "categories": [
+        "marketing"
+      ],
+      "type": "registry:component",
+      "author": "ncdai <dai@chanhdai.com>"
+    },
+    {
+      "name": "shimmering-text",
+      "title": "Shimmering Text",
+      "description": "Smooth, light-sweeping shimmer animation for text.",
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "src/registry/components/shimmering-text/shimmering-text.tsx",
+          "type": "registry:component",
+          "target": "@components/shimmering-text.tsx"
+        }
+      ],
+      "docs": "https://chanhdai.com/components/shimmering-text",
+      "categories": [
+        "text-effects"
+      ],
+      "type": "registry:component",
+      "author": "ncdai <dai@chanhdai.com>"
+    },
+    {
+      "name": "slide-to-unlock",
+      "title": "Slide to Unlock",
+      "description": "Interactive slider inspired by the classic iPhone “slide to unlock” gesture.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://chanhdai.com/r/shimmering-text.json"
+      ],
+      "files": [
+        {
+          "path": "src/registry/components/slide-to-unlock/slide-to-unlock.tsx",
+          "type": "registry:component",
+          "target": "@components/slide-to-unlock.tsx"
+        }
+      ],
+      "docs": "https://chanhdai.com/components/slide-to-unlock",
+      "categories": [
+        "controls"
+      ],
+      "type": "registry:component",
+      "author": "ncdai <dai@chanhdai.com>"
+    },
+    {
+      "name": "testimonials-marquee",
+      "title": "Testimonials Marquee",
+      "description": "Scrolling marquee to showcase user testimonials.",
+      "registryDependencies": [
+        "@kibo-ui/marquee",
+        "https://chanhdai.com/r/testimonial.json"
+      ],
+      "docs": "https://chanhdai.com/components/testimonials-marquee",
+      "categories": [
+        "marketing"
+      ],
+      "type": "registry:component",
+      "author": "ncdai <dai@chanhdai.com>",
+      "files": []
+    },
+    {
+      "name": "testimonial",
+      "title": "Testimonial",
+      "description": "Display user feedback with author info, avatar, and verified badge.",
+      "files": [
+        {
+          "path": "src/registry/components/testimonial/testimonial.tsx",
+          "type": "registry:component",
+          "target": "@components/testimonial.tsx"
+        }
+      ],
+      "docs": "https://chanhdai.com/components/testimonial",
+      "categories": [
+        "marketing"
+      ],
+      "type": "registry:component",
+      "author": "ncdai <dai@chanhdai.com>"
+    },
+    {
+      "name": "github-stars",
+      "title": "GitHub Stars",
+      "description": "Display GitHub repo star count with formatted numbers and full-count tooltip.",
+      "registryDependencies": [
+        "button",
+        "tooltip"
+      ],
+      "files": [
+        {
+          "path": "src/registry/components/github-stars/github-stars.tsx",
+          "type": "registry:component",
+          "target": "@components/github-stars.tsx"
+        }
+      ],
+      "docs": "https://chanhdai.com/components/github-stars",
+      "categories": [
+        "data-display"
+      ],
+      "type": "registry:component",
+      "author": "ncdai <dai@chanhdai.com>"
+    },
+    {
+      "name": "scroll-fade-effect",
+      "title": "Scroll Fade Effect",
+      "description": "Fade content edges as you scroll, for both vertical and horizontal layouts.",
+      "files": [
+        {
+          "path": "src/registry/components/scroll-fade-effect/scroll-fade-effect.tsx",
+          "type": "registry:component",
+          "target": "@components/scroll-fade-effect.tsx"
+        }
+      ],
+      "css": {
+        "@property --top-mask-height": {
+          "syntax": "\"<length>\"",
+          "inherits": "true",
+          "initial-value": "0px"
+        },
+        "@property --bottom-mask-height": {
+          "syntax": "\"<length>\"",
+          "inherits": "true",
+          "initial-value": "64px"
+        },
+        "@property --left-mask-width": {
+          "syntax": "\"<length>\"",
+          "inherits": "true",
+          "initial-value": "0px"
+        },
+        "@property --right-mask-width": {
+          "syntax": "\"<length>\"",
+          "inherits": "true",
+          "initial-value": "64px"
+        },
+        "@layer base": {
+          "@keyframes show-top-mask": {
+            "to": {
+              "--top-mask-height": "var(--mask-height)"
+            }
+          },
+          "@keyframes hide-bottom-mask": {
+            "to": {
+              "--bottom-mask-height": "0px"
+            }
+          },
+          "@keyframes show-left-mask": {
+            "to": {
+              "--left-mask-width": "var(--mask-width)"
+            }
+          },
+          "@keyframes hide-right-mask": {
+            "to": {
+              "--right-mask-width": "0px"
+            }
+          }
+        },
+        "@utility scroll-fade-effect-y": {
+          "--mask-height": "64px",
+          "--mask-offset-top": "0px",
+          "--mask-offset-bottom": "0px",
+          "--scroll-buffer": "2rem",
+          "mask-image": "linear-gradient(to top, transparent, black 90%), linear-gradient(to bottom, transparent 0%, black 100%), linear-gradient(black, black)",
+          "mask-size": "100% var(--top-mask-height), 100% var(--bottom-mask-height), 100% 100%",
+          "mask-repeat": "no-repeat, no-repeat, no-repeat",
+          "mask-position": "0 var(--mask-offset-top), 0 calc(100% - var(--mask-offset-bottom)), 0 0",
+          "mask-composite": "exclude",
+          "animation-name": "show-top-mask, hide-bottom-mask",
+          "animation-timeline": "scroll(self), scroll(self)",
+          "animation-range": "0 var(--scroll-buffer), calc(100% - var(--scroll-buffer)) 100%",
+          "animation-fill-mode": "both"
+        },
+        "@utility scroll-fade-effect-x": {
+          "--mask-width": "64px",
+          "--mask-offset-left": "0px",
+          "--mask-offset-right": "0px",
+          "--scroll-buffer": "2rem",
+          "mask-image": "linear-gradient(to left, transparent, black 90%), linear-gradient(to right, transparent 0%, black 100%), linear-gradient(black, black)",
+          "mask-size": "var(--left-mask-width) 100%, var(--right-mask-width) 100%, 100% 100%",
+          "mask-repeat": "no-repeat, no-repeat, no-repeat",
+          "mask-position": "var(--mask-offset-left) 0, calc(100% - var(--mask-offset-right)) 0, 0 0",
+          "mask-composite": "exclude",
+          "animation-name": "show-left-mask, hide-right-mask",
+          "animation-timeline": "scroll(self inline), scroll(self inline)",
+          "animation-range": "0 var(--scroll-buffer), calc(100% - var(--scroll-buffer)) 100%",
+          "animation-fill-mode": "both"
+        }
+      },
+      "docs": "https://chanhdai.com/components/scroll-fade-effect",
+      "categories": [
+        "effects"
+      ],
+      "type": "registry:component",
+      "author": "ncdai <dai@chanhdai.com>"
+    },
+    {
+      "name": "consent-manager",
+      "title": "Consent Manager",
+      "description": "Cookie and tracking consent banner for Next.js, built on c15t.",
+      "dependencies": [
+        "@c15t/nextjs"
+      ],
+      "registryDependencies": [
+        "button"
+      ],
+      "files": [
+        {
+          "path": "src/registry/components/consent-manager/consent-manager.tsx",
+          "type": "registry:component",
+          "target": "@components/consent-manager.tsx"
+        }
+      ],
+      "docs": "https://chanhdai.com/components/consent-manager",
+      "categories": [
+        "utilities"
+      ],
+      "type": "registry:component",
+      "author": "ncdai <dai@chanhdai.com>"
+    },
+    {
+      "name": "copy-button",
+      "title": "Copy Button",
+      "description": "Copy text to clipboard with visual, haptic, and audio feedback.",
+      "dependencies": [
+        "motion",
+        "@rexa-developer/tiks",
+        "web-haptics"
+      ],
+      "registryDependencies": [
+        "button",
+        "https://chanhdai.com/r/icon-swap.json"
+      ],
+      "files": [
+        {
+          "path": "src/registry/components/copy-button/copy-button.tsx",
+          "type": "registry:component",
+          "target": "@components/copy-button.tsx"
+        },
+        {
+          "path": "src/hooks/use-copy-to-clipboard.ts",
+          "type": "registry:hook",
+          "target": "@hooks/use-copy-to-clipboard.ts"
+        }
+      ],
+      "docs": "https://chanhdai.com/components/copy-button",
+      "categories": [
+        "utilities"
+      ],
+      "type": "registry:component",
+      "author": "ncdai <dai@chanhdai.com>"
+    },
+    {
+      "name": "code-block-command",
+      "title": "Code Block Command",
+      "description": "Display install commands with package manager switcher and copy button.",
+      "dependencies": [
+        "@base-ui/react",
+        "motion",
+        "jotai"
+      ],
+      "registryDependencies": [
+        "https://chanhdai.com/r/icon-swap.json",
+        "https://chanhdai.com/r/copy-button.json"
+      ],
+      "files": [
+        {
+          "path": "src/registry/components/code-block-command/code-block-command.tsx",
+          "type": "registry:component",
+          "target": "@components/code-block-command.tsx"
+        },
+        {
+          "path": "src/components/base/ui/tabs.tsx",
+          "type": "registry:component",
+          "target": "@components/tabs.tsx"
+        }
+      ],
+      "cssVars": {
+        "theme": {
+          "color-code": "var(--code)",
+          "color-code-foreground": "var(--code-foreground)"
+        },
+        "light": {
+          "code": "oklch(0.985 0 0)",
+          "code-foreground": "oklch(0.141 0.005 285.823)"
+        },
+        "dark": {
+          "code": "oklch(0.21 0.006 285.885)",
+          "code-foreground": "oklch(0.985 0 0)"
+        }
+      },
+      "docs": "https://chanhdai.com/components/code-block-command",
+      "categories": [
+        "data-display"
+      ],
+      "type": "registry:component",
+      "author": "ncdai <dai@chanhdai.com>"
+    },
+    {
+      "name": "testimonial-spotlight",
+      "title": "Testimonial Spotlight",
+      "description": "Testimonial card with spotlight effect on hover.",
+      "registryDependencies": [
+        "https://chanhdai.com/r/testimonial.json"
+      ],
+      "files": [
+        {
+          "path": "src/registry/components/testimonial-spotlight/testimonial-spotlight.tsx",
+          "type": "registry:component",
+          "target": "@components/testimonial-spotlight.tsx"
+        }
+      ],
+      "docs": "https://chanhdai.com/components/testimonial-spotlight",
+      "categories": [
+        "marketing"
+      ],
+      "type": "registry:component",
+      "author": "ncdai <dai@chanhdai.com>"
+    },
+    {
+      "name": "glow-card-grid",
+      "title": "Glow Card Grid",
+      "description": "Display cards with glowing border and background effects.",
+      "files": [
+        {
+          "path": "src/registry/components/glow-card-grid/glow-card-grid.tsx",
+          "type": "registry:component",
+          "target": "@components/glow-card-grid.tsx"
+        }
+      ],
+      "categories": [
+        "effects"
+      ],
+      "type": "registry:component",
+      "author": "ncdai <dai@chanhdai.com>"
+    },
+    {
+      "name": "middle-truncation",
+      "title": "Middle Truncation",
+      "description": "Truncate text in the middle while preserving start and end.",
+      "files": [
+        {
+          "path": "src/registry/components/middle-truncation/middle-truncation.tsx",
+          "type": "registry:component",
+          "target": "@components/middle-truncation.tsx"
+        }
+      ],
+      "docs": "https://chanhdai.com/components/middle-truncation",
+      "categories": [
+        "typography"
+      ],
+      "type": "registry:component",
+      "author": "ncdai <dai@chanhdai.com>"
+    },
+    {
+      "name": "twemoji",
+      "title": "Twemoji",
+      "description": "Render Unicode emoji as Twemoji SVG images inline with text.",
+      "files": [
+        {
+          "path": "src/registry/components/twemoji/twemoji.tsx",
+          "type": "registry:component",
+          "target": "@components/twemoji.tsx"
+        },
+        {
+          "path": "src/registry/components/twemoji/lib/twemoji-regex.ts",
+          "type": "registry:lib",
+          "target": "@lib/twemoji-regex.ts"
+        }
+      ],
+      "css": {
+        "@layer base": {
+          ".twemoji": {
+            "display": "inline-block",
+            "height": "1em",
+            "width": "1em",
+            "margin": "0 0.05em 0 0.1em",
+            "vertical-align": "-0.1em"
+          }
+        }
+      },
+      "docs": "https://chanhdai.com/components/twemoji",
+      "categories": [
+        "typography"
+      ],
+      "type": "registry:component",
+      "author": "ncdai <dai@chanhdai.com>"
+    },
+    {
+      "name": "elastic-slider",
+      "title": "Elastic Slider",
+      "description": "Slider with elastic rubber-band drag and magnetic snap feedback.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://chanhdai.com/r/use-controllable-state.json"
+      ],
+      "files": [
+        {
+          "path": "src/registry/components/elastic-slider/elastic-slider.tsx",
+          "type": "registry:component",
+          "target": "@components/elastic-slider.tsx"
+        }
+      ],
+      "docs": "https://chanhdai.com/components/elastic-slider",
+      "categories": [
+        "controls"
+      ],
+      "type": "registry:component",
+      "author": "ncdai <dai@chanhdai.com>"
+    },
+    {
+      "name": "contribution-graph",
+      "title": "Contribution Graph",
+      "description": "A GitHub-style contribution graph component that displays activity levels over time.",
+      "dependencies": [
+        "date-fns"
+      ],
+      "files": [
+        {
+          "path": "src/registry/components/contribution-graph/contribution-graph.tsx",
+          "type": "registry:component",
+          "target": "@components/contribution-graph.tsx"
+        }
+      ],
+      "docs": "https://www.kibo-ui.com/components/contribution-graph",
+      "categories": [
+        "data-display"
+      ],
+      "type": "registry:component",
+      "author": "ncdai <dai@chanhdai.com>"
+    },
+    {
+      "name": "github-contributions",
+      "title": "GitHub Contributions",
+      "description": "Visualize year-long GitHub contribution activity with daily counts, tooltips, and a profile link.",
+      "dependencies": [
+        "date-fns"
+      ],
+      "registryDependencies": [
+        "tooltip",
+        "spinner",
+        "https://chanhdai.com/r/contribution-graph.json"
+      ],
+      "files": [
+        {
+          "path": "src/registry/components/github-contributions/github-contributions.tsx",
+          "type": "registry:component",
+          "target": "@components/github-contributions.tsx"
+        },
+        {
+          "path": "src/registry/components/github-contributions/lib/get-cached-contributions.ts",
+          "type": "registry:lib",
+          "target": "@lib/get-cached-contributions.ts"
+        }
+      ],
+      "css": {
+        "@utility link-underline": {
+          "@apply underline decoration-current/30 decoration-1 underline-offset-3 transition-colors hover:decoration-current": {}
+        }
+      },
+      "docs": "https://chanhdai.com/components/github-contributions",
+      "categories": [
+        "data-display"
+      ],
+      "type": "registry:component",
+      "author": "ncdai <dai@chanhdai.com>"
+    },
+    {
+      "name": "toc-minimap",
+      "title": "TOC Minimap",
+      "description": "Navigate page sections with a compact, hoverable TOC minimap.",
+      "registryDependencies": [
+        "hover-card",
+        "@soundcn/u-mini-map-open"
+      ],
+      "files": [
+        {
+          "path": "src/registry/components/toc-minimap/toc-minimap.tsx",
+          "type": "registry:component",
+          "target": "@components/toc-minimap.tsx"
+        }
+      ],
+      "docs": "https://chanhdai.com/components/toc-minimap",
+      "categories": [
+        "navigation"
+      ],
+      "type": "registry:component",
+      "author": "ncdai <dai@chanhdai.com>"
+    },
+    {
+      "name": "fluid-gradient-text",
+      "title": "Fluid Gradient Text",
+      "description": "Render text with a fluid gradient that shifts with pointer movement.",
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "src/registry/components/fluid-gradient-text/fluid-gradient-text.tsx",
+          "type": "registry:component",
+          "target": "@components/fluid-gradient-text.tsx"
+        }
+      ],
+      "docs": "https://chanhdai.com/components/fluid-gradient-text",
+      "categories": [
+        "text-effects"
+      ],
+      "type": "registry:component",
+      "author": "ncdai <dai@chanhdai.com>"
+    },
+    {
+      "name": "brand-assets-menu",
+      "title": "Brand Assets Menu",
+      "description": "Context menu for copying brand SVGs and opening asset links.",
+      "dependencies": [
+        "@rexa-developer/tiks"
+      ],
+      "registryDependencies": [
+        "context-menu",
+        "sonner"
+      ],
+      "files": [
+        {
+          "path": "src/registry/components/brand-assets-menu/brand-assets-menu.tsx",
+          "type": "registry:component",
+          "target": "@components/brand-assets-menu.tsx"
+        }
+      ],
+      "docs": "https://chanhdai.com/components/brand-assets-menu",
+      "categories": [
+        "menus"
+      ],
+      "type": "registry:component",
+      "author": "ncdai <dai@chanhdai.com>"
+    },
+    {
+      "name": "icon-swap",
+      "title": "Icon Swap",
+      "description": "Animate icon swaps with scale, blur, and fade transitions.",
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "src/registry/components/icon-swap/icon-swap.tsx",
+          "type": "registry:component",
+          "target": "@components/icon-swap.tsx"
+        }
+      ],
+      "docs": "https://chanhdai.com/components/icon-swap",
+      "categories": [
+        "effects"
+      ],
+      "type": "registry:component",
+      "author": "ncdai <dai@chanhdai.com>"
+    },
+    {
+      "name": "dot-grid-spotlight",
+      "title": "Dot Grid Spotlight",
+      "description": "Interactive dot grid with a cursor-tracking spotlight effect.",
+      "files": [
+        {
+          "path": "src/registry/components/dot-grid-spotlight/dot-grid-spotlight.tsx",
+          "type": "registry:component",
+          "target": "@components/dot-grid-spotlight.tsx"
+        }
+      ],
+      "docs": "https://chanhdai.com/components/dot-grid-spotlight",
+      "categories": [
+        "effects"
+      ],
+      "type": "registry:component",
+      "author": "ncdai <dai@chanhdai.com>"
+    },
+    {
+      "name": "login-01",
+      "title": "Login 01",
+      "description": "A simple login form.",
+      "registryDependencies": [
+        "button",
+        "card",
+        "input",
+        "label",
+        "field"
+      ],
+      "files": [
+        {
+          "path": "src/registry/blocks/login-01/page.tsx",
+          "type": "registry:page",
+          "target": "app/login/page.tsx"
+        },
+        {
+          "path": "src/registry/blocks/login-01/components/login-form.tsx",
+          "type": "registry:component",
+          "target": "@components/login-form.tsx"
+        }
+      ],
+      "meta": {
+        "createdAt": "2026-02-22"
+      },
+      "categories": [
+        "application"
+      ],
+      "type": "registry:block",
+      "author": "ncdai <dai@chanhdai.com>"
+    },
+    {
+      "name": "hero-01",
+      "title": "Hero 01",
+      "description": "A hero section with a golden spiral background.",
+      "registryDependencies": [
+        "button",
+        "https://chanhdai.com/r/style.json"
+      ],
+      "files": [
+        {
+          "path": "src/registry/blocks/hero-01/hero-01.tsx",
+          "type": "registry:component",
+          "target": "@components/hero-01.tsx"
+        },
+        {
+          "path": "src/registry/blocks/hero-01/components/hero-01-icons.tsx",
+          "type": "registry:component",
+          "target": "@components/hero-01-icons.tsx"
+        }
+      ],
+      "meta": {
+        "createdAt": "2026-03-12",
+        "previewClassName": "pt-8"
+      },
+      "categories": [
+        "marketing"
+      ],
+      "type": "registry:block",
+      "author": "ncdai <dai@chanhdai.com>"
+    },
+    {
+      "name": "blog-01",
+      "title": "Blog 01",
+      "description": "A blog section with a grid layout.",
+      "dependencies": [
+        "date-fns"
+      ],
+      "registryDependencies": [
+        "button"
+      ],
+      "files": [
+        {
+          "path": "src/registry/blocks/blog-01/blog-01.tsx",
+          "type": "registry:component",
+          "target": "@components/blog-01.tsx"
+        },
+        {
+          "path": "src/registry/blocks/blog-01/components/article-item.tsx",
+          "type": "registry:component",
+          "target": "@components/article-item.tsx"
+        }
+      ],
+      "meta": {
+        "createdAt": "2026-03-13"
+      },
+      "categories": [
+        "marketing"
+      ],
+      "type": "registry:block",
+      "author": "ncdai <dai@chanhdai.com>"
+    },
+    {
+      "name": "blog-02",
+      "title": "Blog 02",
+      "description": "A blog section with a lined grid layout.",
+      "dependencies": [
+        "date-fns"
+      ],
+      "registryDependencies": [
+        "button",
+        "https://chanhdai.com/r/style.json"
+      ],
+      "files": [
+        {
+          "path": "src/registry/blocks/blog-02/blog-02.tsx",
+          "type": "registry:component",
+          "target": "@components/blog-02.tsx"
+        },
+        {
+          "path": "src/registry/blocks/blog-02/components/article-item.tsx",
+          "type": "registry:component",
+          "target": "@components/article-item.tsx"
+        }
+      ],
+      "meta": {
+        "createdAt": "2026-03-18"
+      },
+      "categories": [
+        "marketing"
+      ],
+      "type": "registry:block",
+      "author": "ncdai <dai@chanhdai.com>"
+    },
+    {
+      "name": "testimonials-01",
+      "title": "Testimonials 01",
+      "description": "A testimonials section with dual marquees.",
+      "registryDependencies": [
+        "https://www.kibo-ui.com/r/marquee.json",
+        "https://chanhdai.com/r/testimonial-spotlight.json"
+      ],
+      "files": [
+        {
+          "path": "src/registry/blocks/testimonials-01/testimonials-01.tsx",
+          "type": "registry:component",
+          "target": "@components/testimonials-01.tsx"
+        },
+        {
+          "path": "src/registry/blocks/testimonials-01/components/testimonial-list.tsx",
+          "type": "registry:component",
+          "target": "@components/testimonial-list.tsx"
+        }
+      ],
+      "meta": {
+        "createdAt": "2026-03-20",
+        "previewClassName": "container mx-auto min-h-svh content-center-safe"
+      },
+      "categories": [
+        "marketing"
+      ],
+      "type": "registry:block",
+      "author": "ncdai <dai@chanhdai.com>"
+    },
+    {
+      "name": "testimonials-02",
+      "title": "Testimonials 02",
+      "description": "A testimonials section with a lined layout.",
+      "registryDependencies": [
+        "https://www.kibo-ui.com/r/marquee.json",
+        "https://chanhdai.com/r/style.json",
+        "https://chanhdai.com/r/testimonial.json"
+      ],
+      "files": [
+        {
+          "path": "src/registry/blocks/testimonials-02/testimonials-02.tsx",
+          "type": "registry:component",
+          "target": "@components/testimonials-02.tsx"
+        },
+        {
+          "path": "src/registry/blocks/testimonials-02/components/testimonial-list.tsx",
+          "type": "registry:component",
+          "target": "@components/testimonial-list.tsx"
+        }
+      ],
+      "meta": {
+        "createdAt": "2026-03-29"
+      },
+      "categories": [
+        "marketing"
+      ],
+      "type": "registry:block",
+      "author": "ncdai <dai@chanhdai.com>"
+    },
+    {
+      "name": "experience-01",
+      "title": "Experience 01",
+      "description": "A work experience section with a lined layout.",
+      "registryDependencies": [
+        "https://chanhdai.com/r/style.json",
+        "https://chanhdai.com/r/work-experience.json"
+      ],
+      "files": [
+        {
+          "path": "src/registry/blocks/experience-01/experience-01.tsx",
+          "type": "registry:component",
+          "target": "@components/experience-01.tsx"
+        }
+      ],
+      "meta": {
+        "createdAt": "2026-03-28"
+      },
+      "categories": [
+        "marketing"
+      ],
+      "type": "registry:block",
+      "author": "ncdai <dai@chanhdai.com>"
+    },
+    {
+      "name": "team-01",
+      "title": "Team 01",
+      "description": "A team section with glowing cards.",
+      "registryDependencies": [
+        "https://chanhdai.com/r/glow-card-grid.json"
+      ],
+      "files": [
+        {
+          "path": "src/registry/blocks/team-01/team-01.tsx",
+          "type": "registry:component",
+          "target": "@components/team-01.tsx"
+        }
+      ],
+      "meta": {
+        "createdAt": "2026-03-30",
+        "previewClassName": "min-h-svh place-items-center-safe content-center-safe"
+      },
+      "categories": [
+        "marketing"
+      ],
+      "type": "registry:block",
+      "author": "ncdai <dai@chanhdai.com>"
+    },
+    {
+      "name": "metrics-01",
+      "title": "Metrics 01",
+      "description": "A metrics section with a line chart.",
+      "dependencies": [
+        "date-fns"
+      ],
+      "registryDependencies": [
+        "@bklit/line-chart",
+        "https://chanhdai.com/r/style.json"
+      ],
+      "files": [
+        {
+          "path": "src/registry/blocks/metrics-01/metrics-01.tsx",
+          "type": "registry:component",
+          "target": "@components/metrics-01.tsx"
+        },
+        {
+          "path": "src/registry/blocks/metrics-01/components/metric.tsx",
+          "type": "registry:component",
+          "target": "@components/metric.tsx"
+        }
+      ],
+      "meta": {
+        "createdAt": "2026-05-24",
+        "previewClassName": "min-h-svh content-center-safe"
+      },
+      "categories": [
+        "marketing"
+      ],
+      "type": "registry:block",
+      "author": "ncdai <dai@chanhdai.com>"
+    },
+    {
+      "name": "style",
+      "cssVars": {
+        "theme": {
+          "color-line": "color-mix(in oklab, var(--border) 64%, var(--background))"
+        }
+      },
+      "css": {
+        "@utility screen-line-top": {
+          "@apply relative before:absolute before:top-0 before:left-[-100vw] before:-z-1 before:h-px before:w-[200vw] before:bg-line": {}
+        },
+        "@utility screen-line-bottom": {
+          "@apply relative after:absolute after:bottom-0 after:left-[-100vw] after:-z-1 after:h-px after:w-[200vw] after:bg-line": {}
+        }
+      },
+      "type": "registry:style",
+      "author": "ncdai <dai@chanhdai.com>",
+      "files": []
+    },
+    {
+      "name": "theme-toggle-effect-triangle",
+      "cssVars": {
+        "theme": {
+          "expo-out": "linear(0 0%, 0.1684 2.66%, 0.3165 5.49%, 0.446 8.52%, 0.5581 11.78%, 0.6535 15.29%, 0.7341 19.11%, 0.8011 23.3%, 0.8557 27.93%, 0.8962 32.68%, 0.9283 38.01%, 0.9529 44.08%, 0.9711 51.14%, 0.9833 59.06%, 0.9915 68.74%, 1 100%)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          "::view-transition-group(root)": {
+            "animation-timing-function": "var(--expo-out)"
+          },
+          "::view-transition-old(root),.dark::view-transition-old(root)": {
+            "animation": "none",
+            "animation-fill-mode": "both",
+            "z-index": "-1"
+          },
+          "::view-transition-new(root)": {
+            "mask": "url('data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 40\"><path d=\"m20 0 20 35H0z\" fill=\"white\"/></svg>') center / 0 no-repeat",
+            "animation": "scale 0.7s",
+            "animation-fill-mode": "both"
+          },
+          "@keyframes scale": {
+            "to": {
+              "mask-size": "300vmax"
+            }
+          }
+        }
+      },
+      "docs": "https://chanhdai.com/components/theme-toggle-effect",
+      "categories": [
+        "effects"
+      ],
+      "type": "registry:style",
+      "author": "ncdai <dai@chanhdai.com>",
+      "files": []
+    },
+    {
+      "name": "theme-toggle-effect-triangle-blur",
+      "cssVars": {
+        "theme": {
+          "expo-out": "linear(0 0%, 0.1684 2.66%, 0.3165 5.49%, 0.446 8.52%, 0.5581 11.78%, 0.6535 15.29%, 0.7341 19.11%, 0.8011 23.3%, 0.8557 27.93%, 0.8962 32.68%, 0.9283 38.01%, 0.9529 44.08%, 0.9711 51.14%, 0.9833 59.06%, 0.9915 68.74%, 1 100%)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          "::view-transition-group(root)": {
+            "animation-timing-function": "var(--expo-out)"
+          },
+          "::view-transition-old(root),.dark::view-transition-old(root)": {
+            "animation": "none",
+            "animation-fill-mode": "both",
+            "z-index": "-1"
+          },
+          "::view-transition-new(root)": {
+            "mask": "url('data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 40\"><path d=\"m20 0 20 35H0z\" fill=\"white\" filter=\"url(%23blur)\"/><defs><filter id=\"blur\"><feGaussianBlur stdDeviation=\"1\"/></filter></defs></svg>') center / 0 no-repeat",
+            "animation": "scale 0.7s",
+            "animation-fill-mode": "both"
+          },
+          "@keyframes scale": {
+            "to": {
+              "mask-size": "300vmax"
+            }
+          }
+        }
+      },
+      "docs": "https://chanhdai.com/components/theme-toggle-effect",
+      "categories": [
+        "effects"
+      ],
+      "type": "registry:style",
+      "author": "ncdai <dai@chanhdai.com>",
+      "files": []
+    },
+    {
+      "name": "theme-toggle-effect-circle",
+      "cssVars": {
+        "theme": {
+          "expo-out": "linear(0 0%, 0.1684 2.66%, 0.3165 5.49%, 0.446 8.52%, 0.5581 11.78%, 0.6535 15.29%, 0.7341 19.11%, 0.8011 23.3%, 0.8557 27.93%, 0.8962 32.68%, 0.9283 38.01%, 0.9529 44.08%, 0.9711 51.14%, 0.9833 59.06%, 0.9915 68.74%, 1 100%)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          "::view-transition-group(root)": {
+            "animation-timing-function": "var(--expo-out)"
+          },
+          "::view-transition-old(root),.dark::view-transition-old(root)": {
+            "animation": "none",
+            "animation-fill-mode": "both",
+            "z-index": "-1"
+          },
+          "::view-transition-new(root)": {
+            "mask": "url('data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 40\"><circle cx=\"20\" cy=\"20\" r=\"20\" fill=\"white\"/></svg>') center / 0 no-repeat",
+            "animation": "scale 1s",
+            "animation-fill-mode": "both"
+          },
+          "@keyframes scale": {
+            "to": {
+              "mask-size": "200vmax"
+            }
+          }
+        }
+      },
+      "docs": "https://chanhdai.com/components/theme-toggle-effect",
+      "categories": [
+        "effects"
+      ],
+      "type": "registry:style",
+      "author": "ncdai <dai@chanhdai.com>",
+      "files": []
+    },
+    {
+      "name": "theme-toggle-effect-circle-blur",
+      "cssVars": {
+        "theme": {
+          "expo-out": "linear(0 0%, 0.1684 2.66%, 0.3165 5.49%, 0.446 8.52%, 0.5581 11.78%, 0.6535 15.29%, 0.7341 19.11%, 0.8011 23.3%, 0.8557 27.93%, 0.8962 32.68%, 0.9283 38.01%, 0.9529 44.08%, 0.9711 51.14%, 0.9833 59.06%, 0.9915 68.74%, 1 100%)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          "::view-transition-group(root)": {
+            "animation-timing-function": "var(--expo-out)"
+          },
+          "::view-transition-old(root),.dark::view-transition-old(root)": {
+            "animation": "none",
+            "animation-fill-mode": "both",
+            "z-index": "-1"
+          },
+          "::view-transition-new(root)": {
+            "mask": "url('data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 40\"><defs><filter id=\"blur\"><feGaussianBlur stdDeviation=\"2\"/></filter></defs><circle cx=\"20\" cy=\"20\" r=\"18\" fill=\"white\" filter=\"url(%23blur)\"/></svg>') center / 0 no-repeat",
+            "animation": "scale 1s",
+            "animation-fill-mode": "both"
+          },
+          ".dark::view-transition-new(root)": {
+            "animation": "scale 1s",
+            "animation-fill-mode": "both"
+          },
+          "@keyframes scale": {
+            "to": {
+              "mask-size": "200vmax"
+            }
+          }
+        }
+      },
+      "docs": "https://chanhdai.com/components/theme-toggle-effect",
+      "categories": [
+        "effects"
+      ],
+      "type": "registry:style",
+      "author": "ncdai <dai@chanhdai.com>",
+      "files": []
+    },
+    {
+      "name": "theme-toggle-effect-circle-blur-top-left",
+      "cssVars": {
+        "theme": {
+          "expo-out": "linear(0 0%, 0.1684 2.66%, 0.3165 5.49%, 0.446 8.52%, 0.5581 11.78%, 0.6535 15.29%, 0.7341 19.11%, 0.8011 23.3%, 0.8557 27.93%, 0.8962 32.68%, 0.9283 38.01%, 0.9529 44.08%, 0.9711 51.14%, 0.9833 59.06%, 0.9915 68.74%, 1 100%)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          "::view-transition-group(root)": {
+            "animation-timing-function": "var(--expo-out)"
+          },
+          "::view-transition-new(root)": {
+            "mask": "url('data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 40\"><defs><filter id=\"blur\"><feGaussianBlur stdDeviation=\"2\"/></filter></defs><circle cx=\"0\" cy=\"0\" r=\"18\" fill=\"white\" filter=\"url(%23blur)\"/></svg>') top left / 0 no-repeat",
+            "mask-origin": "content-box",
+            "animation": "scale 1s",
+            "animation-fill-mode": "both",
+            "transform-origin": "top left"
+          },
+          "::view-transition-old(root),.dark::view-transition-old(root)": {
+            "animation": "scale 1s",
+            "animation-fill-mode": "both",
+            "transform-origin": "top left",
+            "z-index": "-1"
+          },
+          "@keyframes scale": {
+            "to": {
+              "mask-size": "350vmax"
+            }
+          }
+        }
+      },
+      "docs": "https://chanhdai.com/components/theme-toggle-effect",
+      "categories": [
+        "effects"
+      ],
+      "type": "registry:style",
+      "author": "ncdai <dai@chanhdai.com>",
+      "files": []
+    },
+    {
+      "name": "theme-toggle-effect-polygon",
+      "cssVars": {
+        "theme": {
+          "expo-out": "linear(0 0%, 0.1684 2.66%, 0.3165 5.49%, 0.446 8.52%, 0.5581 11.78%, 0.6535 15.29%, 0.7341 19.11%, 0.8011 23.3%, 0.8557 27.93%, 0.8962 32.68%, 0.9283 38.01%, 0.9529 44.08%, 0.9711 51.14%, 0.9833 59.06%, 0.9915 68.74%, 1 100%)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          "::view-transition-group(root)": {
+            "animation-duration": "0.7s",
+            "animation-timing-function": "var(--expo-out)"
+          },
+          "::view-transition-new(root)": {
+            "animation-name": "reveal-light",
+            "animation-fill-mode": "both"
+          },
+          "::view-transition-old(root),.dark::view-transition-old(root)": {
+            "animation": "none",
+            "animation-fill-mode": "both",
+            "z-index": "-1"
+          },
+          ".dark::view-transition-new(root)": {
+            "animation-name": "reveal-dark",
+            "animation-fill-mode": "both"
+          },
+          "@keyframes reveal-dark": {
+            "from": {
+              "clip-path": "polygon(50% -71%, -50% 71%, -50% 71%, 50% -71%)"
+            },
+            "to": {
+              "clip-path": "polygon(50% -71%, -50% 71%, 50% 171%, 171% 50%)"
+            }
+          },
+          "@keyframes reveal-light": {
+            "from": {
+              "clip-path": "polygon(171% 50%, 50% 171%, 50% 171%, 171% 50%)"
+            },
+            "to": {
+              "clip-path": "polygon(171% 50%, 50% 171%, -50% 71%, 50% -71%)"
+            }
+          }
+        }
+      },
+      "docs": "https://chanhdai.com/components/theme-toggle-effect",
+      "categories": [
+        "effects"
+      ],
+      "type": "registry:style",
+      "author": "ncdai <dai@chanhdai.com>",
+      "files": []
+    },
+    {
+      "name": "theme-toggle-effect-polygon-gradient",
+      "cssVars": {
+        "theme": {
+          "expo-out": "linear(0 0%, 0.1684 2.66%, 0.3165 5.49%, 0.446 8.52%, 0.5581 11.78%, 0.6535 15.29%, 0.7341 19.11%, 0.8011 23.3%, 0.8557 27.93%, 0.8962 32.68%, 0.9283 38.01%, 0.9529 44.08%, 0.9711 51.14%, 0.9833 59.06%, 0.9915 68.74%, 1 100%)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          "::view-transition-group(root)": {
+            "animation-timing-function": "var(--expo-out)"
+          },
+          "::view-transition-new(root)": {
+            "mask": "url('data:image/svg+xml,<svg width=\"40\" height=\"40\" viewBox=\"0 0 40 40\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M0 0H40L0 40V0Z\" fill=\"url(%23paint0_linear_16_14)\"/><defs><linearGradient id=\"paint0_linear_16_14\" x1=\"0\" y1=\"0\" x2=\"20.5\" y2=\"20.5\" gradientUnits=\"userSpaceOnUse\"><stop stop-color=\"current\"/><stop offset=\"0.84506\" stop-color=\"current\" stop-opacity=\"0.99\"/><stop offset=\"0.9506\" stop-color=\"current\" stop-opacity=\"0\"/><stop offset=\"1\" stop-color=\"current\" stop-opacity=\"0\"/></linearGradient></defs></svg>') top left / 0 no-repeat",
+            "mask-origin": "top left",
+            "animation": "scale 1.5s",
+            "animation-fill-mode": "both"
+          },
+          "::view-transition-old(root),.dark::view-transition-old(root)": {
+            "animation": "scale 1.5s",
+            "animation-fill-mode": "both",
+            "z-index": "-1",
+            "transform-origin": "top left"
+          },
+          "@keyframes scale": {
+            "to": {
+              "mask-size": "200vmax"
+            }
+          }
+        }
+      },
+      "docs": "https://chanhdai.com/components/theme-toggle-effect",
+      "categories": [
+        "effects"
+      ],
+      "type": "registry:style",
+      "author": "ncdai <dai@chanhdai.com>",
+      "files": []
+    },
+    {
+      "name": "thin-scrollbar",
+      "css": {
+        "@layer base": {
+          "::-webkit-scrollbar": {
+            "width": "5px"
+          },
+          "::-webkit-scrollbar-track": {
+            "background": "transparent"
+          },
+          "::-webkit-scrollbar-thumb": {
+            "background": "var(--border)",
+            "border-radius": "5px"
+          },
+          "*": {
+            "scrollbar-width": "thin",
+            "scrollbar-color": "var(--border) transparent"
+          }
+        }
+      },
+      "type": "registry:style",
+      "author": "ncdai <dai@chanhdai.com>",
+      "files": []
+    }
+  ]
+}
