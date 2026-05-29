@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# sync.sh - Smart synchronization script for Shoperzz monorepo
+# sync.sh - Smart synchronization script for Wistant portfolio
 # Usage: ./tooling/sync.sh [--force] [--branch <name>]
 set -euo pipefail
 
@@ -38,7 +38,7 @@ UPSTREAM_EXISTS=true
 if ! git remote get-url upstream > /dev/null 2>&1; then
   warn "Remote 'upstream' not found."
   warn "If you are working on a fork, add upstream:"
-  echo -e "     ${CYAN}git remote add upstream https://github.com/shoperzz/shoperzz.git${RESET}\n"
+  echo -e "     ${CYAN}git remote add upstream https://github.com/wistant/portfolio.git${RESET}\n"
   UPSTREAM_EXISTS=false
 fi
 
