@@ -8,20 +8,21 @@ Portfolio, blog, and component registry for **Wistant Kode** — built on Next.j
 
 ## Project Structure
 
-| Directory                              | Purpose                                                      |
-| -------------------------------------- | ------------------------------------------------------------ |
-| `src/app/`                             | App Router pages, layouts, API routes                        |
-| `src/components/`                      | Shared UI components, organized by domain                    |
-| `src/registry/`                        | Registry source (components, hooks, blocks, examples, lib)   |
-| `src/content/`                         | MDX content: blog posts and component docs                   |
-| `src/data/`                            | Centralized static data (portfolio, user, doc metadata)      |
-| `src/config/`                          | Site (`site.ts`) and registry (`registry.ts`) configuration  |
-| `src/hooks/`, `src/lib/`, `src/utils/`| Hooks, libraries, utilities                                  |
-| `src/types/`                           | Shared TypeScript type definitions                           |
-| `tooling/`                             | Release orchestration bash scripts                           |
-| `e2e/`                                 | End-to-end tests for tooling scripts                         |
+| Directory                              | Purpose                                                     |
+| -------------------------------------- | ----------------------------------------------------------- |
+| `src/app/`                             | App Router pages, layouts, API routes                       |
+| `src/components/`                      | Shared UI components, organized by domain                   |
+| `src/registry/`                        | Registry source (components, hooks, blocks, examples, lib)  |
+| `src/content/`                         | MDX content: blog posts and component docs                  |
+| `src/data/`                            | Centralized static data (portfolio, user, doc metadata)     |
+| `src/config/`                          | Site (`site.ts`) and registry (`registry.ts`) configuration |
+| `src/hooks/`, `src/lib/`, `src/utils/` | Hooks, libraries, utilities                                 |
+| `src/types/`                           | Shared TypeScript type definitions                          |
+| `tooling/`                             | Release orchestration bash scripts                          |
+| `e2e/`                                 | End-to-end tests for tooling scripts                        |
 
 **Key files**:
+
 - `components.json` — shadcn/ui config
 - `src/data/portfolio/user.ts` — personal info (update this to personalize)
 - `src/config/site.ts` — site metadata (title, URL, social handles)
@@ -66,14 +67,14 @@ All MDX content lives in `src/content/` and is served through a unified data lay
 
 This project follows a strict atomic-commit discipline enforced via `tooling/` scripts.
 
-| Script                          | Role                                                 |
-| ------------------------------- | ---------------------------------------------------- |
-| `tooling/push.sh`               | Pre-push guard: format, lint, typecheck, changeset   |
-| `tooling/sync.sh`               | Rebase-based upstream sync                           |
-| `tooling/make-release-description.sh` | Generates `RELEASE.md` from git log           |
-| `tooling/version/get-next-version.sh` | Predicts next semver from changeset files     |
-| `tooling/version/manage-intent.sh`    | Interactive intent manager (alpha/beta/rc/stable) |
-| `e2e/tooling.test.sh`           | E2E validation of all tooling scripts locally        |
+| Script                                | Role                                               |
+| ------------------------------------- | -------------------------------------------------- |
+| `tooling/push.sh`                     | Pre-push guard: format, lint, typecheck, changeset |
+| `tooling/sync.sh`                     | Rebase-based upstream sync                         |
+| `tooling/make-release-description.sh` | Generates `RELEASE.md` from git log                |
+| `tooling/version/get-next-version.sh` | Predicts next semver from changeset files          |
+| `tooling/version/manage-intent.sh`    | Interactive intent manager (alpha/beta/rc/stable)  |
+| `e2e/tooling.test.sh`                 | E2E validation of all tooling scripts locally      |
 
 Run `pnpm push` and `pnpm sync` instead of raw `git push` / `git pull`.
 
@@ -83,7 +84,7 @@ Run `pnpm push` and `pnpm sync` instead of raw `git push` / `git pull`.
 
 - TypeScript strict mode; explicit types when necessary
 - `kebab-case` file naming throughout
-- Descriptive names; comments only for *why*, never *what*
+- Descriptive names; comments only for _why_, never _what_
 - No emojis in code, comments, or commit messages
 - Tailwind CSS v4 syntax; always support dark/light modes
 - Follow SOLID principles
