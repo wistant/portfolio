@@ -1,0 +1,10 @@
+allowBuilds:
+  core-js: false
+  msw: false
+  protobufjs: false
+  puppeteer: false
+  sharp: false
+minimumReleaseAge: 1440
+minimumReleaseAgeExclude:
+  - shadcn
+  - "@base-ui/*"
