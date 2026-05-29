@@ -1,10 +1,7 @@
 name: GitHub Release
 
-# ─────────────────────────────────────────────────────────────────────────────
 # Responsible for creating GitHub Releases ONLY.
-# Independent from NPM publishing (release.yml).
 # Idempotent: skips gracefully if the release already exists.
-# ─────────────────────────────────────────────────────────────────────────────
 
 on:
   push:

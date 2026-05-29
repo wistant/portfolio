@@ -1,5 +1,5 @@
 name: 🐛 Bug Report
-description: Report a bug in Shoperzz or an official plugin
+description: Report a bug in Wistant portfolio
 labels: ["bug", "needs-triage"]
 
 body:
@@ -17,7 +17,7 @@ body:
           required: true
         - label: I have consulted the documentation
           required: true
-        - label: I am on the latest version of Shoperzz
+        - label: I am on the latest version of portfolio
           required: true
 
   - type: dropdown
