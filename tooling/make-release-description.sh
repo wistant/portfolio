@@ -87,9 +87,9 @@ while IFS= read -r line; do
   TYPE=$(echo "$SUBJECT" | grep -oP '^[a-z]+(?=[\(!\:])' || echo "other")
 
   if [[ -n "$PR_NUM" ]]; then
-    ENTRY="- \`${HASH}\` - ${SUBJECT} by @${AUTHOR} in #${PR_NUM}"
+    ENTRY="- ${HASH} - ${SUBJECT} by @${AUTHOR} in #${PR_NUM}"
   else
-    ENTRY="- \`${HASH}\` - ${SUBJECT} by @${AUTHOR}"
+    ENTRY="- ${HASH} - ${SUBJECT} by @${AUTHOR}"
   fi
 
   if [[ -n "${CATEGORIES[$TYPE]+x}" ]]; then
@@ -103,8 +103,6 @@ done <<< "$COMMITS"
 # Write RELEASE.md
 {
   echo "## What's Changed"
-  echo ""
-  echo "**$CURRENT_VERSION** published by @wistant-bot"
   echo ""
 
   # Output in a defined order
