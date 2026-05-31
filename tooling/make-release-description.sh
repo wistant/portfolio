@@ -58,19 +58,38 @@ while IFS= read -r line; do
     AUTHOR="wistant"
   fi
 
+  # Resolve Bot and GitHub Actions attribution
+  if [[ "$AUTHOR_EMAIL" == *"github-actions"* || "$AUTHOR" == "github-actions" ]]; then
+    AUTHOR="github-actions[bot]"
+  elif [[ "$AUTHOR_EMAIL" == *"wistant-bot"* || "$AUTHOR" == "wistant-bot" || "$AUTHOR" == *"bot"* ]]; then
+    AUTHOR="wistant-bot"
+  fi
+
   PR_NUM=""
   if [[ "$SUBJECT" =~ \(\#([0-9]+)\)$ ]]; then
     PR_NUM="${BASH_REMATCH[1]}"
     SUBJECT=$(echo "$SUBJECT" | sed -E 's/ \(\#[0-9]+\)$//')
   fi
 
+  # If no PR number is in the commit message, try to find the merge commit that introduced it
+  if [[ -z "$PR_NUM" ]]; then
+    merge_commit=$(git log --merges --ancestry-path --oneline "${HASH}..HEAD" 2>/dev/null | grep -E "Merge pull request #|Merge branch.*into.*\(#[0-9]+\)" | head -n 1 || true)
+    if [[ -n "$merge_commit" ]]; then
+      if [[ "$merge_commit" =~ \#([0-9]+) ]]; then
+        PR_NUM="${BASH_REMATCH[1]}"
+      elif [[ "$merge_commit" =~ \(\#([0-9]+)\) ]]; then
+        PR_NUM="${BASH_REMATCH[1]}"
+      fi
+    fi
+  fi
+
   # Extract type prefix (feat, fix, etc.)
   TYPE=$(echo "$SUBJECT" | grep -oP '^[a-z]+(?=[\(!\:])' || echo "other")
 
   if [[ -n "$PR_NUM" ]]; then
-    ENTRY="${HASH}: - ${SUBJECT} by @${AUTHOR} in #${PR_NUM}"
+    ENTRY="- \`${HASH}\` - ${SUBJECT} by @${AUTHOR} in #${PR_NUM}"
   else
-    ENTRY="${HASH}: - ${SUBJECT} by @${AUTHOR}"
+    ENTRY="- \`${HASH}\` - ${SUBJECT} by @${AUTHOR}"
   fi
 
   if [[ -n "${CATEGORIES[$TYPE]+x}" ]]; then
