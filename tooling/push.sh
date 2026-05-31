@@ -54,12 +54,27 @@ bash ./tooling/audit/version-audit.sh || {
   exit 1
 }
 
-# Step 1: Formatting Audit (Surgical)
-header "Step 1: Formatting Audit"
+# Step 1: Quality Validation (Turbo)
+header "Step 1: Quality Validation (Turbo)"
+
+if [[ "$SKIP_VERIFY" == "true" ]]; then
+  warn "Skipping local validation (--no-verify)..."
+else
+  info "Running lint and typecheck..."
+  if pnpm lint && pnpm check-types; then
+    success "All quality checks passed."
+  else
+    error "Quality checks failed. Fix errors before pushing."
+    exit 1
+  fi
+fi
+
+# Step 2: Formatting Audit (Surgical)
+header "Step 2: Formatting Audit"
 
 FILES_DIRTY_BEFORE=$(git diff --name-only)
 info "Running Prettier on modified files..."
-pnpm format > /dev/null 2>&1 || true
+pnpm format:write > /dev/null 2>&1 || true
 FILES_DIRTY_AFTER=$(git diff --name-only)
 
 # Identify files fixed by Prettier
@@ -68,32 +83,32 @@ FILES_FIXED=$(comm -13 <(echo "$FILES_DIRTY_BEFORE" | sort) <(echo "$FILES_DIRTY
 if [[ -n "$FILES_FIXED" ]]; then
   warn "Formatting corrections applied to:"
   echo -e "${YELLOW}$FILES_FIXED${RESET}"
-    read -rp "     Commit these style fixes automatically? (Y/n) " AUTO_COMMIT_FORMAT
-    if [[ "$AUTO_COMMIT_FORMAT" != "n" && "$AUTO_COMMIT_FORMAT" != "N" ]]; then
-      echo "$FILES_FIXED" | xargs git add
-      
-      FILE_COUNT=$(echo "$FILES_FIXED" | wc -l)
-      FIRST_FILE=$(echo "$FILES_FIXED" | head -n 1 | awk -F/ '{print $NF}')
-      
-      if [ "$FILE_COUNT" -eq 1 ]; then
-        COMMIT_MSG="style: reformat $FIRST_FILE"
-      elif [ "$FILE_COUNT" -eq 2 ]; then
-        SECOND_FILE=$(echo "$FILES_FIXED" | sed -n '2p' | awk -F/ '{print $NF}')
-        COMMIT_MSG="style: reformat $FIRST_FILE and $SECOND_FILE"
-      else
-        COMMIT_MSG="style: reformat $FIRST_FILE and $((FILE_COUNT - 1)) other files"
-      fi
-      
-      git commit -m "$COMMIT_MSG"
-      success "Formatting committed: $COMMIT_MSG"
+  read -rp "     Commit these style fixes automatically? (Y/n) " AUTO_COMMIT_FORMAT
+  if [[ "$AUTO_COMMIT_FORMAT" != "n" && "$AUTO_COMMIT_FORMAT" != "N" ]]; then
+    echo "$FILES_FIXED" | xargs git add
+    
+    FILE_COUNT=$(echo "$FILES_FIXED" | wc -l)
+    FIRST_FILE=$(echo "$FILES_FIXED" | head -n 1 | awk -F/ '{print $NF}')
+    
+    if [ "$FILE_COUNT" -eq 1 ]; then
+      COMMIT_MSG="style: reformat $FIRST_FILE"
+    elif [ "$FILE_COUNT" -eq 2 ]; then
+      SECOND_FILE=$(echo "$FILES_FIXED" | sed -n '2p' | awk -F/ '{print $NF}')
+      COMMIT_MSG="style: reformat $FIRST_FILE and $SECOND_FILE"
     else
+      COMMIT_MSG="style: reformat $FIRST_FILE and $((FILE_COUNT - 1)) other files"
+    fi
+    
+    git commit -m "$COMMIT_MSG"
+    success "Formatting committed: $COMMIT_MSG"
+  else
     error "Push blocked: Style fixes must be committed."
     exit 1
   fi
 fi
 
-# Step 2: Intent & Release Management
-header "Step 2: Intent & Release Management (Changesets)"
+# Step 3: Intent & Release Management (Changesets)
+header "Step 3: Intent & Release Management (Changesets)"
 
 # Detect existing changesets
 CHANGESETS=$(ls .changeset/*.md 2>/dev/null | grep -v "README.md" || true)
@@ -124,21 +139,6 @@ if [[ -n "$UNCOMMITTED_CHANGESETS" ]]; then
      git add .changeset/*.md .changeset/pre.json 2>/dev/null || true
      git diff --staged --quiet || git commit -m "release: ${NEXT_VERSION}"
      success "Intent ${NEXT_VERSION} committed."
-  fi
-fi
-
-# Step 3: Quality Validation (Turbo)
-header "Step 3: Quality Validation (Turbo)"
-
-if [[ "$SKIP_VERIFY" == "true" ]]; then
-  warn "Skipping local validation (--no-verify)..."
-else
-  info "Running lint and typecheck..."
-  if pnpm lint && pnpm check-types; then
-    success "All quality checks passed."
-  else
-    error "Quality checks failed. Fix errors before pushing."
-    exit 1
   fi
 fi
 
