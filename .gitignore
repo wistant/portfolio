@@ -68,6 +68,7 @@ desktop.ini
 .settings/
 *.sublime-workspace
 .history/
+.antigravitycli/
 
 # CERTIFICATES & KEYS (CRITICAL - NEVER COMMIT)
 *.pem
