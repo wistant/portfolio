@@ -3,37 +3,32 @@ import { ArrowRightIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
+import { WistantMark } from "./wistant-mark"
 
 export function NotFound({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "flex h-[calc(100svh-5.5rem)] flex-col items-center justify-center",
+        "flex h-[calc(100svh-5.5rem)] flex-col items-center justify-center text-center px-4",
         className
       )}
     >
-      <svg
-        className="h-28 w-full text-border"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 514 258"
-        fill="none"
-      >
-        <path
-          d="M65 193v64h128v-64H65Zm0 0H1V65h64m0 128V65m384 0H321v128h128m0-128V1H257v256h192v-64m0-128v128m0-128h64v128h-64M65 65h128V1H65v64Z"
-          stroke="currentColor"
-          strokeWidth="1"
-          vectorEffect="non-scaling-stroke"
-        />
-      </svg>
+      <div className="relative mb-6 flex items-center justify-center">
+        <WistantMark className="h-20 w-auto text-muted-foreground/30 animate-pulse" />
+      </div>
 
-      <h1 className="my-6 text-8xl font-medium tracking-tighter tabular-nums">
+      <h1 className="text-8xl font-bold tracking-tighter tabular-nums text-foreground/90">
         404
       </h1>
+      
+      <p className="mt-2 mb-8 text-sm text-muted-foreground max-w-xs">
+        The page you are looking for does not exist or has been moved.
+      </p>
 
-      <Button asChild>
+      <Button asChild className="group">
         <Link href="/">
           Go to Home
-          <ArrowRightIcon />
+          <ArrowRightIcon className="transition-transform group-hover:translate-x-1" />
         </Link>
       </Button>
     </div>

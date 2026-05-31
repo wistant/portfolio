@@ -51,16 +51,16 @@ created [Shoperzz](https://github.com/shoperzz/shoperzz) an Open Source, headles
 engine with [Vendure](https;//github.com/vendurehq/vendure) and [NestJS](https://nestjs.com)
 for TypeScrit & serious builders.
 `,
-  avatar: "https://assets.chanhdai.com/images/chanhdai-avatar-ghibli.webp",
+  avatar: "https://github.com/wistant.png",
   avatarVariants: {
-    lightOff: "https://assets.chanhdai.com/images/avatar-light-off.webp",
-    lightOn: "https://assets.chanhdai.com/images/avatar-light-on.webp",
-    darkOff: "https://assets.chanhdai.com/images/avatar-dark-off.webp",
-    darkOn: "https://assets.chanhdai.com/images/avatar-dark-on.webp",
+    lightOff: "https://github.com/wistant.png",
+    lightOn: "https://github.com/wistant.png",
+    darkOff: "https://github.com/wistant.png",
+    darkOn: "https://github.com/wistant.png",
   },
   ogImage:
-    "https://assets.chanhdai.com/images/screenshot-og-image-dark.png?t=1778602757",
-  namePronunciationUrl: "https://assets.chanhdai.com/audio/chanhdai.mp3",
+    "https://github.com/wistant.png",
+  namePronunciationUrl: "",
   timeZone: "GMT",
   keywords: [
     "Wistant",

@@ -121,7 +121,7 @@ export function ViewOptions({
       },
       {
         title: "Open in GitHub",
-        href: `https://github.com/ncdai/chanhdai.com/blob/main/src/content/docs/${markdownUrl.split("/").slice(-1).join("/")}`,
+        href: `https://github.com/wistant/portfolio/blob/main/src/content/docs/${markdownUrl.split("/").slice(-1).join("/")}`,
         icon: Icons.github,
       },
       {
