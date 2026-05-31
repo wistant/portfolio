@@ -58,8 +58,7 @@ for TypeScrit & serious builders.
     darkOff: "https://github.com/wistant.png",
     darkOn: "https://github.com/wistant.png",
   },
-  ogImage:
-    "https://github.com/wistant.png",
+  ogImage: "https://github.com/wistant.png",
   namePronunciationUrl: "",
   timeZone: "GMT",
   keywords: [

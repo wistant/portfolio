@@ -48,7 +48,7 @@ export function SiteFooterInteractiveLogotype() {
               y="200"
               textAnchor="middle"
               fill="url(#paint0_linear_1145_73)"
-              className="select-none tracking-wider font-bold"
+              className="font-bold tracking-wider select-none"
               style={{
                 fontFamily: "var(--font-geist-pixel), monospace",
                 fontSize: "220px",
@@ -64,7 +64,7 @@ export function SiteFooterInteractiveLogotype() {
               fill="none"
               stroke="currentColor"
               strokeWidth="2"
-              className="stroke-foreground/10 select-none tracking-wider font-bold"
+              className="stroke-foreground/10 font-bold tracking-wider select-none"
               style={{
                 fontFamily: "var(--font-geist-pixel), monospace",
                 fontSize: "220px",

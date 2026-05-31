@@ -8,8 +8,8 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/base/ui/collapsible"
-import { Panel, PanelHeader, PanelTitle } from "../panel"
 
+import { Panel, PanelHeader, PanelTitle } from "../panel"
 import { ExperienceItem } from "./experience-item"
 
 const MAX = 3

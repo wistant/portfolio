@@ -3,14 +3,15 @@ import type { Metadata } from "next"
 import { getAllDocs } from "@/data/doc/documents"
 
 import { X_HANDLE } from "@/config/site"
-import { PostList } from "./components/post-list"
-import { PostListWithSearch } from "./components/post-list-with-search"
-import { PostSearchInput } from "./components/post-search-input"
 import {
   PageHeading,
   PageHeadingTagline,
   PageHeadingTitle,
 } from "@/components/page-heading"
+
+import { PostList } from "./components/post-list"
+import { PostListWithSearch } from "./components/post-list-with-search"
+import { PostSearchInput } from "./components/post-search-input"
 
 const title = "Blog"
 const description = "Writing about code, design, and everything in between."

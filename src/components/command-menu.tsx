@@ -42,11 +42,11 @@ import {
   CommandShortcut,
 } from "@/components/ui/command"
 
-import { WistantMark, getMarkSVG } from "./wistant-mark"
-import { getWordmarkSVG } from "./wistant-wordmark"
 import { ComponentIcon, Icons } from "./icons"
 import { Button } from "./ui/button"
 import { Kbd, KbdGroup } from "./ui/kbd"
+import { getMarkSVG, WistantMark } from "./wistant-mark"
+import { getWordmarkSVG } from "./wistant-wordmark"
 
 type CommandKind = "command" | "page" | "link" | "component" | "block"
 

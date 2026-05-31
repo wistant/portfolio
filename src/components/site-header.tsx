@@ -5,10 +5,10 @@ import { getAllDocs } from "@/data/doc/documents"
 import type { DocPreview } from "@/types/document"
 import { MAIN_NAV } from "@/config/site"
 import { Separator } from "@/components/ui/separator"
-import { WistantMark } from "@/components/wistant-mark"
 import { NavDesktop } from "@/components/nav-desktop"
 import { NavItemGitHub } from "@/components/nav-item-github"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { WistantMark } from "@/components/wistant-mark"
 import blocks from "@/registry/__blocks__.json"
 
 const BrandContextMenu = dynamic(

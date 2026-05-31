@@ -32,12 +32,12 @@ export function TechStack() {
                   {tech.theme ? (
                     <>
                       <img
-                        className="hidden [html.light_&]:block size-3.5"
+                        className="hidden size-3.5 [html.light_&]:block"
                         src={`https://cdn.simpleicons.org/${slug}/09090b`}
                         alt={`${tech.title} light icon`}
                       />
                       <img
-                        className="hidden [html.dark_&]:block size-3.5"
+                        className="hidden size-3.5 [html.dark_&]:block"
                         src={`https://cdn.simpleicons.org/${slug}/f4f4f5`}
                         alt={`${tech.title} dark icon`}
                       />

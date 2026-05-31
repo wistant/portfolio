@@ -4,8 +4,8 @@ import { useRef } from "react"
 import { useTheme } from "next-themes"
 
 import { cn } from "@/lib/utils"
-import { WistantMark } from "@/components/wistant-mark"
 import { Magnet } from "@/components/react-bits/magnet"
+import { WistantMark } from "@/components/wistant-mark"
 import { DotGridSpotlight } from "@/registry/transformed/components/dot-grid-spotlight"
 
 const DOT_COLOR = {

@@ -14,7 +14,7 @@ import {
   ContextMenuTrigger,
 } from "@/components/ui/context-menu"
 
-import { WistantMark, getMarkSVG } from "./wistant-mark"
+import { getMarkSVG, WistantMark } from "./wistant-mark"
 import { getWordmarkSVG } from "./wistant-wordmark"
 
 export function BrandContextMenu({ children }: { children: React.ReactNode }) {
@@ -68,4 +68,3 @@ export function BrandContextMenu({ children }: { children: React.ReactNode }) {
 }
 
 export default BrandContextMenu
-
