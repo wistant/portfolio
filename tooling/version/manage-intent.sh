@@ -55,15 +55,27 @@ create_intent() {
   [[ "$LEVEL" == "2" ]] && level_str="minor"
   [[ "$LEVEL" == "3" ]] && level_str="major"
 
-  info "Collecte automatique des commits depuis le dernier tag de release..."
+  info "Collecte automatique des nouveaux commits depuis la dernière release..."
 
-  # Collect commits since last tag (or all commits if no tag)
-  local last_tag=$(git tag -l "v*" --sort=-v:refname | head -n 1)
+  # Collect commits since last release commit or last tag (fallback to 10 commits if none)
+  local last_ref=""
+  
+  # 1. Search for last release commit hash
+  local last_release_commit=$(git log --grep="^release:" --grep="^chore(release):" --format="%H" -n 1 2>/dev/null || true)
+  # 2. Search for last tag
+  local last_tag=$(git tag -l "v*" --sort=-v:refname | head -n 1 2>/dev/null || true)
+
+  if [[ -n "$last_release_commit" ]]; then
+    last_ref="$last_release_commit"
+  elif [[ -n "$last_tag" ]]; then
+    last_ref="$last_tag"
+  fi
+
   local commits=""
-  if [[ -n "$last_tag" ]]; then
-    commits=$(git log "${last_tag}..HEAD" --pretty=format:"- %s" --no-merges 2>/dev/null || true)
+  if [[ -n "$last_ref" ]]; then
+    commits=$(git log "${last_ref}..HEAD" --pretty=format:"- %s" --no-merges 2>/dev/null || true)
   else
-    commits=$(git log --pretty=format:"- %s" --no-merges 2>/dev/null | head -20 || true)
+    commits=$(git log --pretty=format:"- %s" --no-merges 2>/dev/null | head -15 || true)
   fi
 
   if [[ -z "$commits" ]]; then
