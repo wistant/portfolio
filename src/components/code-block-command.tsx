@@ -12,6 +12,7 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/base/ui/tabs"
+
 import { CopyButton } from "./copy-button"
 import { getIconForPackageManager } from "./icons"
 

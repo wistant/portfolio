@@ -1,8 +1,8 @@
 "use client"
 
 import type { ComponentProps } from "react"
-import { motion, AnimatePresence } from "motion/react"
-import { Copy, Check, X } from "lucide-react"
+import { Check, Copy, X } from "lucide-react"
+import { AnimatePresence, motion } from "motion/react"
 
 import type { Event } from "@/lib/events"
 import { trackEvent } from "@/lib/events"
@@ -24,7 +24,7 @@ export function CopyStateIcon({
   errorIcon,
 }: CopyStateIconProps) {
   return (
-    <span className="relative flex items-center justify-center size-4">
+    <span className="relative flex size-4 items-center justify-center">
       <AnimatePresence mode="wait" initial={false}>
         <motion.span
           key={state}
@@ -32,11 +32,13 @@ export function CopyStateIcon({
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.8 }}
           transition={{ duration: 0.15 }}
-          className="flex items-center justify-center size-full"
+          className="flex size-full items-center justify-center"
         >
           {state === "idle" && (idleIcon ?? <Copy className="size-full" />)}
-          {state === "done" && (doneIcon ?? <Check className="size-full text-emerald-500" />)}
-          {state === "error" && (errorIcon ?? <X className="size-full text-destructive" />)}
+          {state === "done" &&
+            (doneIcon ?? <Check className="size-full text-emerald-500" />)}
+          {state === "error" &&
+            (errorIcon ?? <X className="size-full text-destructive" />)}
         </motion.span>
       </AnimatePresence>
     </span>

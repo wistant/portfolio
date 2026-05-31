@@ -6,10 +6,7 @@ import remarkMdx from "remark-mdx"
 
 import type { Doc } from "@/types/document"
 
-const processor = remark()
-  .use(remarkMdx)
-  .use(remarkGfm)
-  .use(remarkHeading)
+const processor = remark().use(remarkMdx).use(remarkGfm).use(remarkHeading)
 
 export async function getLLMText(doc: Doc) {
   const processed = await processor.process({
