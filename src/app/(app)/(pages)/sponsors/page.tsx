@@ -14,7 +14,7 @@ import {
   PageHeadingTagline,
   PageHeadingTitle,
 } from "@/components/page-heading"
-import { SponsorItem } from "@/components/sponsor/sponsor-item"
+import { SponsorItem } from "./components/sponsor-item"
 
 const title = "Sponsors"
 const description =

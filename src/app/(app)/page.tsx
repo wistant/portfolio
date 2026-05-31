@@ -4,17 +4,17 @@ import { USER } from "@/data/portfolio/user"
 import type { ProfilePage as PageSchema, WithContext } from "schema-dts"
 
 import { cn } from "@/lib/utils"
-import { About } from "@/components/portfolio/about"
-import { Blog } from "@/components/portfolio/blog"
-import { Experiences } from "@/components/portfolio/experiences"
-import { GitHubContributions } from "@/components/portfolio/github-contributions"
-import { Insights } from "@/components/portfolio/insights"
-import { Overview } from "@/components/portfolio/overview"
-import { ProfileActivityMosaicCover } from "@/components/portfolio/profile-activity-mosaic-cover"
-import { ProfileHeader } from "@/components/portfolio/profile-header"
-import { Projects } from "@/components/portfolio/projects"
-import { SocialLinks } from "@/components/portfolio/social-links"
-import { TechStack } from "@/components/portfolio/tech-stack"
+import { About } from "./components/about"
+import { Blog } from "./components/blog"
+import { Experiences } from "./components/experiences"
+import { GitHubContributions } from "./components/github-contributions"
+import { Insights } from "./components/insights"
+import { Overview } from "./components/overview"
+import { ProfileCover } from "./components/profile-cover"
+import { ProfileHeader } from "./components/profile-header"
+import { Projects } from "./components/projects"
+import { SocialLinks } from "./components/social-links"
+import { TechStack } from "./components/tech-stack"
 
 export const metadata: Metadata = {
   alternates: {
@@ -25,23 +25,24 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <>
-      <Script
+      {/*<Script
         id="schema-jsonld"
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(getPageJsonLd()).replace(/</g, "\\u003c"),
         }}
-      />
+      />*/}
 
       <div className="mx-auto md:max-w-3xl *:[[id]]:scroll-mt-22">
-        <ProfileActivityMosaicCover />
+        <ProfileCover />
         <ProfileHeader />
-        <Separator />
 
         <Overview />
         <SocialLinks />
         <Separator />
 
+        <Separator />
+        <Separator />
         <About />
         {/*<Testimonials />*/}
         <GitHubContributions />
@@ -56,15 +57,20 @@ export default function HomePage() {
       <div className="mx-auto md:max-w-3xl *:[[id]]:scroll-mt-22">
         <Separator />
 
-        <Blog />
+        <Separator />
+        <Separator />
+        <Experiences />
         <Separator />
 
         {/*<Sponsors />*/}
         <Separator />
 
-        <Experiences />
+        <Separator />
+        <Blog />
         <Separator />
 
+        <Separator />
+        <Separator />
         <Projects />
         <Separator />
 
@@ -84,22 +90,22 @@ export default function HomePage() {
   )
 }
 
-function getPageJsonLd(): WithContext<PageSchema> {
-  return {
-    "@context": "https://schema.org",
-    "@type": "ProfilePage",
-    dateCreated: new Date(USER.dateCreated).toISOString(),
-    dateModified: new Date().toISOString(),
-    mainEntity: {
-      "@type": "Person",
-      name: USER.displayName,
-      identifier: USER.username,
-      image: USER.avatar,
-    },
-  }
-}
+// function getPageJsonLd(): WithContext<PageSchema> {
+//   return {
+//     "@context": "https://schema.org",
+//     "@type": "ProfilePage",
+//     dateCreated: new Date(USER.dateCreated).toISOString(),
+//     dateModified: new Date().toISOString(),
+//     mainEntity: {
+//       "@type": "Person",
+//       name: USER.displayName,
+//       identifier: USER.username,
+//       image: USER.avatar,
+//     },
+//   }
+// }
 
-function Separator({ className }: { className?: string }) {
+export function Separator({ className }: { className?: string }) {
   return (
     <div
       className={cn(
@@ -109,14 +115,14 @@ function Separator({ className }: { className?: string }) {
         className
       )}
     >
-      {/* <div
+      <div
         className="absolute -top-1.25 -left-1.25 z-2 flex size-2.25 border bg-background"
         aria-hidden
       />
       <div
         className="absolute -top-1.25 -right-1.25 z-2 flex size-2.25 border bg-background"
         aria-hidden
-      /> */}
+      />
     </div>
   )
 }

@@ -10,14 +10,14 @@ export function Projects() {
     <Panel id="projects">
       <PanelHeader>
         <PanelTitle>
-          Projects
+          My Projects 💻
           <PanelTitleSup>[{PROJECTS.length}]</PanelTitleSup>
         </PanelTitle>
       </PanelHeader>
 
       <CollapsibleList
         items={PROJECTS}
-        max={4}
+        max={3}
         renderItem={(item) => <ProjectItem project={item} />}
       />
     </Panel>

@@ -3,9 +3,9 @@ import type { Metadata } from "next"
 import { getAllDocs } from "@/data/doc/documents"
 
 import { X_HANDLE } from "@/config/site"
-import { PostList } from "@/components/blog/post-list"
-import { PostListWithSearch } from "@/components/blog/post-list-with-search"
-import { PostSearchInput } from "@/components/blog/post-search-input"
+import { PostList } from "./components/post-list"
+import { PostListWithSearch } from "./components/post-list-with-search"
+import { PostSearchInput } from "./components/post-search-input"
 import {
   PageHeading,
   PageHeadingTagline,

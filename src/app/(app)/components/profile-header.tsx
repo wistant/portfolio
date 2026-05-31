@@ -26,8 +26,8 @@ export function ProfileHeader() {
             aria-hidden
           >
             {"text-3xl "}
-            <span className="inline dark:hidden">text-zinc-950</span>
-            <span className="hidden dark:inline">text-zinc-50</span>
+            <span className="inline dark:hidden">API</span>
+            <span className="hidden dark:inline">UI</span>
             {" font-medium"}
           </div>
         </div>

@@ -32,7 +32,7 @@ export function GitHubContributionGraph({
     <ContributionGraph
       className="mx-auto gap-4 py-4"
       data={data}
-      blockSize={11}
+      blockSize={13}
       blockMargin={3}
       blockRadius={2}
       aria-label="GitHub Contributions Graph"

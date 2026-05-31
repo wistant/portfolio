@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils"
-import { Overview } from "@/components/portfolio/overview"
-import { ProfileHeader } from "@/components/portfolio/profile-header"
+import { Overview } from "@/app/(app)/components/overview"
+import { ProfileHeader } from "@/app/(app)/components/profile-header"
 
 export default function Page() {
   return (

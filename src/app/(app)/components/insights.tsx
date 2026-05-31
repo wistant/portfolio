@@ -10,7 +10,7 @@ import {
   PanelHeader,
   PanelTitle,
   PanelTitleSup,
-} from "@/components/portfolio/panel"
+} from "./panel"
 
 export async function Insights() {
   const data = await getInsights()

@@ -4,7 +4,7 @@ import { ArrowRightIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/base/ui/button"
-import { PostItem } from "@/components/blog/post-item"
+import { PostItem } from "@/components/post-item"
 
 import { Panel, PanelHeader, PanelTitle, PanelTitleSup } from "./panel"
 

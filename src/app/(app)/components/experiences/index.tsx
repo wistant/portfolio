@@ -8,7 +8,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/base/ui/collapsible"
-import { Panel, PanelHeader, PanelTitle } from "@/components/portfolio/panel"
+import { Panel, PanelHeader, PanelTitle } from "../panel"
 
 import { ExperienceItem } from "./experience-item"
 
@@ -18,7 +18,7 @@ export function Experiences() {
   return (
     <Panel id="experience">
       <PanelHeader>
-        <PanelTitle>Experience</PanelTitle>
+        <PanelTitle>Work Experiences 🧿</PanelTitle>
       </PanelHeader>
 
       <div className="pr-2 pl-4">

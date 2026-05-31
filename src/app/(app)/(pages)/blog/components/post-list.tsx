@@ -1,7 +1,7 @@
 import type { Doc } from "@/types/document"
 import { cn } from "@/lib/utils"
 
-import { PostItem } from "./post-item"
+import { PostItem } from "@/components/post-item"
 
 export function PostList({ posts }: { posts: Doc[] }) {
   return (
