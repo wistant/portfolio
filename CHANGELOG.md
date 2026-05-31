@@ -1,5 +1,12 @@
 # portfolio
 
+## 1.0.2
+
+### Patch Changes
+
+- e5738a8: - refactor(release): format commit hashes in release notes for github autolinking
+  - refactor(tooling): filter out old commits in intent manager using last release reference
+
 ## 1.0.1
 
 ### Patch Changes
