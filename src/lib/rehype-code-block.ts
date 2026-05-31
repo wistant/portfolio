@@ -1,12 +1,21 @@
 import type { LineElement } from "rehype-pretty-code"
 import rehypePrettyCode from "rehype-pretty-code"
-import { visit } from "unist-util-visit"
 
 import type { UnistNode, UnistTree } from "@/types/unist"
 
+function visit(node: UnistNode, handler: (node: UnistNode) => void) {
+  if (!node) return
+  handler(node)
+  if (node.children) {
+    for (const child of node.children) {
+      visit(child, handler)
+    }
+  }
+}
+
 export function rehypeCodeRawString() {
   return (tree: UnistTree) => {
-    visit(tree, (node: UnistNode) => {
+    visit(tree as unknown as UnistNode, (node: UnistNode) => {
       if (node?.type === "element" && node?.tagName === "pre") {
         if (!node.children || node.children.length === 0) {
           return
@@ -31,8 +40,6 @@ export function rehypeHighlightCode() {
     },
     keepBackground: false,
     onVisitLine(node: LineElement) {
-      // Prevent lines from collapsing in `display: grid` mode, and allow empty
-      // lines to be copy/pasted
       if (node.children.length === 0) {
         node.children = [{ type: "text", value: " " }]
       }
@@ -42,7 +49,7 @@ export function rehypeHighlightCode() {
 
 export function rehypeHighlightCodeRawString() {
   return (tree: UnistTree) => {
-    visit(tree, (node: UnistNode) => {
+    visit(tree as unknown as UnistNode, (node: UnistNode) => {
       if (node?.type === "element" && node?.tagName === "figure") {
         if (
           !node.properties ||

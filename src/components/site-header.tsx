@@ -9,7 +9,6 @@ import { NavDesktop } from "@/components/nav-desktop"
 import { NavItemGitHub } from "@/components/nav-item-github"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { WistantMark } from "@/components/wistant-mark"
-import blocks from "@/registry/__blocks__.json"
 
 const BrandContextMenu = dynamic(
   () => import("@/components/brand-context-menu")
@@ -41,7 +40,7 @@ export function SiteHeader() {
         <NavDesktop items={MAIN_NAV} />
 
         <div className="flex items-center *:first:mr-2 max-sm:*:data-[slot=command-menu-trigger]:hidden">
-          <CommandMenu docs={docPreviews} blocks={blocks} enabledHotkeys />
+          <CommandMenu docs={docPreviews} enabledHotkeys />
           <NavItemGitHub />
           <Separator
             orientation="vertical"

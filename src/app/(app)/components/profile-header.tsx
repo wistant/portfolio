@@ -1,6 +1,6 @@
 import { USER } from "@/data/portfolio/user"
 
-import { AvatarLights } from "@/registry/components/avatar-lights"
+import { AvatarLights } from "@/components/avatar-lights"
 
 import { AvatarLightsToggle } from "./avatar-lights-toggle"
 import { FlipSentences } from "./flip-sentences"

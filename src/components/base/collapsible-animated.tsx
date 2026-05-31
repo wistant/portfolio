@@ -11,8 +11,8 @@ import { Collapsible as CollapsibleRoot } from "@/components/base/ui/collapsible
 import type {
   ChevronsUpDownIconHandle,
   ChevronsUpDownIconProps,
-} from "@/registry/components/chevrons-up-down-icon"
-import { ChevronsUpDownIcon } from "@/registry/components/chevrons-up-down-icon"
+} from "@/components/chevrons-up-down-icon"
+import { ChevronsUpDownIcon } from "@/components/chevrons-up-down-icon"
 
 type CollapsibleContextType = {
   open: boolean

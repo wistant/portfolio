@@ -42,13 +42,13 @@ import {
   CommandShortcut,
 } from "@/components/ui/command"
 
-import { ComponentIcon, Icons } from "./icons"
+import { Icons } from "./icons"
 import { Button } from "./ui/button"
 import { Kbd, KbdGroup } from "./ui/kbd"
 import { getMarkSVG, WistantMark } from "./wistant-mark"
 import { getWordmarkSVG } from "./wistant-wordmark"
 
-type CommandKind = "command" | "page" | "link" | "component" | "block"
+type CommandKind = "command" | "page" | "link"
 
 type CommandLinkItem = {
   title: string
@@ -61,12 +61,6 @@ type CommandLinkItem = {
   openInNewTab?: boolean
 }
 
-type BlockItem = {
-  name: string
-  description: string
-  categories: string[]
-}
-
 const MENU_LINKS: CommandLinkItem[] = [
   {
     title: "Home",
@@ -74,20 +68,6 @@ const MENU_LINKS: CommandLinkItem[] = [
     kind: "page",
     icon: <WistantMark />,
     shortcut: "GH",
-  },
-  {
-    title: "Components",
-    href: "/components",
-    kind: "page",
-    icon: <Icons.react />,
-    shortcut: "GC",
-  },
-  {
-    title: "Blocks",
-    href: "/blocks",
-    kind: "page",
-    icon: <Icons.gridView />,
-    shortcut: "GB",
   },
   {
     title: "Blog",
@@ -190,11 +170,9 @@ const OTHER_LINK_ITEMS: CommandLinkItem[] = [
 
 export function CommandMenu({
   docs,
-  blocks,
   enabledHotkeys = false,
 }: {
   docs: DocPreview[]
-  blocks: BlockItem[]
   enabledHotkeys?: boolean
 }) {
   const router = useRouter()
@@ -287,87 +265,14 @@ export function CommandMenu({
     [click, setTheme]
   )
 
-  const components = useMemo(
-    () =>
-      docs
-        .filter((doc) => doc.category === "components")
-        .sort((a, b) =>
-          a.title.localeCompare(b.title, "en", {
-            sensitivity: "base",
-          })
-        ),
-    [docs]
-  )
-
-  const componentsGroup = useMemo(() => {
-    if (!components || components.length === 0) {
-      return null
-    }
-
-    return (
-      <CommandGroup heading="Components">
-        {components.map((component) => {
-          return (
-            <CommandMenuItem
-              key={component.slug}
-              keywords={["component"]}
-              onHighlight={() => {
-                setSelectedCommandKind("component")
-              }}
-              onSelect={() => {
-                handleOpenLink(`/components/${component.slug}`)
-              }}
-            >
-              <ComponentIcon variant={component.slug} />
-              <p className="line-clamp-1">{component.title}</p>
-            </CommandMenuItem>
-          )
-        })}
-      </CommandGroup>
-    )
-  }, [components, handleOpenLink])
-
-  const blocksGroup = useMemo(() => {
-    if (!blocks || blocks.length === 0) {
-      return null
-    }
-
-    return (
-      <CommandGroup heading="Blocks">
-        {blocks.map((block) => {
-          return (
-            <CommandMenuItem
-              key={block.name}
-              keywords={["block"]}
-              onHighlight={() => {
-                setSelectedCommandKind("block")
-              }}
-              onSelect={() => {
-                handleOpenLink(`/blocks/${block.categories[0]}/${block.name}`)
-              }}
-            >
-              <Icons.gridView />
-              <p className="line-clamp-1">{block.description}</p>
-              <span className="ml-auto font-mono text-xs font-normal text-muted-foreground tabular-nums max-sm:hidden">
-                {block.name}
-              </span>
-            </CommandMenuItem>
-          )
-        })}
-      </CommandGroup>
-    )
-  }, [blocks, handleOpenLink])
-
   const blogLinks = useMemo(
     () =>
-      docs
-        .filter((doc) => doc.category !== "components")
-        .map<CommandLinkItem>((doc) => ({
-          title: doc.title,
-          href: `/blog/${doc.slug}`,
-          kind: "page",
-          keywords: ["blog"],
-        })),
+      docs.map<CommandLinkItem>((doc) => ({
+        title: doc.title,
+        href: `/blog/${doc.slug}`,
+        kind: "page",
+        keywords: ["blog"],
+      })),
     [docs]
   )
 
@@ -413,10 +318,6 @@ export function CommandMenu({
               onLinkHighlight={handleLinkHighlight}
               onLinkSelect={handleOpenLink}
             />
-
-            {componentsGroup}
-
-            {blocksGroup}
 
             <CommandLinkGroup
               heading="Blog"
@@ -656,8 +557,6 @@ const ENTER_ACTION_LABELS: Record<CommandKind, string> = {
   command: "Run Command",
   page: "Go to Page",
   link: "Open Link",
-  component: "Go to Component",
-  block: "Go to Block",
 }
 
 function CommandMenuFooter({

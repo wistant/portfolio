@@ -1,4 +1,4 @@
-import type { AvatarLightsVariants } from "@/registry/components/avatar-lights"
+import type { AvatarLightsVariants } from "@/components/avatar-lights"
 
 export type User = {
   firstName: string

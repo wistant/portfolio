@@ -17,7 +17,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Icons } from "@/components/icons"
-import { CopyStateIcon } from "@/registry/components/copy-button"
+import { CopyStateIcon } from "@/components/copy-button"
 
 const cache = new Map<string, string>()
 
