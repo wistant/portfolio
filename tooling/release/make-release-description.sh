@@ -57,7 +57,7 @@ while IFS= read -r line; do
     AUTHOR_USER="wistant"
   fi
 
-  echo "- \`$HASH\` $SUBJECT — by @$AUTHOR_USER" >> "$OUTPUT_FILE"
+  echo "$HASH: - $SUBJECT — by @$AUTHOR_USER" >> "$OUTPUT_FILE"
 done <<< "$COMMITS"
 
 echo "" >> "$OUTPUT_FILE"
