@@ -4,5 +4,8 @@
   "initialVersions": {
     "portfolio": "1.0.0"
   },
-  "changesets": []
+  "changesets": [
+    "release-1780190056",
+    "release-1780192387"
+  ]
 }
