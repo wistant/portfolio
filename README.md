@@ -1,8 +1,15 @@
-# wistant.me &middot; [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+# Wistant Portfolio
 
-A pixel-perfect, open-source portfolio, blog, and shadcn component registry. Built with Next.js 16, Tailwind CSS v4, and React 19.
+![Wistant Portfolio Preview](./public/preview-light.png)
 
-→ Live: [wistant.me](https://wistant.me)
+<p align="center">
+  <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" /></a>
+  <a href="https://nextjs.org/"><img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white" alt="Next.js" /></a>
+  <a href="https://mdxjs.com/"><img src="https://img.shields.io/badge/MDX-1B1F24?style=for-the-badge&logo=mdx&logoColor=yellow" alt="MDX" /></a>
+  <a href="https://developer.mozilla.org/docs/Web/JavaScript"><img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="JavaScript" /></a>
+  <a href="https://ui.shadcn.com/"><img src="https://img.shields.io/badge/shadcn/ui-000000?style=for-the-badge&logo=shadcnui&logoColor=white" alt="shadcn/ui" /></a>
+  <a href="https://nextjs.org/docs/app/api-reference/turbopack"><img src="https://img.shields.io/badge/Turbopack-EF2D5E?style=for-the-badge&logo=vercel&logoColor=white" alt="Turbopack" /></a>
+</p>
 
 ---
 
