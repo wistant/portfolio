@@ -28,9 +28,10 @@ const bumpLevels = { 'none': 0, 'patch': 1, 'minor': 2, 'major': 3 };
 files.forEach(file => {
     if (file.endsWith('.md') && file !== 'README.md') {
         const content = fs.readFileSync(path.join(changesetDir, file), 'utf8');
-        if (content.includes("'chanhdai.com': major") || content.includes('"chanhdai.com": major')) maxBump = 'major';
-        else if (maxBump !== 'major' && (content.includes("'chanhdai.com': minor") || content.includes('"chanhdai.com": minor'))) maxBump = 'minor';
-        else if (maxBump !== 'major' && maxBump !== 'minor' && (content.includes("'chanhdai.com': patch") || content.includes('"chanhdai.com": patch'))) maxBump = 'patch';
+        const pkgName = corePkg.name || "portfolio";
+        if (content.includes(`'${pkgName}': major`) || content.includes(`"${pkgName}": major`)) maxBump = 'major';
+        else if (maxBump !== 'major' && (content.includes(`'${pkgName}': minor`) || content.includes(`"${pkgName}": minor`))) maxBump = 'minor';
+        else if (maxBump !== 'major' && maxBump !== 'minor' && (content.includes(`'${pkgName}': patch`) || content.includes(`"${pkgName}": patch`))) maxBump = 'patch';
     }
 });
 

@@ -21,6 +21,21 @@ CURRENT_TRACK="Stable"
 
 # Step 0: Version & Git Audit
 header "Step 0: Version & Git Audit"
+
+# Vérification de l'agent SSH pour éviter le blocage TTY au push
+if git remote get-url origin 2>/dev/null | grep -q "git@github.com"; then
+  if ! ssh-add -l >/dev/null 2>&1; then
+    warn "Aucune clé SSH n'est chargée dans l'agent courant."
+    info "Pour éviter tout blocage interactif à la dernière étape, veuillez charger votre clé :"
+    echo -e "     \${CYAN}eval \$(ssh-agent) && ssh-add ~/.ssh/id_ed25519\${RESET}\n"
+    read -rp "  Souhaitez-vous continuer le script malgré tout ? (y/N) " CONTINUE_SSH
+    if [[ "$CONTINUE_SSH" != "y" && "$CONTINUE_SSH" != "Y" ]]; then
+      info "Poussée annulée pour chargement SSH."
+      exit 0
+    fi
+  fi
+fi
+
 LOCAL_VERSION=$(node -p "require('./package.json').version")
 info "Detected local version: $LOCAL_VERSION"
 
@@ -86,26 +101,30 @@ CHANGESETS=$(ls .changeset/*.md 2>/dev/null | grep -v "README.md" || true)
 if [[ -z "$CHANGESETS" ]]; then
   warn "No changeset detected. Your changes will NOT be versioned."
   read -p "Would you like to declare a release intent now? (Y/n) " ADD_INTENT
-  if [[ "$ADD_INTENT" =~ ^[Yy]$ ]]; then
+  if [[ "$ADD_INTENT" =~ ^[Yy]$ || -z "$ADD_INTENT" ]]; then
     # Call Intent Module
     bash ./tooling/version/manage-intent.sh
-    
-    # Only commit if a changeset file was actually created (i.e. user didn't cancel)
-    NEW_CHANGESETS=$(ls .changeset/*.md 2>/dev/null | grep -v "README.md" || true)
-    if [[ -n "$NEW_CHANGESETS" ]]; then
-      NEXT_VERSION=$(./tooling/version/get-next-version.sh)
-      read -p "Would you like to commit this intent (v${NEXT_VERSION} on ${CURRENT_TRACK^^}) automatically? (Y/n) " AUTO_COMMIT
-      if [[ "$AUTO_COMMIT" =~ ^[Yy]$ || -z "$AUTO_COMMIT" ]]; then
-         git add .changeset/*.md .changeset/pre.json 2>/dev/null || true
-         git diff --staged --quiet || git commit -m "release: ${NEXT_VERSION}"
-         success "Intent ${NEXT_VERSION} committed."
-      fi
-    else
-      warn "No changeset created (cancelled). Continuing without versioning."
-    fi
   fi
 else
-  info "Changesets detected: $(echo $CHANGESETS | wc -w) file(s)."
+  info "Changesets detected: $(echo "$CHANGESETS" | wc -w) file(s)."
+  read -p "Would you like to declare an ADDITIONAL release intent? (y/N) " ADD_EXTRA_INTENT
+  if [[ "$ADD_EXTRA_INTENT" =~ ^[Yy]$ ]]; then
+    # Call Intent Module
+    bash ./tooling/version/manage-intent.sh
+  fi
+fi
+
+# Verification of uncommitted intent changesets
+UNCOMMITTED_CHANGESETS=$(git status --porcelain .changeset/ 2>/dev/null || true)
+if [[ -n "$UNCOMMITTED_CHANGESETS" ]]; then
+  NEXT_VERSION=$(./tooling/version/get-next-version.sh)
+  warn "Uncommitted release intents detected."
+  read -p "Would you like to commit these intents (v${NEXT_VERSION} on ${CURRENT_TRACK^^}) automatically? (Y/n) " AUTO_COMMIT
+  if [[ "$AUTO_COMMIT" =~ ^[Yy]$ || -z "$AUTO_COMMIT" ]]; then
+     git add .changeset/*.md .changeset/pre.json 2>/dev/null || true
+     git diff --staged --quiet || git commit -m "release: ${NEXT_VERSION}"
+     success "Intent ${NEXT_VERSION} committed."
+  fi
 fi
 
 # Step 3: Quality Validation (Turbo)
