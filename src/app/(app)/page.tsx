@@ -1,8 +1,4 @@
 import type { Metadata } from "next"
-import Script from "next/script"
-import { USER } from "@/data/portfolio/user"
-import type { ProfilePage as PageSchema, WithContext } from "schema-dts"
-
 import { cn } from "@/lib/utils"
 
 import { About } from "./components/about"
