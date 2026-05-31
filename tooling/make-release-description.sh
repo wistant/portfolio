@@ -68,9 +68,9 @@ while IFS= read -r line; do
   TYPE=$(echo "$SUBJECT" | grep -oP '^[a-z]+(?=[\(!\:])' || echo "other")
 
   if [[ -n "$PR_NUM" ]]; then
-    ENTRY="- ${SUBJECT} by @${AUTHOR} in #${PR_NUM}"
+    ENTRY="${HASH}: - ${SUBJECT} by @${AUTHOR} in #${PR_NUM}"
   else
-    ENTRY="- ${SUBJECT} by @${AUTHOR}"
+    ENTRY="${HASH}: - ${SUBJECT} by @${AUTHOR}"
   fi
 
   if [[ -n "${CATEGORIES[$TYPE]+x}" ]]; then
