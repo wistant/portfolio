@@ -22,24 +22,22 @@ CURRENT_TAG="Stable"
 [[ -f ".changeset/pre.json" ]] && CURRENT_TAG=$(node -p "require('./.changeset/pre.json').tag" 2>/dev/null || echo "Prerelease")
 CURRENT_RANK=$(get_rank "$CURRENT_TAG")
 
-# 2. Remote check (NPM check removed since this is a GitHub project)
-# We trust the local branch state and remote tags instead.
 REMOTE_TRACK="Stable"
 
 # 3. Intent & Purge check
 EXISTING_CHANGESETS=$(find .changeset -name "*.md" ! -name "README.md" 2>/dev/null | wc -l)
 if [ "$EXISTING_CHANGESETS" -gt 0 ]; then
   header "Sovereign Intent Manager v4.0"
-  warn "Existing release intents found ($EXISTING_CHANGESETS file(s))."
-  echo -e "What would you like to do?"
-  echo -e "  [c] ${GREEN}Continue${NC} (Add to existing intents)"
-  echo -e "  [r] ${YELLOW}Reset${NC}    (Purge everything and start fresh)"
-  echo -e "  [q] Quit"
-  read -p "Choice: " ACTION
+  warn "Des intentions de release existantes ont été trouvées ($EXISTING_CHANGESETS fichier(s) changeset)."
+  echo -e "Que souhaitez-vous faire ?"
+  echo -e "  [c] ${GREEN}Continuer${NC} (Conserver les intentions en cours et y ajouter de nouvelles modifications)"
+  echo -e "  [r] ${YELLOW}Réinitialiser (Reset)${NC} (Purger toutes les intentions existantes pour repartir à zéro)"
+  echo -e "  [q] Quitter le script"
+  read -p "Votre choix [c/r/q] : " ACTION
   if [ "$ACTION" == "r" ]; then
-    info "Purging existing intents..."
+    info "Purge des intentions existantes..."
     find .changeset -name "*.md" ! -name "README.md" -delete
-    success "Intents purged."
+    success "Intents purgés avec succès."
   elif [ "$ACTION" == "q" ]; then
     exit 0
   fi
@@ -48,16 +46,16 @@ fi
 # Define Intent creation function
 create_intent() {
   local tag_name="$1"
-  echo -e "\nIntent level for ${tag_name^^}:"
-  echo -e "  [1] ${GREEN}Patch${NC} (Bugs)"
-  echo -e "  [2] ${GREEN}Minor${NC} (Features)"
-  echo -e "  [3] ${GREEN}Major${NC} (Breaking)"
-  read -p "Choice: " LEVEL
+  echo -e "\nNiveau d'impact des modifications pour le canal [${tag_name^^}] :"
+  echo -e "  [1] ${GREEN}Patch${NC} (Corrections de bugs, optimisations mineures — ex: 1.0.0 -> 1.0.1)"
+  echo -e "  [2] ${GREEN}Minor${NC} (Nouvelles fonctionnalités rétrocompatibles — ex: 1.0.0 -> 1.1.0)"
+  echo -e "  [3] ${GREEN}Major${NC} (Ruptures de compatibilité ou changements majeurs — ex: 1.0.0 -> 2.0.0)"
+  read -p "Votre choix d'impact [1/2/3] : " LEVEL
   local level_str="patch"
   [[ "$LEVEL" == "2" ]] && level_str="minor"
   [[ "$LEVEL" == "3" ]] && level_str="major"
 
-  info "Auto-collecting commits since last release tag..."
+  info "Collecte automatique des commits depuis le dernier tag de release..."
 
   # Collect commits since last tag (or all commits if no tag)
   local last_tag=$(git tag -l "v*" --sort=-v:refname | head -n 1)
@@ -72,7 +70,7 @@ create_intent() {
     commits="- Minor updates and improvements"
   fi
 
-  info "Creating changeset with auto-generated summary..."
+  info "Création du fichier d'intention changeset..."
   local changeset_file=".changeset/release-$(date +%s).md"
   local pkg_name=$(node -p "require('./package.json').name" 2>/dev/null || echo "portfolio")
 
@@ -84,14 +82,14 @@ create_intent() {
     echo "${commits}"
   } > "$changeset_file"
 
-  success "Changeset created: $changeset_file"
-  info "Summary (auto-generated from git log):"
+  success "Fichier d'intention créé avec succès : $changeset_file"
+  info "Sommaire généré à partir des commits :"
   echo -e "${GRAY}${commits}${NC}"
 }
 
 # 4. Filtered Console with dynamic version predictions
 header "Sovereign Intent Manager v4.0"
-info "Current Focus: [${YELLOW}${CURRENT_TAG^^}${NC}] | Registry: [${CYAN}${REMOTE_TRACK^^}${NC}]"
+info "Canal Actuel : [${YELLOW}${CURRENT_TAG^^}${NC}] | Registre : [${CYAN}${REMOTE_TRACK^^}${NC}]"
 
 CURRENT_VERSION=$(node -p "require('./package.json').version" 2>/dev/null || echo "1.0.0")
 
@@ -104,35 +102,47 @@ if [[ "$CURRENT_TAG" != "Stable" ]]; then
   NEXT_STABLE=$(node -e "console.log('${CURRENT_VERSION}'.split('-')[0])" 2>/dev/null || echo "")
 fi
 
-echo -e "\nWhat is your next move?"
+echo -e "\n${BOLD}Que souhaitez-vous faire ?${NC}"
+
 if [[ "$CURRENT_TAG" != "Stable" ]]; then
   NEXT_SELF=$(node -e "const semver = require('semver'); console.log(semver.inc('${CURRENT_VERSION}', 'prerelease', '${CURRENT_TAG}'))" 2>/dev/null || echo "")
-  echo -e "  [i] ${GREEN}Create Intent${NC}    (Stay in ${CURRENT_TAG^^} — Next: ${NEXT_SELF})"
+  echo -e "  [${GREEN}i${NC}] ${GREEN}Déclarer des modifications (Create Intent)${NC}"
+  echo -e "      -> Rester sur le canal [${CURRENT_TAG^^}] et incrémenter la version de test actuelle."
+  echo -e "      -> Prochaine version après publication : ${YELLOW}${NEXT_SELF}${NC}"
 else
-  echo -e "  [i] ${GREEN}Create Intent${NC}    (Standard version bump — Patch/Minor/Major)"
+  echo -e "  [${GREEN}i${NC}] ${GREEN}Déclarer des modifications (Create Intent)${NC}"
+  echo -e "      -> Pour un cycle classique sur la branche principale (Patch/Minor/Major)."
 fi
 
-# Switch Menu (Only superior tracks)
-SWITCH_OPTS=0
+echo -e "\n${BOLD}Changement de canal (Maturation de la version) :${NC}"
+
 if [[ "$CURRENT_RANK" -lt 1 ]]; then 
-  echo -e "  [a] ${YELLOW}Switch to Alpha${NC}  (Next: ${NEXT_ALPHA})"
-  SWITCH_OPTS=$((SWITCH_OPTS+1))
+  echo -e "  [${YELLOW}a${NC}] ${YELLOW}Passer au canal Alpha${NC}"
+  echo -e "      -> Démarrer un cycle de pré-release initial pour tester les intégrations."
+  echo -e "      -> Première version générée : ${YELLOW}${NEXT_ALPHA}${NC}"
 fi
+
 if [[ "$CURRENT_RANK" -lt 2 ]]; then 
-  echo -e "  [b] ${YELLOW}Switch to Beta${NC}   (Next: ${NEXT_BETA})"
-  SWITCH_OPTS=$((SWITCH_OPTS+1))
+  echo -e "  [${YELLOW}b${NC}] ${YELLOW}Passer au canal Beta${NC}"
+  echo -e "      -> Figer les fonctionnalités et se concentrer sur la correction de bugs."
+  echo -e "      -> Première version générée : ${YELLOW}${NEXT_BETA}${NC}"
 fi
+
 if [[ "$CURRENT_RANK" -lt 3 ]]; then 
-  echo -e "  [r] ${YELLOW}Switch to RC${NC}     (Next: ${NEXT_RC})"
-  SWITCH_OPTS=$((SWITCH_OPTS+1))
+  echo -e "  [${YELLOW}r${NC}] ${YELLOW}Passer au canal RC (Release Candidate)${NC}"
+  echo -e "      -> Version finalisée prête pour la mise en production sous réserve de derniers tests."
+  echo -e "      -> Première version générée : ${YELLOW}${NEXT_RC}${NC}"
 fi
 
 if [[ "$CURRENT_RANK" -gt 0 ]]; then
-  echo -e "  [x] ${RED}Exit to Stable${NC}  (Next: ${NEXT_STABLE})"
+  echo -e "  [${RED}x${NC}] ${RED}Sortir vers le canal Stable (Mise en Production)${NC}"
+  echo -e "      -> Fermer le cycle de pré-release en cours et publier la version définitive."
+  echo -e "      -> Version finale publiée : ${GREEN}${NEXT_STABLE}${NC}"
 fi
-echo -e "  [q] Quit"
 
-read -p "Your choice: " CHOICE
+echo -e "  [${GRAY}q${NC}] Quitter le script sans apporter de modifications."
+
+read -p "Votre choix : " CHOICE
 
 case $CHOICE in
   i)
@@ -142,7 +152,7 @@ case $CHOICE in
     TAG="alpha"; [[ "$CHOICE" == "b" ]] && TAG="beta"; [[ "$CHOICE" == "r" ]] && TAG="rc"
     NEW_RANK=$(get_rank "$TAG")
     if [ "$NEW_RANK" -le "$CURRENT_RANK" ] && [ "$CURRENT_TAG" != "Stable" ]; then
-        error "Illogical switch: Cannot move from ${CURRENT_TAG} to ${TAG}."
+        error "Changement de track illogique : Impossible de rétrograder de ${CURRENT_TAG} à ${TAG}."
     fi
     
     # Calculate prospective version
@@ -151,36 +161,37 @@ case $CHOICE in
     [[ "$TAG" == "beta" ]] && PROSPECTIVE_VERSION="$NEXT_BETA"
     [[ "$TAG" == "rc" ]] && PROSPECTIVE_VERSION="$NEXT_RC"
 
-    info "Switching track: ${CURRENT_TAG} -> ${TAG}..."
+    info "Bascule de canal en cours : ${CURRENT_TAG} -> ${TAG}..."
     [[ "$CURRENT_TAG" != "Stable" ]] && pnpm changeset pre exit
     pnpm changeset pre enter "$TAG"
     git add .changeset/pre.json
     git commit -m "release: switch ${CURRENT_VERSION} from ${CURRENT_TAG} to ${TAG}"
-    success "Successfully moved to ${TAG} track (Prospective Version: ${PROSPECTIVE_VERSION})."
+    success "Bascule vers le canal [${TAG^^}] effectuée avec succès (Version prévisionnelle : ${PROSPECTIVE_VERSION})."
 
     # Prompts immediately to declare an intent for the new track
-    echo -e "\nYou are now on the [${YELLOW}${TAG^^}${NC}] pre-release track."
-    read -p "Would you like to declare a release intent file (changeset) now? (Y/n) " ADD_INTENT_NOW
+    echo -e "\nVous êtes maintenant sur le canal [${YELLOW}${TAG^^}${NC}]."
+    echo -e "Pour que ce canal génère effectivement la version ${YELLOW}${PROSPECTIVE_VERSION}${NC}, vous devez déclarer une intention de modification (changeset)."
+    read -p "Souhaitez-vous déclarer cette intention de modification maintenant ? (Y/n) " ADD_INTENT_NOW
     if [[ "$ADD_INTENT_NOW" =~ ^[Yy]$ || -z "$ADD_INTENT_NOW" ]]; then
       create_intent "$TAG"
     fi
     ;;
   x)
-    [[ "$CURRENT_RANK" -eq 0 ]] && error "Already in Stable mode."
-    warn "Going stable will close the current pre-release cycle."
-    read -p "Are you sure? (y/N): " CONFIRM
+    [[ "$CURRENT_RANK" -eq 0 ]] && error "Déjà sur le canal Stable."
+    warn "Sortir vers le canal Stable clôturera définitivement le cycle de pré-release en cours."
+    read -p "Êtes-vous sûr de vouloir effectuer cette action ? (y/N) : " CONFIRM
     if [[ "$CONFIRM" =~ ^([yY][eE][sS]|[yY])$ ]]; then
       STABLE_VERSION=$(echo "$CURRENT_VERSION" | sed 's/-[a-z]\+\.[0-9]\+//')
       pnpm changeset pre exit
       git add .changeset/pre.json || true
       git commit -m "release: exit ${CURRENT_VERSION} to stable ${STABLE_VERSION}" || true
-      success "Returned to STABLE track (Target Version: ${STABLE_VERSION})."
+      success "Retour au canal STABLE (Version finale : ${STABLE_VERSION})."
     fi
     ;;
   q|*)
-    echo "Operation cancelled."
+    echo "Opération annulée."
     exit 0
     ;;
 esac
 
-success "Governance cycle completed."
+success "Cycle de gouvernance terminé avec succès."
