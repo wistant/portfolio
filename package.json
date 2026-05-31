@@ -28,6 +28,7 @@
     "typecheck": "tsc --noEmit --pretty",
     "format:check": "prettier --check \"**/*.{ts,tsx,md,mdx}\" --cache",
     "format:write": "prettier --write \"**/*.{ts,tsx,md,mdx}\" --cache",
+    "check": "pnpm format:check && pnpm lint && pnpm check-types",
     "icons:dev": "bun run ./src/scripts/build-icons.ts --watch",
     "icons:build": "bun run ./src/scripts/build-icons.ts",
     "generate-libphonenumber-metadata": "libphonenumber-metadata-generator ./src/assets/libphonenumber.metadata.json --countries VN --extended",

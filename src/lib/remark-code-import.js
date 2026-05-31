@@ -4,9 +4,19 @@
 import fs from "node:fs";
 import { EOL } from "node:os";
 import path from "node:path";
-
 import stripIndent from "strip-indent";
-import { visit } from "unist-util-visit";
+
+function visit(node, type, handler, index = null, parent = null) {
+  if (!node) return;
+  if (node.type === type) {
+    handler(node, index, parent);
+  }
+  if (node.children) {
+    for (let i = 0; i < node.children.length; i++) {
+      visit(node.children[i], type, handler, i, node);
+    }
+  }
+}
 
 function extractLines(
   content,
@@ -33,7 +43,6 @@ function extractLines(
 }
 
 export function remarkCodeImport(options = {}) {
-  // Default rootDir is the "src" directory in the current working directory
   const rootDir = options.rootDir || path.join(process.cwd(), "src");
 
   if (!path.isAbsolute(rootDir)) {
@@ -49,7 +58,6 @@ export function remarkCodeImport(options = {}) {
 
     for (const [node] of codes) {
       const fileMeta = (node.meta || "")
-        // Allow escaping spaces
         .split(/(?<!\\) /g)
         .find((meta) => meta.startsWith("file="));
 
