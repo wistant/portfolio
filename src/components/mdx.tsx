@@ -6,15 +6,12 @@ import rehypeSlug from "rehype-slug"
 import remarkGfm from "remark-gfm"
 
 import { UTM_PARAMS } from "@/config/site"
-import { generator } from "@/lib/auto-type-table"
 import { rehypeAddQueryParams } from "@/lib/rehype-add-query-params"
 import {
   rehypeCodeRawString,
   rehypeHighlightCode,
   rehypeHighlightCodeRawString,
 } from "@/lib/rehype-code-block"
-import { rehypeComponent } from "@/lib/rehype-component"
-import { rehypeNpmCommand } from "@/lib/rehype-npm-command"
 import { remarkCodeImport } from "@/lib/remark-code-import"
 import { cn } from "@/lib/utils"
 import {
@@ -33,14 +30,10 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/base/ui/tabs"
-import { CodeCollapsibleWrapper } from "@/components/code-collapsible-wrapper"
-import { ComponentSource } from "@/components/component-source"
 import { DocSponsors } from "@/components/doc/doc-sponsors"
-import { AutoTypeTable } from "@/registry/components/auto-type-table"
 
 import { Callout } from "./callout"
 import { CodeTabs } from "./code-tabs"
-import { ComponentPreview } from "./component-preview"
 import { FramedImage, IframeEmbed, YouTubeEmbed } from "./embed"
 import { Heading } from "./heading"
 import { mdxCodeBlockComponents } from "./mdx-code-block"
@@ -60,9 +53,6 @@ const components: MDXRemoteProps["components"] = {
   td: TableCell,
   ...mdxCodeBlockComponents,
   code: Code,
-  ComponentPreview,
-  ComponentSource,
-  CodeCollapsibleWrapper,
   CodeTabs,
   Callout,
   Steps: ({ className, ...props }: React.ComponentProps<"div">) => (
@@ -94,7 +84,7 @@ const components: MDXRemoteProps["components"] = {
   IframeEmbed,
   FramedImage,
   DocSponsors,
-  AutoTypeTable: (props) => <AutoTypeTable {...props} generator={generator} />,
+  AutoTypeTable: () => null,
   Testimonial: () => null,
   TestimonialQuote: () => null,
   TestimonialAuthor: () => null,
@@ -113,11 +103,9 @@ const options: MDXRemoteProps["options"] = {
     rehypePlugins: [
       [rehypeExternalLinks, { target: "_blank", rel: "nofollow noopener" }],
       rehypeSlug,
-      rehypeComponent,
       rehypeCodeRawString,
       rehypeHighlightCode,
       rehypeHighlightCodeRawString,
-      rehypeNpmCommand,
       [rehypeAddQueryParams, UTM_PARAMS],
     ],
   },

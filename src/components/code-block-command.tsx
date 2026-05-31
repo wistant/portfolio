@@ -12,7 +12,6 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/base/ui/tabs"
-import { IconSwap, IconSwapItem } from "@/registry/components/icon-swap"
 
 import { CopyButton } from "./copy-button"
 import { getIconForPackageManager } from "./icons"
@@ -45,11 +44,9 @@ export function CodeBlockCommand({
       >
         <div className="px-3">
           <TabsList className="h-10 rounded-none bg-transparent p-0 inset-ring-0 dark:bg-transparent [&_svg]:size-4 [&_svg]:text-muted-foreground">
-            <IconSwap>
-              <IconSwapItem className="mr-2" key={packageManager}>
-                {getIconForPackageManager(packageManager)}
-              </IconSwapItem>
-            </IconSwap>
+            <span className="mr-2 flex items-center justify-center">
+              {getIconForPackageManager(packageManager)}
+            </span>
 
             {Object.entries(tabs).map(([key]) => {
               return (

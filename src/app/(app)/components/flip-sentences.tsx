@@ -3,7 +3,7 @@
 import { useRef } from "react"
 import { useInView, usePageInView } from "motion/react"
 
-import { TextFlip } from "@/registry/components/text-flip"
+import { TextFlip } from "@/components/text-flip"
 
 export function FlipSentences({
   children,

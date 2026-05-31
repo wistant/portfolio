@@ -5,9 +5,9 @@ import { useHotkeys } from "react-hotkeys-hook"
 
 import { trackEvent } from "@/lib/events"
 import { cn } from "@/lib/utils"
+import { useSound } from "@/hooks/use-sound"
 import type { VolumeIconHandle } from "@/components/animated-icons/volume"
 import { VolumeIcon } from "@/components/animated-icons/volume"
-import { useSound } from "@/registry/hooks/sound/use-sound"
 
 export function PronounceMyName({
   className,

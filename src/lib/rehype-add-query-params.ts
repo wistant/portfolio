@@ -1,11 +1,20 @@
 import { addQueryParams } from "@/utils/url"
-import { visit } from "unist-util-visit"
 
 import type { UnistNode, UnistTree } from "@/types/unist"
 
+function visit(node: UnistNode, handler: (node: UnistNode) => void) {
+  if (!node) return
+  handler(node)
+  if (node.children) {
+    for (const child of node.children) {
+      visit(child, handler)
+    }
+  }
+}
+
 export function rehypeAddQueryParams(params: Record<string, string>) {
   return (tree: UnistTree) => {
-    visit(tree, (node: UnistNode) => {
+    visit(tree as unknown as UnistNode, (node: UnistNode) => {
       if (
         node.type !== "element" ||
         node?.tagName !== "a" ||
