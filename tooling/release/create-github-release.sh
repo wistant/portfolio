@@ -44,7 +44,9 @@ info "Creating GitHub Release $VERSION..."
 gh release create "$VERSION" \
   --title "$VERSION" \
   --notes-file RELEASE.md \
-  --target main \
+  --target "${GITHUB_REF_NAME:-$(git branch --show-current || echo "main")}" \
   $PRERELEASE_FLAG
 
+# 6. Cleanup
+rm -f RELEASE.md
 success "GitHub Release $VERSION published successfully."

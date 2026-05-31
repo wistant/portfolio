@@ -34,10 +34,31 @@ echo "## Commits" >> "$OUTPUT_FILE"
 echo "" >> "$OUTPUT_FILE"
 
 if [[ -n "$LAST_TAG" ]]; then
-  git log "${LAST_TAG}..HEAD" --pretty=format:"- \`%h\` %s — by @%an" --no-merges >> "$OUTPUT_FILE"
+  LOG_RANGE="${LAST_TAG}..HEAD"
 else
-  git log --pretty=format:"- \`%h\` %s — by @%an" --no-merges | head -30 >> "$OUTPUT_FILE"
+  LOG_RANGE="HEAD"
 fi
+
+COMMITS=$(git log "$LOG_RANGE" --pretty=format:"%h ||| %s ||| %an ||| %ae" --no-merges 2>/dev/null || echo "")
+
+while IFS= read -r line; do
+  [[ -z "$line" ]] && continue
+
+  HASH=$(echo "$line" | awk -F' \\|\\|\\| ' '{print $1}')
+  SUBJECT=$(echo "$line" | awk -F' \\|\\|\\| ' '{print $2}')
+  AUTHOR_NAME=$(echo "$line" | awk -F' \\|\\|\\| ' '{print $3}')
+  AUTHOR_EMAIL=$(echo "$line" | awk -F' \\|\\|\\| ' '{print $4}')
+
+  # Extract username from email
+  AUTHOR_USER=$(echo "$AUTHOR_EMAIL" | awk -F'@' '{print $1}' | sed 's/^[0-9]\++//')
+
+  # Fallback mapping for Wistant to ensure their handle @wistant is used
+  if [[ "$AUTHOR_USER" == "contact" || "$AUTHOR_NAME" == *"Wistant"* || "$AUTHOR_EMAIL" == *"wistant"* ]]; then
+    AUTHOR_USER="wistant"
+  fi
+
+  echo "- \`$HASH\` $SUBJECT — by @$AUTHOR_USER" >> "$OUTPUT_FILE"
+done <<< "$COMMITS"
 
 echo "" >> "$OUTPUT_FILE"
 echo "" >> "$OUTPUT_FILE"
