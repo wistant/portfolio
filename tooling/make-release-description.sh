@@ -53,6 +53,11 @@ while IFS= read -r line; do
   # Extract username from email (handles GitHub noreply masks: 1234+name@users.noreply.github.com)
   AUTHOR=$(echo "$AUTHOR_EMAIL" | awk -F'@' '{print $1}' | sed 's/^[0-9]\++//')
 
+  # Fallback mapping for Wistant to ensure their handle @wistant is used
+  if [[ "$AUTHOR" == "contact" || "$AUTHOR_EMAIL" == *"wistant"* ]]; then
+    AUTHOR="wistant"
+  fi
+
   PR_NUM=""
   if [[ "$SUBJECT" =~ \(\#([0-9]+)\)$ ]]; then
     PR_NUM="${BASH_REMATCH[1]}"
