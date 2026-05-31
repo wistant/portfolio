@@ -13,79 +13,6 @@
 
 ---
 
-## Overview
-
-### Stack
-
-| Layer     | Technology              |
-| --------- | ----------------------- |
-| Framework | Next.js 16 (App Router) |
-| Styling   | Tailwind CSS v4         |
-| UI        | shadcn/ui + Radix UI    |
-| Content   | MDX (next-mdx-remote)   |
-| Runtime   | React 19                |
-| Package   | pnpm                    |
-| Deploy    | Vercel                  |
-
-### Features
-
-- Clean, modern design with Light/Dark themes
-- Component registry powered by the shadcn CLI
-- Blog and documentation system via MDX
-- SEO-optimized (JSON-LD schema, sitemap, robots.txt)
-- AI-ready with [/llms.txt](https://llmstxt.org) support
-- Analytics-ready (PostHog / OpenPanel)
-- PWA-installable
-
----
-
-## Project Structure
-
-```
-src/
-├── app/            # App Router pages, layouts, API routes
-├── components/     # Shared UI and domain components
-│   ├── portfolio/  # Portfolio-specific sections
-│   ├── blog/       # Blog-specific components
-│   └── doc/        # Documentation components
-├── content/        # MDX content (blog posts, component docs)
-├── data/           # Static typed data (portfolio facts, projects...)
-├── registry/       # shadcn component registry
-├── config/         # Site & registry configuration
-├── hooks/          # React hooks
-├── lib/            # Core utilities and libraries
-├── types/          # Shared TypeScript types
-└── utils/          # Pure utility functions
-```
-
----
-
-## Getting Started
-
-```bash
-# Clone the repo
-git clone https://github.com/wistant/portfolio.git
-cd portfolio
-
-# Install dependencies
-pnpm install
-
-# Start the dev server
-pnpm dev
-```
-
-> Requires Node.js 22.x and pnpm >= 9.
-
-### Environment Variables
-
-Copy `.env.example` to `.env.local` and fill in the required values:
-
-```bash
-cp .env.example .env.local
-```
-
----
-
 ## Development Commands
 
 ```bash
@@ -101,27 +28,10 @@ pnpm sync            # Sync branch with GitHub (tooling/sync.sh)
 
 ---
 
-## CI / CD
-
-This project uses a strict atomic-commit and release pipeline:
-
-| Workflow      | Trigger        | Purpose                               |
-| ------------- | -------------- | ------------------------------------- |
-| `ci.yml`      | Push / PR      | Lint, typecheck, build validation     |
-| `release.yml` | Push to `main` | Changeset versioning + GitHub Release |
-
-Locally, the `tooling/` directory contains:
-
-- `push.sh` — Quality guard before pushing (format, lint, changeset intent)
-- `sync.sh` — Rebase-based upstream synchronization
-- `make-release-description.sh` — Generates structured release notes from git log
-
----
-
 ## Contributors
 
 <a href="https://github.com/wistant/portfolio/graphs/contributors">
- <img src="https://contrib.rocks/image?repo=wistant/portfolio" alt="Contributors" />
+  <img src="https://contrib.rocks/image?repo=wistant/portfolio" />
 </a>
 
 ## Stats
@@ -132,6 +42,6 @@ Locally, the `tooling/` directory contains:
 
 ## License
 
-Licensed under the [MIT License](./LICENSE).
+Licensed under the [GNU License](./LICENSE).
 
 You are free to use, fork, and adapt this project. If you do, please remove my personal information before publishing your own version.
