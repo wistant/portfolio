@@ -45,21 +45,90 @@ if [ "$EXISTING_CHANGESETS" -gt 0 ]; then
   fi
 fi
 
-# 4. Filtered Console
+# Define Intent creation function
+create_intent() {
+  local tag_name="$1"
+  echo -e "\nIntent level for ${tag_name^^}:"
+  echo -e "  [1] ${GREEN}Patch${NC} (Bugs)"
+  echo -e "  [2] ${GREEN}Minor${NC} (Features)"
+  echo -e "  [3] ${GREEN}Major${NC} (Breaking)"
+  read -p "Choice: " LEVEL
+  local level_str="patch"
+  [[ "$LEVEL" == "2" ]] && level_str="minor"
+  [[ "$LEVEL" == "3" ]] && level_str="major"
+
+  info "Auto-collecting commits since last release tag..."
+
+  # Collect commits since last tag (or all commits if no tag)
+  local last_tag=$(git tag -l "v*" --sort=-v:refname | head -n 1)
+  local commits=""
+  if [[ -n "$last_tag" ]]; then
+    commits=$(git log "${last_tag}..HEAD" --pretty=format:"- %s" --no-merges 2>/dev/null || true)
+  else
+    commits=$(git log --pretty=format:"- %s" --no-merges 2>/dev/null | head -20 || true)
+  fi
+
+  if [[ -z "$commits" ]]; then
+    commits="- Minor updates and improvements"
+  fi
+
+  info "Creating changeset with auto-generated summary..."
+  local changeset_file=".changeset/release-$(date +%s).md"
+  local pkg_name=$(node -p "require('./package.json').name" 2>/dev/null || echo "portfolio")
+
+  {
+    echo "---"
+    echo "\"${pkg_name}\": ${level_str}"
+    echo "---"
+    echo ""
+    echo "${commits}"
+  } > "$changeset_file"
+
+  success "Changeset created: $changeset_file"
+  info "Summary (auto-generated from git log):"
+  echo -e "${GRAY}${commits}${NC}"
+}
+
+# 4. Filtered Console with dynamic version predictions
 header "Sovereign Intent Manager v4.0"
 info "Current Focus: [${YELLOW}${CURRENT_TAG^^}${NC}] | Registry: [${CYAN}${REMOTE_TRACK^^}${NC}]"
 
+CURRENT_VERSION=$(node -p "require('./package.json').version" 2>/dev/null || echo "1.0.0")
+
+# Pre-calculate track option versions
+NEXT_ALPHA=$(node -e "const semver = require('semver'); console.log(semver.inc('${CURRENT_VERSION}', 'prerelease', 'alpha'))" 2>/dev/null || echo "")
+NEXT_BETA=$(node -e "const semver = require('semver'); console.log(semver.inc('${CURRENT_VERSION}', 'prerelease', 'beta'))" 2>/dev/null || echo "")
+NEXT_RC=$(node -e "const semver = require('semver'); console.log(semver.inc('${CURRENT_VERSION}', 'prerelease', 'rc'))" 2>/dev/null || echo "")
+NEXT_STABLE=$(node -e "const semver = require('semver'); console.log(semver.inc('${CURRENT_VERSION}', 'patch'))" 2>/dev/null || echo "")
+if [[ "$CURRENT_TAG" != "Stable" ]]; then
+  NEXT_STABLE=$(node -e "console.log('${CURRENT_VERSION}'.split('-')[0])" 2>/dev/null || echo "")
+fi
+
 echo -e "\nWhat is your next move?"
-echo -e "  [i] ${GREEN}Create Intent${NC}    (Stay in ${CURRENT_TAG^^} - Increments 0, 1, 2...)"
+if [[ "$CURRENT_TAG" != "Stable" ]]; then
+  NEXT_SELF=$(node -e "const semver = require('semver'); console.log(semver.inc('${CURRENT_VERSION}', 'prerelease', '${CURRENT_TAG}'))" 2>/dev/null || echo "")
+  echo -e "  [i] ${GREEN}Create Intent${NC}    (Stay in ${CURRENT_TAG^^} — Next: ${NEXT_SELF})"
+else
+  echo -e "  [i] ${GREEN}Create Intent${NC}    (Standard version bump — Patch/Minor/Major)"
+fi
 
 # Switch Menu (Only superior tracks)
 SWITCH_OPTS=0
-if [[ "$CURRENT_RANK" -lt 1 ]]; then echo -e "  [a] ${YELLOW}Switch to Alpha${NC}"; SWITCH_OPTS=$((SWITCH_OPTS+1)); fi
-if [[ "$CURRENT_RANK" -lt 2 ]]; then echo -e "  [b] ${YELLOW}Switch to Beta${NC}"; SWITCH_OPTS=$((SWITCH_OPTS+1)); fi
-if [[ "$CURRENT_RANK" -lt 3 ]]; then echo -e "  [r] ${YELLOW}Switch to RC${NC}"; SWITCH_OPTS=$((SWITCH_OPTS+1)); fi
+if [[ "$CURRENT_RANK" -lt 1 ]]; then 
+  echo -e "  [a] ${YELLOW}Switch to Alpha${NC}  (Next: ${NEXT_ALPHA})"
+  SWITCH_OPTS=$((SWITCH_OPTS+1))
+fi
+if [[ "$CURRENT_RANK" -lt 2 ]]; then 
+  echo -e "  [b] ${YELLOW}Switch to Beta${NC}   (Next: ${NEXT_BETA})"
+  SWITCH_OPTS=$((SWITCH_OPTS+1))
+fi
+if [[ "$CURRENT_RANK" -lt 3 ]]; then 
+  echo -e "  [r] ${YELLOW}Switch to RC${NC}     (Next: ${NEXT_RC})"
+  SWITCH_OPTS=$((SWITCH_OPTS+1))
+fi
 
 if [[ "$CURRENT_RANK" -gt 0 ]]; then
-  echo -e "  [x] ${RED}Exit to Stable${NC} (Finalize release)"
+  echo -e "  [x] ${RED}Exit to Stable${NC}  (Next: ${NEXT_STABLE})"
 fi
 echo -e "  [q] Quit"
 
@@ -67,48 +136,7 @@ read -p "Your choice: " CHOICE
 
 case $CHOICE in
   i)
-    echo -e "\nIntent level for ${CURRENT_TAG^^}:"
-    echo -e "  [1] ${GREEN}Patch${NC} (Bugs)"
-    echo -e "  [2] ${GREEN}Minor${NC} (Features)"
-    echo -e "  [3] ${GREEN}Major${NC} (Breaking)"
-    read -p "Choice: " LEVEL
-    LEVEL_STR="patch"
-    [[ "$LEVEL" == "2" ]] && LEVEL_STR="minor"
-    [[ "$LEVEL" == "3" ]] && LEVEL_STR="major"
-
-    info "Auto-collecting commits since last release tag..."
-
-    # Collect commits since last tag (or all commits if no tag)
-    LAST_TAG=$(git tag -l "v*" --sort=-v:refname | head -n 1)
-    if [[ -n "$LAST_TAG" ]]; then
-      COMMITS=$(git log "${LAST_TAG}..HEAD" --pretty=format:"- %s" --no-merges 2>/dev/null || true)
-    else
-      COMMITS=$(git log --pretty=format:"- %s" --no-merges 2>/dev/null | head -20 || true)
-    fi
-
-    if [[ -z "$COMMITS" ]]; then
-      COMMITS="- Minor updates and improvements"
-    fi
-
-    info "Creating changeset with auto-generated summary..."
-    # Generate a unique filename (mimic Changesets naming)
-    CHANGESET_FILE=".changeset/release-$(date +%s).md"
-
-    # Get package name from package.json
-    PKG_NAME=$(node -p "require('./package.json').name" 2>/dev/null || echo "portfolio")
-
-    # Write the changeset with correct frontmatter bump type
-    {
-      echo "---"
-      echo "\"${PKG_NAME}\": ${LEVEL_STR}"
-      echo "---"
-      echo ""
-      echo "${COMMITS}"
-    } > "$CHANGESET_FILE"
-
-    success "Changeset created: $CHANGESET_FILE"
-    info "Summary (auto-generated from git log):"
-    echo -e "${GRAY}${COMMITS}${NC}"
+    create_intent "$CURRENT_TAG"
     ;;
   a|b|r)
     TAG="alpha"; [[ "$CHOICE" == "b" ]] && TAG="beta"; [[ "$CHOICE" == "r" ]] && TAG="rc"
@@ -116,25 +144,37 @@ case $CHOICE in
     if [ "$NEW_RANK" -le "$CURRENT_RANK" ] && [ "$CURRENT_TAG" != "Stable" ]; then
         error "Illogical switch: Cannot move from ${CURRENT_TAG} to ${TAG}."
     fi
-    CURRENT_VERSION=$(node -p "require('./package.json').version" 2>/dev/null || echo "?")
+    
+    # Calculate prospective version
+    PROSPECTIVE_VERSION=""
+    [[ "$TAG" == "alpha" ]] && PROSPECTIVE_VERSION="$NEXT_ALPHA"
+    [[ "$TAG" == "beta" ]] && PROSPECTIVE_VERSION="$NEXT_BETA"
+    [[ "$TAG" == "rc" ]] && PROSPECTIVE_VERSION="$NEXT_RC"
+
     info "Switching track: ${CURRENT_TAG} -> ${TAG}..."
     [[ "$CURRENT_TAG" != "Stable" ]] && pnpm changeset pre exit
     pnpm changeset pre enter "$TAG"
     git add .changeset/pre.json
     git commit -m "release: switch ${CURRENT_VERSION} from ${CURRENT_TAG} to ${TAG}"
-    success "Successfully moved to ${TAG} track."
+    success "Successfully moved to ${TAG} track (Prospective Version: ${PROSPECTIVE_VERSION})."
+
+    # Prompts immediately to declare an intent for the new track
+    echo -e "\nYou are now on the [${YELLOW}${TAG^^}${NC}] pre-release track."
+    read -p "Would you like to declare a release intent file (changeset) now? (Y/n) " ADD_INTENT_NOW
+    if [[ "$ADD_INTENT_NOW" =~ ^[Yy]$ || -z "$ADD_INTENT_NOW" ]]; then
+      create_intent "$TAG"
+    fi
     ;;
   x)
     [[ "$CURRENT_RANK" -eq 0 ]] && error "Already in Stable mode."
     warn "Going stable will close the current pre-release cycle."
     read -p "Are you sure? (y/N): " CONFIRM
     if [[ "$CONFIRM" =~ ^([yY][eE][sS]|[yY])$ ]]; then
-      CURRENT_VERSION=$(node -p "require('./package.json').version" 2>/dev/null || echo "?")
       STABLE_VERSION=$(echo "$CURRENT_VERSION" | sed 's/-[a-z]\+\.[0-9]\+//')
       pnpm changeset pre exit
       git add .changeset/pre.json || true
       git commit -m "release: exit ${CURRENT_VERSION} to stable ${STABLE_VERSION}" || true
-      success "Returned to STABLE track."
+      success "Returned to STABLE track (Target Version: ${STABLE_VERSION})."
     fi
     ;;
   q|*)
