@@ -136,9 +136,20 @@ if [[ -n "$UNCOMMITTED_CHANGESETS" ]]; then
   warn "Uncommitted release intents detected."
   read -p "Would you like to commit these intents (v${NEXT_VERSION} on ${CURRENT_TRACK^^}) automatically? (Y/n) " AUTO_COMMIT
   if [[ "$AUTO_COMMIT" =~ ^[Yy]$ || -z "$AUTO_COMMIT" ]]; then
-     git add .changeset/*.md .changeset/pre.json 2>/dev/null || true
-     git diff --staged --quiet || git commit -m "release: ${NEXT_VERSION}"
-     success "Intent ${NEXT_VERSION} committed."
+     # Stage only files that actually exist to avoid git add errors
+     if ls .changeset/*.md >/dev/null 2>&1; then
+       git add .changeset/*.md
+     fi
+     if [[ -f ".changeset/pre.json" ]]; then
+       git add .changeset/pre.json
+     fi
+
+     if ! git diff --staged --quiet; then
+       git commit -m "release: ${NEXT_VERSION}"
+       success "Intent ${NEXT_VERSION} committed."
+     else
+       warn "No changes to commit (already staged or up-to-date)."
+     fi
   fi
 fi
 
