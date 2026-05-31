@@ -5,7 +5,7 @@ import { getAllDocs } from "@/data/doc/documents"
 import type { DocPreview } from "@/types/document"
 import { MAIN_NAV } from "@/config/site"
 import { Separator } from "@/components/ui/separator"
-import { ChanhDaiMark } from "@/components/chanhdai-mark"
+import { WistantMark } from "@/components/wistant-mark"
 import { NavDesktop } from "@/components/nav-desktop"
 import { NavItemGitHub } from "@/components/nav-item-github"
 import { ThemeToggle } from "@/components/theme-toggle"
@@ -32,7 +32,7 @@ export function SiteHeader() {
       <div className="screen-line-top screen-line-bottom mx-auto flex h-12 items-center justify-between gap-2 border-x border-line px-2 group-has-data-[slot=layout-wide]/layout:container after:z-1 after:transition-[background-color] sm:gap-4 md:max-w-3xl">
         <BrandContextMenu>
           <Link href="/" aria-label="Home">
-            <ChanhDaiMark className="h-8 shrink-0" />
+            <WistantMark className="h-8 shrink-0" />
           </Link>
         </BrandContextMenu>
 

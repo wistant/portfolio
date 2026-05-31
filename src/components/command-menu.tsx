@@ -42,8 +42,8 @@ import {
   CommandShortcut,
 } from "@/components/ui/command"
 
-import { ChanhDaiMark, getMarkSVG } from "./chanhdai-mark"
-import { getWordmarkSVG } from "./chanhdai-wordmark"
+import { WistantMark, getMarkSVG } from "./wistant-mark"
+import { getWordmarkSVG } from "./wistant-wordmark"
 import { ComponentIcon, Icons } from "./icons"
 import { Button } from "./ui/button"
 import { Kbd, KbdGroup } from "./ui/kbd"
@@ -72,7 +72,7 @@ const MENU_LINKS: CommandLinkItem[] = [
     title: "Home",
     href: "/",
     kind: "page",
-    icon: <ChanhDaiMark />,
+    icon: <WistantMark />,
     shortcut: "GH",
   },
   {
@@ -440,7 +440,7 @@ export function CommandMenu({
                   handleCopyText(getMarkSVG(), "Mark as SVG copied")
                 }}
               >
-                <ChanhDaiMark />
+                <WistantMark className="h-4 w-auto shrink-0" />
                 Copy Mark as SVG
               </CommandMenuItem>
 
@@ -458,7 +458,7 @@ export function CommandMenu({
                 onHighlight={() => {
                   setSelectedCommandKind("link")
                 }}
-                onSelect={() => handleOpenLink("/blog/chanhdai-brand")}
+                onSelect={() => handleOpenLink("/blog/wistant-brand")}
               >
                 <SquareDashedIcon />
                 Brand Guidelines
@@ -466,7 +466,7 @@ export function CommandMenu({
 
               <CommandMenuItem onHighlight={handleCommandHighlight} asChild>
                 <a
-                  href="https://assets.chanhdai.com/chanhdai-brand.zip"
+                  href="https://assets.chanhdai.com/wistant-brand.zip"
                   download
                 >
                   <DownloadIcon />
@@ -670,7 +670,7 @@ function CommandMenuFooter({
       <div className="flex h-10" />
 
       <div className="absolute inset-x-0 bottom-0 flex h-10 items-center justify-between gap-2 rounded-b-2xl px-4 text-xs font-medium">
-        <ChanhDaiMark className="size-6 text-muted-foreground" />
+        <WistantMark className="size-6 text-muted-foreground" />
 
         <div className="flex items-center gap-2 max-sm:hidden">
           <span>{ENTER_ACTION_LABELS[selectedCommandKind ?? "page"]}</span>

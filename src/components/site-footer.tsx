@@ -10,7 +10,8 @@ export function SiteFooter() {
     <footer className="max-w-screen overflow-x-hidden px-2">
       <div className="screen-line-top mx-auto border-x border-line pt-4 group-has-data-[slot=layout-wide]/layout:container md:max-w-3xl">
         <p className="mb-1 px-4 text-center font-mono text-sm text-balance text-muted-foreground [&_span]:mx-0.5 [&_span]:inline-block">
-          Inspired by tailwindcss.com<span>/</span>ui.shadcn.com<span>/</span>
+          Portfolio Inspired by <span>https://chanhdai.com</span>{" "}
+          tailwindcss.com<span>/</span>ui.shadcn.com<span>/</span>
           vercel.com<span>/</span>evilcharts.com
         </p>
 
@@ -47,11 +48,11 @@ export function SiteFooter() {
               llms.txt
             </a>
 
-            <Separator className="max-sm:hidden" />
+            <FooterSeparator className="max-sm:hidden" />
 
             <a
               className="flex items-center text-muted-foreground transition-[color] hover:text-foreground"
-              href="https://x.com/iamncdai?utm_source=chanhdai.com"
+              href="https://x.com/iamnwistant?utm_source=wistant.me"
               target="_blank"
               rel="noopener"
               aria-label="X"
@@ -59,11 +60,11 @@ export function SiteFooter() {
               <Icons.x className="size-4" />
             </a>
 
-            <Separator />
+            <FooterSeparator />
 
             <a
               className="flex items-center text-muted-foreground transition-[color] hover:text-foreground"
-              href="https://github.com/ncdai?utm_source=chanhdai.com"
+              href="https://github.com/wistant?utm_source=wistant.me"
               target="_blank"
               rel="noopener"
               aria-label="GitHub"
@@ -71,11 +72,11 @@ export function SiteFooter() {
               <Icons.github className="size-4" />
             </a>
 
-            <Separator />
+            <FooterSeparator />
 
             <a
               className="flex items-center text-muted-foreground transition-[color] hover:text-foreground"
-              href="https://www.linkedin.com/in/ncdai?utm_source=chanhdai.com"
+              href="https://www.linkedin.com/in/wistant?utm_source=wistant.me"
               target="_blank"
               rel="noopener"
               aria-label="LinkedIn"
@@ -83,7 +84,7 @@ export function SiteFooter() {
               <Icons.linkedin className="size-4" />
             </a>
 
-            <Separator />
+            <FooterSeparator />
 
             <a
               className="flex items-center text-muted-foreground transition-[color] hover:text-foreground"
@@ -95,7 +96,7 @@ export function SiteFooter() {
               <RssIcon className="size-4" />
             </a>
 
-            <Separator />
+            <FooterSeparator />
 
             <a
               className="flex text-muted-foreground transition-[color] hover:text-foreground"
@@ -112,10 +113,10 @@ export function SiteFooter() {
           </div>
         </div>
 
-        {/* <div className="*:absolute *:z-2 *:flex *:size-2 *:border *:border-line *:bg-background">
+        <div className="*:absolute *:z-2 *:flex *:size-2 *:border *:border-line *:bg-background">
           <div className="bottom-[-3.5px] left-[-4.5px]" />
           <div className="right-[-4.5px] bottom-[-3.5px]" />
-        </div> */}
+        </div>
       </div>
 
       <SiteFooterInteractiveLogotype />
@@ -127,6 +128,6 @@ export function SiteFooter() {
   )
 }
 
-function Separator({ className, ...props }: React.ComponentProps<"div">) {
+function FooterSeparator({ className, ...props }: React.ComponentProps<"div">) {
   return <div className={cn("flex h-11 w-px bg-line", className)} {...props} />
 }
