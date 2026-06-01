@@ -1,6 +1,12 @@
-# Contributor Covenant Code of Conduct
+# ⚖️ Contributor Covenant Code of Conduct
 
-## Our Pledge
+> **Note :** Ce code de conduite s'applique à l'ensemble du projet et de la communauté de Wistant Kode. Les signalements peuvent être rédigés en français ou en anglais.
+>
+> _This code of conduct applies to the entire project and community of Wistant Kode. Incident reports can be submitted in either French or English._
+
+---
+
+## Our Pledge / Notre Engagement
 
 We as members, contributors, and leaders pledge to make participation in our
 community a harassment-free experience for everyone, regardless of age, body
