@@ -73,7 +73,7 @@ while IFS= read -r line; do
 
   # If no PR number is in the commit message, try to find the merge commit that introduced it
   if [[ -z "$PR_NUM" ]]; then
-    merge_commit=$(git log --merges --ancestry-path --oneline "${HASH}..HEAD" 2>/dev/null | grep -E "Merge pull request #|Merge branch.*into.*\(#[0-9]+\)" | head -n 1 || true)
+    merge_commit=$(git log --reverse --merges --ancestry-path --oneline "${HASH}..HEAD" 2>/dev/null | grep -E "Merge pull request #|Merge branch.*into.*\(#[0-9]+\)" | head -n 1 || true)
     if [[ -n "$merge_commit" ]]; then
       if [[ "$merge_commit" =~ \#([0-9]+) ]]; then
         PR_NUM="${BASH_REMATCH[1]}"
