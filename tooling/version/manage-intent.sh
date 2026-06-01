@@ -21,6 +21,7 @@ get_rank() {
 CURRENT_TAG="Stable"
 [[ -f ".changeset/pre.json" ]] && CURRENT_TAG=$(node -p "require('./.changeset/pre.json').tag" 2>/dev/null || echo "Prerelease")
 CURRENT_RANK=$(get_rank "$CURRENT_TAG")
+CURRENT_VERSION=$(node -p "require('./package.json').version" 2>/dev/null || echo "1.0.0")
 
 REMOTE_TRACK="Stable"
 
@@ -46,10 +47,47 @@ fi
 # Define Intent creation function
 create_intent() {
   local tag_name="$1"
+  
+  # Pre-calculate exact versions for the prompt
+  local next_patch=""
+  local next_minor=""
+  local next_major=""
+  
+  local version_json=$(node -e "
+    const semver = require('semver');
+    const current = '${CURRENT_VERSION}';
+    const tag = '${tag_name}';
+    if (tag === 'Stable') {
+      console.log(JSON.stringify({
+        patch: semver.inc(current, 'patch'),
+        minor: semver.inc(current, 'minor'),
+        major: semver.inc(current, 'major')
+      }));
+    } else {
+      const hasPrerelease = current.includes('-');
+      console.log(JSON.stringify({
+        patch: hasPrerelease ? semver.inc(current, 'prerelease', tag) : semver.inc(current, 'prepatch', tag),
+        minor: semver.inc(current, 'preminor', tag),
+        major: semver.inc(current, 'premajor', tag)
+      }));
+    }
+  " 2>/dev/null || echo "")
+
+  if [[ -n "$version_json" ]]; then
+    next_patch=$(node -p "JSON.parse('$version_json').patch" 2>/dev/null || echo "")
+    next_minor=$(node -p "JSON.parse('$version_json').minor" 2>/dev/null || echo "")
+    next_major=$(node -p "JSON.parse('$version_json').major" 2>/dev/null || echo "")
+  fi
+
+  # Fallbacks if node fails
+  [[ -z "$next_patch" ]] && next_patch="1.0.1"
+  [[ -z "$next_minor" ]] && next_minor="1.1.0"
+  [[ -z "$next_major" ]] && next_major="2.0.0"
+
   echo -e "\nNiveau d'impact des modifications pour le canal [${tag_name^^}] :"
-  echo -e "  [1] ${GREEN}Patch${NC} (Corrections de bugs, optimisations mineures — ex: 1.0.0 -> 1.0.1)"
-  echo -e "  [2] ${GREEN}Minor${NC} (Nouvelles fonctionnalités rétrocompatibles — ex: 1.0.0 -> 1.1.0)"
-  echo -e "  [3] ${GREEN}Major${NC} (Ruptures de compatibilité ou changements majeurs — ex: 1.0.0 -> 2.0.0)"
+  echo -e "  [1] ${GREEN}Patch${NC} (Corrections de bugs, optimisations mineures — ex: ${CURRENT_VERSION} -> ${next_patch})"
+  echo -e "  [2] ${GREEN}Minor${NC} (Nouvelles fonctionnalités rétrocompatibles — ex: ${CURRENT_VERSION} -> ${next_minor})"
+  echo -e "  [3] ${GREEN}Major${NC} (Ruptures de compatibilité ou changements majeurs — ex: ${CURRENT_VERSION} -> ${next_major})"
   read -p "Votre choix d'impact [1/2/3] : " LEVEL
   local level_str="patch"
   [[ "$LEVEL" == "2" ]] && level_str="minor"
