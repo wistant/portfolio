@@ -15,7 +15,15 @@ OUTPUT="RELEASE.md"
 
 # Resolve version and previous tag
 CURRENT_VERSION=$(node -p "require('./package.json').version" 2>/dev/null || echo "0.0.0")
-PREV_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
+
+# If the current version is a stable release (no hyphen), we want the previous tag
+# to be the last stable release tag (excluding prerelease tags containing "-").
+# Otherwise, we just take the immediate previous tag.
+if [[ "$CURRENT_VERSION" != *"-"* ]]; then
+  PREV_TAG=$(git describe --tags --abbrev=0 --exclude="*-*" HEAD^ 2>/dev/null || echo "")
+else
+  PREV_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
+fi
 
 # Collect commits since last tag (or all if first release)
 if [[ -n "$PREV_TAG" ]]; then
