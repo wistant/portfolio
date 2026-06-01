@@ -1,5 +1,13 @@
 # portfolio
 
+## 1.0.3-beta.2
+
+### Patch Changes
+
+- 8521c1a: - fix(version): align forecast track switch versions with changesets
+  - fix(version): align next version prediction index with changesets
+  - feat(ci): automate and customize Changesets Release PR description layout
+
 ## 1.0.3-beta.1
 
 ### Patch Changes
