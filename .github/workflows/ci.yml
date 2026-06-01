@@ -3,8 +3,14 @@ name: CI
 on:
   pull_request:
     branches: [main, dev]
+    paths-ignore:
+      - '**.md'
+      - '.changeset/**'
   push:
     branches: [main, dev]
+    paths-ignore:
+      - '**.md'
+      - '.changeset/**'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -32,44 +38,55 @@ jobs:
       - run: pnpm lint
       - name: Format & Commit style fixes
         run: |
-          # 1. Run Prettier formatter to fix any issues
-          pnpm format:write
+          IS_FORK=false
+          if [ "${{ github.event_name }}" = "pull_request" ] && [ "${{ github.event.pull_request.head.repo.full_name }}" != "${{ github.repository }}" ]; then
+            IS_FORK=true
+          fi
 
-          # 2. Check if files were modified
-          if [ -n "$(git status --porcelain)" ]; then
-            echo "Format deviations found. Committing files individually..."
-            
-            # Configure Git bot identity
-            git config --global user.name "github-actions[bot]"
-            git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            
-            # Commit each modified file separately
-            for file in $(git diff --name-only); do
-              filename=$(basename "$file")
-              
-              # Determine commit scope based on path
-              if [[ "$file" == *"README.md"* ]]; then
-                scope="readme"
-              elif [[ "$file" == *"CODE_OF_CONDUCT.md"* ]]; then
-                scope="conduct"
-              elif [[ "$file" == *"AGENTS.md"* ]]; then
-                scope="agents"
-              elif [[ "$file" == *"src/components/"* ]]; then
-                scope="components"
-              elif [[ "$file" == *"src/app/"* ]]; then
-                scope="app"
-              else
-                scope="style"
-              fi
-              
-              git add "$file"
-              git commit -m "style($scope): format $filename"
-            done
-            
-            # Push changes back to the repository branch
-            git push
+          if [ "$IS_FORK" = "true" ]; then
+            echo "PR originates from a fork. Auto-commit is disabled for security."
+            echo "Verifying code format..."
+            pnpm format:check
           else
-            echo "All files are perfectly formatted."
+            # 1. Run Prettier formatter to fix any issues
+            pnpm format:write
+
+            # 2. Check if files were modified
+            if [ -n "$(git status --porcelain)" ]; then
+              echo "Format deviations found. Committing files individually..."
+              
+              # Configure Git bot identity
+              git config --global user.name "github-actions[bot]"
+              git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+              
+              # Commit each modified file separately
+              for file in $(git diff --name-only); do
+                filename=$(basename "$file")
+                
+                # Determine commit scope based on path
+                if [[ "$file" == *"README.md"* ]]; then
+                  scope="readme"
+                elif [[ "$file" == *"CODE_OF_CONDUCT.md"* ]]; then
+                  scope="conduct"
+                elif [[ "$file" == *"AGENTS.md"* ]]; then
+                  scope="agents"
+                elif [[ "$file" == *"src/components/"* ]]; then
+                  scope="components"
+                elif [[ "$file" == *"src/app/"* ]]; then
+                  scope="app"
+                else
+                  scope="style"
+                fi
+                
+                git add "$file"
+                git commit -m "style($scope): format $filename"
+              done
+              
+              # Push changes back to the repository branch
+              git push
+            else
+              echo "All files are perfectly formatted."
+            fi
           fi
       - run: pnpm format:check
 
