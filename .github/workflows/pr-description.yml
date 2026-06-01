@@ -55,7 +55,7 @@ jobs:
               const typeMatch = message.match(/^([a-z]+)/);
               const type = typeMatch && categories[typeMatch[1]] ? typeMatch[1] : 'other';
               
-              buckets[type].push(`- \`${hash}\` - ${message} (by @${author})`);
+              buckets[type].push(`- [\`${hash}\`](https://github.com/${context.repo.owner}/${context.repo.repo}/commit/${hash}) - ${message} (by @${author})`);
             }
 
             let prBody = "## 📝 Summary of Changes\nThis Pull Request introduces the following logical adjustments:\n\n";
@@ -66,8 +66,6 @@ jobs:
                 prBody += buckets[type].join('\n') + '\n\n';
               }
             }
-
-            prBody += "## 🔍 Quality Check List\n- [x] Code is formatted according to Prettier standards\n- [x] Commits are structured atomically following the COMMIT convention\n- [x] Verified on local environment\n";
 
             await github.rest.pulls.update({
               owner: context.repo.owner,
