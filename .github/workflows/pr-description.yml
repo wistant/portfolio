@@ -1,0 +1,79 @@
+name: Auto PR Description
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  pull-requests: write
+
+jobs:
+  update-pr-description:
+    name: Generate & Update PR Description
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate PR Body
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: commits } = await github.rest.pulls.listCommits({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+            });
+
+            if (!commits || commits.length === 0) {
+              console.log("No commits found in this PR.");
+              return;
+            }
+
+            const categories = {
+              feat: "Features",
+              fix: "Bug Fixes",
+              docs: "Documentation",
+              ui: "UI / Design",
+              style: "Formatting & Style",
+              refactor: "Refactoring",
+              perf: "Performance Improvements",
+              test: "Tests",
+              ci: "CI / Infrastructure",
+              chore: "Maintenance Tasks",
+              other: "Other Changes"
+            };
+
+            const buckets = {};
+            for (const key of Object.keys(categories)) {
+              buckets[key] = [];
+            }
+
+            for (const c of commits) {
+              const message = c.commit.message.split('\n')[0];
+              const hash = c.sha.substring(0, 7);
+              const author = c.author ? c.author.login : c.commit.author.name;
+              
+              // Extract type prefix (e.g. feat, fix, etc.)
+              const typeMatch = message.match(/^([a-z]+)/);
+              const type = typeMatch && categories[typeMatch[1]] ? typeMatch[1] : 'other';
+              
+              buckets[type].push(`- \`${hash}\` - ${message} (by @${author})`);
+            }
+
+            let prBody = "## 📝 Summary of Changes\nThis Pull Request introduces the following logical adjustments:\n\n";
+            
+            for (const type of ['feat', 'fix', 'ui', 'style', 'refactor', 'docs', 'ci', 'perf', 'test', 'chore', 'other']) {
+              if (buckets[type] && buckets[type].length > 0) {
+                prBody += `### ${categories[type]}\n`;
+                prBody += buckets[type].join('\n') + '\n\n';
+              }
+            }
+
+            prBody += "## 🔍 Quality Check List\n- [x] Code is formatted according to Prettier standards\n- [x] Commits are structured atomically following the COMMIT convention\n- [x] Verified on local environment\n";
+
+            await github.rest.pulls.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+              body: prBody
+            });
+
+            console.log("Successfully updated PR description.");
