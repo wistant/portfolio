@@ -1,5 +1,11 @@
 # portfolio
 
+## 1.0.3-alpha.0
+
+### Patch Changes
+
+- 1bc0cc1: - Minor updates and improvements
+
 ## 1.0.2
 
 ### Patch Changes
