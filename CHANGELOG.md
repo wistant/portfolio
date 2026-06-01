@@ -1,5 +1,12 @@
 # portfolio
 
+## 1.0.3-beta.4
+
+### Patch Changes
+
+- 441401d: - ci(style): restrict prettier auto commit to main repository branches
+  - ci(triggers): ignore documentation and changesets to prevent redundant runs
+
 ## 1.0.3-beta.3
 
 ### Patch Changes
