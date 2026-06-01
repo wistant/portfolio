@@ -1,5 +1,11 @@
 # portfolio
 
+## 1.0.3-beta.3
+
+### Patch Changes
+
+- 9647303: - ci(cache): correct and optimize nextjs build caching
+
 ## 1.0.3-beta.2
 
 ### Patch Changes
