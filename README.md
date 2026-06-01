@@ -53,11 +53,9 @@ pnpm sync            # Sync branch with GitHub (tooling/sync.sh)
 
 ## 👥 Contributors
 
-<p align="left">
-  <a href="https://github.com/wistant">
-    <img src="https://images.weserv.nl/?url=github.com/wistant.png&w=64&h=64&mask=circle" alt="Wistant Kode" />
-  </a>
-</p>
+<a href="https://github.com/wistant/portfolio/graphs/contributors">
+  <img src="https://readme-contribs.as93.net/contributors/wistant/portfolio" alt="Contributors" />
+</a>
 
 Contributions are always welcome! Feel free to open an issue or submit a pull request.
 
