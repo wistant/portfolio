@@ -1,5 +1,22 @@
 # portfolio
 
+## 1.0.3
+
+### Patch Changes
+
+- 1bc0cc1: - Minor updates and improvements
+- bffe019: - release: switch 1.0.3-alpha.0 from alpha to beta
+  - fix(release): resolve earliest merge commit lookup for pull request numbers
+  - chore(version): ignore channel switches when collecting intent commits
+  - feat(ci): link commit hashes to GitHub and remove checklist in PR body
+  - chore(version): show exact forecasted version increments dynamically
+- 8521c1a: - fix(version): align forecast track switch versions with changesets
+  - fix(version): align next version prediction index with changesets
+  - feat(ci): automate and customize Changesets Release PR description layout
+- 9647303: - ci(cache): correct and optimize nextjs build caching
+- 441401d: - ci(style): restrict prettier auto commit to main repository branches
+  - ci(triggers): ignore documentation and changesets to prevent redundant runs
+
 ## 1.0.3-beta.4
 
 ### Patch Changes
