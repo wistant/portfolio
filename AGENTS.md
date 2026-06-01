@@ -117,3 +117,11 @@ Follow the Atomic Commit Protocol defined in [`.protocols/COMMIT.md`](./.protoco
 **Types**: `feat`, `fix`, `ui`, `refactor`, `perf`, `docs`, `test`, `chore`, `style`
 
 No `git add .` — every commit must represent a single, isolated logical intention.
+
+---
+
+## 🎨 Visual & Documentation Guidelines
+
+- **Badge Aesthetics:** When updating badges or technology indicators in the `README.md` or other docs, always use the `style=flat-square` badge format from `shields.io`. Specify exact official brand colors and brand logos (`logoColor=white` or `logoColor=black` where appropriate).
+- **Contributor Graphs:** Do not hardcode individual contributors unless requested. Always prefer dynamic SVG integrations (e.g., `readme-contribs`) that handle low contributor counts (including single-maintainer repositories) without crashing.
+- **Bilingual Interaction:** The owner, **Wistant Kode**, interacts in both English and French. AI agents should be able to parse and respond in French or English as chosen by the user.
