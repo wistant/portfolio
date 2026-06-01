@@ -85,22 +85,35 @@ if [[ -n "$FILES_FIXED" ]]; then
   echo -e "${YELLOW}$FILES_FIXED${RESET}"
   read -rp "     Commit these style fixes automatically? (Y/n) " AUTO_COMMIT_FORMAT
   if [[ "$AUTO_COMMIT_FORMAT" != "n" && "$AUTO_COMMIT_FORMAT" != "N" ]]; then
-    echo "$FILES_FIXED" | xargs git add
+    FILE_COUNT=$(echo "$FILES_FIXED" | grep -c '^' || echo 0)
+    info "Creating $FILE_COUNT targeted style commit(s)..."
     
-    FILE_COUNT=$(echo "$FILES_FIXED" | wc -l)
-    FIRST_FILE=$(echo "$FILES_FIXED" | head -n 1 | awk -F/ '{print $NF}')
+    while IFS= read -r file; do
+      if [[ -n "$file" ]]; then
+        filename=$(basename "$file")
+        
+        # Determine commit scope based on path
+        if [[ "$file" == *"README.md"* ]]; then
+          scope="readme"
+        elif [[ "$file" == *"CODE_OF_CONDUCT.md"* ]]; then
+          scope="conduct"
+        elif [[ "$file" == *"AGENTS.md"* ]]; then
+          scope="agents"
+        elif [[ "$file" == *"src/components/"* ]]; then
+          scope="components"
+        elif [[ "$file" == *"src/app/"* ]]; then
+          scope="app"
+        else
+          scope="style"
+        fi
+        
+        git add "$file"
+        git commit -m "style($scope): format $filename"
+        info "  ✓ Committed: style($scope): format $filename"
+      fi
+    done <<< "$FILES_FIXED"
     
-    if [ "$FILE_COUNT" -eq 1 ]; then
-      COMMIT_MSG="style: reformat $FIRST_FILE"
-    elif [ "$FILE_COUNT" -eq 2 ]; then
-      SECOND_FILE=$(echo "$FILES_FIXED" | sed -n '2p' | awk -F/ '{print $NF}')
-      COMMIT_MSG="style: reformat $FIRST_FILE and $SECOND_FILE"
-    else
-      COMMIT_MSG="style: reformat $FIRST_FILE and $((FILE_COUNT - 1)) other files"
-    fi
-    
-    git commit -m "$COMMIT_MSG"
-    success "Formatting committed: $COMMIT_MSG"
+    success "Formatting committed ($FILE_COUNT atomic commit(s) created)."
   else
     error "Push blocked: Style fixes must be committed."
     exit 1
