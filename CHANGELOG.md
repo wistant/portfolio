@@ -1,5 +1,15 @@
 # portfolio
 
+## 1.0.3-beta.1
+
+### Patch Changes
+
+- bffe019: - release: switch 1.0.3-alpha.0 from alpha to beta
+  - fix(release): resolve earliest merge commit lookup for pull request numbers
+  - chore(version): ignore channel switches when collecting intent commits
+  - feat(ci): link commit hashes to GitHub and remove checklist in PR body
+  - chore(version): show exact forecasted version increments dynamically
+
 ## 1.0.3-alpha.0
 
 ### Patch Changes
