@@ -22,12 +22,55 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref || github.ref }}
       - uses: pnpm/action-setup@v3
         with: { version: 10.26.1 }
       - uses: actions/setup-node@v4
         with: { node-version: 22, cache: pnpm }
       - run: pnpm install --frozen-lockfile
       - run: pnpm lint
+      - name: Format & Commit style fixes
+        run: |
+          # 1. Run Prettier formatter to fix any issues
+          pnpm format:write
+
+          # 2. Check if files were modified
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "Format deviations found. Committing files individually..."
+            
+            # Configure Git bot identity
+            git config --global user.name "github-actions[bot]"
+            git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            
+            # Commit each modified file separately
+            for file in $(git diff --name-only); do
+              filename=$(basename "$file")
+              
+              # Determine commit scope based on path
+              if [[ "$file" == *"README.md"* ]]; then
+                scope="readme"
+              elif [[ "$file" == *"CODE_OF_CONDUCT.md"* ]]; then
+                scope="conduct"
+              elif [[ "$file" == *"AGENTS.md"* ]]; then
+                scope="agents"
+              elif [[ "$file" == *"src/components/"* ]]; then
+                scope="components"
+              elif [[ "$file" == *"src/app/"* ]]; then
+                scope="app"
+              else
+                scope="style"
+              fi
+              
+              git add "$file"
+              git commit -m "style($scope): format $filename"
+            done
+            
+            # Push changes back to the repository branch
+            git push
+          else
+            echo "All files are perfectly formatted."
+          fi
       - run: pnpm format:check
 
   # Vérification des types TypeScript
