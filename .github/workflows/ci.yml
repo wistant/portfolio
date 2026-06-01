@@ -22,10 +22,31 @@ permissions:
   id-token: write
 
 jobs:
+  # Phase de préparation et d'installation des dépendances
+  setup:
+    name: Setup & Cache
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v3
+        with: { version: 10.26.1 }
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: pnpm }
+      - name: Cache node_modules
+        id: cache-node-modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/pnpm-lock.yaml') }}
+      - name: Install dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+        run: pnpm install --frozen-lockfile
+
   # Linting et formatage du code
   lint:
     name: Lint & Format
     runs-on: ubuntu-latest
+    needs: setup
     steps:
       - uses: actions/checkout@v4
         with:
@@ -34,7 +55,12 @@ jobs:
         with: { version: 10.26.1 }
       - uses: actions/setup-node@v4
         with: { node-version: 22, cache: pnpm }
-      - run: pnpm install --frozen-lockfile
+      - name: Restore node_modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/pnpm-lock.yaml') }}
+          fail-on-cache-miss: true
       - run: pnpm lint
       - name: Format & Commit style fixes
         run: |
@@ -94,27 +120,38 @@ jobs:
   typecheck:
     name: TypeScript
     runs-on: ubuntu-latest
+    needs: setup
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v3
         with: { version: 10.26.1 }
       - uses: actions/setup-node@v4
         with: { node-version: 22, cache: pnpm }
-      - run: pnpm install --frozen-lockfile
+      - name: Restore node_modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/pnpm-lock.yaml') }}
+          fail-on-cache-miss: true
       - run: pnpm check-types
 
   # Construction du projet
   build:
     name: Build
     runs-on: ubuntu-latest
-    needs: [lint, typecheck]
+    needs: [setup, lint, typecheck]
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v3
         with: { version: 10.26.1 }
       - uses: actions/setup-node@v4
         with: { node-version: 22, cache: pnpm }
-      - run: pnpm install --frozen-lockfile
+      - name: Restore node_modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/pnpm-lock.yaml') }}
+          fail-on-cache-miss: true
       - name: Cache Next.js build
         uses: actions/cache@v4
         with:
