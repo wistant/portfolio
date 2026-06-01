@@ -154,9 +154,51 @@ info "Canal Actuel : [${YELLOW}${CURRENT_TAG^^}${NC}] | Registre : [${CYAN}${REM
 CURRENT_VERSION=$(node -p "require('./package.json').version" 2>/dev/null || echo "1.0.0")
 
 # Pre-calculate track option versions
-NEXT_ALPHA=$(node -e "const semver = require('semver'); console.log(semver.inc('${CURRENT_VERSION}', 'prerelease', 'alpha'))" 2>/dev/null || echo "")
-NEXT_BETA=$(node -e "const semver = require('semver'); console.log(semver.inc('${CURRENT_VERSION}', 'prerelease', 'beta'))" 2>/dev/null || echo "")
-NEXT_RC=$(node -e "const semver = require('semver'); console.log(semver.inc('${CURRENT_VERSION}', 'prerelease', 'rc'))" 2>/dev/null || echo "")
+NEXT_ALPHA=$(node -e "
+  const semver = require('semver');
+  const current = '${CURRENT_VERSION}';
+  const tag = 'alpha';
+  const parsed = semver.parse(current);
+  if (parsed && parsed.prerelease.length > 0) {
+    const base = parsed.major + '.' + parsed.minor + '.' + parsed.patch;
+    const index = parsed.prerelease[1];
+    const nextIndex = Number(index) + 1;
+    console.log(base + '-' + tag + '.' + nextIndex);
+  } else {
+    console.log(semver.inc(current, 'prepatch', tag));
+  }
+" 2>/dev/null || echo "")
+
+NEXT_BETA=$(node -e "
+  const semver = require('semver');
+  const current = '${CURRENT_VERSION}';
+  const tag = 'beta';
+  const parsed = semver.parse(current);
+  if (parsed && parsed.prerelease.length > 0) {
+    const base = parsed.major + '.' + parsed.minor + '.' + parsed.patch;
+    const index = parsed.prerelease[1];
+    const nextIndex = Number(index) + 1;
+    console.log(base + '-' + tag + '.' + nextIndex);
+  } else {
+    console.log(semver.inc(current, 'prepatch', tag));
+  }
+" 2>/dev/null || echo "")
+
+NEXT_RC=$(node -e "
+  const semver = require('semver');
+  const current = '${CURRENT_VERSION}';
+  const tag = 'rc';
+  const parsed = semver.parse(current);
+  if (parsed && parsed.prerelease.length > 0) {
+    const base = parsed.major + '.' + parsed.minor + '.' + parsed.patch;
+    const index = parsed.prerelease[1];
+    const nextIndex = Number(index) + 1;
+    console.log(base + '-' + tag + '.' + nextIndex);
+  } else {
+    console.log(semver.inc(current, 'prepatch', tag));
+  }
+" 2>/dev/null || echo "")
+
 NEXT_STABLE=$(node -e "const semver = require('semver'); console.log(semver.inc('${CURRENT_VERSION}', 'patch'))" 2>/dev/null || echo "")
 if [[ "$CURRENT_TAG" != "Stable" ]]; then
   NEXT_STABLE=$(node -e "console.log('${CURRENT_VERSION}'.split('-')[0])" 2>/dev/null || echo "")
