@@ -41,10 +41,21 @@ if (maxBump === 'none') {
 } else {
     let nextVersion;
     if (preTag) {
-        // En mode pre, on incrémente le suffixe alpha
-        nextVersion = semver.inc(version, 'prerelease', preTag);
+        // En mode pre, on incrémente le suffixe en tenant compte du comportement de Changesets.
+        // Si on change de tag (ex: alpha -> beta) dans le même cycle, Changesets n'a qu'un seul index global
+        // et l'incrémente (ex: 1.0.3-alpha.0 -> 1.0.3-beta.1).
+        const parsed = semver.parse(version);
+        if (parsed && parsed.prerelease.length > 0) {
+            const base = parsed.major + '.' + parsed.minor + '.' + parsed.patch;
+            const currentIndex = parsed.prerelease[1];
+            const nextIndex = Number(currentIndex) + 1;
+            nextVersion = base + '-' + preTag + '.' + nextIndex;
+        } else {
+            nextVersion = semver.inc(version, 'prepatch', preTag);
+        }
     } else {
         nextVersion = semver.inc(version, maxBump);
     }
     process.stdout.write(nextVersion);
 }
+
