@@ -98,8 +98,18 @@ create_intent() {
   # Collect commits since last release commit or last tag (fallback to 10 commits if none)
   local last_ref=""
   
-  # 1. Search for last release commit hash
-  local last_release_commit=$(git log --grep="^release:" --grep="^chore(release):" --format="%H" -n 1 2>/dev/null || true)
+  # 1. Search for last release commit hash (ignoring prerelease track switches)
+  local last_release_commit=""
+  while read -r commit_hash; do
+    if [[ -n "$commit_hash" ]]; then
+      local commit_msg=$(git log --format="%s" -n 1 "$commit_hash" 2>/dev/null || "")
+      if [[ "$commit_msg" != *"switch"* ]]; then
+        last_release_commit="$commit_hash"
+        break
+      fi
+    fi
+  done < <(git log --grep="^release:" --grep="^chore(release):" --format="%H" 2>/dev/null || true)
+
   # 2. Search for last tag
   local last_tag=$(git tag -l "v*" --sort=-v:refname | head -n 1 2>/dev/null || true)
 
