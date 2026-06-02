@@ -1,6 +1,6 @@
 import { Suspense } from "react"
 import type { Metadata } from "next"
-import { getAllDocs } from "@/data/doc/documents"
+import { getDocsByCategory } from "@/data/doc/documents"
 
 import { X_HANDLE } from "@/config/site"
 import {
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
 }
 
 export default function Page() {
-  const allPosts = getAllDocs()
+  const allPosts = getDocsByCategory("blog")
 
   return (
     <div className="min-h-svh">

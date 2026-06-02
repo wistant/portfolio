@@ -1,10 +1,10 @@
-'use client';
+"use client"
 
-import { useState } from 'react';
-import { motion } from 'motion/react';
+import { useState } from "react"
+import { motion } from "motion/react"
 
 export default function MasonryGallery({ images }: { images: string[] }) {
-  const [hovered, setHovered] = useState<number | null>(null);
+  const [hovered, setHovered] = useState<number | null>(null)
 
   return (
     <div className="min-h-screen px-4 py-8 md:px-6">
@@ -18,17 +18,17 @@ export default function MasonryGallery({ images }: { images: string[] }) {
             viewport={{ once: true }}
             onMouseEnter={() => setHovered(index)}
             onMouseLeave={() => setHovered(null)}
-            className="group relative overflow-hidden rounded-2xl shadow-lg transition-all duration-300 ease-in-out border border-line bg-background"
+            className="group relative overflow-hidden rounded-2xl border border-line bg-background shadow-lg transition-all duration-300 ease-in-out"
           >
             <motion.img
               src={src}
               alt={`Gallery image ${index + 1}`}
               className={`w-full rounded-lg object-cover transition-all duration-300 ease-in-out ${
                 hovered === null
-                  ? 'blur-0 scale-100'
+                  ? "blur-0 scale-100"
                   : hovered === index
-                    ? 'blur-0 scale-105'
-                    : 'blur-xs'
+                    ? "blur-0 scale-105"
+                    : "blur-xs"
               }`}
               whileHover={{ scale: 1.05 }}
             />
@@ -36,5 +36,5 @@ export default function MasonryGallery({ images }: { images: string[] }) {
         ))}
       </div>
     </div>
-  );
+  )
 }

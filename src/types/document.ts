@@ -27,6 +27,13 @@ export type DocMetadata = {
    * Last updated date as an ISO date string (e.g. YYYY-MM-DD).
    */
   updatedAt: string
+  /**
+   * Custom mockup metadata fields for project showcase page covers.
+   */
+  projectType?: "web" | "mobile" | "both"
+  webImage?: string
+  mobileImage?: string
+  webUrl?: string
 }
 
 export type Doc = {

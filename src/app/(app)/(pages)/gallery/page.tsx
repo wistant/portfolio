@@ -1,17 +1,19 @@
-import type { Metadata } from "next"
 import fs from "fs"
 import path from "path"
+import type { Metadata } from "next"
+
 import { X_HANDLE } from "@/config/site"
+import MasonryGallery from "@/components/mvpblocks/masonry-grid-1"
 import {
   PageHeading,
   PageHeadingDescription,
   PageHeadingTagline,
   PageHeadingTitle,
 } from "@/components/page-heading"
-import MasonryGallery from "@/components/mvpblocks/masonry-grid-1"
 
 const title = "Gallery"
-const description = "A curated collection of visual captures, tech setups, and memorable milestones."
+const description =
+  "A curated collection of visual captures, tech setups, and memorable milestones."
 
 const ogImage = `/og/simple?title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}`
 
@@ -58,7 +60,8 @@ export default function Page() {
         <PageHeadingTagline>Gallery</PageHeadingTagline>
         <PageHeadingTitle>Visual captures & memories.</PageHeadingTitle>
         <PageHeadingDescription>
-          A premium visual collection of experiences, tech setups, and personal captures.
+          A premium visual collection of experiences, tech setups, and personal
+          captures.
         </PageHeadingDescription>
       </PageHeading>
 
