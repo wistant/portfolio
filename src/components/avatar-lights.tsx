@@ -16,7 +16,8 @@ export function AvatarLights({
   variants: AvatarLightsVariants
   shape?: "circle" | "square"
 }) {
-  const roundedClass = shape === "square" ? "rounded-2xl sm:rounded-[18%]" : "rounded-full"
+  const roundedClass =
+    shape === "square" ? "rounded-2xl sm:rounded-[18%]" : "rounded-full"
 
   return (
     <div
@@ -93,7 +94,8 @@ function AvatarImage({
   shape = "circle",
   ...props
 }: React.ComponentProps<"img"> & { shape?: "circle" | "square" }) {
-  const roundedClass = shape === "square" ? "rounded-2xl sm:rounded-[18%]" : "rounded-full"
+  const roundedClass =
+    shape === "square" ? "rounded-2xl sm:rounded-[18%]" : "rounded-full"
   return (
     <img
       className={cn(
@@ -107,4 +109,3 @@ function AvatarImage({
     />
   )
 }
-
