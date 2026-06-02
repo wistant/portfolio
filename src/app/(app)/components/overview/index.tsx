@@ -1,4 +1,5 @@
 import { USER } from "@/data/portfolio/user"
+
 import { Panel, PanelContent } from "../panel"
 import { JobItem } from "./job-item"
 
@@ -21,4 +22,3 @@ export function Overview() {
     </Panel>
   )
 }
-
