@@ -37,7 +37,7 @@ import { TOCMinimap } from "@/components/toc-minimap"
 
 export const revalidate = false
 export const dynamic = "force-static"
-export const dynamicParams = false
+export const dynamicParams = true
 
 export async function generateStaticParams() {
   const docs = getAllDocs()
