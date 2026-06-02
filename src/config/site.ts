@@ -24,6 +24,10 @@ export const MAIN_NAV: NavItem[] = [
     title: "Sponsors",
     href: "/sponsors",
   },
+  {
+    title: "Gallery",
+    href: "/gallery",
+  },
 ]
 
 export const MOBILE_NAV: NavItem[] = [
