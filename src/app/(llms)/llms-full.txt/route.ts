@@ -1,4 +1,5 @@
-import { getAllDocs } from "@/data/doc/documents"
+import { execSync } from "child_process"
+import { getDocsByCategory } from "@/data/doc/documents"
 import { EXPERIENCES } from "@/data/portfolio/experiences"
 import { PROJECTS } from "@/data/portfolio/projects"
 import { SOCIAL_LINKS } from "@/data/portfolio/social-links"
@@ -9,7 +10,18 @@ import { format } from "date-fns"
 import { SITE_INFO } from "@/config/site"
 import { getLLMText } from "@/lib/get-llm-text"
 
-const allPosts = getAllDocs()
+function getLatestCommitInfo() {
+  try {
+    const info = execSync(
+      'git log -1 --format="%s — by %an on %ad" --date=short'
+    )
+      .toString()
+      .trim()
+    return info
+  } catch {
+    return "No recent git commit history available."
+  }
+}
 
 const aboutText = `## About
 
@@ -52,30 +64,41 @@ ${PROJECTS.map((item) => {
 }).join("\n\n")}
 `
 
-async function getBlogContent() {
+async function getMDXContentSection(category: string, urlPrefix: string) {
+  const docs = getDocsByCategory(category)
   const text = await Promise.all(
-    allPosts.map(
+    docs.map(
       async (item) =>
-        `---\ntitle: "${item.metadata.title}"\ndescription: "${item.metadata.description}"\nlast_updated: "${format(new Date(item.metadata.updatedAt), "MMMM d, yyyy")}"\nsource: "${SITE_INFO.url}/blog/${item.slug}"\n---\n\n${await getLLMText(item)}`
+        `---\ntitle: "${item.metadata.title}"\ndescription: "${item.metadata.description}"\nlast_updated: "${format(new Date(item.metadata.updatedAt), "MMMM d, yyyy")}"\nsource: "${SITE_INFO.url}/${urlPrefix}/${item.slug}"\n---\n\n${await getLLMText(item)}`
     )
   )
   return text.join("\n\n")
 }
 
 async function getContent() {
+  const latestCommit = getLatestCommitInfo()
+  const blogsContent = await getMDXContentSection("blog", "blog")
+  const projectsContent = await getMDXContentSection("projects", "projects")
+
   return `<SYSTEM>This document contains comprehensive information about ${USER.displayName}'s professional profile, portfolio, and blog content. It includes personal details, work experience, projects, achievements, certifications, and all published blog posts. This data is formatted for consumption by Large Language Models (LLMs) to provide accurate and up-to-date information about ${USER.displayName}'s background, skills, and expertise as a Software Architect/Engineer.</SYSTEM>
 
 # wistant.me
 
 > A minimal, pixel-perfect dev portfolio, shadcn registry, and blog to showcase my work as a Software Architect/Engineer.
 
+**Last Coded**: ${latestCommit}
+
 ${aboutText}
 ${experienceText}
 ${projectsText}
 
-## Blog
+## Blog Posts
 
-${await getBlogContent()}`
+${blogsContent}
+
+## Project Case Studies
+
+${projectsContent}`
 }
 
 export const revalidate = false
