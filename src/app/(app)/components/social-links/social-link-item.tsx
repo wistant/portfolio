@@ -7,6 +7,8 @@ import { UTM_PARAMS } from "@/config/site"
 import { cn } from "@/lib/utils"
 
 export function SocialLinkItem({ icon, title, href }: SocialLink) {
+  const isInvertible = title === "X" || title === "GitHub"
+
   return (
     <div
       className={cn(
@@ -15,7 +17,10 @@ export function SocialLinkItem({ icon, title, href }: SocialLink) {
     >
       <div className="relative size-8 shrink-0 [--image-radius:var(--radius-lg)]">
         <Image
-          className="rounded-(--image-radius) select-none"
+          className={cn(
+            "rounded-(--image-radius) select-none",
+            isInvertible && "dark:invert"
+          )}
           src={icon}
           alt={title}
           width={32}
