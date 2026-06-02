@@ -34,7 +34,7 @@ import { DocSponsors } from "@/components/doc/doc-sponsors"
 
 import { Callout } from "./callout"
 import { CodeTabs } from "./code-tabs"
-import { FramedImage, IframeEmbed, YouTubeEmbed } from "./embed"
+import { FramedImage, IframeEmbed, IphoneShowcase, YouTubeEmbed } from "./embed"
 import { Heading } from "./heading"
 import { mdxCodeBlockComponents } from "./mdx-code-block"
 
@@ -83,6 +83,9 @@ const components: MDXRemoteProps["components"] = {
   YouTubeEmbed,
   IframeEmbed,
   FramedImage,
+  ImageViewer: FramedImage,
+  IphoneShowcase,
+  Iphone: IphoneShowcase,
   DocSponsors,
   AutoTypeTable: () => null,
   Testimonial: () => null,

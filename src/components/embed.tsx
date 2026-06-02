@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils"
+import { Iphone } from "@/components/ui/iphone"
 
 import { ImageZoom } from "./kibo-ui/image-zoom"
 
@@ -56,5 +57,32 @@ export function FramedImage({
 
       <div className="pointer-events-none absolute inset-0 rounded-xl inset-ring-1 inset-ring-black/10 dark:inset-ring-white/10" />
     </figure>
+  )
+}
+
+export function IphoneShowcase({
+  src,
+  videoSrc,
+  children,
+  className,
+  ...props
+}: {
+  src?: string
+  videoSrc?: string
+  children?: React.ReactNode
+  className?: string
+}) {
+  const resolvedSrc =
+    src || (typeof children === "string" ? children.trim() : undefined)
+
+  return (
+    <div
+      className={cn(
+        "mx-auto my-8 flex w-full max-w-[280px] items-center justify-center",
+        className
+      )}
+    >
+      <Iphone src={resolvedSrc} videoSrc={videoSrc} {...props} />
+    </div>
   )
 }
