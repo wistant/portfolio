@@ -3,7 +3,6 @@ import Link from "next/link"
 import { getDocBySlug } from "@/data/doc/documents"
 import { addQueryParams } from "@/utils/url"
 import { BoxIcon, InfinityIcon, LinkIcon } from "lucide-react"
-import { Icons } from "@/components/icons"
 
 import type { Project } from "@/types/projects"
 import { UTM_PARAMS } from "@/config/site"
@@ -22,6 +21,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/base/ui/tooltip"
+import { Icons } from "@/components/icons"
 import { Markdown } from "@/components/markdown"
 
 export function ProjectItem({
