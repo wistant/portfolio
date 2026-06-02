@@ -141,7 +141,9 @@ export function ProfileHeader() {
             <div className="flex size-4 shrink-0 items-center justify-center">
               <span className="flex size-1.5 animate-pulse rounded-full bg-emerald-500" />
             </div>
-            <FlipSentences className="text-sm">{USER.flipSentences}</FlipSentences>
+            <FlipSentences className="text-sm">
+              {USER.flipSentences}
+            </FlipSentences>
           </div>
         </div>
       </div>
