@@ -1,7 +1,7 @@
 import "server-only"
 
 import { unstable_cache } from "next/cache"
-import { subDays, formatISO } from "date-fns"
+import { formatISO, subDays } from "date-fns"
 
 import { GITHUB_USERNAME } from "@/config/site"
 import type { Activity } from "@/components/contribution-graph"
@@ -22,7 +22,7 @@ function generateMockContributions(): Activity[] {
     else if (rand > 0.7) level = 3
     else if (rand > 0.5) level = 2
     else if (rand > 0.3) level = 1
-    
+
     const count = level === 0 ? 0 : level * 2 + Math.floor(Math.random() * 3)
     contributions.push({ date, count, level })
   }
@@ -35,10 +35,12 @@ async function fetchContributions(): Promise<Activity[]> {
       process.env.GITHUB_CONTRIBUTIONS_API_URL ||
       `https://github-contributions-api.jogruber.de`
     const res = await fetch(`${baseUrl}/v4/${GITHUB_USERNAME}?y=last`, {
-      next: { revalidate: 3600 } // Cache at fetch level for 1 hour
+      next: { revalidate: 3600 }, // Cache at fetch level for 1 hour
     })
     if (!res.ok) {
-      console.warn(`GitHub API responded with status ${res.status}. Falling back to mock data.`)
+      console.warn(
+        `GitHub API responded with status ${res.status}. Falling back to mock data.`
+      )
       return generateMockContributions()
     }
     const data = (await res.json()) as GitHubContributionsResponse
@@ -47,7 +49,10 @@ async function fetchContributions(): Promise<Activity[]> {
     }
     return data.contributions
   } catch (error) {
-    console.warn("Failed to fetch GitHub contributions, using mock data fallback.", error)
+    console.warn(
+      "Failed to fetch GitHub contributions, using mock data fallback.",
+      error
+    )
     return generateMockContributions()
   }
 }
@@ -60,4 +65,3 @@ export const getGitHubContributions =
         ["github-contributions"],
         { revalidate: 86400 } // Cache for 1 day in production
       )
-
