@@ -2,7 +2,11 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import Script from "next/script"
-import { findNeighbour, getAllDocs, getDocBySlug } from "@/data/doc/documents"
+import {
+  findNeighbour,
+  getDocBySlug,
+  getDocsByCategory,
+} from "@/data/doc/documents"
 import { USER } from "@/data/portfolio/user"
 import { getTableOfContents } from "fumadocs-core/content/toc"
 import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react"
@@ -40,17 +44,17 @@ export const dynamic = "force-static"
 export const dynamicParams = true
 
 export async function generateStaticParams() {
-  const docs = getAllDocs()
+  const docs = getDocsByCategory("projects")
   return docs.map((doc) => ({ slug: doc.slug }))
 }
 
 export async function generateMetadata({
   params,
-}: PageProps<"/blog/[slug]">): Promise<Metadata> {
+}: PageProps<"/projects/[slug]">): Promise<Metadata> {
   const slug = (await params).slug
   const doc = getDocBySlug(slug)
 
-  if (!doc) {
+  if (!doc || doc.metadata.category !== "projects") {
     return notFound()
   }
 
@@ -109,18 +113,18 @@ function getPageJsonLd(doc: Doc): WithContext<PageSchema> {
   }
 }
 
-export default async function Page({ params }: PageProps<"/blog/[slug]">) {
+export default async function Page({ params }: PageProps<"/projects/[slug]">) {
   const slug = (await params).slug
   const doc = getDocBySlug(slug)
 
-  if (!doc) {
+  if (!doc || doc.metadata.category !== "projects") {
     notFound()
   }
 
   const toc = getTableOfContents(doc.content)
 
-  const allDocs = getAllDocs()
-  const { previous, next } = findNeighbour(allDocs, slug)
+  const allProjects = getDocsByCategory("projects")
+  const { previous, next } = findNeighbour(allProjects, slug)
 
   return (
     <>
@@ -133,8 +137,8 @@ export default async function Page({ params }: PageProps<"/blog/[slug]">) {
       />
 
       <DocKeyboardShortcuts
-        previous={previous ? `/blog/${previous.slug}` : null}
-        next={next ? `/blog/${next.slug}` : null}
+        previous={previous ? `/projects/${previous.slug}` : null}
+        next={next ? `/projects/${next.slug}` : null}
       />
 
       <DocPageRoot>
@@ -148,16 +152,16 @@ export default async function Page({ params }: PageProps<"/blog/[slug]">) {
               size="sm"
               asChild
             >
-              <Link href="/blog">
+              <Link href="/projects">
                 <ArrowLeftIcon />
-                Blog
+                Projects
               </Link>
             </Button>
 
             <div className="flex items-center gap-2">
               <LLMCopyButtonWithViewOptions
                 markdownUrl={`${getDocUrl(doc)}.mdx`}
-                isComponent={doc.metadata.category === "components"}
+                isComponent={false}
               />
 
               <DocShareMenu title={doc.metadata.title} url={getDocUrl(doc)} />
@@ -173,8 +177,8 @@ export default async function Page({ params }: PageProps<"/blog/[slug]">) {
                         asChild
                       >
                         <Link
-                          href={`/blog/${previous.slug}`}
-                          aria-label="Previous Post"
+                          href={`/projects/${previous.slug}`}
+                          aria-label="Previous Project"
                         >
                           <ArrowLeftIcon />
                         </Link>
@@ -183,7 +187,7 @@ export default async function Page({ params }: PageProps<"/blog/[slug]">) {
                   />
                   <TooltipContent className="pr-2 pl-3">
                     <div className="flex items-center gap-3">
-                      Previous Post
+                      Previous Project
                       <Kbd>
                         <ArrowLeftIcon />
                       </Kbd>
@@ -203,8 +207,8 @@ export default async function Page({ params }: PageProps<"/blog/[slug]">) {
                         asChild
                       >
                         <Link
-                          href={`/blog/${next.slug}`}
-                          aria-label="Next Post"
+                          href={`/projects/${next.slug}`}
+                          aria-label="Next Project"
                         >
                           <ArrowRightIcon />
                         </Link>
@@ -213,7 +217,7 @@ export default async function Page({ params }: PageProps<"/blog/[slug]">) {
                   />
                   <TooltipContent className="pr-2 pl-3">
                     <div className="flex items-center gap-3">
-                      Next Post
+                      Next Project
                       <Kbd>
                         <ArrowRightIcon />
                       </Kbd>
@@ -279,6 +283,5 @@ export default async function Page({ params }: PageProps<"/blog/[slug]">) {
 }
 
 function getDocUrl(doc: Doc) {
-  const isComponent = doc.metadata.category === "components"
-  return isComponent ? `/components/${doc.slug}` : `/blog/${doc.slug}`
+  return `/projects/${doc.slug}`
 }

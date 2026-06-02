@@ -1,0 +1,52 @@
+---
+title: "wistant.me : Developer Portfolio & Component Registry"
+description: "A pixel-perfect developer portfolio, blog, and component registry built with Next.js 16 (App Router), Tailwind CSS v4, and Fumadocs."
+image: "/projects/portfolio/portfolio.png"
+category: "projects"
+projectType: "both"
+webImage: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=1200&q=80"
+mobileImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80"
+webUrl: "wistant.me"
+createdAt: "2026-05-20"
+updatedAt: "2026-05-20"
+---
+
+Welcome to **wistant.me**, the official digital home, blog, and custom component registry of **Wistant Kode**.
+
+This project serves as a highly optimized, responsive showcase of engineering projects, architectural writings, and reusable UI components. It is built using the latest modern React and web technologies to ensure exceptional performance, premium typography, and seamless transitions.
+
+<br />
+
+### Core Tech Stack
+
+- **Framework:** Next.js 16 (App Router) leveraging React Server Components (RSC) and static page generation.
+- **Styling:** Tailwind CSS v4 featuring native CSS variables, container queries, and sleek dark/light mode configurations.
+- **Components:** Radix UI, Base UI, Magic UI, and shadcn/ui.
+- **Content:** Markdown (MDX) handled with gray-matter and Fumadocs content parsers.
+- **Package Manager:** pnpm.
+- **Deployment:** Vercel.
+
+<br />
+
+### Custom Component Registry
+
+One of the highlight features of **wistant.me** is its embedded shadcn-like component registry. Instead of just showing code blocks, users can directly preview and install custom UI components, hooks, blocks, and libraries using the shadcn CLI or the site's direct copy controls.
+
+The registry is divided into:
+
+- `registry:component` — Advanced UI blocks with smooth animations.
+- `registry:hook` — Custom React hooks for gesture, layout, and event handlers.
+- `registry:block` — Larger sections (e.g. Hero, Bento grids).
+- `registry:lib` — Utility functions.
+
+<br />
+
+### Atomic Commit & Pipeline Orchestration
+
+To maintain a flawless codebase, the project utilizes a custom tooling suite located in `/tooling`:
+
+- `tooling/push.sh` — Ensures format, lint, typecheck, and changeset updates are fully validated before any push.
+- `tooling/sync.sh` — Provides a rebase-based upstream sync mechanism.
+- `tooling/make-release-description.sh` — Automatically constructs release notes from git commits.
+
+Built with absolute performance and modern styling in mind.
