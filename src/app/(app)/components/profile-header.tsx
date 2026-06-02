@@ -12,6 +12,7 @@ import {
 
 import type { User } from "@/types/user"
 import { AvatarLights } from "@/components/avatar-lights"
+import { Button } from "@/components/base/ui/button"
 
 import { AvatarLightsToggle } from "./avatar-lights-toggle"
 import { FlipSentences } from "./flip-sentences"
@@ -60,12 +61,16 @@ export function ProfileHeader() {
             <PronounceMyName namePronunciationUrl={USER.namePronunciationUrl} />
           )}
 
-          <a
-            href={`mailto:${atob(USER.email)}`}
-            className="flex h-8.5 items-center justify-center rounded-full border border-line px-4 font-mono text-xs font-medium transition-colors hover:bg-muted sm:text-sm"
+          <Button
+            variant="outline"
+            size="sm"
+            className="h-8.5 rounded-lg border-line font-mono text-xs font-medium uppercase tracking-wider text-muted-foreground hover:bg-muted hover:text-foreground dark:border-input dark:bg-input/30"
+            asChild
           >
-            contact
-          </a>
+            <a href={`mailto:${atob(USER.email)}`}>
+              contact
+            </a>
+          </Button>
         </div>
       </div>
 
@@ -85,12 +90,7 @@ export function ProfileHeader() {
         </div>
       </div>
 
-      {/* 3. Bio */}
-      <div className="mt-3 text-sm leading-relaxed whitespace-pre-line text-foreground/90 sm:text-base">
-        {USER.bio}
-      </div>
-
-      {/* 4. Twitter/X style Metadata Wrapper with flat overrides */}
+      {/* 3. Twitter/X style Metadata Wrapper with flat overrides */}
       <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-sm text-muted-foreground [&_.gap-4]:gap-1.5 [&_.size-6]:size-4 [&_.size-6]:border-none [&_.size-6]:bg-transparent [&_.size-6]:shadow-none [&_.size-6]:ring-0 [&_.size-6]:ring-offset-0 [&_a]:text-sm [&_a]:text-foreground [&_a:hover]:underline [&_p]:text-sm [&_svg]:text-muted-foreground/80">
         {/* Location */}
         <div className="flex items-center gap-1.5">
@@ -140,7 +140,7 @@ export function ProfileHeader() {
         <EmailItem email={USER.email} />
       </div>
 
-      {/* 5. Flip sentences roles */}
+      {/* 4. Flip sentences roles */}
       <FlipSentences className="mt-4 h-10 border-t border-dashed border-line pt-2 text-sm">
         {USER.flipSentences}
       </FlipSentences>
