@@ -1,4 +1,6 @@
 import Image from "next/image"
+import Link from "next/link"
+import { getDocBySlug } from "@/data/doc/documents"
 import { addQueryParams } from "@/utils/url"
 import { BoxIcon, InfinityIcon, LinkIcon } from "lucide-react"
 
@@ -31,6 +33,7 @@ export function ProjectItem({
   const { start, end } = project.period
   const isOngoing = !end
   const isSinglePeriod = end === start
+  const hasLocalPage = !!getDocBySlug(project.id)
 
   return (
     <Collapsible className={className} defaultOpen={project.isExpanded}>
@@ -122,6 +125,20 @@ export function ProjectItem({
                 </li>
               ))}
             </ul>
+          )}
+
+          {hasLocalPage && (
+            <div className="pt-2">
+              <Link
+                href={`/projects/${project.id}`}
+                className="inline-flex items-center gap-1 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground hover:no-underline"
+              >
+                Read full case study
+                <span className="font-mono transition-transform duration-200 group-hover:translate-x-0.5">
+                  →
+                </span>
+              </Link>
+            </div>
           )}
         </div>
       </CollapsibleContent>
