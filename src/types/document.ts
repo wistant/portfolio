@@ -34,6 +34,7 @@ export type DocMetadata = {
   webImage?: string
   mobileImage?: string
   webUrl?: string
+  githubUrl?: string
 }
 
 export type Doc = {

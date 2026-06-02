@@ -3,6 +3,7 @@ import Link from "next/link"
 import { getDocBySlug } from "@/data/doc/documents"
 import { addQueryParams } from "@/utils/url"
 import { BoxIcon, InfinityIcon, LinkIcon } from "lucide-react"
+import { Icons } from "@/components/icons"
 
 import type { Project } from "@/types/projects"
 import { UTM_PARAMS } from "@/config/site"
@@ -82,6 +83,27 @@ export function ProjectItem({
                 </dd>
               </dl>
             </div>
+
+            {project.github && (
+              <Tooltip>
+                <TooltipTrigger
+                  render={
+                    <a
+                      className="relative flex size-6 shrink-0 items-center justify-center text-muted-foreground after:absolute after:-inset-2 hover:text-foreground"
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener"
+                      aria-label="Open GitHub Repository"
+                    >
+                      <Icons.github className="pointer-events-none size-4" />
+                    </a>
+                  }
+                />
+                <TooltipContent>
+                  <p>Open GitHub Repository</p>
+                </TooltipContent>
+              </Tooltip>
+            )}
 
             <Tooltip>
               <TooltipTrigger
