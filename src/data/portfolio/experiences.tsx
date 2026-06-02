@@ -1,9 +1,4 @@
-import {
-  BriefcaseBusinessIcon,
-  CodeXmlIcon,
-  CpuIcon,
-  LayersIcon,
-} from "lucide-react"
+import { CodeXmlIcon, CpuIcon } from "lucide-react"
 
 import type { Experience } from "@/types/experiences"
 
@@ -11,6 +6,7 @@ export const EXPERIENCES: Experience[] = [
   {
     id: "unity-link",
     companyName: "Unity Link",
+    companyLogo: "/experiences/unity-link.jpg",
     positions: [
       {
         id: "1",
@@ -44,6 +40,7 @@ export const EXPERIENCES: Experience[] = [
   {
     id: "devia-technologies",
     companyName: "Devia Technologies",
+    companyLogo: "/experiences/devia.jpg",
     positions: [
       {
         id: "1",
