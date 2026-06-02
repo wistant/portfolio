@@ -44,18 +44,19 @@ This is not a marketing slogan. It's an architectural truth. Vendure's core mana
 And you can write your own.
 
 ```typescript
-import { VendurePlugin, PluginCommonModule } from '@vendure/core'
-import { MonPlugin } from './mon-plugin.service'
+import { PluginCommonModule, VendurePlugin } from "@vendure/core"
+
+import { MonPlugin } from "./mon-plugin.service"
 
 @VendurePlugin({
-  imports:   [PluginCommonModule],
+  imports: [PluginCommonModule],
   providers: [MonPlugin],
-  entities:  [MonEntite],
+  entities: [MonEntite],
   shopApiExtensions: {
-    schema:    monSchemaGql,
+    schema: monSchemaGql,
     resolvers: [MonResolver],
   },
-  configuration: config => {
+  configuration: (config) => {
     // Modify Vendure config at startup
     return config
   },
@@ -111,14 +112,14 @@ Vendure exposes NestJS services that you inject into your own services and plugi
 @Injectable()
 export class MonService {
   constructor(
-    private orderService:       OrderService,
-    private customerService:    CustomerService,
-    private productService:     ProductVariantService,
-    private transactionService: TransactionalConnection,
+    private orderService: OrderService,
+    private customerService: CustomerService,
+    private productService: ProductVariantService,
+    private transactionService: TransactionalConnection
   ) {}
 
   async getOrderWithCustomer(ctx: RequestContext, orderId: ID) {
-    const order    = await this.orderService.findOne(ctx, orderId)
+    const order = await this.orderService.findOne(ctx, orderId)
     const customer = await this.customerService.findOne(ctx, order.customerId)
     return { order, customer }
   }
@@ -148,6 +149,7 @@ Separating these two APIs allows for very different permissions. A customer fron
 ### RequestContext — the pattern that structures everything
 
 Every operation in Vendure begins with a `RequestContext`. This context carries:
+
 - The active channel (which store)
 - The requested language
 - The authenticated user (customer or admin)
@@ -159,10 +161,7 @@ export class MonResolver {
   constructor(private monService: MonService) {}
 
   @Query()
-  async maQuery(
-    @Ctx() ctx: RequestContext,
-    @Args('id') id: string,
-  ) {
+  async maQuery(@Ctx() ctx: RequestContext, @Args("id") id: string) {
     // ctx is always the first argument
     return this.monService.trouverQuelqueChose(ctx, id)
   }
@@ -176,13 +175,13 @@ Passing `ctx` to every service call might seem verbose. But it's what ensures th
 When you register schema extensions in your plugin, they are automatically merged into the global schema at startup. The frontend sees a unified schema — it doesn't know how many plugins contribute.
 
 ```typescript
-import gql from 'graphql-tag'
+import gql from "graphql-tag"
 
 const EXTENSION_SCHEMA = gql`
   type MonType {
-    id:        ID!
+    id: ID!
     reference: String!
-    status:    String!
+    status: String!
   }
 
   extend type Mutation {
@@ -205,44 +204,58 @@ This is the most important interface if you are building payment integrations. A
 
 ```typescript
 import {
-  PaymentMethodHandler,
-  CreatePaymentResult,
-  SettlePaymentResult,
   CancelPaymentResult,
+  CreatePaymentResult,
   LanguageCode,
-} from '@vendure/core'
+  PaymentMethodHandler,
+  SettlePaymentResult,
+} from "@vendure/core"
 
 export const monPaymentHandler = new PaymentMethodHandler({
-  code: 'mon-provider',
-  description: [{ languageCode: LanguageCode.en, value: 'My Payment Provider' }],
+  code: "mon-provider",
+  description: [
+    { languageCode: LanguageCode.en, value: "My Payment Provider" },
+  ],
 
   // These args are configurable from the admin dashboard
   // They are securely stored and passed to each call
   args: {
-    apiKey:      { type: 'string', label: [{ languageCode: LanguageCode.en, value: 'API Key' }] },
-    environment: { type: 'string', label: [{ languageCode: LanguageCode.en, value: 'Environment' }] },
+    apiKey: {
+      type: "string",
+      label: [{ languageCode: LanguageCode.en, value: "API Key" }],
+    },
+    environment: {
+      type: "string",
+      label: [{ languageCode: LanguageCode.en, value: "Environment" }],
+    },
   },
 
   // Step 1 — initiate the transaction
   // Called when the customer chooses this payment method
-  async createPayment(ctx, order, amount, args, metadata): Promise<CreatePaymentResult> {
+  async createPayment(
+    ctx,
+    order,
+    amount,
+    args,
+    metadata
+  ): Promise<CreatePaymentResult> {
     try {
       const response = await monApi.initiate({
-        amount:    amount,
+        amount: amount,
         reference: order.code,
-        apiKey:    args.apiKey,
+        apiKey: args.apiKey,
       })
 
       return {
         amount,
-        state:         'Authorized' as const,
+        state: "Authorized" as const,
         transactionId: response.transactionId,
-        metadata:      { providerRef: response.ref },
+        metadata: { providerRef: response.ref },
       }
     } catch (error) {
       return {
         amount,
-        state:        'Declined' as const,
+        state: "Declined" as const,
         errorMessage: error.message,
       }
     }
@@ -254,15 +267,15 @@ export const monPaymentHandler = new PaymentMethodHandler({
     const verified = await monApi.verify(payment.transactionId, args.apiKey)
 
     return {
-      success:      verified.status === 'SUCCESS',
-      errorMessage: verified.status !== 'SUCCESS' ? verified.reason : undefined,
+      success: verified.status === "SUCCESS",
+      errorMessage: verified.status !== "SUCCESS" ? verified.reason : undefined,
     }
   },
 
   // Optional — refund
   async createRefund(ctx, input, amount, order, payment, args) {
     await monApi.refund(payment.transactionId, amount)
-    return { state: 'Settled' as const }
+    return { state: "Settled" as const }
   },
 })
 ```
@@ -282,27 +295,26 @@ This separation perfectly reflects the reality of African mobile payments. And i
 Vendure exposes a NestJS `EventBus` based on RxJS. Every significant action in the system emits an event — you can subscribe to these events from any plugin without modifying the code that emits them.
 
 ```typescript
-import { Injectable, OnApplicationBootstrap } from '@nestjs/common'
+import { Injectable, OnApplicationBootstrap } from "@nestjs/common"
 import {
+  CustomerRegistrationEvent,
   EventBus,
   OrderStateTransitionEvent,
   PaymentStateTransitionEvent,
-  CustomerRegistrationEvent,
-} from '@vendure/core'
+} from "@vendure/core"
 
 @Injectable()
 export class MonEventHandler implements OnApplicationBootstrap {
-
   constructor(private eventBus: EventBus) {}
 
   onApplicationBootstrap() {
     // Listen for payment transitions
     this.eventBus
       .ofType(PaymentStateTransitionEvent)
-      .subscribe(async event => {
-        if (event.toState === 'Settled') {
-          const order    = event.order
-          const payment  = event.payment
+      .subscribe(async (event) => {
+        if (event.toState === "Settled") {
+          const order = event.order
+          const payment = event.payment
           const customer = order.customer
 
           // Trigger a notification, update a cache,
@@ -312,12 +324,10 @@ export class MonEventHandler implements OnApplicationBootstrap {
       })
 
     // Listen for customer registrations
-    this.eventBus
-      .ofType(CustomerRegistrationEvent)
-      .subscribe(async event => {
-        const { customer } = event
-        // Send a welcome message, create a profile in a CRM, etc.
-      })
+    this.eventBus.ofType(CustomerRegistrationEvent).subscribe(async (event) => {
+      const { customer } = event
+      // Send a welcome message, create a profile in a CRM, etc.
+    })
   }
 }
 ```
@@ -345,13 +355,12 @@ This pattern is powerful because it completely decouples side effects from the m
 Vendure uses TypeORM for all persistence. When you create a plugin with its own entities, you declare them in `@VendurePlugin({ entities: [...] })` and Vendure automatically integrates them into the global connection.
 
 ```typescript
-import { Entity, Column, ManyToOne } from 'typeorm'
-import { VendureEntity, Order, ID } from '@vendure/core'
-import { DeepPartial } from '@vendure/common/lib/shared-types'
+import { DeepPartial } from "@vendure/common/lib/shared-types"
+import { ID, Order, VendureEntity } from "@vendure/core"
+import { Column, Entity, ManyToOne } from "typeorm"
 
 @Entity()
 export class MonEntite extends VendureEntity {
-
   constructor(input?: DeepPartial<MonEntite>) {
     super(input)
   }
@@ -363,10 +372,10 @@ export class MonEntite extends VendureEntity {
   @Column()
   reference: string
 
-  @Column({ default: 'pending' })
+  @Column({ default: "pending" })
   status: string
 
-  @Column({ type: 'jsonb', nullable: true })
+  @Column({ type: "jsonb", nullable: true })
   metadata: Record<string, unknown>
 }
 ```
@@ -402,12 +411,12 @@ One of the most practical features: add fields to any Vendure entity via configu
 const config: VendureConfig = {
   customFields: {
     Customer: [
-      { name: 'phoneNumber',  type: 'string',  nullable: true },
-      { name: 'preferredLang', type: 'string', defaultValue: 'en' },
+      { name: "phoneNumber", type: "string", nullable: true },
+      { name: "preferredLang", type: "string", defaultValue: "en" },
     ],
     Order: [
-      { name: 'deliveryZone', type: 'string', nullable: true },
-      { name: 'whatsappSent', type: 'boolean', defaultValue: false },
+      { name: "deliveryZone", type: "string", nullable: true },
+      { name: "whatsappSent", type: "boolean", defaultValue: false },
     ],
   },
 }
@@ -438,6 +447,7 @@ A single Vendure deployment can power multiple stores with completely different 
 Vendure solves the difficult problem — core commerce logic. But it leaves open exactly what is missing for African markets.
 
 **What Vendure does not do natively:**
+
 - Orange Money, Wave, MTN MoMo integration
 - Transactional WhatsApp notifications
 - Workflows designed for asynchronous mobile payments
