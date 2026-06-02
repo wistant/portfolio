@@ -1,60 +1,149 @@
-import { USER } from "@/data/portfolio/user"
+"use client"
 
+import { USER } from "@/data/portfolio/user"
+import { urlToName } from "@/utils/url"
+import {
+  LinkIcon,
+  MapPinIcon,
+  MarsIcon,
+  NonBinaryIcon,
+  VenusIcon,
+} from "lucide-react"
+
+import type { User } from "@/types/user"
 import { AvatarLights } from "@/components/avatar-lights"
 
 import { AvatarLightsToggle } from "./avatar-lights-toggle"
 import { FlipSentences } from "./flip-sentences"
+// Import interactive metadata items from Overview
+import { CurrentLocalTimeItem } from "./overview/current-local-time-item"
+import { EmailItem } from "./overview/email-item"
+import { PhoneItem } from "./overview/phone-item"
 import { PronounceMyName } from "./pronounce-my-name"
 import { VerifiedIcon } from "./verified-icon"
 
+function getGenderIcon(gender: User["gender"]) {
+  switch (gender) {
+    case "male":
+      return <MarsIcon className="size-4 shrink-0 text-muted-foreground/80" />
+    case "female":
+      return <VenusIcon className="size-4 shrink-0 text-muted-foreground/80" />
+    case "non-binary":
+      return (
+        <NonBinaryIcon className="size-4 shrink-0 text-muted-foreground/80" />
+      )
+  }
+}
+
 export function ProfileHeader() {
   return (
-    <div className="screen-line-bottom flex border-x border-line">
-      <div className="shrink-0 border-r border-line">
-        <AvatarLightsToggle className="group/avatar-lights-toggle mx-0.5 my-0.75 flex outline-none">
-          <AvatarLights
-            className="ring-border ring-offset-background group-focus-visible/avatar-lights-toggle:ring-1 group-focus-visible/avatar-lights-toggle:ring-offset-2"
-            variants={USER.avatarVariants}
-          />
-        </AvatarLightsToggle>
-      </div>
-
-      <div className="flex flex-1 flex-col">
-        <div className="flex grow items-end pb-1 pl-4">
-          <div
-            className="line-clamp-1 font-mono text-xs text-zinc-300 select-none max-sm:hidden dark:text-zinc-800"
-            aria-hidden
-          >
-            {"text-3xl "}
-            <span className="inline dark:hidden">API</span>
-            <span className="hidden dark:inline">UI</span>
-            {" font-medium"}
-          </div>
-        </div>
-
-        <div className="border-t border-line">
-          <div className="flex items-center gap-2 pl-4">
-            <h1 className="-translate-y-px text-3xl font-semibold tracking-tight">
-              {USER.displayName}
-            </h1>
-
-            <VerifiedIcon
-              className="size-4.5 text-info select-none"
-              aria-hidden
+    <div className="relative flex flex-col border-x border-line px-4 pb-4 select-none">
+      {/* 1. Row: Avatar overlapping the cover, premium Action on the right */}
+      <div className="relative flex h-16 items-end justify-between sm:h-20">
+        {/* Overlapping Avatar container */}
+        <div className="absolute -top-16 left-0 z-10 size-30 rounded-2xl border border-line bg-background p-1 min-[24rem]:size-32 sm:-top-20 sm:size-40">
+          <AvatarLightsToggle className="group/avatar-lights-toggle flex h-full w-full outline-none">
+            <AvatarLights
+              className="h-full w-full ring-border ring-offset-background group-focus-visible/avatar-lights-toggle:ring-1 group-focus-visible/avatar-lights-toggle:ring-offset-2"
+              variants={USER.avatarVariants}
+              shape="square"
             />
+          </AvatarLightsToggle>
+        </div>
 
-            {USER.namePronunciationUrl && (
-              <PronounceMyName
-                namePronunciationUrl={USER.namePronunciationUrl}
-              />
-            )}
-          </div>
+        {/* Empty spacer to align items right */}
+        <div className="flex-1" />
 
-          <FlipSentences className="h-12.5 border-t border-line py-1 pl-4 sm:h-9">
-            {USER.flipSentences}
-          </FlipSentences>
+        {/* Actions on the right */}
+        <div className="mb-2 flex items-center gap-2 sm:mb-3">
+          {USER.namePronunciationUrl && (
+            <PronounceMyName namePronunciationUrl={USER.namePronunciationUrl} />
+          )}
+
+          <a
+            href={`mailto:${atob(USER.email)}`}
+            className="flex h-8.5 items-center justify-center rounded-full border border-line px-4 font-mono text-xs font-medium transition-colors hover:bg-muted sm:text-sm"
+          >
+            contact
+          </a>
         </div>
       </div>
+
+      {/* 2. Display Name, Gold Badge, and Handle */}
+      <div className="mt-3">
+        <div className="flex items-center gap-1.5">
+          <h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+            {USER.displayName}
+          </h1>
+          <VerifiedIcon
+            className="size-5.5 text-[#e1b12c] select-none" // PREMIUM GOLD BADGE
+            aria-hidden
+          />
+        </div>
+        <div className="mt-0.5 font-mono text-xs text-muted-foreground sm:text-sm">
+          @{USER.username}
+        </div>
+      </div>
+
+      {/* 3. Bio */}
+      <div className="mt-3 text-sm leading-relaxed whitespace-pre-line text-foreground/90 sm:text-base">
+        {USER.bio}
+      </div>
+
+      {/* 4. Twitter/X style Metadata Wrapper with flat overrides */}
+      <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-sm text-muted-foreground [&_.gap-4]:gap-1.5 [&_.size-6]:size-4 [&_.size-6]:border-none [&_.size-6]:bg-transparent [&_.size-6]:shadow-none [&_.size-6]:ring-0 [&_.size-6]:ring-offset-0 [&_a]:text-sm [&_a]:text-foreground [&_a:hover]:underline [&_p]:text-sm [&_svg]:text-muted-foreground/80">
+        {/* Location */}
+        <div className="flex items-center gap-1.5">
+          <div className="flex size-4 shrink-0 items-center justify-center">
+            <MapPinIcon className="size-4 text-muted-foreground/80" />
+          </div>
+          <a
+            href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(USER.address)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm hover:underline"
+          >
+            {USER.address}
+          </a>
+        </div>
+
+        {/* Website */}
+        <div className="flex items-center gap-1.5 text-[#e1b12c] [&_a]:text-[#e1b12c]!">
+          <div className="flex size-4 shrink-0 items-center justify-center">
+            <LinkIcon className="size-4 text-[#e1b12c]!" />
+          </div>
+          <a
+            href={USER.website}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm hover:underline"
+          >
+            {urlToName(USER.website)}
+          </a>
+        </div>
+
+        {/* Pronouns */}
+        <div className="flex items-center gap-1.5">
+          <div className="flex size-4 shrink-0 items-center justify-center">
+            {getGenderIcon(USER.gender)}
+          </div>
+          <span className="text-sm">{USER.pronouns}</span>
+        </div>
+
+        {/* Current Local Time */}
+        <CurrentLocalTimeItem timeZone={USER.timeZone} />
+
+        {/* Phone */}
+        <PhoneItem phoneNumber={USER.phoneNumber} />
+
+        {/* Email */}
+        <EmailItem email={USER.email} />
+      </div>
+
+      {/* 5. Flip sentences roles */}
+      <FlipSentences className="mt-4 h-10 border-t border-dashed border-line pt-2 text-sm">
+        {USER.flipSentences}
+      </FlipSentences>
     </div>
   )
 }
