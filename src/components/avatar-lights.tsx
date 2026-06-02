@@ -10,14 +10,19 @@ export type AvatarLightsVariants = {
 export function AvatarLights({
   className,
   variants,
+  shape = "circle",
   ...props
 }: Omit<React.ComponentProps<"div">, "children"> & {
   variants: AvatarLightsVariants
+  shape?: "circle" | "square"
 }) {
+  const roundedClass = shape === "square" ? "rounded-2xl sm:rounded-[18%]" : "rounded-full"
+
   return (
     <div
       className={cn(
-        "pointer-events-none relative size-30 rounded-full min-[24rem]:size-32 sm:size-40",
+        "pointer-events-none relative size-30 min-[24rem]:size-32 sm:size-40",
+        roundedClass,
         className
       )}
       {...props}
@@ -27,6 +32,7 @@ export function AvatarLights({
           src={variants.lightOff}
           alt="Avatar with lights off in light mode"
           fetchPriority="high"
+          shape={shape}
         />
       </div>
 
@@ -35,6 +41,7 @@ export function AvatarLights({
           src={variants.lightOn}
           alt="Avatar with lights on in light mode"
           fetchPriority="high"
+          shape={shape}
         />
       </AvatarLayer>
 
@@ -43,6 +50,7 @@ export function AvatarLights({
           src={variants.darkOff}
           alt="Avatar with lights off in dark mode"
           fetchPriority="high"
+          shape={shape}
         />
       </AvatarLayer>
 
@@ -51,11 +59,15 @@ export function AvatarLights({
           src={variants.darkOn}
           alt="Avatar with lights on in dark mode"
           fetchPriority="high"
+          shape={shape}
         />
       </AvatarLayer>
 
       <div
-        className="pointer-events-none absolute inset-0 rounded-full inset-ring-1 inset-ring-foreground/10"
+        className={cn(
+          "pointer-events-none absolute inset-0 inset-ring-1 inset-ring-foreground/10",
+          roundedClass
+        )}
         aria-hidden
       />
     </div>
@@ -78,12 +90,15 @@ function AvatarImage({
   className,
   src,
   alt,
+  shape = "circle",
   ...props
-}: React.ComponentProps<"img">) {
+}: React.ComponentProps<"img"> & { shape?: "circle" | "square" }) {
+  const roundedClass = shape === "square" ? "rounded-2xl sm:rounded-[18%]" : "rounded-full"
   return (
     <img
       className={cn(
-        "size-full rounded-full object-cover select-none",
+        "size-full object-cover select-none",
+        roundedClass,
         className
       )}
       src={src}
@@ -92,3 +107,4 @@ function AvatarImage({
     />
   )
 }
+
