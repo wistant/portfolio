@@ -7,8 +7,6 @@ import { Blog } from "./components/blog"
 import { Experiences } from "./components/experiences"
 import { GitHubContributions } from "./components/github-contributions"
 import { Insights } from "./components/insights"
-import { Overview } from "./components/overview"
-import { ProfileCover } from "./components/profile-cover"
 import { ProfileHeader } from "./components/profile-header"
 import { Projects } from "./components/projects"
 import { SocialLinks } from "./components/social-links"
@@ -32,10 +30,8 @@ export default function HomePage() {
       />*/}
 
       <div className="mx-auto md:max-w-3xl *:[[id]]:scroll-mt-22">
-        <ProfileCover />
         <ProfileHeader />
 
-        <Overview />
         <SocialLinks />
         <Separator />
 
