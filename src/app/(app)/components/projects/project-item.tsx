@@ -21,6 +21,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/base/ui/tooltip"
+import { Icons } from "@/components/icons"
 import { Markdown } from "@/components/markdown"
 
 export function ProjectItem({
@@ -82,6 +83,27 @@ export function ProjectItem({
                 </dd>
               </dl>
             </div>
+
+            {project.github && (
+              <Tooltip>
+                <TooltipTrigger
+                  render={
+                    <a
+                      className="relative flex size-6 shrink-0 items-center justify-center text-muted-foreground after:absolute after:-inset-2 hover:text-foreground"
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener"
+                      aria-label="Open GitHub Repository"
+                    >
+                      <Icons.github className="pointer-events-none size-4" />
+                    </a>
+                  }
+                />
+                <TooltipContent>
+                  <p>Open GitHub Repository</p>
+                </TooltipContent>
+              </Tooltip>
+            )}
 
             <Tooltip>
               <TooltipTrigger

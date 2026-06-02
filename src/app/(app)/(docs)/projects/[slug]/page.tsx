@@ -9,7 +9,7 @@ import {
 } from "@/data/doc/documents"
 import { USER } from "@/data/portfolio/user"
 import { getTableOfContents } from "fumadocs-core/content/toc"
-import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react"
+import { ArrowLeftIcon, ArrowRightIcon, LinkIcon } from "lucide-react"
 import type { BlogPosting as PageSchema, WithContext } from "schema-dts"
 
 import type { Doc } from "@/types/document"
@@ -35,6 +35,7 @@ import { LLMCopyButtonWithViewOptions } from "@/components/doc/doc-page-actions"
 import { DocPageRoot } from "@/components/doc/doc-page-root"
 import { DocShareMenu } from "@/components/doc/doc-share-menu"
 import { FramedImage } from "@/components/embed"
+import { Icons } from "@/components/icons"
 import { MDX } from "@/components/mdx"
 import { TOCInline } from "@/components/toc-inline"
 import { TOCMinimap } from "@/components/toc-minimap"
@@ -238,12 +239,41 @@ export default async function Page({ params }: PageProps<"/projects/[slug]">) {
             />
           </div>
 
-          <h1
+          <div
             data-slot="doc-title"
-            className="screen-line-bottom px-4 text-3xl font-semibold tracking-tight text-balance"
+            className="screen-line-bottom flex flex-col justify-between gap-4 px-4 py-4 md:flex-row md:items-center md:py-6"
           >
-            {doc.metadata.title}
-          </h1>
+            <h1 className="text-3xl font-semibold tracking-tight text-balance">
+              {doc.metadata.title}
+            </h1>
+
+            <div className="flex shrink-0 items-center gap-2">
+              {doc.metadata.webUrl && (
+                <Button variant="outline" size="sm" asChild className="gap-2">
+                  <a
+                    href={doc.metadata.webUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <LinkIcon className="size-4" />
+                    <span>Live Demo</span>
+                  </a>
+                </Button>
+              )}
+              {doc.metadata.githubUrl && (
+                <Button variant="outline" size="sm" asChild className="gap-2">
+                  <a
+                    href={doc.metadata.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Icons.github className="size-4" />
+                    <span>GitHub</span>
+                  </a>
+                </Button>
+              )}
+            </div>
+          </div>
         </DocContainer>
 
         <DocGrid>

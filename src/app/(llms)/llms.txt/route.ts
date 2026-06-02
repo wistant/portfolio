@@ -1,12 +1,34 @@
-import { getAllDocs } from "@/data/doc/documents"
+import { execSync } from "child_process"
+import { getDocsByCategory } from "@/data/doc/documents"
 
 import { SITE_INFO } from "@/config/site"
 
-const allPosts = getAllDocs()
+function getLatestCommitInfo() {
+  try {
+    const info = execSync(
+      'git log -1 --format="%s — by %an on %ad" --date=short'
+    )
+      .toString()
+      .trim()
+    return info
+  } catch {
+    return "No recent git commit history available."
+  }
+}
 
-const content = `# wistant.me
+export const revalidate = false
+export const dynamic = "force-static"
+
+export async function GET() {
+  const blogs = getDocsByCategory("blog")
+  const projects = getDocsByCategory("projects")
+  const latestCommit = getLatestCommitInfo()
+
+  const content = `# wistant.me
 
 > A minimal, pixel-perfect dev portfolio, shadcn registry, and blog to showcase my work as a Software Architect/Engineer.
+
+**Last Coded**: ${latestCommit}
 
 - [About](${SITE_INFO.url}/about.md): A quick intro to me, my tech stack, and how to connect.
 - [Experience](${SITE_INFO.url}/experience.md): Highlights from my career and key roles I've taken on.
@@ -14,15 +36,15 @@ const content = `# wistant.me
 - [Awards](${SITE_INFO.url}/awards.md): My key awards and honors.
 - [Certifications](${SITE_INFO.url}/certifications.md): Certifications and credentials I've earned.
 
-## Blog
+## Blog Posts
 
-${allPosts.map((item) => `- [${item.metadata.title}](${SITE_INFO.url}/blog/${item.slug}.mdx): ${item.metadata.description}`).join("\n")}
+${blogs.map((item) => `- [${item.metadata.title}](${SITE_INFO.url}/doc.mdx/${item.slug}): ${item.metadata.description}`).join("\n")}
+
+## Project Case Studies
+
+${projects.map((item) => `- [${item.metadata.title}](${SITE_INFO.url}/doc.mdx/${item.slug}): ${item.metadata.description}`).join("\n")}
 `
 
-export const revalidate = false
-export const dynamic = "force-static"
-
-export async function GET() {
   return new Response(content, {
     headers: {
       "Content-Type": "text/markdown;charset=utf-8",

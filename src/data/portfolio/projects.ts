@@ -9,6 +9,7 @@ export const PROJECTS: Project[] = [
       end: "05.2026",
     },
     link: "https://wistant-sunabase.vercel.app",
+    github: "https://github.com/wistant/sunabase-landing",
     skills: [
       "Next.js",
       "TypeScript",
@@ -29,6 +30,7 @@ export const PROJECTS: Project[] = [
       end: "05.2026",
     },
     link: "https://github.com/wistant/portfolio",
+    github: "https://github.com/wistant/portfolio",
     skills: [
       "Open Source",
       "Portfolio",
@@ -57,6 +59,7 @@ export const PROJECTS: Project[] = [
       end: "05.2026",
     },
     link: "https://shoperzz.dev",
+    github: "https://github.com/wistant/shoperzz",
     skills: [
       "Open Source",
       "E-commerce",
@@ -89,6 +92,7 @@ export const PROJECTS: Project[] = [
       end: "05.2026",
     },
     link: "https://wistant.vercel.app",
+    github: "https://github.com/wistant/wistant.me",
     skills: [
       "Next.js",
       "TypeScript",
@@ -110,6 +114,7 @@ export const PROJECTS: Project[] = [
       end: "05.2026",
     },
     link: "https://propellent.app",
+    github: "https://github.com/wistant/propellent",
     skills: [
       "Next.js",
       "TypeScript",
@@ -130,6 +135,7 @@ export const PROJECTS: Project[] = [
       end: "05.2026",
     },
     link: "https://wistant-splyt.vercel.app",
+    github: "https://github.com/wistant/splyt-landing",
     skills: [
       "Next.js",
       "TypeScript",
@@ -151,6 +157,7 @@ export const PROJECTS: Project[] = [
       end: "05.2026",
     },
     link: "https://wistant-pizza.vercel.app",
+    github: "https://github.com/wistant/pizza-landing",
     skills: [
       "Next.js",
       "TypeScript",
@@ -170,6 +177,7 @@ export const PROJECTS: Project[] = [
       end: "05.2026",
     },
     link: "https://suburbia-wistant.vercel.app/",
+    github: "https://github.com/wistant/suburbia",
     skills: [
       "Next.js",
       "TypeScript",
@@ -192,6 +200,7 @@ export const PROJECTS: Project[] = [
       end: "05.2026",
     },
     link: "https://wistant-interlock.vercel.app",
+    github: "https://github.com/wistant/interlock-landing",
     skills: [
       "Next.js",
       "TypeScript",
