@@ -7,22 +7,22 @@ createdAt: "2026-05-15"
 updatedAt: "2026-05-15"
 ---
 
-When a TypeScript developer wants to build an e-commerce application - a marketplace, a B2B platform, a complex sales system - 
-they usually know what to use: Node.js, NestJS, GraphQL, PostgreSQL, Redis, REST, queues, events. The problem isn't skill. 
+When a TypeScript developer wants to build an e-commerce application - a marketplace, a B2B platform, a complex sales system -
+they usually know what to use: Node.js, NestJS, GraphQL, PostgreSQL, Redis, REST, queues, events. The problem isn't skill.
 And, contrary to popular belief, **the fundamental problem is not just time either**.
 
-Yes, building a serious commerce infrastructure *from scratch* takes months. But the true 
-danger lies in **Architectural Debt and Rigidity**. When you build fast to meet an aggressive 
-deadline, you make early architectural decisions that inevitably become technical traps. As the 
-business model evolves, scales, or pivots, your once "simple" codebase turns into a monolithic bottleneck. 
+Yes, building a serious commerce infrastructure _from scratch_ takes months. But the true
+danger lies in **Architectural Debt and Rigidity**. When you build fast to meet an aggressive
+deadline, you make early architectural decisions that inevitably become technical traps. As the
+business model evolves, scales, or pivots, your once "simple" codebase turns into a monolithic bottleneck.
 
-Adding a new regional payment gateway requires altering the core order state machine. 
-Introducing WhatsApp notifications breaks the email worker. Many developers find themselves 
-with a fragile foundation they are forced to rewrite entirely a few months later, simply because 
-the architecture was never designed to bend without breaking. This is exactly what 
+Adding a new regional payment gateway requires altering the core order state machine.
+Introducing WhatsApp notifications breaks the email worker. Many developers find themselves
+with a fragile foundation they are forced to rewrite entirely a few months later, simply because
+the architecture was never designed to bend without breaking. This is exactly what
 **[Shoperzz](https://github.com/shoperzz/shoperzz)** aims to solve.
 
-<br/>
+<br />
 
 ### What is Shoperzz?
 
@@ -37,21 +37,20 @@ You use only what you need. You extend what you want. You keep full mastery of y
 
 **[Shoperzz](https://github.com/shoperzz/shoperzz)** relies on [Vendure.io](https://vendure.io) as its technical foundation — currently one of the most serious references for headless commerce in TypeScript — but pushes the concept much further with an architecture explicitly designed for the modern realities of emerging markets.
 
-<br/>
+<br />
 
 ### Forget the "Western Standard"
 
 E-commerce doesn't work the same way everywhere. The vast majority of e-commerce solutions were designed
-to work in environments where Stripe is the norm, where transactional emails are central, and where purchasing 
-behaviors follow predictable, standardized Western flows. But in many rapid-growth markets, especially across 
+to work in environments where Stripe is the norm, where transactional emails are central, and where purchasing
+behaviors follow predictable, standardized Western flows. But in many rapid-growth markets, especially across
 Africa, the reality is radically different:
 
 - Payments often bypass traditional banking, flowing through **Orange Money, MTN MoMo, Wave, Airtel Money** or other localized, telco-driven solutions.
-- Customer communication is overwhelmingly conducted via **WhatsApp**  & TikTok, not email.
-- Automations, confirmations, and interactions must be designed for how people *actually* buy, which is highly conversational and mobile-first.
+- Customer communication is overwhelmingly conducted via **WhatsApp** & TikTok, not email.
+- Automations, confirmations, and interactions must be designed for how people _actually_ buy, which is highly conversational and mobile-first.
 
 **[Shoperzz](https://github.com/shoperzz/shoperzz)** integrates this reality directly into its ecosystem. Not as bloated, forced features stuffed into the core, but through a relentless **plugin** system.
-
 
 ### The Art of Absolute Modularity
 
@@ -62,10 +61,11 @@ Everything in **[Shoperzz](https://github.com/shoperzz/shoperzz)** is modular.
 - You want WhatsApp for notifications, order confirmations, or customer support? Plugin.
 - You don't need it? The module doesn't even exist in your memory heap or your codebase.
 
-The core remains perfectly lightweight, clean, and universal. 
+The core remains perfectly lightweight, clean, and universal.
 Each plugin is independent, decoupled, and extensible. It operates its own logic, emits its own events, and manages its own handlers, all while naturally integrating into the global Dependency Injection architecture of NestJS.
 
 The goal is not to force a specific monolithic path. The goal is to provide a modern, industrial foundation adaptable to any advanced product:
+
 - Marketplace.
 - B2B networks.
 - Quick commerce.
@@ -74,59 +74,59 @@ The goal is not to force a specific monolithic path. The goal is to provide a mo
 
 You choose your modules. You control your infra. You build your system.
 
-<br/>
+<br />
 
 ### Key Features (Without The Bloat)
 
 Instead of traditional, rigid tables, here is how the architectural features of **[Shoperzz](https://github.com/shoperzz/shoperzz)** break down into specialized modules:
 
-- **Plugin-First Philosophy:** Nothing is hardcoded into the core. From payment 
-gateways to business automations, everything operates as decoupled plugins. Shoperzz 
-operates on a strict plugin-first system, inspired by NestJS and Vendure. Nothing is 
-hardcoded into the core; all functionalities, from payment gateways and shipping methods 
-to communication channels and business automations, are implemented as optional, decoupled plugins. 
-This architecture ensures your build remains clean and efficient, allowing you to precisely control 
-what goes into your infrastructure. You gain the power to audit, replace, and extend each component 
-independently, tailoring the platform to any market or business model.
+- **Plugin-First Philosophy:** Nothing is hardcoded into the core. From payment
+  gateways to business automations, everything operates as decoupled plugins. Shoperzz
+  operates on a strict plugin-first system, inspired by NestJS and Vendure. Nothing is
+  hardcoded into the core; all functionalities, from payment gateways and shipping methods
+  to communication channels and business automations, are implemented as optional, decoupled plugins.
+  This architecture ensures your build remains clean and efficient, allowing you to precisely control
+  what goes into your infrastructure. You gain the power to audit, replace, and extend each component
+  independently, tailoring the platform to any market or business model.
 
-- **Independent Autonomy:** Each plugin functions as an autonomous unit with its own logic, events, and 
-handlers. This modularity ensures Shoperzz adapts to your project's unique requirements, rather than the 
-other way around. Whether you need specific payment providers, custom CRM integrations, or unique communication 
-flows (e.g., WhatsApp for certain regions), you only install the plugins relevant to your use case. This fosters 
-an ecosystem that grows independently of the core, enabling the Shoperzz team, the community, or even you to create 
-and publish new services and integrations.
+- **Independent Autonomy:** Each plugin functions as an autonomous unit with its own logic, events, and
+  handlers. This modularity ensures Shoperzz adapts to your project's unique requirements, rather than the
+  other way around. Whether you need specific payment providers, custom CRM integrations, or unique communication
+  flows (e.g., WhatsApp for certain regions), you only install the plugins relevant to your use case. This fosters
+  an ecosystem that grows independently of the core, enabling the Shoperzz team, the community, or even you to create
+  and publish new services and integrations.
 
-- **Africa-Native Focus:** Native, out-of-the-box integration for local payment gateways pervasive in the African 
-market (Orange Money, Wave, MTN MoMo, Airtel Money). It also prioritizes WhatsApp as a first-class citizen for customer 
-communication and business automation, recognizing its central role in the regional commerce landscape.
+- **Africa-Native Focus:** Native, out-of-the-box integration for local payment gateways pervasive in the African
+  market (Orange Money, Wave, MTN MoMo, Airtel Money). It also prioritizes WhatsApp as a first-class citizen for customer
+  communication and business automation, recognizing its central role in the regional commerce landscape.
 
-- **Enterprise Scalability:** Designed for performance, speed, and serious builders. Shoperzz 
-handles complex marketplace logic or specialized B2B scenarios by leveraging a modern tech stack 
-(Node.js, TypeScript, NestJS, Angular, GraphQL, TypeORM). It avoids the "ready-made application" trap by empowering 
-developers with an architecture they understand and control entirely.
+- **Enterprise Scalability:** Designed for performance, speed, and serious builders. Shoperzz
+  handles complex marketplace logic or specialized B2B scenarios by leveraging a modern tech stack
+  (Node.js, TypeScript, NestJS, Angular, GraphQL, TypeORM). It avoids the "ready-made application" trap by empowering
+  developers with an architecture they understand and control entirely.
 
-- **Total Sovereignty:** Reclaim control over your e-commerce stack. By moving away from 
-opaque monoliths to a transparent, plugin-based architecture, you gain the sovereignty needed 
-to innovate faster. You start with a lightweight core and build up only with the specific modules 
-your use-case requires.
-<br/>
+- **Total Sovereignty:** Reclaim control over your e-commerce stack. By moving away from
+  opaque monoliths to a transparent, plugin-based architecture, you gain the sovereignty needed
+  to innovate faster. You start with a lightweight core and build up only with the specific modules
+  your use-case requires.
+  <br />
 
 ### The Ecosystem: A Platform, Not a Black Box
 
-At this point, you might wonder: *“Wait... local payments, WhatsApp, notifications, 
-all directly inside a backend framework? That sounds more like a pre-built app than 
-a flexible development tool, doesn't it?”*
+At this point, you might wonder: _“Wait... local payments, WhatsApp, notifications,
+all directly inside a backend framework? That sounds more like a pre-built app than
+a flexible development tool, doesn't it?”_
 
 An excellent concern. And the answer lies precisely within the plugin architecture.
-In **[Shoperzz](https://github.com/shoperzz/shoperzz)**, a plugin is an independent 
+In **[Shoperzz](https://github.com/shoperzz/shoperzz)**, a plugin is an independent
 NPM package that adds functionality without maliciously altering the integrity of the core system.
 
-A plugin can add a payment system, listen to asynchronous events, create API routes, 
-expose GraphQL resolvers, or even inject standalone background workers. And most importantly: 
+A plugin can add a payment system, listen to asynchronous events, create API routes,
+expose GraphQL resolvers, or even inject standalone background workers. And most importantly:
 **it exists independently.**
 
-You can literally install it, update it, disable it, or delete it without breaking your application. 
-This is the NestJS philosophy taken to its ultimate conclusion: decoupled building blocks communicating 
+You can literally install it, update it, disable it, or delete it without breaking your application.
+This is the NestJS philosophy taken to its ultimate conclusion: decoupled building blocks communicating
 cleanly, ensuring your project never mutates into an unmaintainable legacy monolith.
 
 ```bash
@@ -145,6 +145,7 @@ This is the fundamental difference between surviving your infrastructure and tru
 You are not a prisoner to a tool. You are the architect defining the limits.
 
 ---
+
 #### Stats & Project Structure
 
 - `apps/` - Web applications (Platform, Docs, Dashboard).
@@ -154,6 +155,6 @@ You are not a prisoner to a tool. You are the architect defining the limits.
 - `demos/` - Ready-to-deploy storefront and API staging nodes.
 - `docs/` - Technical documentation of the **[Shoperzz](https://github.com/shoperzz/shoperzz)** project.
 
-------
+---
 
 Built with love for serious builders.
