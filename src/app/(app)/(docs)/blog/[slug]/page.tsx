@@ -30,6 +30,7 @@ import {
 import { LLMCopyButtonWithViewOptions } from "@/components/doc/doc-page-actions"
 import { DocPageRoot } from "@/components/doc/doc-page-root"
 import { DocShareMenu } from "@/components/doc/doc-share-menu"
+import { FramedImage } from "@/components/embed"
 import { MDX } from "@/components/mdx"
 import { TOCInline } from "@/components/toc-inline"
 import { TOCMinimap } from "@/components/toc-minimap"
@@ -249,6 +250,14 @@ export default async function Page({ params }: PageProps<"/blog/[slug]">) {
               <p className="text-muted-foreground">
                 {doc.metadata.description}
               </p>
+
+              {doc.metadata.image && (
+                <FramedImage
+                  src={doc.metadata.image}
+                  alt={doc.metadata.title}
+                  className="my-6 aspect-video w-full object-cover"
+                />
+              )}
 
               <TOCInline className="lg:hidden" items={toc} />
 
