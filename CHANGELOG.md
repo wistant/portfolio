@@ -1,5 +1,20 @@
 # portfolio
 
+## 1.0.5-beta.1
+
+### Patch Changes
+
+- ea1880f: - release: switch 1.0.4 from alpha to beta
+  - chore: remove old file of changeset
+  - chore(config): adjust allowed dev origins and remote patterns in next.config.ts
+  - feat(config): support explicit id fields for social link redirects
+  - chore(config): remove legacy redirects from next.config.ts
+  - chore(config): dynamically generate redirects for social links
+  - chore(portfolio): configure experiences, sponsors, social links, and tech stack
+  - ui(tech-stack): re-order entries and add linux, bash, and antigravity
+  - ui(tech-stack): fetch technology logos dynamically from GitHub repos
+  - ui(projects): fallback to github avatar for projects and update OG assets
+
 ## 1.0.5-alpha.0
 
 ### Patch Changes
