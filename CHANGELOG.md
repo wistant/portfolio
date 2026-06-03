@@ -1,5 +1,17 @@
 # portfolio
 
+## 1.0.5-beta.2
+
+### Patch Changes
+
+- acf2bcb: - chore: remove tests certifications mdx files
+  - feat(navigation): hide certifications links and home widget when empty
+  - ui(navigation): revamp not found page with dynamic context and actions
+  - ui(certifications): add coming soon empty state layout
+  - fix(blog): filter blog homepage feed, RSS, and sitemap by category
+  - feat(certifications): add certifications section with mdx support and homepage integration
+  - refactor(content): separate blog and project documents into dedicated folders
+
 ## 1.0.5-beta.1
 
 ### Patch Changes
