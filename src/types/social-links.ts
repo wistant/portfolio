@@ -1,4 +1,6 @@
 export type SocialLink = {
+  /** Unique identifier for short link / redirects (e.g. "x", "github"). */
+  id?: string
   /** Icon image URL (absolute or path under /public) shown beside the title. */
   icon: string
   title: string

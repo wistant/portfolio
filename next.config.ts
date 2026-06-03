@@ -32,19 +32,28 @@ const nextConfig: NextConfig = {
       : undefined,
   async redirects() {
     const socialRedirects = SOCIAL_LINKS.flatMap((link) => {
-      const slug = link.title.toLowerCase().replace(/[^a-z0-9]/g, "")
-      const aliases = [slug]
-      if (slug === "xtwitter") {
-        aliases.push("x", "twitter")
+      const primarySlug =
+        link.id || link.title.toLowerCase().replace(/[^a-z0-9]/g, "")
+      const aliases = [primarySlug]
+      if (
+        primarySlug === "x" ||
+        primarySlug === "twitter" ||
+        primarySlug === "xtwitter"
+      ) {
+        if (!aliases.includes("x")) aliases.push("x")
+        if (!aliases.includes("twitter")) aliases.push("twitter")
       }
-      if (slug === "github") {
-        aliases.push("git")
+      if (primarySlug === "github" || primarySlug === "git") {
+        if (!aliases.includes("github")) aliases.push("github")
+        if (!aliases.includes("git")) aliases.push("git")
       }
-      if (slug === "telegram") {
-        aliases.push("tg")
+      if (primarySlug === "telegram" || primarySlug === "tg") {
+        if (!aliases.includes("telegram")) aliases.push("telegram")
+        if (!aliases.includes("tg")) aliases.push("tg")
       }
-      if (slug === "bluesky") {
-        aliases.push("bsky")
+      if (primarySlug === "bluesky" || primarySlug === "bsky") {
+        if (!aliases.includes("bluesky")) aliases.push("bluesky")
+        if (!aliases.includes("bsky")) aliases.push("bsky")
       }
       return aliases.map((alias) => ({
         source: `/${alias}`,
