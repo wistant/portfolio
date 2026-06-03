@@ -10,6 +10,7 @@ import { Insights } from "./components/insights"
 import { ProfileHeader } from "./components/profile-header"
 import { Projects } from "./components/projects"
 import { SocialLinks } from "./components/social-links"
+import { Sponsors } from "./components/sponsors"
 import { TechStack } from "./components/tech-stack"
 
 export const metadata: Metadata = {
@@ -56,7 +57,7 @@ export default function HomePage() {
         <Experiences />
         <Separator />
 
-        {/*<Sponsors />*/}
+        <Sponsors />
         <Separator />
 
         <Separator />
