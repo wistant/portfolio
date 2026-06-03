@@ -3,7 +3,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { getDocsByCategory } from "@/data/doc/documents"
 import { format } from "date-fns"
-import { AwardIcon, ExternalLinkIcon } from "lucide-react"
+import { ArrowLeftIcon, AwardIcon, ExternalLinkIcon } from "lucide-react"
 
 import type { Doc } from "@/types/document"
 import { X_HANDLE } from "@/config/site"
@@ -70,8 +70,28 @@ export default function CertificationsPage() {
       </PageHeading>
 
       {groupKeys.length === 0 ? (
-        <div className="screen-line-top screen-line-bottom p-4">
-          <p className="font-mono text-sm">No certifications found.</p>
+        <div className="flex flex-col items-center justify-center py-12 text-center select-none">
+          <div className="relative mb-6 flex items-center justify-center">
+            <div className="animate-pulse">
+              <AwardIcon className="h-16 w-16 text-muted-foreground/40" />
+            </div>
+          </div>
+          <div className="screen-line-top screen-line-bottom w-full max-w-md space-y-3 px-4 py-6">
+            <h2 className="text-xl font-bold tracking-tight">Coming Soon 🏆</h2>
+            <p className="mx-auto max-w-xs text-sm text-muted-foreground">
+              Technical credentials, cloud badges, and professional
+              certifications are currently being synchronized. Please check back
+              soon!
+            </p>
+          </div>
+          <div className="mt-8">
+            <Button asChild variant="outline" className="gap-2">
+              <Link href="/">
+                <ArrowLeftIcon className="size-4" />
+                <span>Go to Home</span>
+              </Link>
+            </Button>
+          </div>
         </div>
       ) : (
         <div className="space-y-8">
