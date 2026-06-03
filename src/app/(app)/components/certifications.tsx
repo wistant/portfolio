@@ -12,6 +12,10 @@ import { Panel, PanelHeader, PanelTitle, PanelTitleSup } from "./panel"
 export function Certifications() {
   const allCerts = getDocsByCategory("certifications")
 
+  if (allCerts.length === 0) {
+    return null
+  }
+
   return (
     <Panel id="certifications">
       <PanelHeader>

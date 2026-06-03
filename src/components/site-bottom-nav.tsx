@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic"
-import { getAllDocs } from "@/data/doc/documents"
+import { getAllDocs, getDocsByCategory } from "@/data/doc/documents"
 
 import type { DocPreview } from "@/types/document"
 import { MOBILE_NAV } from "@/config/site"
@@ -11,6 +11,7 @@ const NavMobile = dynamic(() => import("@/components/nav-mobile"))
 
 export function SiteBottomNav() {
   const docs = getAllDocs()
+  const hasCerts = getDocsByCategory("certifications").length > 0
 
   // Minimize data serialized to client component - only send necessary fields
   const docPreviews: DocPreview[] = docs.map((doc) => ({
@@ -18,6 +19,10 @@ export function SiteBottomNav() {
     title: doc.metadata.title,
     category: doc.metadata.category,
   }))
+
+  const mobileNavItems = hasCerts
+    ? MOBILE_NAV
+    : MOBILE_NAV.filter((item) => item.href !== "/certifications")
 
   return (
     <div
@@ -31,7 +36,7 @@ export function SiteBottomNav() {
         orientation="vertical"
         className="mr-1 ml-2.5 data-vertical:h-6 data-vertical:self-center"
       />
-      <NavMobile items={MOBILE_NAV} />
+      <NavMobile items={mobileNavItems} />
     </div>
   )
 }

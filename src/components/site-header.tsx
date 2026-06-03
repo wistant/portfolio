@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic"
 import Link from "next/link"
-import { getAllDocs } from "@/data/doc/documents"
+import { getAllDocs, getDocsByCategory } from "@/data/doc/documents"
 
 import type { DocPreview } from "@/types/document"
 import { MAIN_NAV } from "@/config/site"
@@ -18,6 +18,7 @@ const CommandMenu = dynamic(() => import("@/components/command-menu"))
 
 export function SiteHeader() {
   const docs = getAllDocs()
+  const hasCerts = getDocsByCategory("certifications").length > 0
 
   // Minimize data serialized to client component - only send necessary fields
   const docPreviews: DocPreview[] = docs.map((doc) => ({
@@ -25,6 +26,10 @@ export function SiteHeader() {
     title: doc.metadata.title,
     category: doc.metadata.category,
   }))
+
+  const headerNavItems = hasCerts
+    ? MAIN_NAV
+    : MAIN_NAV.filter((item) => item.href !== "/certifications")
 
   return (
     <header className="sticky top-0 z-50 max-w-screen overflow-x-hidden bg-background px-2 pt-2">
@@ -37,7 +42,7 @@ export function SiteHeader() {
 
         <div className="flex-1" />
 
-        <NavDesktop items={MAIN_NAV} />
+        <NavDesktop items={headerNavItems} />
 
         <div className="flex items-center *:first:mr-2 max-sm:*:data-[slot=command-menu-trigger]:hidden">
           <CommandMenu docs={docPreviews} enabledHotkeys />

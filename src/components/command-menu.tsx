@@ -195,6 +195,22 @@ export function CommandMenu({
 
   const { success: tiksSuccess } = useTiks()
 
+  const hasCerts = useMemo(() => {
+    return docs.some((doc) => doc.category === "certifications")
+  }, [docs])
+
+  const menuLinks = useMemo(() => {
+    return hasCerts
+      ? MENU_LINKS
+      : MENU_LINKS.filter((link) => link.href !== "/certifications")
+  }, [hasCerts])
+
+  const portfolioLinks = useMemo(() => {
+    return hasCerts
+      ? PORTFOLIO_LINKS
+      : PORTFOLIO_LINKS.filter((link) => link.href !== "/certifications")
+  }, [hasCerts])
+
   useHotkeys(
     "mod+k, slash",
     (e) => {
@@ -342,14 +358,14 @@ export function CommandMenu({
 
             <CommandLinkGroup
               heading="Menu"
-              links={MENU_LINKS}
+              links={menuLinks}
               onLinkHighlight={handleLinkHighlight}
               onLinkSelect={handleOpenLink}
             />
 
             <CommandLinkGroup
               heading="Portfolio"
-              links={PORTFOLIO_LINKS}
+              links={portfolioLinks}
               onLinkHighlight={handleLinkHighlight}
               onLinkSelect={handleOpenLink}
             />

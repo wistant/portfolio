@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { getDocsByCategory } from "@/data/doc/documents"
 
 import { cn } from "@/lib/utils"
 
@@ -21,6 +22,8 @@ export const metadata: Metadata = {
 }
 
 export default function HomePage() {
+  const hasCerts = getDocsByCategory("certifications").length > 0
+
   return (
     <>
       {/*<Script
@@ -75,9 +78,12 @@ export default function HomePage() {
         {/*<Awards />*/}
         {/*<Separator />*/}
 
-        <Separator />
-        <Certifications />
-        <Separator />
+        {hasCerts && (
+          <>
+            <Certifications />
+            <Separator />
+          </>
+        )}
 
         {/*<Bookmarks />*/}
         {/*<Separator />*/}
