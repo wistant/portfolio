@@ -18,4 +18,6 @@ export type TechStack = {
   categories: string[]
   /** If true, use theme-specific icons for dark/light mode. */
   theme?: boolean
+  /** GitHub username/organization or repository to fetch logo dynamically. */
+  github?: string
 }

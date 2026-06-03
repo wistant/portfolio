@@ -1,6 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { getDocBySlug } from "@/data/doc/documents"
+import { USER } from "@/data/portfolio/user"
 import { addQueryParams } from "@/utils/url"
 import { BoxIcon, InfinityIcon, LinkIcon } from "lucide-react"
 
@@ -36,17 +37,19 @@ export function ProjectItem({
   const isSinglePeriod = end === start
   const hasLocalPage = !!getDocBySlug(project.id)
 
+  const logoSrc = project.logo || USER.logo || USER.avatar
+
   return (
     <Collapsible className={className} defaultOpen={project.isExpanded}>
       <div className="flex items-center hover:bg-accent-muted">
-        {project.logo ? (
+        {logoSrc ? (
           <Image
-            src={project.logo}
+            src={logoSrc}
             alt={project.title}
             width={32}
             height={32}
             quality={100}
-            className="mx-4 flex size-6 shrink-0 select-none"
+            className="mx-4 flex size-6 shrink-0 rounded-md object-cover select-none"
             unoptimized
             aria-hidden
           />

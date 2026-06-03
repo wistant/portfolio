@@ -1,15 +1,22 @@
 import type { NextConfig } from "next"
 
+import { SOCIAL_LINKS } from "./src/data/portfolio/social-links"
+
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   transpilePackages: ["next-mdx-remote"],
-  allowedDevOrigins: ["ncdai.localhost", "ncdai.local"],
+  allowedDevOrigins: ["wistant.localhost", "wistant.local"],
   devIndicators: false,
   images: {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "assets.chanhdai.com",
+        hostname: "github.com",
+        port: "",
+      },
+      {
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
         port: "",
       },
       {
@@ -29,53 +36,38 @@ const nextConfig: NextConfig = {
         }
       : undefined,
   async redirects() {
-    return [
-      {
-        source: "/:section(blog|components)/writing-effect-inspired-by-apple",
-        destination: "/:section/apple-hello-effect",
-        permanent: true,
-      },
-      {
-        source: "/:section(blog|components)/work-experience",
-        destination: "/:section/work-experience-component",
-        permanent: true,
-      },
-      {
-        source: "/:section(blog|components)/theme-switcher-component",
-        destination: "/:section/theme-switcher",
-        permanent: true,
-      },
-      {
-        source: "/wall-of-love",
-        destination: "/testimonials",
-        permanent: true,
-      },
-      {
-        source: "/blocks/content",
-        destination: "/blocks/marketing",
-        permanent: true,
-      },
-      {
-        source: "/blocks/content/blog-01",
-        destination: "/blocks/marketing/blog-01",
-        permanent: true,
-      },
-      {
-        source: "/blocks/content/blog-02",
-        destination: "/blocks/marketing/blog-02",
-        permanent: true,
-      },
-      {
-        source: "/blocks/content/experience-01",
-        destination: "/blocks/marketing/experience-01",
-        permanent: true,
-      },
-      {
-        source: "/blocks/content/team-01",
-        destination: "/blocks/marketing/team-01",
-        permanent: true,
-      },
-    ]
+    const socialRedirects = SOCIAL_LINKS.flatMap((link) => {
+      const primarySlug =
+        link.id || link.title.toLowerCase().replace(/[^a-z0-9]/g, "")
+      const aliases = [primarySlug]
+      if (
+        primarySlug === "x" ||
+        primarySlug === "twitter" ||
+        primarySlug === "xtwitter"
+      ) {
+        if (!aliases.includes("x")) aliases.push("x")
+        if (!aliases.includes("twitter")) aliases.push("twitter")
+      }
+      if (primarySlug === "github" || primarySlug === "git") {
+        if (!aliases.includes("github")) aliases.push("github")
+        if (!aliases.includes("git")) aliases.push("git")
+      }
+      if (primarySlug === "telegram" || primarySlug === "tg") {
+        if (!aliases.includes("telegram")) aliases.push("telegram")
+        if (!aliases.includes("tg")) aliases.push("tg")
+      }
+      if (primarySlug === "bluesky" || primarySlug === "bsky") {
+        if (!aliases.includes("bluesky")) aliases.push("bluesky")
+        if (!aliases.includes("bsky")) aliases.push("bsky")
+      }
+      return aliases.map((alias) => ({
+        source: `/${alias}`,
+        destination: link.href,
+        permanent: false,
+      }))
+    })
+
+    return socialRedirects
   },
   async rewrites() {
     return [

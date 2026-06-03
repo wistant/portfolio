@@ -38,6 +38,8 @@ export type User = {
   avatarVariants: AvatarLightsVariants
   /** Open Graph image URL for social sharing */
   ogImage: string
+  /** Public URL to logo image */
+  logo?: string
   /** Audio URL for name pronunciation */
   namePronunciationUrl: string
   /** SEO keywords list for metadata */
