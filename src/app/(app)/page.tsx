@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils"
 
 import { About } from "./components/about"
 import { Blog } from "./components/blog"
+import { Certifications } from "./components/certifications"
 import { Experiences } from "./components/experiences"
 import { GitHubContributions } from "./components/github-contributions"
 import { Insights } from "./components/insights"
@@ -74,8 +75,9 @@ export default function HomePage() {
         {/*<Awards />*/}
         {/*<Separator />*/}
 
-        {/*<Certifications />*/}
-        {/*<Separator />*/}
+        <Separator />
+        <Certifications />
+        <Separator />
 
         {/*<Bookmarks />*/}
         {/*<Separator />*/}
