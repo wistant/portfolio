@@ -77,6 +77,13 @@ const MENU_LINKS: CommandLinkItem[] = [
     shortcut: "GL",
   },
   {
+    title: "Certifications",
+    href: "/certifications",
+    kind: "page",
+    icon: <CircleCheckBigIcon strokeWidth={1.5} />,
+    shortcut: "GC",
+  },
+  {
     title: "Sponsors",
     href: "/sponsors",
     kind: "page",
@@ -119,7 +126,7 @@ const PORTFOLIO_LINKS: CommandLinkItem[] = [
   },
   {
     title: "Certifications",
-    href: "/#certs",
+    href: "/certifications",
     kind: "page",
     icon: <CircleCheckBigIcon />,
   },
@@ -187,6 +194,22 @@ export function CommandMenu({
   const [click] = useClickSound()
 
   const { success: tiksSuccess } = useTiks()
+
+  const hasCerts = useMemo(() => {
+    return docs.some((doc) => doc.category === "certifications")
+  }, [docs])
+
+  const menuLinks = useMemo(() => {
+    return hasCerts
+      ? MENU_LINKS
+      : MENU_LINKS.filter((link) => link.href !== "/certifications")
+  }, [hasCerts])
+
+  const portfolioLinks = useMemo(() => {
+    return hasCerts
+      ? PORTFOLIO_LINKS
+      : PORTFOLIO_LINKS.filter((link) => link.href !== "/certifications")
+  }, [hasCerts])
 
   useHotkeys(
     "mod+k, slash",
@@ -267,12 +290,40 @@ export function CommandMenu({
 
   const blogLinks = useMemo(
     () =>
-      docs.map<CommandLinkItem>((doc) => ({
-        title: doc.title,
-        href: `/blog/${doc.slug}`,
-        kind: "page",
-        keywords: ["blog"],
-      })),
+      docs
+        .filter((doc) => doc.category === "blog" || !doc.category)
+        .map<CommandLinkItem>((doc) => ({
+          title: doc.title,
+          href: `/blog/${doc.slug}`,
+          kind: "page",
+          keywords: ["blog"],
+        })),
+    [docs]
+  )
+
+  const projectLinks = useMemo(
+    () =>
+      docs
+        .filter((doc) => doc.category === "projects")
+        .map<CommandLinkItem>((doc) => ({
+          title: doc.title,
+          href: `/projects/${doc.slug}`,
+          kind: "page",
+          keywords: ["project", "showcase", "portfolio"],
+        })),
+    [docs]
+  )
+
+  const certificationLinks = useMemo(
+    () =>
+      docs
+        .filter((doc) => doc.category === "certifications")
+        .map<CommandLinkItem>((doc) => ({
+          title: doc.title,
+          href: `/certifications/${doc.slug}`,
+          kind: "page",
+          keywords: ["certification", "certifications", "credential", "credly"],
+        })),
     [docs]
   )
 
@@ -307,25 +358,47 @@ export function CommandMenu({
 
             <CommandLinkGroup
               heading="Menu"
-              links={MENU_LINKS}
+              links={menuLinks}
               onLinkHighlight={handleLinkHighlight}
               onLinkSelect={handleOpenLink}
             />
 
             <CommandLinkGroup
               heading="Portfolio"
-              links={PORTFOLIO_LINKS}
+              links={portfolioLinks}
               onLinkHighlight={handleLinkHighlight}
               onLinkSelect={handleOpenLink}
             />
 
-            <CommandLinkGroup
-              heading="Blog"
-              links={blogLinks}
-              fallbackIcon={<Icons.news />}
-              onLinkHighlight={handleLinkHighlight}
-              onLinkSelect={handleOpenLink}
-            />
+            {projectLinks.length > 0 && (
+              <CommandLinkGroup
+                heading="Projects"
+                links={projectLinks}
+                fallbackIcon={<BoxIcon />}
+                onLinkHighlight={handleLinkHighlight}
+                onLinkSelect={handleOpenLink}
+              />
+            )}
+
+            {blogLinks.length > 0 && (
+              <CommandLinkGroup
+                heading="Blog"
+                links={blogLinks}
+                fallbackIcon={<Icons.news />}
+                onLinkHighlight={handleLinkHighlight}
+                onLinkSelect={handleOpenLink}
+              />
+            )}
+
+            {certificationLinks.length > 0 && (
+              <CommandLinkGroup
+                heading="Certifications"
+                links={certificationLinks}
+                fallbackIcon={<CircleCheckBigIcon />}
+                onLinkHighlight={handleLinkHighlight}
+                onLinkSelect={handleOpenLink}
+              />
+            )}
 
             <CommandLinkGroup
               heading="Social Links"

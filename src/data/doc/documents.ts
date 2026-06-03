@@ -40,17 +40,46 @@ function getMDXData(dir: string) {
 }
 
 export const getAllDocs = cache(() => {
-  return getMDXData(path.join(process.cwd(), "src/content/docs")).sort(
-    (a, b) => {
-      if (a.metadata.pinned && !b.metadata.pinned) return -1
-      if (!a.metadata.pinned && b.metadata.pinned) return 1
+  const blogDir = path.join(process.cwd(), "src/content/blog")
+  const projectsDir = path.join(process.cwd(), "src/content/projects")
+  const certsDir = path.join(process.cwd(), "src/content/certifications")
 
-      return (
-        new Date(b.metadata.createdAt).getTime() -
-        new Date(a.metadata.createdAt).getTime()
-      )
-    }
-  )
+  const blogs = fs.existsSync(blogDir)
+    ? getMDXData(blogDir).map((doc) => {
+        if (!doc.metadata.category) {
+          doc.metadata.category = "blog"
+        }
+        return doc
+      })
+    : []
+
+  const projects = fs.existsSync(projectsDir)
+    ? getMDXData(projectsDir).map((doc) => {
+        if (!doc.metadata.category) {
+          doc.metadata.category = "projects"
+        }
+        return doc
+      })
+    : []
+
+  const certs = fs.existsSync(certsDir)
+    ? getMDXData(certsDir).map((doc) => {
+        if (!doc.metadata.category) {
+          doc.metadata.category = "certifications"
+        }
+        return doc
+      })
+    : []
+
+  return [...blogs, ...projects, ...certs].sort((a, b) => {
+    if (a.metadata.pinned && !b.metadata.pinned) return -1
+    if (!a.metadata.pinned && b.metadata.pinned) return 1
+
+    return (
+      new Date(b.metadata.createdAt).getTime() -
+      new Date(a.metadata.createdAt).getTime()
+    )
+  })
 })
 
 export function getDocBySlug(slug: string) {

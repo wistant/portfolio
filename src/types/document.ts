@@ -35,6 +35,10 @@ export type DocMetadata = {
   mobileImage?: string
   webUrl?: string
   githubUrl?: string
+  /** Certification specific fields */
+  logo?: string
+  credentialUrl?: string
+  group?: string
 }
 
 export type Doc = {

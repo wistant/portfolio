@@ -5,7 +5,7 @@ import Script from "next/script"
 import { findNeighbour, getAllDocs, getDocBySlug } from "@/data/doc/documents"
 import { USER } from "@/data/portfolio/user"
 import { getTableOfContents } from "fumadocs-core/content/toc"
-import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react"
+import { ArrowLeftIcon, ArrowRightIcon, ExternalLinkIcon } from "lucide-react"
 import type { BlogPosting as PageSchema, WithContext } from "schema-dts"
 
 import type { Doc } from "@/types/document"
@@ -42,17 +42,17 @@ export const dynamicParams = true
 export async function generateStaticParams() {
   const docs = getAllDocs()
   return docs
-    .filter((doc) => !doc.metadata.category || doc.metadata.category === "blog")
+    .filter((doc) => doc.metadata.category === "certifications")
     .map((doc) => ({ slug: doc.slug }))
 }
 
 export async function generateMetadata({
   params,
-}: PageProps<"/blog/[slug]">): Promise<Metadata> {
+}: PageProps<"/certifications/[slug]">): Promise<Metadata> {
   const slug = (await params).slug
   const doc = getDocBySlug(slug)
 
-  if (!doc || (doc.metadata.category && doc.metadata.category !== "blog")) {
+  if (!doc || doc.metadata.category !== "certifications") {
     return notFound()
   }
 
@@ -111,20 +111,22 @@ function getPageJsonLd(doc: Doc): WithContext<PageSchema> {
   }
 }
 
-export default async function Page({ params }: PageProps<"/blog/[slug]">) {
+export default async function CertificationPage({
+  params,
+}: PageProps<"/certifications/[slug]">) {
   const slug = (await params).slug
   const doc = getDocBySlug(slug)
 
-  if (!doc || (doc.metadata.category && doc.metadata.category !== "blog")) {
+  if (!doc || doc.metadata.category !== "certifications") {
     notFound()
   }
 
   const toc = getTableOfContents(doc.content)
 
-  const allBlogs = getAllDocs().filter(
-    (d) => !d.metadata.category || d.metadata.category === "blog"
+  const allCerts = getAllDocs().filter(
+    (d) => d.metadata.category === "certifications"
   )
-  const { previous, next } = findNeighbour(allBlogs, slug)
+  const { previous, next } = findNeighbour(allCerts, slug)
 
   return (
     <>
@@ -137,8 +139,8 @@ export default async function Page({ params }: PageProps<"/blog/[slug]">) {
       />
 
       <DocKeyboardShortcuts
-        previous={previous ? `/blog/${previous.slug}` : null}
-        next={next ? `/blog/${next.slug}` : null}
+        previous={previous ? `/certifications/${previous.slug}` : null}
+        next={next ? `/certifications/${next.slug}` : null}
       />
 
       <DocPageRoot>
@@ -152,16 +154,16 @@ export default async function Page({ params }: PageProps<"/blog/[slug]">) {
               size="sm"
               asChild
             >
-              <Link href="/blog">
-                <ArrowLeftIcon />
-                Blog
+              <Link href="/certifications">
+                <ArrowLeftIcon className="size-4" />
+                Certifications
               </Link>
             </Button>
 
             <div className="flex items-center gap-2">
               <LLMCopyButtonWithViewOptions
                 markdownUrl={`${getDocUrl(doc)}.mdx`}
-                isComponent={doc.metadata.category === "components"}
+                isComponent={false}
               />
 
               <DocShareMenu title={doc.metadata.title} url={getDocUrl(doc)} />
@@ -177,19 +179,19 @@ export default async function Page({ params }: PageProps<"/blog/[slug]">) {
                         asChild
                       >
                         <Link
-                          href={`/blog/${previous.slug}`}
-                          aria-label="Previous Post"
+                          href={`/certifications/${previous.slug}`}
+                          aria-label="Previous Certification"
                         >
-                          <ArrowLeftIcon />
+                          <ArrowLeftIcon className="size-4" />
                         </Link>
                       </Button>
                     }
                   />
                   <TooltipContent className="pr-2 pl-3">
                     <div className="flex items-center gap-3">
-                      Previous Post
+                      Previous Cert
                       <Kbd>
-                        <ArrowLeftIcon />
+                        <ArrowLeftIcon className="size-3" />
                       </Kbd>
                     </div>
                   </TooltipContent>
@@ -207,19 +209,19 @@ export default async function Page({ params }: PageProps<"/blog/[slug]">) {
                         asChild
                       >
                         <Link
-                          href={`/blog/${next.slug}`}
-                          aria-label="Next Post"
+                          href={`/certifications/${next.slug}`}
+                          aria-label="Next Certification"
                         >
-                          <ArrowRightIcon />
+                          <ArrowRightIcon className="size-4" />
                         </Link>
                       </Button>
                     }
                   />
                   <TooltipContent className="pr-2 pl-3">
                     <div className="flex items-center gap-3">
-                      Next Post
+                      Next Cert
                       <Kbd>
-                        <ArrowRightIcon />
+                        <ArrowRightIcon className="size-3" />
                       </Kbd>
                     </div>
                   </TooltipContent>
@@ -238,12 +240,29 @@ export default async function Page({ params }: PageProps<"/blog/[slug]">) {
             />
           </div>
 
-          <h1
+          <div
             data-slot="doc-title"
-            className="screen-line-bottom px-4 text-3xl font-semibold tracking-tight text-balance"
+            className="screen-line-bottom flex flex-col justify-between gap-4 px-4 py-4 md:flex-row md:items-center md:py-6"
           >
-            {doc.metadata.title}
-          </h1>
+            <h1 className="text-3xl font-semibold tracking-tight text-balance">
+              {doc.metadata.title}
+            </h1>
+
+            <div className="flex shrink-0 items-center gap-2">
+              {doc.metadata.credentialUrl && (
+                <Button variant="outline" size="sm" asChild className="gap-2">
+                  <a
+                    href={doc.metadata.credentialUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <ExternalLinkIcon className="size-4" />
+                    <span>Verify Credential</span>
+                  </a>
+                </Button>
+              )}
+            </div>
+          </div>
         </DocContainer>
 
         <DocGrid>
@@ -283,6 +302,5 @@ export default async function Page({ params }: PageProps<"/blog/[slug]">) {
 }
 
 function getDocUrl(doc: Doc) {
-  const isComponent = doc.metadata.category === "components"
-  return isComponent ? `/components/${doc.slug}` : `/blog/${doc.slug}`
+  return `/certifications/${doc.slug}`
 }

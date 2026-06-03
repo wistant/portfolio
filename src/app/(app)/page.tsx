@@ -1,9 +1,11 @@
 import type { Metadata } from "next"
+import { getDocsByCategory } from "@/data/doc/documents"
 
 import { cn } from "@/lib/utils"
 
 import { About } from "./components/about"
 import { Blog } from "./components/blog"
+import { Certifications } from "./components/certifications"
 import { Experiences } from "./components/experiences"
 import { GitHubContributions } from "./components/github-contributions"
 import { Insights } from "./components/insights"
@@ -20,6 +22,8 @@ export const metadata: Metadata = {
 }
 
 export default function HomePage() {
+  const hasCerts = getDocsByCategory("certifications").length > 0
+
   return (
     <>
       {/*<Script
@@ -74,8 +78,12 @@ export default function HomePage() {
         {/*<Awards />*/}
         {/*<Separator />*/}
 
-        {/*<Certifications />*/}
-        {/*<Separator />*/}
+        {hasCerts && (
+          <>
+            <Certifications />
+            <Separator />
+          </>
+        )}
 
         {/*<Bookmarks />*/}
         {/*<Separator />*/}

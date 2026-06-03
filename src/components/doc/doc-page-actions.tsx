@@ -113,6 +113,11 @@ export function ViewOptions({
 
     const q = getPrompt(fullMarkdownUrl, isComponent)
 
+    const urlParts = markdownUrl.replace(/^\//, "").split("/")
+    const categoryType = urlParts[0]
+    const fileSlug = urlParts.slice(1).join("/")
+    const githubPath = `src/content/${categoryType}/${fileSlug}`
+
     const _items = [
       {
         title: "View as Markdown",
@@ -121,7 +126,7 @@ export function ViewOptions({
       },
       {
         title: "Open in GitHub",
-        href: `https://github.com/wistant/portfolio/blob/main/src/content/docs/${markdownUrl.split("/").slice(-1).join("/")}`,
+        href: `https://github.com/wistant/portfolio/blob/main/${githubPath}`,
         icon: Icons.github,
       },
       {

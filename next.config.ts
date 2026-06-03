@@ -24,6 +24,11 @@ const nextConfig: NextConfig = {
         hostname: "images.unsplash.com",
         port: "",
       },
+      {
+        protocol: "https",
+        hostname: "images.credly.com",
+        port: "",
+      },
     ],
     qualities: [75, 100],
   },
@@ -72,11 +77,11 @@ const nextConfig: NextConfig = {
   async rewrites() {
     return [
       {
-        source: "/:section(blog|components)/:slug.mdx",
+        source: "/:section(blog|components|certifications)/:slug.mdx",
         destination: "/doc.mdx/:slug",
       },
       {
-        source: "/:section(blog|components)/:slug",
+        source: "/:section(blog|components|certifications)/:slug",
         destination: "/doc.mdx/:slug",
         has: [
           {

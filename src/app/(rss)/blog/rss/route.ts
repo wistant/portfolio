@@ -1,4 +1,4 @@
-import { getAllDocs } from "@/data/doc/documents"
+import { getDocsByCategory } from "@/data/doc/documents"
 
 import { SITE_INFO } from "@/config/site"
 
@@ -6,7 +6,7 @@ export const revalidate = false
 export const dynamic = "force-static"
 
 export function GET() {
-  const itemsXml = getAllDocs()
+  const itemsXml = getDocsByCategory("blog")
     .map(
       (doc) =>
         `<item>

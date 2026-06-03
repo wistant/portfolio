@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { getAllDocs } from "@/data/doc/documents"
+import { getDocsByCategory } from "@/data/doc/documents"
 import { ArrowRightIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
@@ -9,7 +9,7 @@ import { PostItem } from "@/components/post-item"
 import { Panel, PanelHeader, PanelTitle, PanelTitleSup } from "./panel"
 
 export function Blog() {
-  const allPosts = getAllDocs()
+  const allPosts = getDocsByCategory("blog")
 
   return (
     <Panel id="blog">
