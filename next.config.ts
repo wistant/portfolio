@@ -53,54 +53,7 @@ const nextConfig: NextConfig = {
       }))
     })
 
-    return [
-      ...socialRedirects,
-      {
-        source: "/:section(blog|components)/writing-effect-inspired-by-apple",
-        destination: "/:section/apple-hello-effect",
-        permanent: true,
-      },
-      {
-        source: "/:section(blog|components)/work-experience",
-        destination: "/:section/work-experience-component",
-        permanent: true,
-      },
-      {
-        source: "/:section(blog|components)/theme-switcher-component",
-        destination: "/:section/theme-switcher",
-        permanent: true,
-      },
-      {
-        source: "/wall-of-love",
-        destination: "/testimonials",
-        permanent: true,
-      },
-      {
-        source: "/blocks/content",
-        destination: "/blocks/marketing",
-        permanent: true,
-      },
-      {
-        source: "/blocks/content/blog-01",
-        destination: "/blocks/marketing/blog-01",
-        permanent: true,
-      },
-      {
-        source: "/blocks/content/blog-02",
-        destination: "/blocks/marketing/blog-02",
-        permanent: true,
-      },
-      {
-        source: "/blocks/content/experience-01",
-        destination: "/blocks/marketing/experience-01",
-        permanent: true,
-      },
-      {
-        source: "/blocks/content/team-01",
-        destination: "/blocks/marketing/team-01",
-        permanent: true,
-      },
-    ]
+    return socialRedirects
   },
   async rewrites() {
     return [
