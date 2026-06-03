@@ -10,7 +10,7 @@ export const EXPERIENCES: Experience[] = [
     positions: [
       {
         id: "1",
-        title: "Professional Backend & Full-Stack Intern",
+        title: "Intern Backend developer",
         employmentPeriod: {
           start: "01.2026",
           end: "05.2026",
@@ -31,7 +31,6 @@ export const EXPERIENCES: Experience[] = [
           "SOLID Principles",
           "Design Patterns",
           "REST APIs",
-          "GraphQL",
         ],
         isExpanded: true,
       },
@@ -46,8 +45,8 @@ export const EXPERIENCES: Experience[] = [
         id: "1",
         title: "Front-End & API Developer",
         employmentPeriod: {
-          start: "05.2024",
-          end: "12.2025",
+          start: "06.2025",
+          end: "09.2025",
         },
         employmentType: "Full-time",
         icon: <CodeXmlIcon />,
@@ -60,9 +59,6 @@ export const EXPERIENCES: Experience[] = [
           "HTML5",
           "CSS3",
           "DOM Manipulation",
-          "Node.js",
-          "Express",
-          "REST APIs",
           "Web Performance",
           "API Integration",
         ],

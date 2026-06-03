@@ -20,10 +20,10 @@ export const SOCIAL_LINKS: SocialLink[] = [
     href: "https://linkedin.com/in/wistant",
   },
   {
-    icon: "/icons/SocialIcons/whatsapp.svg",
-    title: "WhatsApp",
+    icon: "/icons/SocialIcons/telegram.svg",
+    title: "Telegram",
     subtitle: "Wistant",
-    href: "https://wa.me/237697135341?text=Bonjour%20Wistant%2C%20je%20viens%20de%20voir%20votre%20portfolio%20et%20j%27aimerais%20%C3%A9changer%20avec%20vous.",
+    href: "https://t.me/iamwistant",
   },
   {
     icon: "/icons/SocialIcons/reddit.svg",

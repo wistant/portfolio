@@ -42,12 +42,12 @@ export const MOBILE_NAV: NavItem[] = [
   ...MAIN_NAV,
 ]
 
-export const X_HANDLE = "@iamnwistant"
+export const X_HANDLE = "@iamwistant"
 export const GITHUB_USERNAME = "wistant"
 export const SOURCE_CODE_GITHUB_REPO = "portfolio"
 export const SOURCE_CODE_GITHUB_URL = "https://github.com/wistant/portfolio"
 
-export const SPONSORSHIP_URL = "https://github.com/sponsors/witant"
+export const SPONSORSHIP_URL = "https://github.com/sponsors/wistant"
 
 export const UTM_PARAMS = {
   utm_source: "wistant.me",

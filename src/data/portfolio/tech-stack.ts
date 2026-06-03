@@ -51,13 +51,6 @@ export const TECH_STACK: TechStack[] = [
     categories: ["Backend & Database"],
     github: "redis",
   },
-  {
-    key: "java",
-    title: "Java",
-    href: "https://www.java.com/",
-    categories: ["Languages"],
-    github: "openjdk",
-  },
 
   // === Dev Tools, System & OS ===
   {

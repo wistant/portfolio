@@ -57,6 +57,8 @@ export default function HomePage() {
         <Experiences />
         <Separator />
 
+        <Separator />
+        <Separator />
         <Sponsors />
         <Separator />
 
