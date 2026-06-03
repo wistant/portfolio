@@ -20,6 +20,9 @@ export function TechStack() {
         <ul className="flex flex-wrap gap-2">
           {TECH_STACK.map((tech) => {
             const slug = KEY_MAP[tech.key] || tech.key
+            const owner = tech.github?.split("/")[0] || tech.github
+            const logoSrc = owner ? `https://github.com/${owner}.png` : null
+
             return (
               <li key={tech.key} className="flex">
                 <a
@@ -29,7 +32,13 @@ export function TechStack() {
                   aria-label={tech.title}
                   className="flex items-center gap-1.5 rounded-full bg-zinc-50 px-1.5 py-0.5 text-xs tracking-wide text-foreground ring-1 ring-border/80 select-none dark:bg-zinc-900 [&_img]:size-3.5"
                 >
-                  {tech.theme ? (
+                  {logoSrc ? (
+                    <img
+                      className="size-3.5 rounded-full object-cover"
+                      src={logoSrc}
+                      alt={`${tech.title} icon`}
+                    />
+                  ) : tech.theme ? (
                     <>
                       <img
                         className="hidden size-3.5 [html.light_&]:block"
