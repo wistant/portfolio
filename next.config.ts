@@ -1,5 +1,7 @@
 import type { NextConfig } from "next"
 
+import { SOCIAL_LINKS } from "./src/data/portfolio/social-links"
+
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   transpilePackages: ["next-mdx-remote"],
@@ -29,7 +31,30 @@ const nextConfig: NextConfig = {
         }
       : undefined,
   async redirects() {
+    const socialRedirects = SOCIAL_LINKS.flatMap((link) => {
+      const slug = link.title.toLowerCase().replace(/[^a-z0-9]/g, "")
+      const aliases = [slug]
+      if (slug === "xtwitter") {
+        aliases.push("x", "twitter")
+      }
+      if (slug === "github") {
+        aliases.push("git")
+      }
+      if (slug === "telegram") {
+        aliases.push("tg")
+      }
+      if (slug === "bluesky") {
+        aliases.push("bsky")
+      }
+      return aliases.map((alias) => ({
+        source: `/${alias}`,
+        destination: link.href,
+        permanent: false,
+      }))
+    })
+
     return [
+      ...socialRedirects,
       {
         source: "/:section(blog|components)/writing-effect-inspired-by-apple",
         destination: "/:section/apple-hello-effect",
