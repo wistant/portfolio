@@ -13,6 +13,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       pathPrefix = "/projects"
     } else if (doc.metadata.category === "components") {
       pathPrefix = "/components"
+    } else if (doc.metadata.category === "certifications") {
+      pathPrefix = "/certifications"
     }
 
     return {
@@ -23,12 +25,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   })
 
-  const routes = ["", "/blog", "/gallery", "/projects", "/sponsors"].map(
-    (route) => ({
-      url: `${SITE_INFO.url}${route}`,
-      lastModified: new Date().toISOString(),
-    })
-  )
+  const routes = [
+    "",
+    "/blog",
+    "/gallery",
+    "/projects",
+    "/sponsors",
+    "/certifications",
+  ].map((route) => ({
+    url: `${SITE_INFO.url}${route}`,
+    lastModified: new Date().toISOString(),
+  }))
 
   return [...routes, ...docs]
 }
