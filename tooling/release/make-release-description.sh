@@ -57,7 +57,33 @@ while IFS= read -r line; do
     AUTHOR_USER="wistant"
   fi
 
-  echo "$HASH: - $SUBJECT — by @$AUTHOR_USER" >> "$OUTPUT_FILE"
+  # Extract type, scope, and clean subject using regex
+  REGEX='^([a-z]+)(\(([^)]+)\))?(!?):[[:space:]]*(.+)$'
+  if [[ "$SUBJECT" =~ $REGEX ]]; then
+    TYPE="${BASH_REMATCH[1]}"
+    SCOPE="${BASH_REMATCH[3]:-}"
+    IS_BREAKING="${BASH_REMATCH[4]:-}"
+    CLEAN_SUBJECT="${BASH_REMATCH[5]}"
+  else
+    TYPE="other"
+    SCOPE=""
+    IS_BREAKING=""
+    CLEAN_SUBJECT="$SUBJECT"
+  fi
+
+  # Format subject with scope if present
+  FORMATTED_MSG=""
+  if [[ -n "$SCOPE" ]]; then
+    FORMATTED_MSG="**${SCOPE}**: ${CLEAN_SUBJECT}"
+  else
+    FORMATTED_MSG="${CLEAN_SUBJECT}"
+  fi
+
+  if [[ -n "$IS_BREAKING" ]]; then
+    FORMATTED_MSG="💥 [BREAKING] ${FORMATTED_MSG}"
+  fi
+
+  echo "$HASH: - [$TYPE] $FORMATTED_MSG — by @$AUTHOR_USER" >> "$OUTPUT_FILE"
 done <<< "$COMMITS"
 
 echo "" >> "$OUTPUT_FILE"
