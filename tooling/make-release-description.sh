@@ -39,6 +39,8 @@ COMMITS=$(git log "$LOG_RANGE" --pretty=format:"%s ||| %ae ||| %h" --no-merges 2
 declare -A CATEGORIES=(
   ["feat"]="Features"
   ["fix"]="Bug Fixes"
+  ["ui"]="UI / Design"
+  ["style"]="Style & Formatting"
   ["docs"]="Documentation"
   ["ci"]="CI / Infrastructure"
   ["refactor"]="Refactoring"
@@ -91,13 +93,36 @@ while IFS= read -r line; do
     fi
   fi
 
-  # Extract type prefix (feat, fix, etc.)
-  TYPE=$(echo "$SUBJECT" | grep -oP '^[a-z]+(?=[\(!\:])' || echo "other")
+  # Extract type, scope, and clean subject using regex
+  REGEX='^([a-z]+)(\(([^)]+)\))?(!?):[[:space:]]*(.+)$'
+  if [[ "$SUBJECT" =~ $REGEX ]]; then
+    TYPE="${BASH_REMATCH[1]}"
+    SCOPE="${BASH_REMATCH[3]:-}"
+    IS_BREAKING="${BASH_REMATCH[4]:-}"
+    CLEAN_SUBJECT="${BASH_REMATCH[5]}"
+  else
+    TYPE="other"
+    SCOPE=""
+    IS_BREAKING=""
+    CLEAN_SUBJECT="$SUBJECT"
+  fi
+
+  # Format subject with scope if present
+  FORMATTED_MSG=""
+  if [[ -n "$SCOPE" ]]; then
+    FORMATTED_MSG="**${SCOPE}**: ${CLEAN_SUBJECT}"
+  else
+    FORMATTED_MSG="${CLEAN_SUBJECT}"
+  fi
+
+  if [[ -n "$IS_BREAKING" ]]; then
+    FORMATTED_MSG="💥 [BREAKING] ${FORMATTED_MSG}"
+  fi
 
   if [[ -n "$PR_NUM" ]]; then
-    ENTRY="- ${HASH} - ${SUBJECT} by @${AUTHOR} in #${PR_NUM}"
+    ENTRY="- ${HASH} - ${FORMATTED_MSG} by @${AUTHOR} in #${PR_NUM}"
   else
-    ENTRY="- ${HASH} - ${SUBJECT} by @${AUTHOR}"
+    ENTRY="- ${HASH} - ${FORMATTED_MSG} by @${AUTHOR}"
   fi
 
   if [[ -n "${CATEGORIES[$TYPE]+x}" ]]; then
@@ -114,7 +139,7 @@ done <<< "$COMMITS"
   echo ""
 
   # Output in a defined order
-  for TYPE in feat fix refactor ci docs build test perf chore release other; do
+  for TYPE in feat fix ui style refactor ci docs build test perf chore release other; do
     if [[ -n "${BUCKETS[$TYPE]+x}" && -n "${BUCKETS[$TYPE]}" ]]; then
       echo "### ${CATEGORIES[$TYPE]}"
       echo "${BUCKETS[$TYPE]}"
