@@ -41,7 +41,9 @@ export const dynamicParams = true
 
 export async function generateStaticParams() {
   const docs = getAllDocs()
-  return docs.map((doc) => ({ slug: doc.slug }))
+  return docs
+    .filter((doc) => !doc.metadata.category || doc.metadata.category === "blog")
+    .map((doc) => ({ slug: doc.slug }))
 }
 
 export async function generateMetadata({
@@ -50,7 +52,7 @@ export async function generateMetadata({
   const slug = (await params).slug
   const doc = getDocBySlug(slug)
 
-  if (!doc) {
+  if (!doc || (doc.metadata.category && doc.metadata.category !== "blog")) {
     return notFound()
   }
 
@@ -113,14 +115,16 @@ export default async function Page({ params }: PageProps<"/blog/[slug]">) {
   const slug = (await params).slug
   const doc = getDocBySlug(slug)
 
-  if (!doc) {
+  if (!doc || (doc.metadata.category && doc.metadata.category !== "blog")) {
     notFound()
   }
 
   const toc = getTableOfContents(doc.content)
 
-  const allDocs = getAllDocs()
-  const { previous, next } = findNeighbour(allDocs, slug)
+  const allBlogs = getAllDocs().filter(
+    (d) => !d.metadata.category || d.metadata.category === "blog"
+  )
+  const { previous, next } = findNeighbour(allBlogs, slug)
 
   return (
     <>
