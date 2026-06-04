@@ -3,7 +3,7 @@ import path from "path"
 import type { Metadata } from "next"
 
 import { X_HANDLE } from "@/config/site"
-import { Gallery } from "@/app/(app)/components/gallery"
+import MasonryGallery from "@/components/mvpblocks/masonry-grid-1"
 import {
   PageHeading,
   PageHeadingDescription,
@@ -68,7 +68,7 @@ export default function Page() {
       <div className="h-4" />
       <div className="screen-line-bottom h-px" />
 
-      <Gallery images={images} />
+      <MasonryGallery images={images} />
 
       <div className="screen-line-top h-4" />
     </div>
