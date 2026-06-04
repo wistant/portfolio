@@ -1,113 +1,116 @@
 ---
 title: "Building a Pixel-Perfect Developer Portfolio and Component Registry: My Design Engineering Journey"
-description: "An in-depth look at the technical choices, X inspiration, and custom registry architecture behind my personal website."
+description: "A deep dive into the engineering, custom shadcn-style registry pipeline, and design choices behind this platform."
 image: "/preview.png"
 createdAt: "2026-06-04"
 updatedAt: "2026-06-04"
 ---
 
-When I set out to build my personal site, I didn't want just another boilerplate portfolio. The internet is flooded with generic landing pages using standard component templates. As a Design Engineer, I wanted a site that was a testament to my skills—a pixel-perfect digital hub that combines high-performance engineering with premium aesthetics.
+When I decided to rebuild my portfolio, I wanted to move away from standard pre-built landing pages. I aimed to construct a highly optimized, custom design-engineered platform that serves as both a showcase and a package distribution node. 
 
-In this write-up, I’ll explain how I built this platform, the design inspiration I drew from creators on X (formerly Twitter), my technical choices, and how I implemented an interactive shadcn-style component registry.
-
-![Portfolio Preview Showcase](/preview.png)
+In this article, I will detail the architectural choices, implementation challenges, and technical mechanisms that power this site.
 
 <br />
 
-### The Spark: X (Twitter) Design Inspiration
+### The Inspiration: chanhdai.com
 
-The inspiration for this website started on my X timeline. I noticed a shift in developer portfolios towards **Design Engineering**—interfaces that prioritize micro-interactions, canvas-like grid backdrops, and physical details (like dynamic cursors, glowing borders, and realistic device mockups).
+This project’s aesthetic and structural identity is a tribute to [chanhdai.com](https://chanhdai.com/), an exceptional portfolio created by Design Engineer Chanh Dai. I first encountered his work trending on X (Twitter), showing off screen-aligned grid lines, physical micro-interactions, and a custom mouse-tracking canvas cursor. 
 
-I wanted to capture that high-end feeling. Specifically:
-- **Perfect Grid Layouts:** Screen-aligned borders and dashed grid lines separating content columns.
-- **Physical Feedback:** Hover effects that feel physical, such as a cursor that snaps to interactive elements or an avatar with dynamic lighting states.
-- **Accessible & Responsive Design:** High-fidelity details that scale gracefully down to touch devices.
+Inspired by his pixel-perfect design system, I set out to reconstruct this layout from scratch, adapting it to Next.js 16 (App Router), React 19, and Tailwind CSS v4.
 
-<br />
-
-### Technical Foundation & Architecture
-
-To achieve this vision without compromising page speed, I carefully selected my stack:
-
-1. **Next.js 16 (App Router):** The foundation of the site. Using React Server Components (RSC) allows me to pre-render content (like blog posts and certifications) on the server, resulting in near-instantaneous page loads.
-2. **Tailwind CSS v4:** Tailwind v4 is a major leap forward. It replaces the old config file with native CSS variables and `@theme` directives directly in CSS. This gives me absolute control over my layout utility classes, border colors, and dark-mode overrides.
-3. **Fumadocs:** For content management. It parses my MDX files and dynamically generates the Table of Contents columns, providing built-in syntax highlighting and keyboard shortcuts.
-
-![Hero Section Layout](/hero.png)
+<FramedImage src="/preview.png" alt="Developer Portfolio and Registry Preview" />
 
 <br />
 
-### Premium UI Libraries & Components
+### Technical Choices & Performance Architecture
 
-Creating premium micro-animations requires specialized libraries. Here are the core tools that power the interface:
+To maintain high performance while loading heavy visual and interactive assets, I built on a modern, decoupled stack:
 
-#### GSAP & ScrollTrigger
-GSAP is the gold standard for high-performance animations. I used it to implement:
-- **Interactive Target Cursor (`TargetCursor.tsx`):** A custom canvas cursor that follows the mouse and expands/snaps to buttons and links. It uses GSAP to smooth out the tracking using custom easing.
-- **Sticky Stack Cards (`StickyCard002`):** Used in the gallery, this component pins cards on scroll and scales down older items as new ones slide over them.
+#### Next.js 16 (App Router) & React 19
+Using React Server Components (RSC) by default allows the server to compile and serialize the main layout and MDX files. This ensures the initial HTML load is extremely small and fast. Only interactive islands—such as the custom cursor tracking, theme switcher, and collapsible listings—are hydrated as client-side modules.
 
-#### Motion (Framer Motion)
-While GSAP handles complex canvas-like animations, Motion manages our React layout transitions:
-- **Theme Switcher (`ThemeSwitcher.tsx`):** A three-option pill (System, Light, Dark) with a sliding border background that morphs between options.
-- **Collapsible Lists:** Expanding/collapsing project card details with layout animations.
+#### Tailwind CSS v4
+Tailwind v4 is an architectural shift from v3. By replacing the JavaScript-based `tailwind.config.js` with native CSS variables and `@theme` directives inside a CSS sheet, v4 reduces compile-time overhead. It compiles utility classes directly to optimized CSS variables, improving hot-reloading speed and runtime rendering.
+
+#### Unified Content Layer (MDX + Fumadocs)
+Instead of using a separate database or API headless CMS, the blog posts, projects, and certifications are served directly via MDX files in `src/content/`. I built a unified compiler layer around `gray-matter` and `fumadocs-core`. 
+
+Fumadocs parses the file directory structure, reads headings to construct on-the-fly Table of Contents arrays, and automatically exposes raw `.mdx` content endpoints. This makes the text easily digestible for search engines, RSS readers, and LLM web-crawlers (via `/llms.txt`).
+
+<FramedImage src="/hero.png" alt="Dashboard Hero Grid Layout" />
+
+<br />
+
+### Building a Custom Component Registry
+
+To turn this site into a utility tool for other developers, I built a custom component registry inspired by `shadcn/ui`. This allows me to distribute custom UI components, hooks, and blocks.
+
+```bash
+# How to install components directly from our registry
+npx shadcn@latest add http://wistant.me/r/theme-switcher.json
+```
+
+#### The Compilation Pipeline
+The registry operates as a build-step script executed before deployment:
+
+<Steps>
+<Step>
+**Component Definition:** Components are written in TypeScript under `src/registry/`.
+</Step>
+<Step>
+**AST Parsing:** A compiler script (`pnpm registry:build`) parses the React files, inspects their imports, and resolves their internal dependencies.
+</Step>
+<Step>
+**JSON Manifest Output:** The script outputs JSON files to `public/r/[name].json` containing the component name, required package dependencies (like `motion` or `lucide-react`), and the raw file contents string.
+</Step>
+</Steps>
+
+This setup lets users import complex animated elements directly into their projects via the shadcn CLI or copy-paste them with a single click.
+
+<FramedImage src="/blog.png" alt="Blog and Article Feed Layout" />
+
+<br />
+
+### Motion, Easing, and Micro-interactions
+
+A design-engineered site relies on micro-interactions. Using static styles feels flat; using slow, linear transitions feels sluggish. I designed a physics-based spring animation system to make the layout feel natural.
+
+#### Target Cursor Physics
+The cursor (`TargetCursor.tsx`) uses a custom HTML5 canvas overlays system. It captures window mouse movements and maps them to a GSAP timeline. When hovering over clickable elements, the cursor snaps to their bounds and scales up. 
+
+To ensure the cursor doesn’t lag behind the physical mouse, I synchronized GSAP’s tick updates with the browser’s `requestAnimationFrame` and `Lenis` smooth-scroll ticks.
+
+#### Easing Curve Theme Switches
+For the theme switcher, I utilized Framer Motion's layout animations. Instead of fading the background active tab indicator, the element physically slides and stretches to morph into the new tab’s bounds, using a spring curve:
 
 ```typescript
-// Reusable theme-switching slider layout
-<motion.span
-  layoutId="theme-option"
-  transition={{ type: "spring", stiffness: 200, damping: 30 }}
-  className="absolute inset-0 rounded-full border border-line bg-accent-muted"
-/>
+// Spring-based layout morphing configuration
+transition={{ 
+  type: "spring", 
+  stiffness: 200, 
+  damping: 30, 
+  mass: 0.5 
+}}
 ```
 
-![Theme Switcher and Header](/about.png)
+<FramedImage src="/about.png" alt="Theme Switcher Detail and Layout Grid" />
 
 <br />
 
-### Custom Component Registry
+### Preventing Cumulative Layout Shift (CLS)
 
-One of the most complex features of the site is the custom component registry. Instead of simply copy-pasting code fragments, I wanted my site to act as a **distribution hub** for custom UI components, hooks, and blocks.
+One of the largest contributors to poor Google Lighthouse scores is Cumulative Layout Shift (CLS). When remote or local images load after the main text, they push content down, creating a jarring shift.
 
-#### How It Works:
-1. **Registry Items:** Component files are written under `src/registry/components/`.
-2. **Build Pipeline:** Running `pnpm registry:build` parses these source files and generates JSON manifests (metadata, dependency listings, and raw code string) under `public/r/`.
-3. **Fumadocs Integration:** When viewing a component page, Next.js fetches the registry metadata dynamically, rendering a tabbed preview with a live demo, direct pnpm/npm command copy buttons, and full source code files.
+To prevent this:
+- Every screenshot in the blog is wrapped in our custom `<FramedImage />` component.
+- The parent container maintains an aspect-ratio placeholder box.
+- Image styles are strictly set with `width: "auto"` and `height: "auto"` to preserve native aspect ratios while fitting container width boundaries.
+- Critical above-the-fold assets, such as the dynamic profile avatar (`AvatarLights`), are marked with `loading="eager"` and `fetchPriority="high"` to bypass lazy-loading queues.
 
-This architecture enables developers to copy components directly into their projects with a single command!
-
-![Blog Post Feed Layout](/blog.png)
-
-<br />
-
-### Visual Highlights & Details
-
-A premium feel is built on small details:
-- **Avatar Electric Lighting (`AvatarLights`):** The profile avatar responds to theme changes and user interaction. It features two toggle states ("light on" and "light off") in both dark and light modes, creating four custom image variations.
-- **Lenis Smooth Scroll:** To avoid the browser's native rigid scroll, I integrated `Lenis` smooth scroll, which coordinates with GSAP ScrollTriggers to provide a fluid, premium scroll feel.
-- **Dashed Grid Borders:** Grid structures (e.g. `.screen-line-top` and `.screen-line-bottom`) use CSS repeating linear gradients to render modern dashboard borders.
-
-```css
-/* Custom dashboard repeating lines */
-.screen-line-bottom::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 1px;
-  background: repeating-linear-gradient(90deg, var(--color-line) 0, var(--color-line) 4px, transparent 0, transparent 8px);
-}
-```
-
-![Sponsors and Contributions Dashboard](/sponsor.png)
+<FramedImage src="/sponsor.png" alt="Sponsorship and Contributions Panel" />
 
 <br />
 
-### Milestones of Build Quality
+### Summary
 
-Getting the portfolio ready for production involved several engineering stages:
-- **TypeScript Strict Mode:** Ensured all frontmatter metadata, navigation settings, and user details conform to strict types.
-- **ESLint & Quality Gates:** Integrated ESLint and Prettier checking via a git push hook (`tooling/push.sh`).
-- **Aspect Ratio Optimization:** Updated all Next.js `<Image />` elements with proper CSS sizes (`style={{ width: "auto", height: "auto" }}`) to ensure zero Cumulative Layout Shift (CLS) and keep the console completely warning-free.
-
-This site is an ongoing experiment in web aesthetics. I am always adding new components to the registry, writing technical notes, and pushing the boundaries of what a personal developer hub can be.
+Rebuilding my portfolio was an exercise in balancing aesthetic layout details with performance guidelines. By using server-side MDX rendering, Next.js App Router, Tailwind CSS v4, and custom GSAP tracking, I built a site that is visually engaging while maintaining a high-performance profile.
