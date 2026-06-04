@@ -1,176 +1,184 @@
 "use client"
 
-import React, { useRef, useState, useEffect, useCallback } from "react"
+import { useRef } from "react"
 import { useGSAP } from "@gsap/react"
 import gsap from "gsap"
-import { ArrowLeft, ArrowRight } from "lucide-react"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
+import ReactLenis from "lenis/react"
+
 import { cn } from "@/lib/utils"
 
-interface SkiperProps {
-  children: React.ReactNode[]
-  className?: string
-  gap?: number
+interface CardData {
+  id: number | string
+  image: string
+  alt?: string
 }
 
-export function Skiper({ children, className, gap = 16 }: SkiperProps) {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const trackRef = useRef<HTMLDivElement>(null)
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const isDragging = useRef(false)
-  const startX = useRef(0)
-  const currentTranslate = useRef(0)
-  const prevTranslate = useRef(0)
+interface StickyCard002Props {
+  cards: CardData[]
+  className?: string
+  containerClassName?: string
+  imageClassName?: string
+}
 
-  // Register GSAP plugins & handle scope safety
-  const { contextSafe } = useGSAP({ scope: containerRef })
+const StickyCard002 = ({
+  cards,
+  className,
+  containerClassName,
+  imageClassName,
+}: StickyCard002Props) => {
+  const container = useRef(null)
+  const imageRefs = useRef<(HTMLImageElement | null)[]>([])
 
-  const getSlideWidth = useCallback(() => {
-    if (!trackRef.current) return 0
-    const slide = trackRef.current.children[0] as HTMLElement
-    return slide ? slide.offsetWidth + gap : 0
-  }, [gap])
+  useGSAP(
+    () => {
+      gsap.registerPlugin(ScrollTrigger)
 
-  const slideTo = useCallback((index: number) => {
-    if (!trackRef.current || children.length === 0) return
-    const targetIndex = Math.max(0, Math.min(children.length - 1, index))
-    setCurrentIndex(targetIndex)
+      const imageElements = imageRefs.current
+      const totalCards = imageElements.length
 
-    const slideWidth = getSlideWidth()
-    const targetTranslate = -targetIndex * slideWidth
+      if (!imageElements[0]) return
 
-    contextSafe(() => {
-      gsap.to(trackRef.current, {
-        x: targetTranslate,
-        duration: 0.6,
-        ease: "power3.out",
-        onComplete: () => {
-          currentTranslate.current = targetTranslate
-          prevTranslate.current = targetTranslate
-        }
-      })
-    })()
-  }, [contextSafe, children.length, getSlideWidth])
+      gsap.set(imageElements[0], { y: "0%", scale: 1, rotation: 0 })
 
-  const next = useCallback(() => slideTo(currentIndex + 1), [currentIndex, slideTo])
-  const prev = useCallback(() => slideTo(currentIndex - 1), [currentIndex, slideTo])
-
-  const handleDragStart = (x: number) => {
-    isDragging.current = true
-    startX.current = x
-    if (trackRef.current) {
-      gsap.killTweensOf(trackRef.current)
-    }
-  }
-
-  const handleDragMove = (x: number) => {
-    if (!isDragging.current) return
-    const diff = x - startX.current
-    const tempTranslate = prevTranslate.current + diff
-
-    // Resistance on bounds
-    const maxTranslate = 0
-    const minTranslate = -((children.length - 1) * getSlideWidth())
-    
-    let finalTranslate = tempTranslate
-    if (tempTranslate > maxTranslate) {
-      finalTranslate = maxTranslate + (tempTranslate - maxTranslate) * 0.25
-    } else if (tempTranslate < minTranslate) {
-      finalTranslate = minTranslate + (tempTranslate - minTranslate) * 0.25
-    }
-
-    currentTranslate.current = finalTranslate
-    if (trackRef.current) {
-      gsap.set(trackRef.current, { x: finalTranslate })
-    }
-  }
-
-  const handleDragEnd = () => {
-    if (!isDragging.current) return
-    isDragging.current = false
-
-    const movedBy = currentTranslate.current - prevTranslate.current
-    const slideWidth = getSlideWidth()
-
-    let targetIndex = currentIndex
-    if (Math.abs(movedBy) > slideWidth * 0.15) {
-      if (movedBy < 0) {
-        targetIndex = currentIndex + 1
-      } else {
-        targetIndex = currentIndex - 1
+      for (let i = 1; i < totalCards; i++) {
+        if (!imageElements[i]) continue
+        gsap.set(imageElements[i], { y: "100%", scale: 1, rotation: 0 })
       }
-    }
 
-    slideTo(targetIndex)
-  }
+      const scrollTimeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: ".sticky-cards",
+          start: "top top",
+          end: `+=${window.innerHeight * (totalCards - 1)}`,
+          pin: true,
+          scrub: 0.5,
+          pinSpacing: true,
+        },
+      })
 
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "ArrowLeft") prev()
-      if (e.key === "ArrowRight") next()
-    }
-    window.addEventListener("keydown", handleKeyDown)
-    return () => window.removeEventListener("keydown", handleKeyDown)
-  }, [prev, next])
+      for (let i = 0; i < totalCards - 1; i++) {
+        const currentImage = imageElements[i]
+        const nextImage = imageElements[i + 1]
+        const position = i
+        if (!currentImage || !nextImage) continue
+
+        scrollTimeline.to(
+          currentImage,
+          {
+            scale: 0.7,
+            rotation: 5,
+            duration: 1,
+            ease: "none",
+          },
+          position
+        )
+
+        scrollTimeline.to(
+          nextImage,
+          {
+            y: "0%",
+            duration: 1,
+            ease: "none",
+          },
+          position
+        )
+      }
+
+      const resizeObserver = new ResizeObserver(() => {
+        ScrollTrigger.refresh()
+      })
+
+      if (container.current) {
+        resizeObserver.observe(container.current)
+      }
+
+      return () => {
+        resizeObserver.disconnect()
+        scrollTimeline.kill()
+        ScrollTrigger.getAll().forEach((trigger) => trigger.kill())
+      }
+    },
+    { scope: container }
+  )
 
   return (
-    <div className={cn("relative w-full overflow-hidden select-none", className)} ref={containerRef}>
-      {/* Slides Track */}
-      <div
-        ref={trackRef}
-        className="flex cursor-grab active:cursor-grabbing will-change-transform"
-        style={{ gap: `${gap}px` }}
-        onTouchStart={(e) => handleDragStart(e.touches[0].clientX)}
-        onTouchMove={(e) => handleDragMove(e.touches[0].clientX)}
-        onTouchEnd={handleDragEnd}
-        onMouseDown={(e) => handleDragStart(e.clientX)}
-        onMouseMove={(e) => handleDragMove(e.clientX)}
-        onMouseUp={handleDragEnd}
-        onMouseLeave={handleDragEnd}
-      >
-        {children.map((child, index) => (
-          <div key={index} className="shrink-0 w-full md:w-[calc(100%-48px)] lg:w-[calc(50%-8px)]">
-            {child}
-          </div>
-        ))}
-      </div>
-
-      {/* Navigation Buttons */}
-      <div className="mt-6 flex items-center justify-between">
-        {/* Indicators */}
-        <div className="flex gap-1.5">
-          {children.map((_, index) => (
-            <button
-              key={index}
+    <div className={cn("relative h-full w-full", className)} ref={container}>
+      <div className="sticky-cards relative flex h-full w-full items-center justify-center overflow-hidden p-3 lg:p-8">
+        <div
+          className={cn(
+            "relative h-[90%] w-full max-w-sm overflow-hidden rounded-lg sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl 2xl:max-w-3xl",
+            containerClassName
+          )}
+        >
+          {cards.map((card, i) => (
+            <img
+              key={card.id}
+              src={card.image}
+              alt={card.alt || ""}
               className={cn(
-                "size-2.5 rounded-full bg-muted-foreground/30 transition-all duration-300",
-                index === currentIndex && "w-6 bg-foreground"
+                "absolute h-full w-full rounded-4xl object-cover",
+                imageClassName
               )}
-              onClick={() => slideTo(index)}
-              aria-label={`Go to slide ${index + 1}`}
+              ref={(el) => {
+                imageRefs.current[i] = el
+              }}
             />
           ))}
-        </div>
-
-        {/* Controls */}
-        <div className="flex gap-2">
-          <button
-            onClick={prev}
-            disabled={currentIndex === 0}
-            className="flex size-9 items-center justify-center rounded-full border border-line bg-background text-foreground transition-colors hover:bg-muted disabled:opacity-30 disabled:cursor-not-allowed"
-            aria-label="Previous slide"
-          >
-            <ArrowLeft className="size-4.5" />
-          </button>
-          <button
-            onClick={next}
-            disabled={currentIndex === children.length - 1}
-            className="flex size-9 items-center justify-center rounded-full border border-line bg-background text-foreground transition-colors hover:bg-muted disabled:opacity-30 disabled:cursor-not-allowed"
-            aria-label="Next slide"
-          >
-            <ArrowRight className="size-4.5" />
-          </button>
         </div>
       </div>
     </div>
   )
 }
+
+// Example usage component with default data
+const Skiper17 = () => {
+  const defaultCards = [
+    {
+      id: 1,
+      image: "/images/lummi/img14.png",
+    },
+    {
+      id: 2,
+      image: "/images/lummi/img15.png",
+    },
+    {
+      id: 3,
+      image: "/images/lummi/img29.png",
+    },
+    {
+      id: 4,
+      image: "/images/lummi/img21.png",
+    },
+    {
+      id: 5,
+      image: "/images/lummi/img27.png",
+    },
+  ]
+
+  return (
+    <ReactLenis root>
+      <div className="h-full w-full">
+        <StickyCard002 cards={defaultCards} />
+      </div>
+    </ReactLenis>
+  )
+}
+
+export { Skiper17, StickyCard002 }
+
+/**
+ * Skiper 17 StickyCard_002 — React + Gsap + scrollTrigger
+ * We respect the original creators. This is an inspired rebuild with our own taste and does not claim any ownership.
+ *
+ * License & Usage:
+ * - Free to use and modify in both personal and commercial projects.
+ * - Attribution to Skiper UI is required when using the free version.
+ * - No attribution required with Skiper UI Pro.
+ *
+ * Feedback and contributions are welcome.
+ *
+ * Author: @gurvinder-singh02
+ * Website: https://gxuri.in
+ * Twitter: https://x.com/Gur__vi
+ */
