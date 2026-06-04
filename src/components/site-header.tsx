@@ -7,7 +7,7 @@ import { MAIN_NAV } from "@/config/site"
 import { Separator } from "@/components/ui/separator"
 import { NavDesktop } from "@/components/nav-desktop"
 import { NavItemGitHub } from "@/components/nav-item-github"
-import { ThemeToggle } from "@/components/theme-toggle"
+import { ThemeSwitcher } from "@/components/theme-switcher"
 import { WistantMark } from "@/components/wistant-mark"
 
 const BrandContextMenu = dynamic(
@@ -51,7 +51,7 @@ export function SiteHeader() {
             orientation="vertical"
             className="mx-2 data-vertical:h-4 data-vertical:self-center"
           />
-          <ThemeToggle />
+          <ThemeSwitcher />
         </div>
 
         {/* <div className="absolute top-[-3.5px] left-[-4.5px] z-2 flex size-2 border border-line bg-background" /> */}

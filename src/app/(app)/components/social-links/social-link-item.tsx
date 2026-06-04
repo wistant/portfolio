@@ -26,6 +26,7 @@ export function SocialLinkItem({ icon, title, href }: SocialLink) {
           width={32}
           height={32}
           quality={100}
+          style={{ width: "auto", height: "auto" }}
           unoptimized
         />
         <div className="pointer-events-none absolute inset-0 rounded-(--image-radius) inset-ring-1 inset-ring-black/10 dark:inset-ring-white/15" />

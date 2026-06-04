@@ -33,6 +33,7 @@ export function AvatarLights({
           src={variants.lightOff}
           alt="Avatar with lights off in light mode"
           fetchPriority="high"
+          loading="eager"
           shape={shape}
         />
       </div>
@@ -42,6 +43,7 @@ export function AvatarLights({
           src={variants.lightOn}
           alt="Avatar with lights on in light mode"
           fetchPriority="high"
+          loading="eager"
           shape={shape}
         />
       </AvatarLayer>
@@ -51,6 +53,7 @@ export function AvatarLights({
           src={variants.darkOff}
           alt="Avatar with lights off in dark mode"
           fetchPriority="high"
+          loading="eager"
           shape={shape}
         />
       </AvatarLayer>
@@ -60,6 +63,7 @@ export function AvatarLights({
           src={variants.darkOn}
           alt="Avatar with lights on in dark mode"
           fetchPriority="high"
+          loading="eager"
           shape={shape}
         />
       </AvatarLayer>
