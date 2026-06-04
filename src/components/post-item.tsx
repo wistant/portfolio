@@ -17,14 +17,14 @@ export function PostItem({
       {post.metadata.image && (
         <div className="relative select-none [--image-radius:var(--radius-xl)]">
           <Image
-            className="w-full h-auto rounded-(--image-radius) select-none"
+            className="w-full aspect-[1570/760] object-cover rounded-(--image-radius) select-none"
             src={post.metadata.image}
             alt={post.metadata.title}
-            width={1200}
-            height={630}
+            width={1570}
+            height={760}
             quality={100}
             loading={imageLoading}
-            style={{ width: "100%", height: "auto" }}
+            style={{ width: "100%", height: "auto", objectFit: "cover" }}
             unoptimized
           />
           <div className="pointer-events-none absolute inset-0 rounded-(--image-radius) inset-ring-1 inset-ring-black/10 dark:inset-ring-white/10" />
