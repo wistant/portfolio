@@ -259,7 +259,7 @@ export default async function Page({ params }: PageProps<"/blog/[slug]">) {
                 <FramedImage
                   src={doc.metadata.image}
                   alt={doc.metadata.title}
-                  className="my-6 aspect-video w-full object-cover"
+                  className="my-6 aspect-[1570/760] w-full object-cover"
                 />
               )}
 
