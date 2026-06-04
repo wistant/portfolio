@@ -23,7 +23,10 @@ export function Gallery({ images }: GalleryProps) {
 
   return (
     <div className="py-4">
-      <StickyCard002 cards={cards} className="h-[75vh] w-full rounded-3xl overflow-hidden border border-line bg-muted/10" />
+      <StickyCard002
+        cards={cards}
+        className="h-[75vh] w-full overflow-hidden rounded-3xl border border-line bg-muted/10"
+      />
     </div>
   )
 }
