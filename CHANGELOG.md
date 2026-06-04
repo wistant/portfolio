@@ -1,5 +1,24 @@
 # portfolio
 
+## 1.0.5-rc.3
+
+### Patch Changes
+
+- 7165f19: - release: switch 1.0.5-beta.2 from beta to rc
+  - chore(root): remove obsolete files ansi.flf and portless.json
+- 7d1b787: - style(components): format theme-switcher.tsx
+  - style(components): format TargetCursor.tsx
+  - style(app): format gallery.tsx
+  - refactor(gallery): restore original animated masonry grid layout
+  - fix(image): resolve image aspect ratio mismatch and LCP preload warnings in console
+  - feat(gallery): integrate StickyCard002 slider for page-scroll card-swipe captures
+  - fix(cursor): resolve any casting and react-hooks lint errors in TargetCursor
+  - feat(gallery): add touch-drag gallery carousel utilizing GSAP and react-medium-image-zoom
+  - chore(deps): install @gsap/react and lenis dependencies
+  - refactor(not-found): relocate not-found components and pages
+  - feat(theme): integrate ThemeSwitcher component in SiteHeader
+  - refactor(footer): relocate site footer to app-specific components directory
+
 ## 1.0.5-beta.2
 
 ### Patch Changes
