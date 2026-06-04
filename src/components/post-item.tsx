@@ -17,7 +17,7 @@ export function PostItem({
       {post.metadata.image && (
         <div className="relative select-none [--image-radius:var(--radius-xl)]">
           <Image
-            className="w-full aspect-[1570/760] object-cover rounded-(--image-radius) select-none"
+            className="aspect-[1570/760] w-full rounded-(--image-radius) object-cover select-none"
             src={post.metadata.image}
             alt={post.metadata.title}
             width={1570}

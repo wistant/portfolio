@@ -31,7 +31,10 @@ The conceptual difference is important. A SaaS like Shopify imposes an interface
 
 **The numbers that matter:** 8,200+ stars on GitHub. Written in native TypeScript. Built on NestJS and TypeORM. In production in dozens of e-commerce projects worldwide. Actively maintained since 2019.
 
-<FramedImage src="/blog/vendure/home-features-5.png" alt="Vendure Core Architecture and Features" />
+<FramedImage
+  src="/blog/vendure/home-features-5.png"
+  alt="Vendure Core Architecture and Features"
+/>
 
 Vendure's technical stack says a lot about its creators. They chose NestJS — the Node.js framework that brings the structure, dependency injection, and modularity that projects of this complexity require. They chose TypeORM — the most mature ORM solution for TypeScript. They chose GraphQL — because the commerce API is inherently relational and GraphQL clients need flexibility in what they fetch.
 
@@ -70,7 +73,10 @@ export class MonPlugin {}
 
 This `@VendurePlugin()` decorator does several things at once. It registers your TypeORM entities in the global database connection. It adds your GraphQL resolvers to the existing schema. It registers your NestJS services for dependency injection. It allows you to modify Vendure's configuration at startup.
 
-<FramedImage src="/blog/vendure/v360-release-post.png" alt="Vendure Core Releases Dashboard" />
+<FramedImage
+  src="/blog/vendure/v360-release-post.png"
+  alt="Vendure Core Releases Dashboard"
+/>
 
 A Vendure plugin is a standalone unit. It can be activated or deactivated in the main configuration. It can be published to npm and reused in any Vendure project. It can have its own database migrations, its own GraphQL endpoints, its own event handlers.
 
@@ -94,7 +100,10 @@ AddingItems → ArrangingPayment → PaymentAuthorized → PaymentSettled → Pa
 
 And `Cancelled` is accessible from almost any state.
 
-<FramedImage src="/blog/vendure/shipping-with-vendure.png" alt="Custom Shipping and Order Management" />
+<FramedImage
+  src="/blog/vendure/shipping-with-vendure.png"
+  alt="Custom Shipping and Order Management"
+/>
 
 The beauty is that each transition is explicit, audited, and customizable. You can add your own states if your use case requires it — an `AwaitingWhatsAppConfirmation` state, for example, for markets where the customer confirms their order via WhatsApp before paying.
 
@@ -122,8 +131,14 @@ export class MonService {
 
 You never rewrite the logic for retrieving an order or managing product variants. All of that is handled out of the box.
 
-<FramedImage src="/blog/vendure/vendure-core-v360-products-before.png" alt="Product Catalog Views Before Upgrades" />
-<FramedImage src="/blog/vendure/vendure-core-v360-products-after.png" alt="Product Catalog Views After V3.0 Upgrades" />
+<FramedImage
+  src="/blog/vendure/vendure-core-v360-products-before.png"
+  alt="Product Catalog Views Before Upgrades"
+/>
+<FramedImage
+  src="/blog/vendure/vendure-core-v360-products-after.png"
+  alt="Product Catalog Views After V3.0 Upgrades"
+/>
 
 ### The channel system — native multi-store
 
@@ -131,7 +146,10 @@ A channel in Vendure is a logical store. You can have multiple channels in a sin
 
 This is the ideal foundation for a multi-vendor marketplace, or for a store that operates in several countries with different currencies.
 
-<FramedImage src="/blog/vendure/vendure-core-v360-product-detail-after.png" alt="Detailed Product Configuration Dashboard" />
+<FramedImage
+  src="/blog/vendure/vendure-core-v360-product-detail-after.png"
+  alt="Detailed Product Configuration Dashboard"
+/>
 
 ---
 
@@ -160,7 +178,10 @@ export class MonResolver {
 
 Passing `ctx` to every service call ensures that each operation executes in the correct language and transaction context, resolving multi-language and multi-currency edge cases.
 
-<FramedImage src="/blog/vendure/vendure-core-v360-translation-fallbacks.png" alt="Translation Fallbacks and Localization in Shop API" />
+<FramedImage
+  src="/blog/vendure/vendure-core-v360-translation-fallbacks.png"
+  alt="Translation Fallbacks and Localization in Shop API"
+/>
 
 ---
 
@@ -193,7 +214,13 @@ export const monPaymentHandler = new PaymentMethodHandler({
     },
   },
 
-  async createPayment(ctx, order, amount, args, metadata): Promise<CreatePaymentResult> {
+  async createPayment(
+    ctx,
+    order,
+    amount,
+    args,
+    metadata
+  ): Promise<CreatePaymentResult> {
     const response = await monApi.initiate({
       amount: amount,
       reference: order.code,
@@ -276,13 +303,19 @@ const config: VendureConfig = {
 }
 ```
 
-<FramedImage src="/blog/vendure/vendure-core-v360-shared-product-option-groups.png" alt="Custom Fields and Option Group Configuration" />
+<FramedImage
+  src="/blog/vendure/vendure-core-v360-shared-product-option-groups.png"
+  alt="Custom Fields and Option Group Configuration"
+/>
 
 ### Getting Started and Local Setup
 
 Getting started with Vendure is direct. By running the official CLI, you can provision a new e-commerce instance in minutes, preconfigured with GraphQL endpoints and the Admin UI dashboard.
 
-<FramedImage src="/blog/vendure/getting-started.png" alt="Vendure Administration Interface Getting Started" />
+<FramedImage
+  src="/blog/vendure/getting-started.png"
+  alt="Vendure Administration Interface Getting Started"
+/>
 
 ---
 
