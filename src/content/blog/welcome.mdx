@@ -1,51 +1,113 @@
 ---
-title: Welcome to chanhdai.com
-description: A pixel-perfect dev portfolio and shadcn registry showcasing my work as a Design Engineer.
-image: https://assets.chanhdai.com/images/screenshot-og-image-dark.png?t=1778602757
-createdAt: 2025-02-14
-updatedAt: 2026-05-07
+title: "Building a Pixel-Perfect Developer Portfolio and Component Registry: My Design Engineering Journey"
+description: "An in-depth look at the technical choices, X inspiration, and custom registry architecture behind my personal website."
+image: "/preview.png"
+createdAt: "2026-06-04"
+updatedAt: "2026-06-04"
 ---
 
-## Stack
+When I set out to build my personal site, I didn't want just another boilerplate portfolio. The internet is flooded with generic landing pages using standard component templates. As a Design Engineer, I wanted a site that was a testament to my skills—a pixel-perfect digital hub that combines high-performance engineering with premium aesthetics.
 
-- Next.js 16
-- Tailwind CSS v4
-- shadcn/ui
+In this write-up, I’ll explain how I built this platform, the design inspiration I drew from creators on X (formerly Twitter), my technical choices, and how I implemented an interactive shadcn-style component registry.
 
-## Featured
+![Portfolio Preview Showcase](/preview.png)
 
-- Clean & modern design
-- Light/Dark themes
-- vCard integration
-- SEO optimized ([JSON-LD schema](https://json-ld.org), sitemap, robots)
-- AI-ready with [/llms.txt](https://llmstxt.org)
-- Spam-protected email
-- Installable as PWA
-- Analytics with [PostHog](https://posthog.com) and [OpenPanel](https://openpanel.dev)
+<br />
 
-## Content
+### The Spark: X (Twitter) Design Inspiration
 
-Centralized document system powered by MDX:
+The inspiration for this website started on my X timeline. I noticed a shift in developer portfolios towards **Design Engineering**—interfaces that prioritize micro-interactions, canvas-like grid backdrops, and physical details (like dynamic cursors, glowing borders, and realistic device mockups).
 
-- Unified content layer for blog posts and component docs
-- Category-based content organization
-- Raw `.mdx` endpoints for AI readability
-- Syntax highlighting with code blocks
-- Dynamic OG images for rich link previews
-- RSS feed for content distribution
+I wanted to capture that high-end feeling. Specifically:
+- **Perfect Grid Layouts:** Screen-aligned borders and dashed grid lines separating content columns.
+- **Physical Feedback:** Hover effects that feel physical, such as a cursor that snaps to interactive elements or an avatar with dynamic lighting states.
+- **Accessible & Responsive Design:** High-fidelity details that scale gracefully down to touch devices.
 
-## Registry
+<br />
 
-Easily build and distribute reusable components, hooks, and pages using a custom registry powered by the [shadcn CLI](https://ui.shadcn.com/docs/cli).
+### Technical Foundation & Architecture
 
-Each entry is well-documented and includes:
+To achieve this vision without compromising page speed, I carefully selected my stack:
 
-- Live preview & code snippets
-- Beautiful, readable code blocks
-- One-click command blocks (pnpm, npm, yarn, bun)
+1. **Next.js 16 (App Router):** The foundation of the site. Using React Server Components (RSC) allows me to pre-render content (like blog posts and certifications) on the server, resulting in near-instantaneous page loads.
+2. **Tailwind CSS v4:** Tailwind v4 is a major leap forward. It replaces the old config file with native CSS variables and `@theme` directives directly in CSS. This gives me absolute control over my layout utility classes, border colors, and dark-mode overrides.
+3. **Fumadocs:** For content management. It parses my MDX files and dynamically generates the Table of Contents columns, providing built-in syntax highlighting and keyboard shortcuts.
 
-## License
+![Hero Section Layout](/hero.png)
 
-Licensed under the [MIT license](https://github.com/ncdai/chanhdai.com/blob/main/LICENSE). The source code is available on [GitHub](https://github.com/ncdai/chanhdai.com).
+<br />
 
-> You’re free to use my code! Just make sure to remove all my personal information before publishing your website. It’s awesome to see my code being useful to someone!
+### Premium UI Libraries & Components
+
+Creating premium micro-animations requires specialized libraries. Here are the core tools that power the interface:
+
+#### GSAP & ScrollTrigger
+GSAP is the gold standard for high-performance animations. I used it to implement:
+- **Interactive Target Cursor (`TargetCursor.tsx`):** A custom canvas cursor that follows the mouse and expands/snaps to buttons and links. It uses GSAP to smooth out the tracking using custom easing.
+- **Sticky Stack Cards (`StickyCard002`):** Used in the gallery, this component pins cards on scroll and scales down older items as new ones slide over them.
+
+#### Motion (Framer Motion)
+While GSAP handles complex canvas-like animations, Motion manages our React layout transitions:
+- **Theme Switcher (`ThemeSwitcher.tsx`):** A three-option pill (System, Light, Dark) with a sliding border background that morphs between options.
+- **Collapsible Lists:** Expanding/collapsing project card details with layout animations.
+
+```typescript
+// Reusable theme-switching slider layout
+<motion.span
+  layoutId="theme-option"
+  transition={{ type: "spring", stiffness: 200, damping: 30 }}
+  className="absolute inset-0 rounded-full border border-line bg-accent-muted"
+/>
+```
+
+![Theme Switcher and Header](/about.png)
+
+<br />
+
+### Custom Component Registry
+
+One of the most complex features of the site is the custom component registry. Instead of simply copy-pasting code fragments, I wanted my site to act as a **distribution hub** for custom UI components, hooks, and blocks.
+
+#### How It Works:
+1. **Registry Items:** Component files are written under `src/registry/components/`.
+2. **Build Pipeline:** Running `pnpm registry:build` parses these source files and generates JSON manifests (metadata, dependency listings, and raw code string) under `public/r/`.
+3. **Fumadocs Integration:** When viewing a component page, Next.js fetches the registry metadata dynamically, rendering a tabbed preview with a live demo, direct pnpm/npm command copy buttons, and full source code files.
+
+This architecture enables developers to copy components directly into their projects with a single command!
+
+![Blog Post Feed Layout](/blog.png)
+
+<br />
+
+### Visual Highlights & Details
+
+A premium feel is built on small details:
+- **Avatar Electric Lighting (`AvatarLights`):** The profile avatar responds to theme changes and user interaction. It features two toggle states ("light on" and "light off") in both dark and light modes, creating four custom image variations.
+- **Lenis Smooth Scroll:** To avoid the browser's native rigid scroll, I integrated `Lenis` smooth scroll, which coordinates with GSAP ScrollTriggers to provide a fluid, premium scroll feel.
+- **Dashed Grid Borders:** Grid structures (e.g. `.screen-line-top` and `.screen-line-bottom`) use CSS repeating linear gradients to render modern dashboard borders.
+
+```css
+/* Custom dashboard repeating lines */
+.screen-line-bottom::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: repeating-linear-gradient(90deg, var(--color-line) 0, var(--color-line) 4px, transparent 0, transparent 8px);
+}
+```
+
+![Sponsors and Contributions Dashboard](/sponsor.png)
+
+<br />
+
+### Milestones of Build Quality
+
+Getting the portfolio ready for production involved several engineering stages:
+- **TypeScript Strict Mode:** Ensured all frontmatter metadata, navigation settings, and user details conform to strict types.
+- **ESLint & Quality Gates:** Integrated ESLint and Prettier checking via a git push hook (`tooling/push.sh`).
+- **Aspect Ratio Optimization:** Updated all Next.js `<Image />` elements with proper CSS sizes (`style={{ width: "auto", height: "auto" }}`) to ensure zero Cumulative Layout Shift (CLS) and keep the console completely warning-free.
+
+This site is an ongoing experiment in web aesthetics. I am always adding new components to the registry, writing technical notes, and pushing the boundaries of what a personal developer hub can be.
