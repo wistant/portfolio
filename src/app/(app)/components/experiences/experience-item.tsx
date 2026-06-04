@@ -22,6 +22,7 @@ export function ExperienceItem({ experience }: { experience: Experience }) {
               height={24}
               quality={100}
               className="rounded-full"
+              style={{ width: "auto", height: "auto" }}
               unoptimized
               aria-hidden
             />
