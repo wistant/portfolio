@@ -1,8 +1,5 @@
 import React from "react"
-import {
-  findTechBySkill,
-  LOCAL_ICONS,
-} from "@/data/portfolio/tech-stack"
+import { findTechBySkill, LOCAL_ICONS } from "@/data/portfolio/tech-stack"
 
 import { Tag } from "@/components/ui/tag"
 
