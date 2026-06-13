@@ -102,14 +102,30 @@ export default function Page() {
               Open Source Engines & Tools 💻
             </h2>
           </div>
-          <div className="grid grid-cols-1 gap-4 border-b border-line p-4 md:grid-cols-2">
-            {openSource.map((project) => (
-              <ProjectCard
-                key={project.id}
-                project={project}
-                hasLocalPage={!!getDocBySlug(project.id)}
-              />
-            ))}
+          <div className="relative border-b border-line py-4">
+            {/* Background Vertical Separator Lines */}
+            <div className="pointer-events-none absolute inset-0 -z-1 grid grid-cols-1 gap-4 max-sm:hidden sm:grid-cols-2">
+              <div className="border-r border-line"></div>
+              <div className="border-l border-line"></div>
+            </div>
+
+            <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              {openSource.map((project) => (
+                <li
+                  key={project.id}
+                  className={cn(
+                    "max-sm:screen-line-top max-sm:screen-line-bottom",
+                    "sm:nth-[2n+1]:screen-line-top sm:nth-[2n+1]:screen-line-bottom",
+                    "p-4"
+                  )}
+                >
+                  <ProjectCard
+                    project={project}
+                    hasLocalPage={!!getDocBySlug(project.id)}
+                  />
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       )}
@@ -124,14 +140,30 @@ export default function Page() {
               Client & Company Architectures 🏢
             </h2>
           </div>
-          <div className="grid grid-cols-1 gap-4 border-b border-line p-4 md:grid-cols-2">
-            {client.map((project) => (
-              <ProjectCard
-                key={project.id}
-                project={project}
-                hasLocalPage={!!getDocBySlug(project.id)}
-              />
-            ))}
+          <div className="relative border-b border-line py-4">
+            {/* Background Vertical Separator Lines */}
+            <div className="pointer-events-none absolute inset-0 -z-1 grid grid-cols-1 gap-4 max-sm:hidden sm:grid-cols-2">
+              <div className="border-r border-line"></div>
+              <div className="border-l border-line"></div>
+            </div>
+
+            <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              {client.map((project) => (
+                <li
+                  key={project.id}
+                  className={cn(
+                    "max-sm:screen-line-top max-sm:screen-line-bottom",
+                    "sm:nth-[2n+1]:screen-line-top sm:nth-[2n+1]:screen-line-bottom",
+                    "p-4"
+                  )}
+                >
+                  <ProjectCard
+                    project={project}
+                    hasLocalPage={!!getDocBySlug(project.id)}
+                  />
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       )}
@@ -146,14 +178,30 @@ export default function Page() {
               Landings, Frontend & Experiential Apps 🎨
             </h2>
           </div>
-          <div className="grid grid-cols-1 gap-4 border-b border-line p-4 md:grid-cols-2">
-            {rest.map((project) => (
-              <ProjectCard
-                key={project.id}
-                project={project}
-                hasLocalPage={!!getDocBySlug(project.id)}
-              />
-            ))}
+          <div className="relative border-b border-line py-4">
+            {/* Background Vertical Separator Lines */}
+            <div className="pointer-events-none absolute inset-0 -z-1 grid grid-cols-1 gap-4 max-sm:hidden sm:grid-cols-2">
+              <div className="border-r border-line"></div>
+              <div className="border-l border-line"></div>
+            </div>
+
+            <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              {rest.map((project) => (
+                <li
+                  key={project.id}
+                  className={cn(
+                    "max-sm:screen-line-top max-sm:screen-line-bottom",
+                    "sm:nth-[2n+1]:screen-line-top sm:nth-[2n+1]:screen-line-bottom",
+                    "p-4"
+                  )}
+                >
+                  <ProjectCard
+                    project={project}
+                    hasLocalPage={!!getDocBySlug(project.id)}
+                  />
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       )}

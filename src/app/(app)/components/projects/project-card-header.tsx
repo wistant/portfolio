@@ -15,6 +15,7 @@ export function ProjectCardHeader({ title, status }: ProjectCardHeaderProps) {
       }
     switch (status.toLowerCase()) {
       case "ongoing":
+      case "current":
       case "live":
         return {
           dot: "bg-emerald-500 animate-pulse",

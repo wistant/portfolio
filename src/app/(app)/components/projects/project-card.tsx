@@ -34,10 +34,7 @@ export function ProjectCard({
   // 4. Resolve Tags / Skills
   const tagList = project.skills || []
 
-  // 5. Resolve Top Label
-  const topLabel = project.status || project.id
-
-  // 6. Resolve Case Study details href and label
+  // 5. Resolve Case Study details href and label
   const detailsHref = hasLocalPage ? `/projects/${project.id}` : project.link
   const detailsLabel = hasLocalPage ? "Read Case Study" : "View Live Site"
 
@@ -46,17 +43,17 @@ export function ProjectCard({
       onMouseEnter={() => setCardHover(true)}
       onMouseLeave={() => setCardHover(false)}
       onClick={() => router.push(detailsHref)}
-      className="group flex w-full cursor-pointer flex-col"
+      className="group flex h-full w-full cursor-pointer flex-col"
     >
       {/* 1. Preview Area */}
       <ProjectCardPreview
         title={title}
         projectImage={projectImage}
         backgroundImage={backgroundImage}
-        topLabel={topLabel}
         pinned={project.pinned}
         cardHover={cardHover}
         themeColor={project.themeColor}
+        projectId={project.id}
       />
 
       {/* 2. Header Area */}

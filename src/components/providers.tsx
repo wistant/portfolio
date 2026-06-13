@@ -9,6 +9,22 @@ import { TooltipProvider as RadixTooltipProvider } from "@/components/ui/tooltip
 import { TooltipProvider as BaseTooltipProvider } from "@/components/base/ui/tooltip"
 import { KeyboardShortcuts } from "@/components/keyboard-shortcuts"
 
+if (typeof window !== "undefined" && process.env.NODE_ENV === "development") {
+  const orig = console.error
+  console.error = (...args: unknown[]) => {
+    if (
+      typeof args[0] === "string" &&
+      (args[0].includes("Encountered a script tag") ||
+        args[0].includes("Hydration failed") ||
+        args[0].includes("hydration-mismatch") ||
+        args[0].includes("error while hydrating"))
+    ) {
+      return
+    }
+    orig.apply(console, args)
+  }
+}
+
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <JotaiProvider>

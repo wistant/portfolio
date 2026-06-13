@@ -3,6 +3,7 @@ import { getDocBySlug } from "@/data/doc/documents"
 import { PROJECTS } from "@/data/portfolio/projects"
 import { ArrowRightIcon } from "lucide-react"
 
+import { cn } from "@/lib/utils"
 import { Button } from "@/components/base/ui/button"
 
 import { Panel, PanelHeader, PanelTitle, PanelTitleSup } from "../panel"
@@ -21,14 +22,30 @@ export function Projects() {
         </PanelTitle>
       </PanelHeader>
 
-      <div className="grid grid-cols-1 gap-4 border-b border-line p-4 md:grid-cols-2">
-        {visibleProjects.map((project) => (
-          <ProjectCard
-            key={project.id}
-            project={project}
-            hasLocalPage={!!getDocBySlug(project.id)}
-          />
-        ))}
+      <div className="relative py-4">
+        {/* Background Vertical Separator Lines */}
+        <div className="pointer-events-none absolute inset-0 -z-1 grid grid-cols-1 gap-4 max-sm:hidden sm:grid-cols-2">
+          <div className="border-r border-line"></div>
+          <div className="border-l border-line"></div>
+        </div>
+
+        <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          {visibleProjects.map((project) => (
+            <li
+              key={project.id}
+              className={cn(
+                "max-sm:screen-line-top max-sm:screen-line-bottom",
+                "sm:nth-[2n+1]:screen-line-top sm:nth-[2n+1]:screen-line-bottom",
+                "p-4"
+              )}
+            >
+              <ProjectCard
+                project={project}
+                hasLocalPage={!!getDocBySlug(project.id)}
+              />
+            </li>
+          ))}
+        </ul>
       </div>
 
       {PROJECTS.length > 4 && (

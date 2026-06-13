@@ -1,30 +1,6 @@
-import { TECH_STACK } from "@/data/portfolio/tech-stack"
+import { KEY_MAP, LOCAL_ICONS, TECH_STACK } from "@/data/portfolio/tech-stack"
 
 import { Panel, PanelContent } from "./panel"
-
-const KEY_MAP: Record<string, string> = {
-  js: "javascript",
-  nextjs: "nextdotjs",
-  "shadcn-ui": "shadcnui",
-  radixui: "radixui",
-  "base-ui": "baseui",
-  "react-navigation": "react",
-  nodejs: "nodedotjs",
-  claude: "anthropic",
-}
-
-const LOCAL_ICONS: Record<string, string> = {
-  html: "/icons/html.svg",
-  css: "/icons/css.svg",
-  prisma: "/icons/prisma.svg",
-  typeorm: "/icons/typeorm.svg",
-  sqlite: "/icons/sqlite.svg",
-  postgresql: "/icons/postgresql.svg",
-  mysql: "/icons/mysql.svg",
-  nestjs: "/icons/nestjs.svg",
-  typescript: "/icons/typescript.svg",
-  js: "/icons/javascript.svg",
-}
 
 export function TechStack() {
   return (

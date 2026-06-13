@@ -1,62 +1,11 @@
 import React from "react"
-import { TECH_STACK } from "@/data/portfolio/tech-stack"
+import {
+  findTechBySkill,
+  KEY_MAP,
+  LOCAL_ICONS,
+} from "@/data/portfolio/tech-stack"
 
 import { Tag } from "@/components/ui/tag"
-
-const KEY_MAP: Record<string, string> = {
-  js: "javascript",
-  nextjs: "nextdotjs",
-  "shadcn-ui": "shadcnui",
-  radixui: "radixui",
-  "base-ui": "baseui",
-  "react-navigation": "react",
-  nodejs: "nodedotjs",
-  claude: "anthropic",
-}
-
-const LOCAL_ICONS: Record<string, string> = {
-  html: "/icons/html.svg",
-  css: "/icons/css.svg",
-  prisma: "/icons/prisma.svg",
-  typeorm: "/icons/typeorm.svg",
-  sqlite: "/icons/sqlite.svg",
-  postgresql: "/icons/postgresql.svg",
-  mysql: "/icons/mysql.svg",
-  nestjs: "/icons/nestjs.svg",
-  typescript: "/icons/typescript.svg",
-  js: "/icons/javascript.svg",
-}
-
-const aliasMap: Record<string, string> = {
-  javascript: "js",
-  nextjs: "nextjs",
-  "next.js": "nextjs",
-  nestjs: "nestjs",
-  typescript: "typescript",
-  react: "react",
-  nodejs: "nodejs",
-  "node.js": "nodejs",
-  html: "html",
-  html5: "html",
-  css: "css",
-  css3: "css",
-  prisma: "prisma",
-  typeorm: "typeorm",
-}
-
-export function findTechBySkill(skill: string) {
-  const cleanSkill = skill
-    .trim()
-    .toLowerCase()
-    .replace(/[^a-z0-9]/g, "")
-  const mappedKey = aliasMap[cleanSkill] || cleanSkill
-
-  return TECH_STACK.find(
-    (tech) =>
-      tech.key.toLowerCase().replace(/[^a-z0-9]/g, "") === mappedKey ||
-      tech.title.toLowerCase().replace(/[^a-z0-9]/g, "") === cleanSkill
-  )
-}
 
 export function TechTag({ skill }: { skill: string }) {
   const tech = findTechBySkill(skill)
