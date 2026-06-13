@@ -475,13 +475,14 @@ export function findTechBySkill(skill: string) {
     .trim()
     .toLowerCase()
     .replace(/[^a-z0-9\s]/g, "") // Keep spaces for mapping multi-word keys
-  
+
   // Try mapping via aliasMap with normalized spaces
   const mappedKey = aliasMap[cleanSkill] || cleanSkill.replace(/\s+/g, "")
 
   return TECH_STACK.find(
     (tech) =>
       tech.key.toLowerCase().replace(/[^a-z0-9]/g, "") === mappedKey ||
-      tech.title.toLowerCase().replace(/[^a-z0-9]/g, "") === cleanSkill.replace(/\s+/g, "")
+      tech.title.toLowerCase().replace(/[^a-z0-9]/g, "") ===
+        cleanSkill.replace(/\s+/g, "")
   )
 }
