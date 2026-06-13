@@ -245,8 +245,6 @@ export function ProjectCardPreview({
       className="relative aspect-video w-full rounded-none border border-line/80 bg-muted/15 p-1 transition-colors duration-300 group-hover:border-line"
     >
       <div className="relative flex h-full w-full items-end justify-center overflow-hidden rounded-none border border-line bg-muted">
-
-
         {/* Pin Icon */}
         {pinned && (
           <div className="absolute top-1.5 right-1.5 z-20 rounded-full border border-line bg-background/90 p-1 text-muted-foreground/85 shadow-xs select-none">
