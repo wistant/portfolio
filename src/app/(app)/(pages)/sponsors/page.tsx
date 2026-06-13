@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { notFound } from "next/navigation"
 import { SPONSORS } from "@/data/sponsor-data"
 import { addQueryParams } from "@/utils/url"
 import { ArrowUpRightIcon } from "lucide-react"
@@ -59,6 +60,10 @@ const SPONSORS_BY_TIER = SPONSORS.reduce(
 )
 
 export default function Page() {
+  if (SPONSORS.length === 0) {
+    notFound()
+  }
+
   return (
     <div>
       <PageHeading>

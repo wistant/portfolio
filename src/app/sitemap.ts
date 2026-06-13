@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next"
 import { getAllDocs } from "@/data/doc/documents"
+import { SPONSORS } from "@/data/sponsor-data"
 
 import { SITE_INFO } from "@/config/site"
 
@@ -30,12 +31,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/blog",
     "/gallery",
     "/projects",
-    "/sponsors",
+    SPONSORS.length > 0 ? "/sponsors" : null,
     "/certifications",
-  ].map((route) => ({
-    url: `${SITE_INFO.url}${route}`,
-    lastModified: new Date().toISOString(),
-  }))
+  ]
+    .filter((r): r is string => r !== null)
+    .map((route) => ({
+      url: `${SITE_INFO.url}${route}`,
+      lastModified: new Date().toISOString(),
+    }))
 
   return [...routes, ...docs]
 }
