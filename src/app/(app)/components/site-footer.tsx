@@ -4,7 +4,6 @@ import { SITE_INFO, SOURCE_CODE_GITHUB_URL } from "@/config/site"
 import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
 
-import { SiteFooterInteractiveLogotype } from "./site-footer-brand"
 
 export function SiteFooter() {
   return (
@@ -128,7 +127,6 @@ export function SiteFooter() {
         </div>
       </div>
 
-      <SiteFooterInteractiveLogotype />
 
       <div className="pb-[env(safe-area-inset-bottom,0px)]">
         <div className="flex h-24" />
