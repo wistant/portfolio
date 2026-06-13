@@ -6,6 +6,7 @@ import { Pin, Star } from "lucide-react"
 import { motion } from "motion/react"
 
 import { formatStars } from "@/lib/github"
+import { Icons } from "@/components/icons"
 
 interface ProjectCardPreviewProps {
   title: string
@@ -253,10 +254,13 @@ export function ProjectCardPreview({
       <div className="relative flex h-full w-full items-end justify-center overflow-hidden rounded-none border border-line bg-muted">
         {/* Stars badge — top left */}
         {stars != null && stars > 0 && (
-          <div className="absolute top-1.5 left-1.5 z-20 flex items-center gap-0.5 rounded-full border border-line bg-background/90 px-1.5 py-0.5 shadow-xs select-none">
-            <Star className="size-2.5 fill-amber-400 text-amber-400" />
-            <span className="text-[9px] font-semibold leading-none text-amber-400">
-              {formatStars(stars)}
+          <div className="absolute top-1.5 left-1.5 z-20 flex items-center gap-1 rounded-full border border-line bg-background/90 px-1.5 py-0.5 shadow-xs select-none">
+            <Icons.github className="size-2.5 text-muted-foreground" />
+            <span className="flex items-center gap-0.5">
+              <Star className="size-2.5 fill-amber-400 text-amber-400" />
+              <span className="text-[9px] font-semibold leading-none text-amber-400">
+                {formatStars(stars)}
+              </span>
             </span>
           </div>
         )}
