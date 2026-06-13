@@ -239,4 +239,3 @@ export function findTechBySkill(skill: string) {
         cleanSkill.replace(/\s+/g, "")
   )
 }
-
