@@ -1,5 +1,20 @@
 # portfolio
 
+## 1.0.6-alpha.0
+
+### Patch Changes
+
+- 35d8bbc: - release: switch 1.0.5 from Stable to alpha
+  - style(components): format tech-tag.tsx
+  - style(app): format site-footer.tsx
+  - style(app): format project-item.tsx
+  - style(app): format experience-position-item.tsx
+  - ui(footer): remove interactive logotype from footer
+  - feat(tech-stack): add html, css, prisma, and typeorm with local icon resolution
+  - feat(experiences): render work experience and project tags as tech stack badges
+  - ui(tech-stack): make stack items and image logos rectangular with rounded-xs shape
+  - ui(tech-stack): group stack items with tooltips and rectangular badges
+
 ## 1.0.5
 
 ### Patch Changes
