@@ -1,7 +1,6 @@
 import type { TechStack } from "@/types/tech-stack"
 
 export const TECH_STACK: TechStack[] = [
-  // === Backend & Database ===
   {
     key: "nodejs",
     title: "Node.js",
@@ -66,7 +65,6 @@ export const TECH_STACK: TechStack[] = [
     github: "redis",
   },
 
-  // === Dev Tools, System & OS ===
   {
     key: "linux",
     title: "Linux",
@@ -110,7 +108,6 @@ export const TECH_STACK: TechStack[] = [
     github: "google-deepmind",
   },
 
-  // === Frontend & UI ===
   {
     key: "js",
     title: "JavaScript",
@@ -174,29 +171,5 @@ export const TECH_STACK: TechStack[] = [
     href: "https://tailwindcss.com/",
     categories: ["Frontend"],
     github: "tailwindlabs/tailwindcss",
-  },
-  {
-    key: "shadcn-ui",
-    title: "shadcn/ui",
-    href: "https://ui.shadcn.com/",
-    categories: ["Frontend"],
-    theme: true,
-    github: "shadcn-ui",
-  },
-  {
-    key: "radixui",
-    title: "Radix UI",
-    href: "https://www.radix-ui.com/",
-    categories: ["Frontend"],
-    theme: true,
-    github: "radix-ui",
-  },
-  {
-    key: "base-ui",
-    title: "Base UI",
-    href: "https://base-ui.com/",
-    categories: ["Frontend"],
-    theme: true,
-    github: "base-ui",
   },
 ]

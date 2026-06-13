@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { getDocBySlug } from "@/data/doc/documents"
 import { PROJECTS } from "@/data/portfolio/projects"
 
 import { X_HANDLE } from "@/config/site"
@@ -9,7 +10,7 @@ import {
   PageHeadingTagline,
   PageHeadingTitle,
 } from "@/components/page-heading"
-import { ProjectItem } from "@/app/(app)/components/projects/project-item"
+import { ProjectCard } from "@/app/(app)/components/projects/project-card"
 
 const title = "Projects"
 const description =
@@ -101,16 +102,15 @@ export default function Page() {
               Open Source Engines & Tools 💻
             </h2>
           </div>
-          <ul>
+          <div className="grid grid-cols-1 gap-4 border-b border-line p-4 md:grid-cols-2">
             {openSource.map((project) => (
-              <li
+              <ProjectCard
                 key={project.id}
-                className="border-b border-line last:border-b-0"
-              >
-                <ProjectItem project={project} />
-              </li>
+                project={project}
+                hasLocalPage={!!getDocBySlug(project.id)}
+              />
             ))}
-          </ul>
+          </div>
         </div>
       )}
 
@@ -124,16 +124,15 @@ export default function Page() {
               Client & Company Architectures 🏢
             </h2>
           </div>
-          <ul>
+          <div className="grid grid-cols-1 gap-4 border-b border-line p-4 md:grid-cols-2">
             {client.map((project) => (
-              <li
+              <ProjectCard
                 key={project.id}
-                className="border-b border-line last:border-b-0"
-              >
-                <ProjectItem project={project} />
-              </li>
+                project={project}
+                hasLocalPage={!!getDocBySlug(project.id)}
+              />
             ))}
-          </ul>
+          </div>
         </div>
       )}
 
@@ -147,16 +146,15 @@ export default function Page() {
               Landings, Frontend & Experiential Apps 🎨
             </h2>
           </div>
-          <ul>
+          <div className="grid grid-cols-1 gap-4 border-b border-line p-4 md:grid-cols-2">
             {rest.map((project) => (
-              <li
+              <ProjectCard
                 key={project.id}
-                className="border-b border-line last:border-b-0"
-              >
-                <ProjectItem project={project} />
-              </li>
+                project={project}
+                hasLocalPage={!!getDocBySlug(project.id)}
+              />
             ))}
-          </ul>
+          </div>
         </div>
       )}
 

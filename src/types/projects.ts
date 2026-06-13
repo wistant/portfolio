@@ -24,4 +24,18 @@ export type Project = {
   logo?: string
   /** Whether the project card is expanded by default in the UI. */
   isExpanded?: boolean
+  /** Project image/mockup preview. */
+  projectImage?: string
+  /** Background image or CSS class gradient. */
+  backgroundImage?: string
+  /** Project status (e.g. Completed, Ongoing, Building). */
+  status?: string
+  /** Whether the project is pinned. */
+  pinned?: boolean
+  /** Optional video preview link. */
+  projectVideo?: string
+  /** Optional single-line short description. */
+  shortDescription?: string
+  /** Dynamic accent color for project background glow. */
+  themeColor?: string
 }
