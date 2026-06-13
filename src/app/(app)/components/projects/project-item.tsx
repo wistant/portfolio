@@ -7,7 +7,6 @@ import { BoxIcon, InfinityIcon, LinkIcon } from "lucide-react"
 
 import type { Project } from "@/types/projects"
 import { UTM_PARAMS } from "@/config/site"
-import { TechTag } from "@/components/tech-tag"
 import { Prose } from "@/components/ui/typography"
 import {
   Collapsible,
@@ -24,6 +23,7 @@ import {
 } from "@/components/base/ui/tooltip"
 import { Icons } from "@/components/icons"
 import { Markdown } from "@/components/markdown"
+import { TechTag } from "@/components/tech-tag"
 
 export function ProjectItem({
   className,
