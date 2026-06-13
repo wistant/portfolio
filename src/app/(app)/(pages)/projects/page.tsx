@@ -9,7 +9,7 @@ import {
   PageHeadingTagline,
   PageHeadingTitle,
 } from "@/components/page-heading"
-import { ProjectItem } from "@/app/(app)/components/projects/project-item"
+import { ProjectCard } from "@/app/(app)/components/projects/project-card"
 
 const title = "Projects"
 const description =
@@ -101,16 +101,11 @@ export default function Page() {
               Open Source Engines & Tools 💻
             </h2>
           </div>
-          <ul>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 border-b border-line">
             {openSource.map((project) => (
-              <li
-                key={project.id}
-                className="border-b border-line last:border-b-0"
-              >
-                <ProjectItem project={project} />
-              </li>
+              <ProjectCard key={project.id} project={project} />
             ))}
-          </ul>
+          </div>
         </div>
       )}
 
@@ -124,16 +119,11 @@ export default function Page() {
               Client & Company Architectures 🏢
             </h2>
           </div>
-          <ul>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 border-b border-line">
             {client.map((project) => (
-              <li
-                key={project.id}
-                className="border-b border-line last:border-b-0"
-              >
-                <ProjectItem project={project} />
-              </li>
+              <ProjectCard key={project.id} project={project} />
             ))}
-          </ul>
+          </div>
         </div>
       )}
 
@@ -147,16 +137,11 @@ export default function Page() {
               Landings, Frontend & Experiential Apps 🎨
             </h2>
           </div>
-          <ul>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 border-b border-line">
             {rest.map((project) => (
-              <li
-                key={project.id}
-                className="border-b border-line last:border-b-0"
-              >
-                <ProjectItem project={project} />
-              </li>
+              <ProjectCard key={project.id} project={project} />
             ))}
-          </ul>
+          </div>
         </div>
       )}
 
