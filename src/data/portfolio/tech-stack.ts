@@ -49,9 +49,6 @@ export const TECH_STACK: TechStack[] = [
     href: "https://vite.dev/",
     categories: ["Dev Tools"],
   },
-]
-
-export const TECH_TAGS: TechStack[] = [
   {
     key: "react",
     title: "React",
@@ -159,30 +156,35 @@ export const TECH_TAGS: TechStack[] = [
     title: "Base UI",
     href: "https://base-ui.com/",
     categories: ["Frontend"],
+    showInStack: false,
   },
   {
     key: "magicui",
     title: "Magic UI",
     href: "https://magicui.design/",
     categories: ["Frontend"],
+    showInStack: false,
   },
   {
     key: "radixui",
     title: "Radix UI",
     href: "https://www.radix-ui.com/",
     categories: ["Frontend"],
+    showInStack: false,
   },
   {
     key: "shadcnui",
     title: "shadcn/ui",
     href: "https://ui.shadcn.com/",
     categories: ["Frontend"],
+    showInStack: false,
   },
   {
     key: "opensource",
     title: "Open Source",
     href: "https://opensource.org/",
     categories: ["Dev Tools"],
+    showInStack: false,
   },
 ]
 
@@ -285,8 +287,7 @@ export function findTechBySkill(skill: string) {
   // Try mapping via aliasMap with normalized spaces
   const mappedKey = aliasMap[cleanSkill] || cleanSkill.replace(/\s+/g, "")
 
-  const allTech = [...TECH_STACK, ...TECH_TAGS]
-  return allTech.find(
+  return TECH_STACK.find(
     (tech) =>
       tech.key.toLowerCase().replace(/[^a-z0-9]/g, "") === mappedKey ||
       tech.title.toLowerCase().replace(/[^a-z0-9]/g, "") ===

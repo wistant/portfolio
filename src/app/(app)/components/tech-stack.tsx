@@ -7,7 +7,7 @@ export function TechStack() {
     <Panel id="stack" className="before:content-none">
       <PanelContent>
         <ul className="flex flex-wrap gap-2">
-          {TECH_STACK.map((tech) => {
+          {TECH_STACK.filter((tech) => tech.showInStack !== false).map((tech) => {
             const localIcon = LOCAL_ICONS[tech.key]
 
             return (

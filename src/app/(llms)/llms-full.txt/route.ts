@@ -41,7 +41,7 @@ ${SOCIAL_LINKS.map((item) => `- [${item.title}](${item.href})`).join("\n")}
 
 ### Tech Stack
 
-${TECH_STACK.map((item) => `- [${item.title}](${item.href})`).join("\n")}\n`
+${TECH_STACK.filter((item) => item.showInStack !== false).map((item) => `- [${item.title}](${item.href})`).join("\n")}\n`
 
 const experienceText = `## Experience
 
