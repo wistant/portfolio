@@ -21,6 +21,11 @@ export const PROJECTS: Project[] = [
     ],
     description:
       "Crafting the visionary landing page for 'Sunabase', a high-fidelity backend platform. Showcasing managed Postgres, Zero-Trust Identity, and Edge-Native Workflows with a premium UI/UX.",
+    projectImage: "/projects/sunabase/sunabase.png",
+    backgroundImage: "bg-gradient-to-br from-indigo-900/40 via-slate-900 to-blue-900/40",
+    status: "Completed",
+    pinned: true,
+    shortDescription: "High-fidelity backend platform landing page showcasing managed Postgres and Zero-Trust Identity.",
   },
   {
     id: "wistantdotme",
@@ -50,6 +55,11 @@ export const PROJECTS: Project[] = [
     ],
     description: "A pixel-perfect dev portfolio and shadcn registry.",
     logo: "https://assets.chanhdai.com/images/project-logos/chanhdaidotcom.svg",
+    projectImage: "/projects/portfolio/preview.png",
+    backgroundImage: "bg-gradient-to-br from-neutral-800/20 via-neutral-900 to-emerald-950/20",
+    status: "Ongoing",
+    pinned: true,
+    shortDescription: "Developer portfolio and shadcn registry built with Next.js 16 and Tailwind CSS v4.",
   },
   {
     id: "shoperzz",
@@ -83,6 +93,9 @@ export const PROJECTS: Project[] = [
 - Full keyboard navigation and type-ahead search
 `,
     logo: "https://assets.chanhdai.com/images/project-logos/react-wheel-picker.svg",
+    backgroundImage: "bg-gradient-to-br from-rose-950/20 via-slate-900 to-amber-950/20",
+    status: "Completed",
+    shortDescription: "Open source e-commerce engine and custom react-wheel-picker npm package.",
   },
   {
     id: "navi-landing",
@@ -105,6 +118,11 @@ export const PROJECTS: Project[] = [
     ],
     description:
       "A visionary landing page for Navi, a futuristic interface designed for seamless interaction with The Wired.",
+    projectImage: "/projects/navi-landing/th.png",
+    backgroundImage: "bg-gradient-to-br from-fuchsia-950/30 via-slate-900 to-cyan-950/30",
+    status: "Completed",
+    pinned: true,
+    shortDescription: "Futuristic landing page interface designed for seamless interaction with The Wired.",
   },
   {
     id: "propellent-landing",
@@ -126,6 +144,11 @@ export const PROJECTS: Project[] = [
     ],
     description:
       "A high-growth SaaS landing page and dashboard for data-driven business scaling. Now fully Open Source.",
+    projectImage: "/projects/propellent-landing/propellent.png",
+    backgroundImage: "bg-gradient-to-br from-emerald-950/30 via-slate-900 to-teal-950/30",
+    status: "Completed",
+    pinned: true,
+    shortDescription: "High-growth SaaS landing page and dashboard for data-driven business scaling.",
   },
   {
     id: "splyt-landing",
@@ -148,6 +171,10 @@ export const PROJECTS: Project[] = [
     ],
     description:
       "Development of a vibrant landing page for 'Splyt', a protein + caffeine drink. Showcasing a playful yet premium UI/UX, engaging animations, and a focus on brand storytelling.",
+    projectImage: "/projects/splyt-landing/th.webp",
+    backgroundImage: "bg-gradient-to-br from-rose-950/30 via-slate-900 to-orange-950/20",
+    status: "Completed",
+    shortDescription: "Vibrant protein + caffeine drink landing page focusing on playful brand storytelling.",
   },
   {
     id: "pizza-landing",
@@ -168,6 +195,10 @@ export const PROJECTS: Project[] = [
     ],
     description:
       "Landing page for a pizza delivery service, focusing on premium UI/UX, enticing visuals, and a seamless ordering experience.",
+    projectImage: "/projects/pizza-landing/th.webp",
+    backgroundImage: "bg-gradient-to-br from-yellow-950/20 via-slate-900 to-red-950/30",
+    status: "Completed",
+    shortDescription: "Clean landing page for a pizza delivery service, focusing on premium food visuals.",
   },
   {
     id: "suburbia",
@@ -191,6 +222,11 @@ export const PROJECTS: Project[] = [
     ],
     description:
       "Landing page for 'Suburbia', a custom skateboard brand. Showcasing a vibrant, rebellious UI/UX, interactive board customizer, and engaging animations.",
+    projectImage: "/projects/suburbia/th.webp",
+    backgroundImage: "bg-gradient-to-br from-violet-950/30 via-slate-900 to-purple-950/30",
+    status: "Completed",
+    pinned: true,
+    shortDescription: "Landing page for a custom skateboard brand featuring an interactive board customizer.",
   },
   {
     id: "interlock-landing",
@@ -212,6 +248,11 @@ export const PROJECTS: Project[] = [
     ],
     description:
       "Landing page for Interlock, a platform redefining decentralized finance. Showcasing next-gen security, seamless harmony, and state-of-the-art encryption through a premium UI/UX.",
+    projectImage: "/projects/interlock-landing/th.png",
+    backgroundImage: "bg-gradient-to-br from-blue-950/30 via-slate-900 to-indigo-950/30",
+    status: "Completed",
+    pinned: true,
+    shortDescription: "FinTech landing page redefining decentralized finance with state-of-the-art encryption.",
   },
   {
     id: "quaricdotcom",
