@@ -3,19 +3,13 @@
 import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { addQueryParams } from "@/utils/url"
 import { ArrowUpRight, ExternalLink, Pin } from "lucide-react"
 import { motion } from "motion/react"
 
 import type { Project } from "@/types/projects"
 import { UTM_PARAMS } from "@/config/site"
-import { Button } from "@/components/base/ui/button"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogTitle,
-} from "@/components/base/ui/dialog"
 import {
   Tooltip,
   TooltipContent,
@@ -33,8 +27,8 @@ export function ProjectCard({
   project,
   hasLocalPage = false,
 }: ProjectCardProps) {
+  const router = useRouter()
   const [cardHover, setCardHover] = useState<boolean>(false)
-  const [isOpen, setIsOpen] = useState<boolean>(false)
 
   const cardVariants = {
     initial: { y: 2 },
@@ -105,7 +99,7 @@ export function ProjectCard({
     <div
       onMouseEnter={() => setCardHover(true)}
       onMouseLeave={() => setCardHover(false)}
-      onClick={() => setIsOpen(true)}
+      onClick={() => router.push(detailsHref)}
       className="group flex w-full cursor-pointer flex-col"
     >
       {/* Image / Preview Container */}
@@ -253,98 +247,6 @@ export function ProjectCard({
             </Tooltip>
           )}
         </div>
-      </div>
-
-      {/* Project Popup Dialog */}
-      <div onClick={(e) => e.stopPropagation()}>
-        <Dialog open={isOpen} onOpenChange={setIsOpen}>
-          <DialogContent className="gap-0 overflow-hidden border border-line bg-background/95 p-0 shadow-2xl backdrop-blur-md sm:max-w-3xl">
-            {/* Video / Preview Container */}
-            <div className="relative flex aspect-video w-full items-center justify-center border-b border-line bg-muted p-1">
-              {project.projectVideo ? (
-                <video
-                  src={project.projectVideo}
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  className="h-full w-full object-cover"
-                />
-              ) : (
-                projectImage && (
-                  <div className="relative h-full w-full">
-                    <Image
-                      src={projectImage}
-                      alt={title}
-                      fill
-                      className="object-contain"
-                      unoptimized
-                    />
-                  </div>
-                )
-              )}
-            </div>
-
-            {/* Content Info Container */}
-            <div className="space-y-4 p-5">
-              <div className="space-y-1">
-                <DialogTitle className="font-mono text-base font-bold tracking-wider text-foreground uppercase">
-                  {title}
-                </DialogTitle>
-                <DialogDescription className="text-xs leading-relaxed text-muted-foreground">
-                  {project.shortDescription || project.description}
-                </DialogDescription>
-              </div>
-
-              {/* Links & Actions */}
-              <div className="flex flex-wrap items-center gap-2 border-t border-line/50 pt-3">
-                {project.link && (
-                  <Link
-                    href={addQueryParams(project.link, UTM_PARAMS)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex"
-                  >
-                    <Button
-                      size="sm"
-                      className="flex h-8 cursor-pointer items-center gap-1.5 text-xs font-semibold"
-                    >
-                      <ExternalLink className="size-3.5" />
-                      <span>Live Site</span>
-                    </Button>
-                  </Link>
-                )}
-                {project.github && (
-                  <Link
-                    href={project.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex"
-                  >
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="flex h-8 cursor-pointer items-center gap-1.5 text-xs font-semibold"
-                    >
-                      <Icons.github className="size-3.5" />
-                      <span>GitHub</span>
-                    </Button>
-                  </Link>
-                )}
-                <Link href={detailsHref} className="ml-auto inline-flex">
-                  <Button
-                    variant="secondary"
-                    size="sm"
-                    className="flex h-8 cursor-pointer items-center gap-1 text-xs font-semibold"
-                  >
-                    <span>Details</span>
-                    <ArrowUpRight className="size-3.5" />
-                  </Button>
-                </Link>
-              </div>
-            </div>
-          </DialogContent>
-        </Dialog>
       </div>
     </div>
   )
