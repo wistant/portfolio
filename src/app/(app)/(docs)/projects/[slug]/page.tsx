@@ -297,9 +297,16 @@ export default async function Page({ params }: PageProps<"/projects/[slug]">) {
                 {doc.metadata.description}
               </p>
 
-              {doc.metadata.image && (
+              {(doc.metadata.image ||
+                projectData?.projectImage ||
+                projectData?.logo) && (
                 <FramedImage
-                  src={doc.metadata.image}
+                  src={
+                    doc.metadata.image ||
+                    projectData?.projectImage ||
+                    projectData?.logo ||
+                    ""
+                  }
                   alt={doc.metadata.title}
                   className="my-6 aspect-[1570/760] w-full object-cover"
                 />
