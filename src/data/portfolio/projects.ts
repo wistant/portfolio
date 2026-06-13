@@ -28,6 +28,7 @@ export const PROJECTS: Project[] = [
     pinned: true,
     shortDescription:
       "High-fidelity backend platform landing page showcasing managed Postgres and Zero-Trust Identity.",
+    themeColor: "#6366f1",
   },
   {
     id: "wistantdotme",
@@ -64,6 +65,7 @@ export const PROJECTS: Project[] = [
     pinned: true,
     shortDescription:
       "Developer portfolio and shadcn registry built with Next.js 16 and Tailwind CSS v4.",
+    themeColor: "#10b981",
   },
   {
     id: "shoperzz",
@@ -102,6 +104,7 @@ export const PROJECTS: Project[] = [
     status: "Completed",
     shortDescription:
       "Open source e-commerce engine and custom react-wheel-picker npm package.",
+    themeColor: "#f59e0b",
   },
   {
     id: "navi-landing",
@@ -131,6 +134,7 @@ export const PROJECTS: Project[] = [
     pinned: true,
     shortDescription:
       "Futuristic landing page interface designed for seamless interaction with The Wired.",
+    themeColor: "#06b6d4",
   },
   {
     id: "propellent-landing",
@@ -159,6 +163,7 @@ export const PROJECTS: Project[] = [
     pinned: true,
     shortDescription:
       "High-growth SaaS landing page and dashboard for data-driven business scaling.",
+    themeColor: "#14b8a6",
   },
   {
     id: "splyt-landing",
@@ -187,6 +192,7 @@ export const PROJECTS: Project[] = [
     status: "Completed",
     shortDescription:
       "Vibrant protein + caffeine drink landing page focusing on playful brand storytelling.",
+    themeColor: "#f43f5e",
   },
   {
     id: "pizza-landing",
@@ -213,6 +219,7 @@ export const PROJECTS: Project[] = [
     status: "Completed",
     shortDescription:
       "Clean landing page for a pizza delivery service, focusing on premium food visuals.",
+    themeColor: "#ef4444",
   },
   {
     id: "suburbia",
@@ -243,6 +250,7 @@ export const PROJECTS: Project[] = [
     pinned: true,
     shortDescription:
       "Landing page for a custom skateboard brand featuring an interactive board customizer.",
+    themeColor: "#8b5cf6",
   },
   {
     id: "interlock-landing",
@@ -271,6 +279,7 @@ export const PROJECTS: Project[] = [
     pinned: true,
     shortDescription:
       "FinTech landing page redefining decentralized finance with state-of-the-art encryption.",
+    themeColor: "#3b82f6",
   },
   {
     id: "quaricdotcom",

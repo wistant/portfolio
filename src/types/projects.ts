@@ -36,4 +36,6 @@ export type Project = {
   projectVideo?: string
   /** Optional single-line short description. */
   shortDescription?: string
+  /** Dynamic accent color for project background glow. */
+  themeColor?: string
 }

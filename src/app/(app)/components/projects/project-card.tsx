@@ -56,6 +56,7 @@ export function ProjectCard({
         topLabel={topLabel}
         pinned={project.pinned}
         cardHover={cardHover}
+        themeColor={project.themeColor}
       />
 
       {/* 2. Header Area */}
