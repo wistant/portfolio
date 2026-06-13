@@ -1,5 +1,28 @@
 # portfolio
 
+## 1.0.6-beta.2
+
+### Patch Changes
+
+- e57d9d5: - style(style): format tech-stack.ts
+  - style(components): format tech-tag.tsx
+  - style(app): format tech-stack.tsx
+  - style(app): format project-card.tsx
+  - style(app): format project-card-preview.tsx
+  - style(app): format page.tsx
+  - feat(tech-stack): centralize icon mappings, add vercel and github actions, and support logos for all tags
+  - fix(providers): suppress next-themes hydration and script console errors in dev
+  - ui(projects): configure 'current'/'completed' status values and display status only in header
+  - ui(projects): fix project card alignment and height in grid
+  - ui(projects): align project card grid visual separation and breakpoints with blog list
+  - feat(projects): boost extracted color saturation and add diverse pattern variations based on project ID hash
+  - feat(projects): add automatic dominant color extraction for project card backgrounds
+  - fix(fetch): add 2-second timeout to external fetches and simplify log output
+- 9baa7fd: - style(app): format page.tsx
+  - content(projects): remove placeholder quaric and zadark template projects
+  - content(projects): revamp all descriptions, pin only portfolio and shoperzz
+  - feat(projects): auto-sort by pin+date, logo fallback in preview and OG metadata
+
 ## 1.0.6-beta.1
 
 ### Patch Changes
