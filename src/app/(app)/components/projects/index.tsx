@@ -3,8 +3,8 @@ import { getDocBySlug } from "@/data/doc/documents"
 import { PROJECTS } from "@/data/portfolio/projects"
 import { ArrowRightIcon } from "lucide-react"
 
-import { cn } from "@/lib/utils"
 import { getGithubStars } from "@/lib/github"
+import { cn } from "@/lib/utils"
 import { Button } from "@/components/base/ui/button"
 
 import { Panel, PanelHeader, PanelTitle, PanelTitleSup } from "../panel"
