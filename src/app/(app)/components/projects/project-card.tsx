@@ -34,10 +34,7 @@ export function ProjectCard({
   // 4. Resolve Tags / Skills
   const tagList = project.skills || []
 
-  // 5. Resolve Top Label
-  const topLabel = project.status || project.id
-
-  // 6. Resolve Case Study details href and label
+  // 5. Resolve Case Study details href and label
   const detailsHref = hasLocalPage ? `/projects/${project.id}` : project.link
   const detailsLabel = hasLocalPage ? "Read Case Study" : "View Live Site"
 
@@ -53,7 +50,6 @@ export function ProjectCard({
         title={title}
         projectImage={projectImage}
         backgroundImage={backgroundImage}
-        topLabel={topLabel}
         pinned={project.pinned}
         cardHover={cardHover}
         themeColor={project.themeColor}

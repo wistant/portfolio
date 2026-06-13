@@ -24,15 +24,15 @@ export const PROJECTS: Project[] = [
     projectImage: "/projects/sunabase/sunabase.png",
     backgroundImage:
       "bg-gradient-to-br from-indigo-900/40 via-slate-900 to-blue-900/40",
-    status: "Completed",
+    status: "completed",
     pinned: true,
     shortDescription:
       "High-fidelity backend platform landing page showcasing managed Postgres and Zero-Trust Identity.",
     themeColor: "#6366f1",
   },
   {
-    id: "wistantdotme",
-    title: "wistant.me",
+    id: "portfolio",
+    title: "My portfolio",
     period: {
       start: "05.2026",
       end: "05.2026",
@@ -61,7 +61,7 @@ export const PROJECTS: Project[] = [
     projectImage: "/projects/portfolio/preview.png",
     backgroundImage:
       "bg-gradient-to-br from-neutral-800/20 via-neutral-900 to-emerald-950/20",
-    status: "Ongoing",
+    status: "current",
     pinned: true,
     shortDescription:
       "Developer portfolio and shadcn registry built with Next.js 16 and Tailwind CSS v4.",
@@ -101,7 +101,7 @@ export const PROJECTS: Project[] = [
     logo: "https://assets.chanhdai.com/images/project-logos/react-wheel-picker.svg",
     backgroundImage:
       "bg-gradient-to-br from-rose-950/20 via-slate-900 to-amber-950/20",
-    status: "Completed",
+    status: "completed",
     shortDescription:
       "Open source e-commerce engine and custom react-wheel-picker npm package.",
     themeColor: "#f59e0b",
@@ -130,7 +130,7 @@ export const PROJECTS: Project[] = [
     projectImage: "/projects/navi-landing/th.png",
     backgroundImage:
       "bg-gradient-to-br from-fuchsia-950/30 via-slate-900 to-cyan-950/30",
-    status: "Completed",
+    status: "completed",
     pinned: true,
     shortDescription:
       "Futuristic landing page interface designed for seamless interaction with The Wired.",
@@ -159,7 +159,7 @@ export const PROJECTS: Project[] = [
     projectImage: "/projects/propellent-landing/propellent.png",
     backgroundImage:
       "bg-gradient-to-br from-emerald-950/30 via-slate-900 to-teal-950/30",
-    status: "Completed",
+    status: "completed",
     pinned: true,
     shortDescription:
       "High-growth SaaS landing page and dashboard for data-driven business scaling.",
@@ -189,7 +189,7 @@ export const PROJECTS: Project[] = [
     projectImage: "/projects/splyt-landing/th.webp",
     backgroundImage:
       "bg-gradient-to-br from-rose-950/30 via-slate-900 to-orange-950/20",
-    status: "Completed",
+    status: "completed",
     shortDescription:
       "Vibrant protein + caffeine drink landing page focusing on playful brand storytelling.",
     themeColor: "#f43f5e",
@@ -216,7 +216,7 @@ export const PROJECTS: Project[] = [
     projectImage: "/projects/pizza-landing/th.webp",
     backgroundImage:
       "bg-gradient-to-br from-yellow-950/20 via-slate-900 to-red-950/30",
-    status: "Completed",
+    status: "completed",
     shortDescription:
       "Clean landing page for a pizza delivery service, focusing on premium food visuals.",
     themeColor: "#ef4444",
@@ -246,7 +246,7 @@ export const PROJECTS: Project[] = [
     projectImage: "/projects/suburbia/th.webp",
     backgroundImage:
       "bg-gradient-to-br from-violet-950/30 via-slate-900 to-purple-950/30",
-    status: "Completed",
+    status: "completed",
     pinned: true,
     shortDescription:
       "Landing page for a custom skateboard brand featuring an interactive board customizer.",
@@ -275,7 +275,7 @@ export const PROJECTS: Project[] = [
     projectImage: "/projects/interlock-landing/th.png",
     backgroundImage:
       "bg-gradient-to-br from-blue-950/30 via-slate-900 to-indigo-950/30",
-    status: "Completed",
+    status: "completed",
     pinned: true,
     shortDescription:
       "FinTech landing page redefining decentralized finance with state-of-the-art encryption.",
