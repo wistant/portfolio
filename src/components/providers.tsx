@@ -3,6 +3,7 @@
 import { ProgressProvider } from "@bprogress/next/app"
 import { Provider as JotaiProvider } from "jotai"
 import { ThemeProvider } from "next-themes"
+import ReactLenis from "lenis/react"
 
 import { Toaster } from "@/components/ui/sonner"
 import { TooltipProvider as RadixTooltipProvider } from "@/components/ui/tooltip"
@@ -27,8 +28,9 @@ if (typeof window !== "undefined" && process.env.NODE_ENV === "development") {
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <JotaiProvider>
-      <ThemeProvider
+    <ReactLenis root>
+      <JotaiProvider>
+        <ThemeProvider
         enableSystem
         disableTransitionOnChange
         enableColorScheme
@@ -52,5 +54,6 @@ export function Providers({ children }: { children: React.ReactNode }) {
         <Toaster position="top-center" />
       </ThemeProvider>
     </JotaiProvider>
+  </ReactLenis>
   )
 }
