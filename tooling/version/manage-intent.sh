@@ -121,9 +121,9 @@ create_intent() {
 
   local commits=""
   if [[ -n "$last_ref" ]]; then
-    commits=$(git log "${last_ref}..HEAD" --pretty=format:"- %s" --no-merges 2>/dev/null || true)
+    commits=$(git log "${last_ref}..HEAD" --pretty=format:"- %h: %s" --no-merges 2>/dev/null || true)
   else
-    commits=$(git log --pretty=format:"- %s" --no-merges 2>/dev/null | head -15 || true)
+    commits=$(git log --pretty=format:"- %h: %s" --no-merges 2>/dev/null | head -15 || true)
   fi
 
   if [[ -z "$commits" ]]; then
