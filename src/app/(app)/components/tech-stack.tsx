@@ -1,4 +1,4 @@
-import { TECH_STACK, KEY_MAP, LOCAL_ICONS } from "@/data/portfolio/tech-stack"
+import { KEY_MAP, LOCAL_ICONS, TECH_STACK } from "@/data/portfolio/tech-stack"
 
 import { Panel, PanelContent } from "./panel"
 
