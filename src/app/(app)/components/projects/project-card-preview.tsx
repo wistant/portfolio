@@ -258,7 +258,7 @@ export function ProjectCardPreview({
             <Icons.github className="size-2.5 text-muted-foreground" />
             <span className="flex items-center gap-0.5">
               <Star className="size-2.5 fill-amber-400 text-amber-400" />
-              <span className="text-[9px] font-semibold leading-none text-amber-400">
+              <span className="text-[9px] leading-none font-semibold text-amber-400">
                 {formatStars(stars)}
               </span>
             </span>
