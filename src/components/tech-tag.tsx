@@ -1,5 +1,6 @@
 import React from "react"
 import { TECH_STACK } from "@/data/portfolio/tech-stack"
+
 import { Tag } from "@/components/ui/tag"
 
 const KEY_MAP: Record<string, string> = {
@@ -44,9 +45,12 @@ const aliasMap: Record<string, string> = {
 }
 
 export function findTechBySkill(skill: string) {
-  const cleanSkill = skill.trim().toLowerCase().replace(/[^a-z0-9]/g, "")
+  const cleanSkill = skill
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, "")
   const mappedKey = aliasMap[cleanSkill] || cleanSkill
-  
+
   return TECH_STACK.find(
     (tech) =>
       tech.key.toLowerCase().replace(/[^a-z0-9]/g, "") === mappedKey ||
@@ -72,7 +76,7 @@ export function TechTag({ skill }: { skill: string }) {
       target="_blank"
       rel="noopener"
       aria-label={tech.title}
-      className="flex items-center gap-1.5 rounded-xs bg-zinc-50 px-1.5 py-0.5 text-xs tracking-wide text-foreground ring-1 ring-border/80 select-none dark:bg-zinc-900 [&_img]:size-3.5 hover:bg-accent-muted transition-colors duration-200"
+      className="flex items-center gap-1.5 rounded-xs bg-zinc-50 px-1.5 py-0.5 text-xs tracking-wide text-foreground ring-1 ring-border/80 transition-colors duration-200 select-none hover:bg-accent-muted dark:bg-zinc-900 [&_img]:size-3.5"
     >
       {localIcon ? (
         <img
