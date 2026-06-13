@@ -1,3 +1,4 @@
+import { findTechBySkill } from "@/data/portfolio/tech-stack"
 import { differenceInMonths, parse } from "date-fns"
 import { BriefcaseBusinessIcon, InfinityIcon } from "lucide-react"
 
@@ -15,7 +16,6 @@ import {
 } from "@/components/base/ui/collapsible"
 import { Markdown } from "@/components/markdown"
 import { TechTag } from "@/components/tech-tag"
-import { findTechBySkill } from "@/data/portfolio/tech-stack"
 
 export function ExperiencePositionItem({
   position,
@@ -115,7 +115,9 @@ export function ExperiencePositionItem({
       </CollapsibleContent>
 
       {(() => {
-        const filteredSkills = (position.skills || []).filter((s) => !!findTechBySkill(s))
+        const filteredSkills = (position.skills || []).filter(
+          (s) => !!findTechBySkill(s)
+        )
         if (filteredSkills.length === 0) return null
         return (
           <ul className="flex flex-wrap gap-1.5 pt-3 pl-9">
