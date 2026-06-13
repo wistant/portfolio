@@ -1,8 +1,8 @@
 {
   "mode": "pre",
-  "tag": "alpha",
+  "tag": "beta",
   "initialVersions": {
-    "portfolio": "1.0.5"
+    "portfolio": "1.0.6-alpha.0"
   },
   "changesets": [
     "release-1781312108"
