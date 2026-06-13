@@ -178,6 +178,12 @@ export const TECH_TAGS: TechStack[] = [
     href: "https://ui.shadcn.com/",
     categories: ["Frontend"],
   },
+  {
+    key: "opensource",
+    title: "Open Source",
+    href: "https://opensource.org/",
+    categories: ["Dev Tools"],
+  },
 ]
 
 export const LOCAL_ICONS: Record<string, string> = {
@@ -210,6 +216,7 @@ export const LOCAL_ICONS: Record<string, string> = {
   magicui: "/icons/magic-ui.svg",
   radixui: "/icons/radix-ui.svg",
   shadcnui: "/icons/shadcn-ui.svg",
+  opensource: "/icons/opensource.svg",
 }
 
 export const aliasMap: Record<string, string> = {
@@ -265,6 +272,8 @@ export const aliasMap: Record<string, string> = {
   "shadcn ui": "shadcnui",
   "shadcn-ui": "shadcnui",
   "shadcn/ui": "shadcnui",
+  opensource: "opensource",
+  "open source": "opensource",
 }
 
 export function findTechBySkill(skill: string) {
