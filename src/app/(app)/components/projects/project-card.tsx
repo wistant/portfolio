@@ -57,6 +57,7 @@ export function ProjectCard({
         pinned={project.pinned}
         cardHover={cardHover}
         themeColor={project.themeColor}
+        projectId={project.id}
       />
 
       {/* 2. Header Area */}
