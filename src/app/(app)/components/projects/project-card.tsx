@@ -5,8 +5,8 @@ import Image from "next/image"
 import Link from "next/link"
 import { getDocBySlug } from "@/data/doc/documents"
 import { addQueryParams } from "@/utils/url"
-import { motion } from "motion/react"
 import { ArrowUpRight, ExternalLink, Pin } from "lucide-react"
+import { motion } from "motion/react"
 
 import type { Project } from "@/types/projects"
 import { UTM_PARAMS } from "@/config/site"
@@ -45,7 +45,9 @@ export function ProjectCard({ project }: ProjectCardProps) {
   const projectImage = project.projectImage || ""
 
   // 3. Resolve Background Image or class
-  const backgroundImage = project.backgroundImage || "bg-gradient-to-br from-indigo-950/25 via-slate-900 to-slate-950"
+  const backgroundImage =
+    project.backgroundImage ||
+    "bg-gradient-to-br from-indigo-950/25 via-slate-900 to-slate-950"
 
   // 4. Resolve Tags / Skills
   const tagList = project.skills || []
@@ -59,7 +61,10 @@ export function ProjectCard({ project }: ProjectCardProps) {
   // Status Color Mapping
   const getStatusColor = (status: string | undefined) => {
     if (!status)
-      return { dot: "bg-zinc-400 dark:bg-zinc-600", text: "text-muted-foreground" }
+      return {
+        dot: "bg-zinc-400 dark:bg-zinc-600",
+        text: "text-muted-foreground",
+      }
     switch (status.toLowerCase()) {
       case "ongoing":
       case "live":
@@ -75,18 +80,24 @@ export function ProjectCard({ project }: ProjectCardProps) {
       case "completed":
         return { dot: "bg-blue-500", text: "text-blue-500 font-semibold" }
       default:
-        return { dot: "bg-zinc-400 dark:bg-zinc-600", text: "text-muted-foreground" }
+        return {
+          dot: "bg-zinc-400 dark:bg-zinc-600",
+          text: "text-muted-foreground",
+        }
     }
   }
   const statusColors = getStatusColor(statusText)
 
   // 7. Resolve Case Study availability
   const hasLocalPage = !!getDocBySlug(project.id)
-  const detailsHref = hasLocalPage ? `/projects/${project.id}` : addQueryParams(project.link, UTM_PARAMS)
+  const detailsHref = hasLocalPage
+    ? `/projects/${project.id}`
+    : addQueryParams(project.link, UTM_PARAMS)
   const detailsLabel = hasLocalPage ? "Read Case Study" : "View Live Site"
 
   // 8. Background configuration
-  const isCssGradient = backgroundImage.startsWith("bg-") || backgroundImage.startsWith("from-")
+  const isCssGradient =
+    backgroundImage.startsWith("bg-") || backgroundImage.startsWith("from-")
 
   return (
     <div
@@ -99,13 +110,13 @@ export function ProjectCard({ project }: ProjectCardProps) {
       <div className="relative aspect-video w-full rounded-none border border-line/80 bg-muted/15 p-1 transition-colors duration-300 group-hover:border-line">
         <div className="relative flex h-full w-full items-end justify-center overflow-hidden rounded-none border border-line bg-muted">
           {/* Top Label */}
-          <span className="absolute top-1.5 left-4 z-20 select-none text-[10px] font-semibold uppercase tracking-wider text-muted-foreground transition-all duration-300 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:text-foreground">
+          <span className="absolute top-1.5 left-4 z-20 text-[10px] font-semibold tracking-wider text-muted-foreground uppercase transition-all duration-300 select-none group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:text-foreground">
             {topLabel}
           </span>
 
           {/* Pin Icon */}
           {project.pinned && (
-            <div className="absolute top-1.5 right-1.5 z-20 select-none rounded-full border border-line bg-background/90 p-1 shadow-xs text-muted-foreground/85">
+            <div className="absolute top-1.5 right-1.5 z-20 rounded-full border border-line bg-background/90 p-1 text-muted-foreground/85 shadow-xs select-none">
               <Pin className="size-3 rotate-45 fill-muted-foreground/15" />
             </div>
           )}
@@ -134,7 +145,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
             initial="initial"
             animate={cardHover ? "hover" : "initial"}
             transition={{ type: "spring", stiffness: 220, damping: 20 }}
-            className="relative h-[130px] w-[270px] overflow-hidden bg-background px-1 pt-1 border border-b-0 border-line rounded-t-lg shadow-2xl"
+            className="relative h-[130px] w-[270px] overflow-hidden rounded-t-lg border border-b-0 border-line bg-background px-1 pt-1 shadow-2xl"
           >
             {projectImage ? (
               <Image
@@ -142,7 +153,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
                 alt={title}
                 width={270}
                 height={130}
-                className="h-full w-full object-cover object-top rounded-t-md"
+                className="h-full w-full rounded-t-md object-cover object-top"
                 unoptimized
               />
             ) : (
@@ -158,12 +169,12 @@ export function ProjectCard({ project }: ProjectCardProps) {
 
       {/* Info Details Row */}
       <div className="mt-3 flex items-center justify-between px-1">
-        <h3 className="text-sm font-semibold text-foreground transition-colors duration-300 group-hover:text-primary leading-snug">
+        <h3 className="text-sm leading-snug font-semibold text-foreground transition-colors duration-300 group-hover:text-primary">
           {title}
         </h3>
         {statusText && (
           <div
-            className={`flex items-center gap-1.5 text-[10px] select-none font-semibold uppercase tracking-wider ${statusColors.text}`}
+            className={`flex items-center gap-1.5 text-[10px] font-semibold tracking-wider uppercase select-none ${statusColors.text}`}
           >
             <span className={`size-1.5 rounded-full ${statusColors.dot}`} />
             <span>{statusText}</span>
@@ -172,7 +183,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
       </div>
 
       {/* Description */}
-      <p className="mt-1.5 px-1 line-clamp-2 text-xs leading-relaxed text-muted-foreground/85">
+      <p className="mt-1.5 line-clamp-2 px-1 text-xs leading-relaxed text-muted-foreground/85">
         {project.shortDescription || project.description}
       </p>
 
@@ -191,11 +202,11 @@ export function ProjectCard({ project }: ProjectCardProps) {
       )}
 
       {/* Link and Action Icons */}
-      <div className="flex items-center justify-between px-1 pt-3 mt-auto">
+      <div className="mt-auto flex items-center justify-between px-1 pt-3">
         <Link
           href={detailsHref}
           onClick={(e) => e.stopPropagation()}
-          className="inline-flex items-center gap-1 text-[11px] font-bold text-muted-foreground transition-colors hover:text-foreground group-hover:text-foreground"
+          className="inline-flex items-center gap-1 text-[11px] font-bold text-muted-foreground transition-colors group-hover:text-foreground hover:text-foreground"
         >
           <span>{detailsLabel}</span>
           <ArrowUpRight className="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -245,9 +256,9 @@ export function ProjectCard({ project }: ProjectCardProps) {
       {/* Project Popup Dialog */}
       <div onClick={(e) => e.stopPropagation()}>
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
-          <DialogContent className="sm:max-w-3xl p-0 overflow-hidden border border-line bg-background/95 backdrop-blur-md gap-0 shadow-2xl">
+          <DialogContent className="gap-0 overflow-hidden border border-line bg-background/95 p-0 shadow-2xl backdrop-blur-md sm:max-w-3xl">
             {/* Video / Preview Container */}
-            <div className="relative w-full aspect-video border-b border-line bg-muted p-1 flex items-center justify-center">
+            <div className="relative flex aspect-video w-full items-center justify-center border-b border-line bg-muted p-1">
               {project.projectVideo ? (
                 <video
                   src={project.projectVideo}
@@ -255,11 +266,11 @@ export function ProjectCard({ project }: ProjectCardProps) {
                   muted
                   loop
                   playsInline
-                  className="w-full h-full object-cover"
+                  className="h-full w-full object-cover"
                 />
               ) : (
                 projectImage && (
-                  <div className="relative w-full h-full">
+                  <div className="relative h-full w-full">
                     <Image
                       src={projectImage}
                       alt={title}
@@ -273,18 +284,18 @@ export function ProjectCard({ project }: ProjectCardProps) {
             </div>
 
             {/* Content Info Container */}
-            <div className="p-5 space-y-4">
+            <div className="space-y-4 p-5">
               <div className="space-y-1">
-                <DialogTitle className="text-base font-bold uppercase tracking-wider text-foreground font-mono">
+                <DialogTitle className="font-mono text-base font-bold tracking-wider text-foreground uppercase">
                   {title}
                 </DialogTitle>
-                <DialogDescription className="text-xs text-muted-foreground leading-relaxed">
+                <DialogDescription className="text-xs leading-relaxed text-muted-foreground">
                   {project.shortDescription || project.description}
                 </DialogDescription>
               </div>
 
               {/* Links & Actions */}
-              <div className="flex flex-wrap items-center gap-2 pt-3 border-t border-line/50">
+              <div className="flex flex-wrap items-center gap-2 border-t border-line/50 pt-3">
                 {project.link && (
                   <Link
                     href={addQueryParams(project.link, UTM_PARAMS)}
@@ -292,7 +303,10 @@ export function ProjectCard({ project }: ProjectCardProps) {
                     rel="noopener noreferrer"
                     className="inline-flex"
                   >
-                    <Button size="sm" className="h-8 text-xs font-semibold flex items-center gap-1.5 cursor-pointer">
+                    <Button
+                      size="sm"
+                      className="flex h-8 cursor-pointer items-center gap-1.5 text-xs font-semibold"
+                    >
                       <ExternalLink className="size-3.5" />
                       <span>Live Site</span>
                     </Button>
@@ -305,17 +319,22 @@ export function ProjectCard({ project }: ProjectCardProps) {
                     rel="noopener noreferrer"
                     className="inline-flex"
                   >
-                    <Button variant="outline" size="sm" className="h-8 text-xs font-semibold flex items-center gap-1.5 cursor-pointer">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="flex h-8 cursor-pointer items-center gap-1.5 text-xs font-semibold"
+                    >
                       <Icons.github className="size-3.5" />
                       <span>GitHub</span>
                     </Button>
                   </Link>
                 )}
-                <Link
-                  href={detailsHref}
-                  className="inline-flex ml-auto"
-                >
-                  <Button variant="secondary" size="sm" className="h-8 text-xs font-semibold flex items-center gap-1 cursor-pointer">
+                <Link href={detailsHref} className="ml-auto inline-flex">
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    className="flex h-8 cursor-pointer items-center gap-1 text-xs font-semibold"
+                  >
                     <span>Details</span>
                     <ArrowUpRight className="size-3.5" />
                   </Button>

@@ -101,7 +101,7 @@ export default function Page() {
               Open Source Engines & Tools 💻
             </h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 border-b border-line">
+          <div className="grid grid-cols-1 gap-4 border-b border-line p-4 md:grid-cols-2">
             {openSource.map((project) => (
               <ProjectCard key={project.id} project={project} />
             ))}
@@ -119,7 +119,7 @@ export default function Page() {
               Client & Company Architectures 🏢
             </h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 border-b border-line">
+          <div className="grid grid-cols-1 gap-4 border-b border-line p-4 md:grid-cols-2">
             {client.map((project) => (
               <ProjectCard key={project.id} project={project} />
             ))}
@@ -137,7 +137,7 @@ export default function Page() {
               Landings, Frontend & Experiential Apps 🎨
             </h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 border-b border-line">
+          <div className="grid grid-cols-1 gap-4 border-b border-line p-4 md:grid-cols-2">
             {rest.map((project) => (
               <ProjectCard key={project.id} project={project} />
             ))}

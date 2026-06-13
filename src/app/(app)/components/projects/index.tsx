@@ -20,7 +20,7 @@ export function Projects() {
         </PanelTitle>
       </PanelHeader>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 border-b border-line">
+      <div className="grid grid-cols-1 gap-4 border-b border-line p-4 md:grid-cols-2">
         {visibleProjects.map((project) => (
           <ProjectCard key={project.id} project={project} />
         ))}
