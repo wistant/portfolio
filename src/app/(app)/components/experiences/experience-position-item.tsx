@@ -15,6 +15,7 @@ import {
 } from "@/components/base/ui/collapsible"
 import { Markdown } from "@/components/markdown"
 import { TechTag } from "@/components/tech-tag"
+import { findTechBySkill } from "@/data/portfolio/tech-stack"
 
 export function ExperiencePositionItem({
   position,
@@ -113,15 +114,19 @@ export function ExperiencePositionItem({
         )}
       </CollapsibleContent>
 
-      {Array.isArray(position.skills) && position.skills.length > 0 && (
-        <ul className="flex flex-wrap gap-1.5 pt-3 pl-9">
-          {position.skills.map((skill, index) => (
-            <li key={index} className="flex">
-              <TechTag skill={skill} />
-            </li>
-          ))}
-        </ul>
-      )}
+      {(() => {
+        const filteredSkills = (position.skills || []).filter((s) => !!findTechBySkill(s))
+        if (filteredSkills.length === 0) return null
+        return (
+          <ul className="flex flex-wrap gap-1.5 pt-3 pl-9">
+            {filteredSkills.map((skill, index) => (
+              <li key={index} className="flex">
+                <TechTag skill={skill} />
+              </li>
+            ))}
+          </ul>
+        )
+      })()}
     </Collapsible>
   )
 }

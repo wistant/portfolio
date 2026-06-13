@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 
 import type { Project } from "@/types/projects"
 import { TechTag } from "@/components/tech-tag"
+import { findTechBySkill } from "@/data/portfolio/tech-stack"
 
 import { ProjectCardActions } from "./project-card-actions"
 import { ProjectCardHeader } from "./project-card-header"
@@ -33,8 +34,8 @@ export function ProjectCard({
   // 3. Resolve Background Image or class
   const backgroundImage = project.backgroundImage
 
-  // 4. Resolve Tags / Skills
-  const tagList = project.skills || []
+  // 4. Resolve Tags / Skills (filter to only show primary tech skills)
+  const tagList = (project.skills || []).filter((skill) => !!findTechBySkill(skill))
 
   // 5. Resolve Case Study details href and label
   const detailsHref = hasLocalPage ? `/projects/${project.id}` : project.link
