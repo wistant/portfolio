@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { getDocBySlug } from "@/data/doc/documents"
 import { PROJECTS } from "@/data/portfolio/projects"
 import { ArrowRightIcon } from "lucide-react"
 
@@ -22,7 +23,11 @@ export function Projects() {
 
       <div className="grid grid-cols-1 gap-4 border-b border-line p-4 md:grid-cols-2">
         {visibleProjects.map((project) => (
-          <ProjectCard key={project.id} project={project} />
+          <ProjectCard
+            key={project.id}
+            project={project}
+            hasLocalPage={!!getDocBySlug(project.id)}
+          />
         ))}
       </div>
 

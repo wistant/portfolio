@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { getDocBySlug } from "@/data/doc/documents"
 import { PROJECTS } from "@/data/portfolio/projects"
 
 import { X_HANDLE } from "@/config/site"
@@ -103,7 +104,11 @@ export default function Page() {
           </div>
           <div className="grid grid-cols-1 gap-4 border-b border-line p-4 md:grid-cols-2">
             {openSource.map((project) => (
-              <ProjectCard key={project.id} project={project} />
+              <ProjectCard
+                key={project.id}
+                project={project}
+                hasLocalPage={!!getDocBySlug(project.id)}
+              />
             ))}
           </div>
         </div>
@@ -121,7 +126,11 @@ export default function Page() {
           </div>
           <div className="grid grid-cols-1 gap-4 border-b border-line p-4 md:grid-cols-2">
             {client.map((project) => (
-              <ProjectCard key={project.id} project={project} />
+              <ProjectCard
+                key={project.id}
+                project={project}
+                hasLocalPage={!!getDocBySlug(project.id)}
+              />
             ))}
           </div>
         </div>
@@ -139,7 +148,11 @@ export default function Page() {
           </div>
           <div className="grid grid-cols-1 gap-4 border-b border-line p-4 md:grid-cols-2">
             {rest.map((project) => (
-              <ProjectCard key={project.id} project={project} />
+              <ProjectCard
+                key={project.id}
+                project={project}
+                hasLocalPage={!!getDocBySlug(project.id)}
+              />
             ))}
           </div>
         </div>

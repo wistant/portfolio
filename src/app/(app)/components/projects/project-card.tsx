@@ -3,7 +3,6 @@
 import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { getDocBySlug } from "@/data/doc/documents"
 import { addQueryParams } from "@/utils/url"
 import { ArrowUpRight, ExternalLink, Pin } from "lucide-react"
 import { motion } from "motion/react"
@@ -27,9 +26,13 @@ import { TechTag } from "@/components/tech-tag"
 
 interface ProjectCardProps {
   project: Project
+  hasLocalPage?: boolean
 }
 
-export function ProjectCard({ project }: ProjectCardProps) {
+export function ProjectCard({
+  project,
+  hasLocalPage = false,
+}: ProjectCardProps) {
   const [cardHover, setCardHover] = useState<boolean>(false)
   const [isOpen, setIsOpen] = useState<boolean>(false)
 
@@ -89,7 +92,6 @@ export function ProjectCard({ project }: ProjectCardProps) {
   const statusColors = getStatusColor(statusText)
 
   // 7. Resolve Case Study availability
-  const hasLocalPage = !!getDocBySlug(project.id)
   const detailsHref = hasLocalPage
     ? `/projects/${project.id}`
     : addQueryParams(project.link, UTM_PARAMS)
