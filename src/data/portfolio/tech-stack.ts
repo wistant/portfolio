@@ -49,6 +49,9 @@ export const TECH_STACK: TechStack[] = [
     href: "https://vite.dev/",
     categories: ["Dev Tools"],
   },
+]
+
+export const TECH_TAGS: TechStack[] = [
   {
     key: "react",
     title: "React",
@@ -151,6 +154,30 @@ export const TECH_STACK: TechStack[] = [
     href: "https://vercel.com/",
     categories: ["Dev Tools"],
   },
+  {
+    key: "baseui",
+    title: "Base UI",
+    href: "https://base-ui.com/",
+    categories: ["Frontend"],
+  },
+  {
+    key: "magicui",
+    title: "Magic UI",
+    href: "https://magicui.design/",
+    categories: ["Frontend"],
+  },
+  {
+    key: "radixui",
+    title: "Radix UI",
+    href: "https://www.radix-ui.com/",
+    categories: ["Frontend"],
+  },
+  {
+    key: "shadcnui",
+    title: "shadcn/ui",
+    href: "https://ui.shadcn.com/",
+    categories: ["Frontend"],
+  },
 ]
 
 export const LOCAL_ICONS: Record<string, string> = {
@@ -179,6 +206,10 @@ export const LOCAL_ICONS: Record<string, string> = {
   turborepo: "/icons/turborepo.svg",
   githubactions: "/icons/github-actions.svg",
   vercel: "/icons/vercel-icon.svg",
+  baseui: "/icons/base-ui.svg",
+  magicui: "/icons/magic-ui.svg",
+  radixui: "/icons/radix-ui.svg",
+  shadcnui: "/icons/shadcn-ui.svg",
 }
 
 export const aliasMap: Record<string, string> = {
@@ -221,6 +252,19 @@ export const aliasMap: Record<string, string> = {
   tailwindcssv3: "tailwindcss",
   vite: "vite",
   vitejs: "vite",
+  baseui: "baseui",
+  "base ui": "baseui",
+  "base-ui": "baseui",
+  magicui: "magicui",
+  "magic ui": "magicui",
+  "magic-ui": "magicui",
+  radixui: "radixui",
+  "radix ui": "radixui",
+  "radix-ui": "radixui",
+  shadcnui: "shadcnui",
+  "shadcn ui": "shadcnui",
+  "shadcn-ui": "shadcnui",
+  "shadcn/ui": "shadcnui",
 }
 
 export function findTechBySkill(skill: string) {
@@ -232,7 +276,8 @@ export function findTechBySkill(skill: string) {
   // Try mapping via aliasMap with normalized spaces
   const mappedKey = aliasMap[cleanSkill] || cleanSkill.replace(/\s+/g, "")
 
-  return TECH_STACK.find(
+  const allTech = [...TECH_STACK, ...TECH_TAGS]
+  return allTech.find(
     (tech) =>
       tech.key.toLowerCase().replace(/[^a-z0-9]/g, "") === mappedKey ||
       tech.title.toLowerCase().replace(/[^a-z0-9]/g, "") ===
