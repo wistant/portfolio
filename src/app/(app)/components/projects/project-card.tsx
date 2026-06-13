@@ -43,7 +43,7 @@ export function ProjectCard({
       onMouseEnter={() => setCardHover(true)}
       onMouseLeave={() => setCardHover(false)}
       onClick={() => router.push(detailsHref)}
-      className="group flex w-full h-full cursor-pointer flex-col"
+      className="group flex h-full w-full cursor-pointer flex-col"
     >
       {/* 1. Preview Area */}
       <ProjectCardPreview
