@@ -1,8 +1,8 @@
 "use client"
 
 import Link from "next/link"
-import { addQueryParams } from "@/utils/url"
 import { ArrowUpRight, ExternalLink } from "lucide-react"
+import { addQueryParams } from "@/utils/url"
 
 import { UTM_PARAMS } from "@/config/site"
 import {

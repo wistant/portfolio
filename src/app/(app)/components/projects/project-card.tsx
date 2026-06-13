@@ -13,11 +13,13 @@ import { ProjectCardPreview } from "./project-card-preview"
 interface ProjectCardProps {
   project: Project
   hasLocalPage?: boolean
+  stars?: number | null
 }
 
 export function ProjectCard({
   project,
   hasLocalPage = false,
+  stars,
 }: ProjectCardProps) {
   const router = useRouter()
   const [cardHover, setCardHover] = useState<boolean>(false)
@@ -55,6 +57,7 @@ export function ProjectCard({
         themeColor={project.themeColor}
         projectId={project.id}
         logo={project.logo}
+        stars={stars}
       />
 
       {/* 2. Header Area */}
