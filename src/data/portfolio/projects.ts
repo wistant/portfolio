@@ -39,7 +39,9 @@ export const PROJECTS: Project[] = [
       start: "05.2026",
     },
     link: "https://shoperzz.dev",
-    github: "https://github.com/wistant/shoperzz",
+    github: "https://github.com/shoperzz/shoperzz",
+    projectImage:
+      "https://raw.githubusercontent.com/wistant/datafiles/main/blog/shoperzz-dark.png",
     skills: [
       "Open Source",
       "TypeScript",
