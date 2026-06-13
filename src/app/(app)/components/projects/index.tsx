@@ -5,10 +5,11 @@ import { ArrowRightIcon } from "lucide-react"
 import { Button } from "@/components/base/ui/button"
 
 import { Panel, PanelHeader, PanelTitle, PanelTitleSup } from "../panel"
-import { ProjectItem } from "./project-item"
+import { ProjectCard } from "./project-card"
 
 export function Projects() {
-  const visibleProjects = PROJECTS.slice(0, 5)
+  // Show 4 projects for a balanced 2x2 grid layout
+  const visibleProjects = PROJECTS.slice(0, 4)
 
   return (
     <Panel id="projects">
@@ -19,15 +20,13 @@ export function Projects() {
         </PanelTitle>
       </PanelHeader>
 
-      <ul>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 border-b border-line">
         {visibleProjects.map((project) => (
-          <li key={project.id} className="border-b border-line">
-            <ProjectItem project={project} />
-          </li>
+          <ProjectCard key={project.id} project={project} />
         ))}
-      </ul>
+      </div>
 
-      {PROJECTS.length > 5 && (
+      {PROJECTS.length > 4 && (
         <div className="flex h-12 items-center justify-center pb-px">
           <Button
             className="gap-2 border-none pr-2.5 pl-3"
