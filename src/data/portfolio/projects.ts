@@ -252,50 +252,6 @@ export const PROJECTS: Project[] = [
       "Appetite-triggering pizza delivery landing page with warm brand tones and order-flow design.",
     themeColor: "#ef4444",
   },
-  {
-    id: "quaricdotcom",
-    title: "quaric.com — Company Website",
-    period: {
-      start: "03.2024",
-    },
-    link: "https://quaric.com",
-    skills: [
-      "Company Project",
-      "Next.js",
-      "Tailwind CSS",
-      "shadcn/ui",
-      "Strapi",
-      "Docker",
-      "NGINX",
-    ],
-    description:
-      "Official corporate website for Quaric, built with Next.js 15 and a headless Strapi 5 CMS backend. Features a custom VNPAY-QR payment integration, containerized deployment with Docker and Docker Compose, and NGINX reverse-proxy configuration for production-grade hosting.",
-    logo: "https://assets.chanhdai.com/images/project-logos/quaricdotcom.svg",
-    shortDescription:
-      "Corporate site for Quaric with headless Strapi CMS, VNPAY-QR payments, and Docker deployment.",
-    themeColor: "#64748b",
-  },
-  {
-    id: "zadark",
-    title: "ZaDark — Browser Extension for Zalo",
-    period: {
-      start: "01.2022",
-    },
-    link: "https://zadark.com",
-    skills: [
-      "Open Source",
-      "Pet Project",
-      "Browser Extension",
-      "JavaScript",
-      "Docusaurus",
-    ],
-    description:
-      "ZaDark is an open-source browser extension and CLI tool that brings Dark Mode, anti-peeking privacy controls, custom fonts, and background personalization to Zalo Web and Zalo PC. Grew organically to 30k+ active Chrome users, 80k+ SourceForge downloads, a paid Safari release generating 10M+ VND in net sales, and a Bronze Medal at the 10th Design, Manufacturing, and Application Award 2022.",
-    logo: "https://assets.chanhdai.com/images/project-logos/zadark.svg",
-    shortDescription:
-      "Open-source Dark Mode + privacy extension for Zalo — 30k+ Chrome users, 10M+ VND in Safari sales.",
-    themeColor: "#a855f7",
-  },
 ].sort((a, b) => {
   // 1. Pinned first
   if (a.pinned && !b.pinned) return -1
