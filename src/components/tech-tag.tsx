@@ -1,8 +1,8 @@
 import React from "react"
 import {
+  findTechBySkill,
   KEY_MAP,
   LOCAL_ICONS,
-  findTechBySkill,
 } from "@/data/portfolio/tech-stack"
 
 import { Tag } from "@/components/ui/tag"
