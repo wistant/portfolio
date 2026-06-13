@@ -2,9 +2,7 @@
  * Fetch the GitHub star count for a given repository URL.
  * Results are cached and revalidated every hour.
  */
-export async function getGithubStars(
-  repoUrl: string
-): Promise<number | null> {
+export async function getGithubStars(repoUrl: string): Promise<number | null> {
   try {
     // Extract owner/repo from any GitHub URL format
     const match = repoUrl.match(/github\.com\/([^/]+)\/([^/?#]+)/)
