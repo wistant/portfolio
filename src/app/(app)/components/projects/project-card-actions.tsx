@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { Star, ArrowUpRight, ExternalLink } from "lucide-react"
+import { ArrowUpRight, ExternalLink } from "lucide-react"
 import { addQueryParams } from "@/utils/url"
 
 import { UTM_PARAMS } from "@/config/site"
@@ -11,14 +11,12 @@ import {
   TooltipTrigger,
 } from "@/components/base/ui/tooltip"
 import { Icons } from "@/components/icons"
-import { formatStars } from "@/lib/github"
 
 interface ProjectCardActionsProps {
   detailsHref: string
   detailsLabel: string
   liveLink?: string
   github?: string
-  stars?: number | null
 }
 
 export function ProjectCardActions({
@@ -26,7 +24,6 @@ export function ProjectCardActions({
   detailsLabel,
   liveLink,
   github,
-  stars,
 }: ProjectCardActionsProps) {
   return (
     <div className="mt-auto flex items-center justify-between px-1 pt-3">
@@ -68,23 +65,13 @@ export function ProjectCardActions({
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={(e) => e.stopPropagation()}
-                  className="inline-flex items-center gap-1 rounded-sm p-1 text-muted-foreground transition-colors hover:text-foreground"
+                  className="p-1 text-muted-foreground transition-colors hover:text-foreground"
                 >
-                  <Icons.github className="size-3.5 shrink-0" />
-                  {stars != null && stars > 0 && (
-                    <span className="flex items-center gap-0.5 text-[10px] font-semibold leading-none text-amber-400">
-                      <Star className="size-2.5 fill-amber-400 text-amber-400" />
-                      {formatStars(stars)}
-                    </span>
-                  )}
+                  <Icons.github className="size-3.5" />
                 </a>
               }
             />
-            <TooltipContent>
-              {stars != null && stars > 0
-                ? `${stars.toLocaleString()} stars on GitHub`
-                : "GitHub Repository"}
-            </TooltipContent>
+            <TooltipContent>GitHub Repository</TooltipContent>
           </Tooltip>
         )}
       </div>

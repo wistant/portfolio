@@ -57,6 +57,7 @@ export function ProjectCard({
         themeColor={project.themeColor}
         projectId={project.id}
         logo={project.logo}
+        stars={stars}
       />
 
       {/* 2. Header Area */}
@@ -87,7 +88,6 @@ export function ProjectCard({
         detailsLabel={detailsLabel}
         liveLink={project.link}
         github={project.github}
-        stars={stars}
       />
     </div>
   )

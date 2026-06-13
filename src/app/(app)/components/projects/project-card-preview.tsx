@@ -2,8 +2,10 @@
 
 import { useState } from "react"
 import Image from "next/image"
-import { Pin } from "lucide-react"
+import { Pin, Star } from "lucide-react"
 import { motion } from "motion/react"
+
+import { formatStars } from "@/lib/github"
 
 interface ProjectCardPreviewProps {
   title: string
@@ -14,6 +16,7 @@ interface ProjectCardPreviewProps {
   themeColor?: string
   projectId: string
   logo?: string
+  stars?: number | null
 }
 
 // Convert RGB to HSL, boost saturation for vividness, and convert back to RGB
@@ -201,6 +204,7 @@ export function ProjectCardPreview({
   themeColor,
   projectId,
   logo,
+  stars,
 }: ProjectCardPreviewProps) {
   const [extractedColor, setExtractedColor] = useState<string | null>(null)
 
@@ -247,7 +251,17 @@ export function ProjectCardPreview({
       className="relative aspect-video w-full rounded-none border border-line/80 bg-muted/15 p-1 transition-colors duration-300 group-hover:border-line"
     >
       <div className="relative flex h-full w-full items-end justify-center overflow-hidden rounded-none border border-line bg-muted">
-        {/* Pin Icon */}
+        {/* Stars badge — top left */}
+        {stars != null && stars > 0 && (
+          <div className="absolute top-1.5 left-1.5 z-20 flex items-center gap-0.5 rounded-full border border-line bg-background/90 px-1.5 py-0.5 shadow-xs select-none">
+            <Star className="size-2.5 fill-amber-400 text-amber-400" />
+            <span className="text-[9px] font-semibold leading-none text-amber-400">
+              {formatStars(stars)}
+            </span>
+          </div>
+        )}
+
+        {/* Pin icon — top right */}
         {pinned && (
           <div className="absolute top-1.5 right-1.5 z-20 rounded-full border border-line bg-background/90 p-1 text-muted-foreground/85 shadow-xs select-none">
             <Pin className="size-3 rotate-45 fill-muted-foreground/15" />
