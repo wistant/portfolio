@@ -26,15 +26,20 @@ type InsightsResponse = {
 export const getInsights = unstable_cache(
   async (): Promise<InsightsResponse | null> => {
     try {
+      const controller = new AbortController()
+      const timeoutId = setTimeout(() => controller.abort(), 2000)
+
       const res = await fetch(
         `https://api.openpanel.dev/insights/${process.env.OPENPANEL_PROJECT_ID}/overview`,
         {
+          signal: controller.signal,
           headers: {
             "openpanel-client-id": process.env.OPENPANEL_CLIENT_ID!,
             "openpanel-client-secret": process.env.OPENPANEL_CLIENT_SECRET!,
           },
         }
       )
+      clearTimeout(timeoutId)
 
       if (!res.ok) {
         return null

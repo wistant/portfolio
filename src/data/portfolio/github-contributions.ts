@@ -34,9 +34,16 @@ async function fetchContributions(): Promise<Activity[]> {
     const baseUrl =
       process.env.GITHUB_CONTRIBUTIONS_API_URL ||
       `https://github-contributions-api.jogruber.de`
+
+    const controller = new AbortController()
+    const timeoutId = setTimeout(() => controller.abort(), 2000)
+
     const res = await fetch(`${baseUrl}/v4/${GITHUB_USERNAME}?y=last`, {
+      signal: controller.signal,
       next: { revalidate: 3600 }, // Cache at fetch level for 1 hour
     })
+    clearTimeout(timeoutId)
+
     if (!res.ok) {
       console.warn(
         `GitHub API responded with status ${res.status}. Falling back to mock data.`
@@ -49,9 +56,9 @@ async function fetchContributions(): Promise<Activity[]> {
     }
     return data.contributions
   } catch (error) {
+    const message = error instanceof Error ? error.message : String(error)
     console.warn(
-      "Failed to fetch GitHub contributions, using mock data fallback.",
-      error
+      `Failed to fetch GitHub contributions (${message}). Using mock data fallback.`
     )
     return generateMockContributions()
   }

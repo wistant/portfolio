@@ -6,9 +6,13 @@ import { GitHubStars } from "@/components/github-stars"
 const getStargazerCount = unstable_cache(
   async () => {
     try {
+      const controller = new AbortController()
+      const timeoutId = setTimeout(() => controller.abort(), 2000)
+
       const response = await fetch(
         `https://api.github.com/repos/${SOURCE_CODE_GITHUB_REPO}`,
         {
+          signal: controller.signal,
           headers: {
             Accept: "application/vnd.github+json",
             Authorization: `Bearer ${process.env.GITHUB_API_TOKEN}`,
@@ -16,6 +20,7 @@ const getStargazerCount = unstable_cache(
           },
         }
       )
+      clearTimeout(timeoutId)
 
       if (!response.ok) {
         return 0
