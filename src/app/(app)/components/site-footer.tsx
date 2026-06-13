@@ -4,8 +4,6 @@ import { SITE_INFO, SOURCE_CODE_GITHUB_URL } from "@/config/site"
 import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
 
-import { SiteFooterInteractiveLogotype } from "./site-footer-brand"
-
 export function SiteFooter() {
   return (
     <footer className="max-w-screen overflow-x-hidden px-2">
@@ -127,8 +125,6 @@ export function SiteFooter() {
           <div className="right-[-4.5px] bottom-[-3.5px]" />
         </div>
       </div>
-
-      <SiteFooterInteractiveLogotype />
 
       <div className="pb-[env(safe-area-inset-bottom,0px)]">
         <div className="flex h-24" />

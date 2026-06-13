@@ -7,7 +7,6 @@ import { BoxIcon, InfinityIcon, LinkIcon } from "lucide-react"
 
 import type { Project } from "@/types/projects"
 import { UTM_PARAMS } from "@/config/site"
-import { Tag } from "@/components/ui/tag"
 import { Prose } from "@/components/ui/typography"
 import {
   Collapsible,
@@ -24,6 +23,7 @@ import {
 } from "@/components/base/ui/tooltip"
 import { Icons } from "@/components/icons"
 import { Markdown } from "@/components/markdown"
+import { TechTag } from "@/components/tech-tag"
 
 export function ProjectItem({
   className,
@@ -146,7 +146,7 @@ export function ProjectItem({
             <ul className="flex flex-wrap gap-1.5">
               {project.skills.map((skill, index) => (
                 <li key={index} className="flex">
-                  <Tag>{skill}</Tag>
+                  <TechTag skill={skill} />
                 </li>
               ))}
             </ul>

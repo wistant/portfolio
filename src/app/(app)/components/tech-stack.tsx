@@ -13,6 +13,19 @@ const KEY_MAP: Record<string, string> = {
   claude: "anthropic",
 }
 
+const LOCAL_ICONS: Record<string, string> = {
+  html: "/icons/html.svg",
+  css: "/icons/css.svg",
+  prisma: "/icons/prisma.svg",
+  typeorm: "/icons/typeorm.svg",
+  sqlite: "/icons/sqlite.svg",
+  postgresql: "/icons/postgresql.svg",
+  mysql: "/icons/mysql.svg",
+  nestjs: "/icons/nestjs.svg",
+  typescript: "/icons/typescript.svg",
+  js: "/icons/javascript.svg",
+}
+
 export function TechStack() {
   return (
     <Panel id="stack" className="before:content-none">
@@ -22,6 +35,7 @@ export function TechStack() {
             const slug = KEY_MAP[tech.key] || tech.key
             const owner = tech.github?.split("/")[0] || tech.github
             const logoSrc = owner ? `https://github.com/${owner}.png` : null
+            const localIcon = LOCAL_ICONS[tech.key]
 
             return (
               <li key={tech.key} className="flex">
@@ -30,11 +44,17 @@ export function TechStack() {
                   target="_blank"
                   rel="noopener"
                   aria-label={tech.title}
-                  className="flex items-center gap-1.5 rounded-full bg-zinc-50 px-1.5 py-0.5 text-xs tracking-wide text-foreground ring-1 ring-border/80 select-none dark:bg-zinc-900 [&_img]:size-3.5"
+                  className="flex items-center gap-1.5 rounded-xs bg-zinc-50 px-1.5 py-0.5 text-xs tracking-wide text-foreground ring-1 ring-border/80 select-none dark:bg-zinc-900 [&_img]:size-3.5"
                 >
-                  {logoSrc ? (
+                  {localIcon ? (
                     <img
-                      className="size-3.5 rounded-full object-cover"
+                      className="size-3.5 rounded-xs object-cover"
+                      src={localIcon}
+                      alt={`${tech.title} icon`}
+                    />
+                  ) : logoSrc ? (
+                    <img
+                      className="size-3.5 rounded-xs object-cover"
                       src={logoSrc}
                       alt={`${tech.title} icon`}
                     />
