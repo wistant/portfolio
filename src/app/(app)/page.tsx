@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import { getDocsByCategory } from "@/data/doc/documents"
+import { SPONSORS } from "@/data/sponsor-data"
 
 import { cn } from "@/lib/utils"
 
@@ -61,10 +62,14 @@ export default function HomePage() {
         <Experiences />
         <Separator />
 
-        <Separator />
-        <Separator />
-        <Sponsors />
-        <Separator />
+        {SPONSORS.length > 0 && (
+          <>
+            <Separator />
+            <Separator />
+            <Sponsors />
+            <Separator />
+          </>
+        )}
 
         <Separator />
         <Blog />

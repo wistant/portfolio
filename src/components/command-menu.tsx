@@ -2,6 +2,7 @@
 
 import React, { useCallback, useEffect, useMemo, useState } from "react"
 import { SOCIAL_LINKS } from "@/data/portfolio/social-links"
+import { SPONSORS } from "@/data/sponsor-data"
 import { copyToClipboardWithEvent } from "@/utils/copy"
 import { useRouter } from "@bprogress/next/app"
 import { useTiks } from "@rexa-developer/tiks/react"
@@ -200,9 +201,14 @@ export function CommandMenu({
   }, [docs])
 
   const menuLinks = useMemo(() => {
-    return hasCerts
-      ? MENU_LINKS
-      : MENU_LINKS.filter((link) => link.href !== "/certifications")
+    let links = MENU_LINKS
+    if (!hasCerts) {
+      links = links.filter((link) => link.href !== "/certifications")
+    }
+    if (SPONSORS.length === 0) {
+      links = links.filter((link) => link.href !== "/sponsors")
+    }
+    return links
   }, [hasCerts])
 
   const portfolioLinks = useMemo(() => {
