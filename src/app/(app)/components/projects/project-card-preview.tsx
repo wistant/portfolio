@@ -13,6 +13,7 @@ interface ProjectCardPreviewProps {
   cardHover: boolean
   themeColor?: string
   projectId: string
+  logo?: string
 }
 
 // Convert RGB to HSL, boost saturation for vividness, and convert back to RGB
@@ -199,6 +200,7 @@ export function ProjectCardPreview({
   cardHover,
   themeColor,
   projectId,
+  logo,
 }: ProjectCardPreviewProps) {
   const [extractedColor, setExtractedColor] = useState<string | null>(null)
 
@@ -277,15 +279,15 @@ export function ProjectCardPreview({
           </div>
         )}
 
-        {/* Foreground Project Mockup Image */}
-        <motion.div
-          variants={cardVariants}
-          initial="initial"
-          animate={cardHover ? "hover" : "initial"}
-          transition={{ type: "spring", stiffness: 220, damping: 20 }}
-          className="relative h-32.5 w-67.5 overflow-hidden rounded-t-lg border border-b-0 border-line bg-background px-1 pt-1 shadow-2xl"
-        >
-          {projectImage ? (
+        {/* Foreground Project Mockup Image or Logo fallback */}
+        {projectImage ? (
+          <motion.div
+            variants={cardVariants}
+            initial="initial"
+            animate={cardHover ? "hover" : "initial"}
+            transition={{ type: "spring", stiffness: 220, damping: 20 }}
+            className="relative h-32.5 w-67.5 overflow-hidden rounded-t-lg border border-b-0 border-line bg-background px-1 pt-1 shadow-2xl"
+          >
             <Image
               src={projectImage}
               alt={title}
@@ -300,14 +302,34 @@ export function ProjectCardPreview({
                 }
               }}
             />
-          ) : (
-            <div className="flex h-full w-full items-center justify-center bg-muted">
-              <span className="font-mono text-[9px] text-muted-foreground">
-                NO PREVIEW
-              </span>
-            </div>
-          )}
-        </motion.div>
+          </motion.div>
+        ) : logo ? (
+          <motion.div
+            variants={cardVariants}
+            initial="initial"
+            animate={cardHover ? "hover" : "initial"}
+            transition={{ type: "spring", stiffness: 220, damping: 20 }}
+            className="relative flex h-32.5 w-67.5 items-center justify-center rounded-t-lg border border-b-0 border-line bg-background p-4 shadow-2xl"
+          >
+            <img
+              src={logo}
+              alt={`${title} logo`}
+              className="h-16 w-auto max-w-[60%] object-contain"
+              onLoad={(e) => {
+                const color = extractDominantColor(e.currentTarget)
+                if (color) {
+                  setExtractedColor(color)
+                }
+              }}
+            />
+          </motion.div>
+        ) : (
+          <div className="flex h-full w-full items-center justify-center bg-muted">
+            <span className="font-mono text-[9px] text-muted-foreground">
+              NO PREVIEW
+            </span>
+          </div>
+        )}
       </div>
     </div>
   )
