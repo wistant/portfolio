@@ -54,6 +54,7 @@ export function ProjectCard({
         cardHover={cardHover}
         themeColor={project.themeColor}
         projectId={project.id}
+        logo={project.logo}
       />
 
       {/* 2. Header Area */}

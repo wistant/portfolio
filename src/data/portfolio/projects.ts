@@ -195,33 +195,6 @@ export const PROJECTS: Project[] = [
     themeColor: "#f43f5e",
   },
   {
-    id: "pizza-landing",
-    title: "Pizza - Crispy and Delicious",
-    period: {
-      start: "03.2026",
-      end: "05.2026",
-    },
-    link: "https://wistant-pizza.vercel.app",
-    github: "https://github.com/wistant/pizza-landing",
-    skills: [
-      "Next.js",
-      "TypeScript",
-      "UI/UX",
-      "Framer Motion",
-      "Tailwind",
-      "Food & Beverage",
-    ],
-    description:
-      "Landing page for a pizza delivery service, focusing on premium UI/UX, enticing visuals, and a seamless ordering experience.",
-    projectImage: "/projects/pizza-landing/th.webp",
-    backgroundImage:
-      "bg-gradient-to-br from-yellow-950/20 via-slate-900 to-red-950/30",
-    status: "completed",
-    shortDescription:
-      "Clean landing page for a pizza delivery service, focusing on premium food visuals.",
-    themeColor: "#ef4444",
-  },
-  {
     id: "suburbia",
     title: "Suburbia - Custom Skateboard Landing Page",
     period: {
@@ -325,148 +298,33 @@ export const PROJECTS: Project[] = [
 `,
     logo: "https://assets.chanhdai.com/images/project-logos/zadark.svg",
   },
-  {
-    id: "qabox",
-    title: "QABox",
-    period: {
-      start: "07.2023",
-      end: "07.2023",
-    },
-    link: "https://github.com/ncdai/qabox",
-    skills: [
-      "University Project",
-      "PHP",
-      "MySQL",
-      "MVC",
-      "Docker",
-      "Docker Compose",
-    ],
-    description:
-      "- Course: Distributed Applications — FIT@HCMUS\n- Project Score: 10/10\n- Source Code: https://github.com/ncdai/qabox",
-  },
-  {
-    id: "taskbox",
-    title: "TaskBox",
-    period: {
-      start: "07.2023",
-      end: "07.2023",
-    },
-    link: "https://github.com/ncdai/taskbox",
-    skills: [
-      "University Project",
-      "PHP",
-      "MySQL",
-      "MVC",
-      "Docker",
-      "Docker Compose",
-    ],
-    description:
-      "- Course: Distributed Applications — FIT@HCMUS\n- Project Score: 10/10\n- Source Code: https://github.com/ncdai/taskbox",
-  },
-  {
-    id: "daichat-app",
-    title: "DaiChat App",
-    period: {
-      start: "07.2020",
-      end: "07.2020",
-    },
-    link: "https://www.youtube.com/watch?v=H5U3J_W1low",
-    skills: ["University Project", "Java", "Java Swing", "Java Networking"],
-    description: `- Course: Java Application Programming — FIT@HCMUS
-- Requirement: Developed a real-time chat application using Java technologies
-- Project Score: 10/10
-- Source Code:
-  - Server: https://github.com/ncdai/ltudjava-summer2020-chatapp_server
-  - Client: https://github.com/ncdai/ltudjava-summer2020-chatapp_client`,
-  },
-  {
-    id: "qlsv-app",
-    title: "QLSV App",
-    period: {
-      start: "06.2020",
-      end: "06.2020",
-    },
-    link: "https://www.youtube.com/watch?v=tG9SZEBrwog",
-    skills: ["University Project", "Java", "Java Swing", "Hibernate", "MySQL"],
-    description: `- Course: Java Application Programming — FIT@HCMUS
-- Requirement: Built a student management system with role-based functionalities using Java technologies
-- Project Score: 10/10
-- Source Code: https://github.com/ncdai/ltudjava-summer2020-hibernate`,
-  },
-  {
-    id: "penphy",
-    title: "Penphy",
-    period: {
-      start: "01.2019",
-      end: "08.2019",
-    },
-    link: "https://www.youtube.com/watch?v=EdU7rUO-UA4",
-    skills: ["Startup Project", "JavaScript", "React Native"],
-    description: "2nd Prize — Business Startup Competition 2019",
-  },
-  {
-    id: "unlimitedstudy",
-    title: "UnlimitedStudy",
-    period: {
-      start: "01.2017",
-      end: "08.2018",
-    },
-    link: "https://muctim.tuoitre.vn/cong-cu-ho-tro-viec-day-va-hoc-55107.htm",
-    skills: [
-      "National Competition",
-      "Creative Software",
-      "PHP",
-      "Laravel 4",
-      "MySQL",
-      "jQuery",
-      "Bootstrap 3",
-    ],
-    description: `UnlimitedStudy is a website that provides teaching and learning support tools for teachers and students.
-- 3rd Prize — National Science and Engineering Fair 2018 (ViSEF)
-- 1st Prize — Can Tho City Science and Engineering Fair 2018
-- 3rd Prize — National Young Informatics Contest 2018
-- 2nd Prize — Can Tho City Youth and Children’s Creativity Contest 2018
-- 3rd Prize — Can Tho City Young Informatics Contest 2018
-- Reached 7k+ users, mainly high school students in Can Tho City
-- Pilot implemented in high schools across Can Tho City with English quizzes, supervised by English subject specialists from the Can Tho City Department of Education and Training`,
-  },
-  {
-    id: "dmessage",
-    title: "DMessage",
-    period: {
-      start: "05.2017",
-      end: "05.2017",
-    },
-    link: "https://github.com/ncdai/DMessage",
-    skills: [
-      "Self-learning Project",
-      "Pet Project",
-      "Express.js",
-      "Socket.io",
-      "MongoDB",
-      "Mongoose ODM",
-    ],
-    description:
-      "A Messenger clone built to practice real-time communication using Socket.IO. This project showcases my self-learning journey in implementing WebSockets for instant messaging.",
-  },
-  {
-    id: "study-english",
-    title: "Study English",
-    period: {
-      start: "11.2016",
-      end: "12.2017",
-    },
-    link: "https://www.youtube.com/watch?v=OYgugvjqU4A",
-    skills: [
-      "National Competition",
-      "Creative Software",
-      "PHP",
-      "Laravel 4",
-      "MySQL",
-    ],
-    description: `Study English is a free, mobile-friendly website for high school English learning, offering vocabulary, quizzes, listening practice, and more.
-- Consolation Prize — National Youth and Children’s Creativity Contest 2016
-- 1st Prize — Can Tho City Youth and Children’s Creativity Contest 2016
-- Consolation Prize — Can Tho City Young Informatics Contest 2016`,
-  },
-]
+].sort((a, b) => {
+  // 1. Pinned first
+  if (a.pinned && !b.pinned) return -1
+  if (!a.pinned && b.pinned) return 1
+
+  // Helper to convert MM.YYYY to timestamp
+  const parseDate = (p: { start: string; end?: string }) => {
+    if (!p.end) {
+      // Ongoing / present - return high value
+      return Infinity
+    }
+    const [month, year] = p.end.split(".")
+    return new Date(parseInt(year), parseInt(month) - 1).getTime()
+  }
+
+  const dateA = parseDate(a.period)
+  const dateB = parseDate(b.period)
+
+  if (dateA !== dateB) {
+    return dateB - dateA // Descending (newest first)
+  }
+
+  // Fallback to start date descending
+  const parseStartDate = (start: string) => {
+    const [month, year] = start.split(".")
+    return new Date(parseInt(year), parseInt(month) - 1).getTime()
+  }
+
+  return parseStartDate(b.period.start) - parseStartDate(a.period.start)
+})

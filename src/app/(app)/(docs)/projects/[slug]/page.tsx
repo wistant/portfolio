@@ -7,6 +7,7 @@ import {
   getDocBySlug,
   getDocsByCategory,
 } from "@/data/doc/documents"
+import { PROJECTS } from "@/data/portfolio/projects"
 import { USER } from "@/data/portfolio/user"
 import { getTableOfContents } from "fumadocs-core/content/toc"
 import { ArrowLeftIcon, ArrowRightIcon, LinkIcon } from "lucide-react"
@@ -61,10 +62,13 @@ export async function generateMetadata({
 
   const { title, description, image, createdAt, updatedAt } = doc.metadata
 
+  const projectData = PROJECTS.find((p) => p.id === slug)
   const postUrl = getDocUrl(doc)
   const ogImage =
     image ||
-    `/og/simple?title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}`
+    (projectData?.logo
+      ? projectData.logo
+      : `/og/simple?title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}`)
 
   return {
     title,
@@ -93,7 +97,7 @@ export async function generateMetadata({
   }
 }
 
-function getPageJsonLd(doc: Doc): WithContext<PageSchema> {
+function getPageJsonLd(doc: Doc, logoFallback?: string): WithContext<PageSchema> {
   return {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -101,6 +105,7 @@ function getPageJsonLd(doc: Doc): WithContext<PageSchema> {
     description: doc.metadata.description,
     image:
       doc.metadata.image ||
+      logoFallback ||
       `/og/simple?title=${encodeURIComponent(doc.metadata.title)}&description=${encodeURIComponent(doc.metadata.description)}`,
     url: `${SITE_INFO.url}${getDocUrl(doc)}`,
     datePublished: new Date(doc.metadata.createdAt).toISOString(),
@@ -126,6 +131,7 @@ export default async function Page({ params }: PageProps<"/projects/[slug]">) {
 
   const allProjects = getDocsByCategory("projects")
   const { previous, next } = findNeighbour(allProjects, slug)
+  const projectData = PROJECTS.find((p) => p.id === slug)
 
   return (
     <>
@@ -133,7 +139,7 @@ export default async function Page({ params }: PageProps<"/projects/[slug]">) {
         id="schema-jsonld"
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(getPageJsonLd(doc)).replace(/</g, "\\u003c"),
+          __html: JSON.stringify(getPageJsonLd(doc, projectData?.logo)).replace(/</g, "\\u003c"),
         }}
       />
 
