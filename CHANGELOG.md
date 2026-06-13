@@ -1,5 +1,20 @@
 # portfolio
 
+## 1.0.6-beta.1
+
+### Patch Changes
+
+- 116f912: - release: switch 1.0.6-alpha.0 from alpha to beta
+  - feat(projects): add dynamic themeColor radial glow background and border accent animation
+  - refactor(projects): decompose ProjectCard into modular preview, header, and action subcomponents
+  - ui(projects): remove popup dialog and route card clicks to details page
+  - fix(projects): solve client-side bundler error by passing hasLocalPage prop to ProjectCard
+  - style(projects): apply prettier code formatting to project files
+  - ui(projects): render projects page categories as grids of ProjectCards
+  - ui(projects): render homepage projects as a 2x2 grid of ProjectCards
+  - ui(projects): add ProjectCard component with rich hover animations and modal dialog
+  - refactor(projects): extend project types and data with card metadata
+
 ## 1.0.6-alpha.0
 
 ### Patch Changes
