@@ -38,6 +38,20 @@ export const TECH_STACK: TechStack[] = [
     github: "mysql",
   },
   {
+    key: "prisma",
+    title: "Prisma",
+    href: "https://www.prisma.io/",
+    categories: ["Backend & Database"],
+    github: "prisma/prisma",
+  },
+  {
+    key: "typeorm",
+    title: "TypeORM",
+    href: "https://typeorm.io/",
+    categories: ["Backend & Database"],
+    github: "typeorm/typeorm",
+  },
+  {
     key: "mongodb",
     title: "MongoDB",
     href: "https://www.mongodb.com/",
@@ -110,6 +124,20 @@ export const TECH_STACK: TechStack[] = [
     href: "https://www.typescriptlang.org/",
     categories: ["Languages"],
     github: "microsoft/TypeScript",
+  },
+  {
+    key: "html",
+    title: "HTML",
+    href: "https://developer.mozilla.org/en-US/docs/Web/HTML",
+    categories: ["Languages"],
+    github: "whatwg/html",
+  },
+  {
+    key: "css",
+    title: "CSS",
+    href: "https://developer.mozilla.org/en-US/docs/Web/CSS",
+    categories: ["Languages"],
+    github: "w3c/csswg-drafts",
   },
   {
     key: "react",
