@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react"
 import Image from "next/image"
 import { Pin } from "lucide-react"
 import { motion } from "motion/react"
@@ -14,6 +15,60 @@ interface ProjectCardPreviewProps {
   themeColor?: string
 }
 
+// Client-side extraction of the most saturated dominant color using canvas scaling
+function extractDominantColor(img: HTMLImageElement): string | null {
+  try {
+    const canvas = document.createElement("canvas")
+    canvas.width = 8
+    canvas.height = 8
+    const ctx = canvas.getContext("2d")
+    if (!ctx) return null
+
+    ctx.drawImage(img, 0, 0, 8, 8)
+    const imgData = ctx.getImageData(0, 0, 8, 8).data
+
+    let maxSaturation = -1
+    let bestRgb = null
+
+    for (let i = 0; i < imgData.length; i += 4) {
+      const r = imgData[i]
+      const g = imgData[i + 1]
+      const b = imgData[i + 2]
+      const a = imgData[i + 3]
+      if (a < 200) continue // Skip transparent pixels
+
+      const max = Math.max(r, g, b)
+      const min = Math.min(r, g, b)
+      const chroma = max - min
+      const saturation = max === 0 ? 0 : chroma / max
+      const brightness = max / 255
+
+      // Filter out black, white, and very gray/dull pixels
+      if (brightness < 0.15 || brightness > 0.95 || saturation < 0.2) {
+        continue
+      }
+
+      if (saturation > maxSaturation) {
+        maxSaturation = saturation
+        bestRgb = `rgb(${r}, ${g}, ${b})`
+      }
+    }
+
+    // Fallback to average color if no saturated color is found
+    if (!bestRgb && imgData.length >= 4) {
+      canvas.width = 1
+      canvas.height = 1
+      ctx.drawImage(img, 0, 0, 1, 1)
+      const [r, g, b] = ctx.getImageData(0, 0, 1, 1).data
+      return `rgb(${r}, ${g}, ${b})`
+    }
+
+    return bestRgb
+  } catch {
+    return null
+  }
+}
+
 export function ProjectCardPreview({
   title,
   projectImage,
@@ -23,6 +78,8 @@ export function ProjectCardPreview({
   cardHover,
   themeColor,
 }: ProjectCardPreviewProps) {
+  const [extractedColor, setExtractedColor] = useState<string | null>(null)
+
   const cardVariants = {
     initial: { y: 2 },
     hover: { y: 10 },
@@ -33,8 +90,11 @@ export function ProjectCardPreview({
   const bg = backgroundImage || defaultBg
   const isCssGradient = bg.startsWith("bg-") || bg.startsWith("from-")
 
+  // Use the manual theme color if provided, otherwise fall back to the extracted color
+  const activeColor = themeColor || extractedColor
+
   const borderStyle =
-    cardHover && themeColor ? { borderColor: `${themeColor}40` } : undefined
+    cardHover && activeColor ? { borderColor: `${activeColor}40` } : undefined
 
   return (
     <div
@@ -55,10 +115,10 @@ export function ProjectCardPreview({
         )}
 
         {/* Background Gradient/Pattern/Glow */}
-        {themeColor ? (
+        {activeColor ? (
           <motion.div
             style={{
-              background: `radial-gradient(110% 110% at 50% 10%, ${themeColor}22 0%, transparent 70%)`,
+              background: `radial-gradient(110% 110% at 50% 10%, ${activeColor}22 0%, transparent 70%)`,
             }}
             animate={{ opacity: cardHover ? 1.5 : 0.8 }}
             transition={{ duration: 0.3 }}
@@ -97,6 +157,12 @@ export function ProjectCardPreview({
               height={130}
               className="h-full w-full rounded-t-md object-cover object-top"
               unoptimized
+              onLoad={(e) => {
+                const color = extractDominantColor(e.currentTarget)
+                if (color) {
+                  setExtractedColor(color)
+                }
+              }}
             />
           ) : (
             <div className="flex h-full w-full items-center justify-center bg-muted">
