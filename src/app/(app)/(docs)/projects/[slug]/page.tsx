@@ -97,7 +97,10 @@ export async function generateMetadata({
   }
 }
 
-function getPageJsonLd(doc: Doc, logoFallback?: string): WithContext<PageSchema> {
+function getPageJsonLd(
+  doc: Doc,
+  logoFallback?: string
+): WithContext<PageSchema> {
   return {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -139,7 +142,10 @@ export default async function Page({ params }: PageProps<"/projects/[slug]">) {
         id="schema-jsonld"
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(getPageJsonLd(doc, projectData?.logo)).replace(/</g, "\\u003c"),
+          __html: JSON.stringify(getPageJsonLd(doc, projectData?.logo)).replace(
+            /</g,
+            "\\u003c"
+          ),
         }}
       />
 
