@@ -1,5 +1,6 @@
 "use client"
 
+import { SPONSORS } from "@/data/sponsor-data"
 import { useRouter } from "@bprogress/next/app"
 import { useHotkeys } from "react-hotkeys-hook"
 
@@ -18,7 +19,9 @@ export function KeyboardShortcuts() {
 
   useHotkeys("g>h", () => navigate("/", "g>h"))
   useHotkeys("g>l", () => navigate("/blog", "g>l"))
-  useHotkeys("g>s", () => navigate("/sponsors", "g>s"))
+  useHotkeys("g>s", () => navigate("/sponsors", "g>s"), {
+    enabled: SPONSORS.length > 0,
+  })
   useHotkeys("g>t", () => navigate("/testimonials", "g>t"))
   useHotkeys("g>c", () => navigate("/certifications", "g>c"))
 

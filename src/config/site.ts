@@ -1,4 +1,5 @@
 import { USER } from "@/data/portfolio/user"
+import { SPONSORS } from "@/data/sponsor-data"
 
 import type { NavItem } from "@/types/nav"
 
@@ -28,10 +29,14 @@ export const MAIN_NAV: NavItem[] = [
     title: "Certifications",
     href: "/certifications",
   },
-  {
-    title: "Sponsors",
-    href: "/sponsors",
-  },
+  ...(SPONSORS.length > 0
+    ? [
+        {
+          title: "Sponsors",
+          href: "/sponsors",
+        },
+      ]
+    : []),
   {
     title: "Gallery",
     href: "/gallery",
