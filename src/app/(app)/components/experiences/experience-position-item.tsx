@@ -4,7 +4,6 @@ import { BriefcaseBusinessIcon, InfinityIcon } from "lucide-react"
 import type { ExperiencePosition } from "@/types/experiences"
 import { cn } from "@/lib/utils"
 import { Separator } from "@/components/ui/separator"
-import { TechTag } from "@/components/tech-tag"
 import { Prose } from "@/components/ui/typography"
 import {
   Collapsible,
@@ -15,6 +14,7 @@ import {
   CollapsibleTrigger,
 } from "@/components/base/ui/collapsible"
 import { Markdown } from "@/components/markdown"
+import { TechTag } from "@/components/tech-tag"
 
 export function ExperiencePositionItem({
   position,
