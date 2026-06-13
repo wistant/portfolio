@@ -4,6 +4,7 @@ import { PROJECTS } from "@/data/portfolio/projects"
 
 import { X_HANDLE } from "@/config/site"
 import { cn } from "@/lib/utils"
+import { getGithubStars } from "@/lib/github"
 import {
   PageHeading,
   PageHeadingDescription,
@@ -64,7 +65,7 @@ export function Separator({ className }: { className?: string }) {
   )
 }
 
-export default function Page() {
+export default async function Page() {
   const openSource = PROJECTS.filter(
     (p) => p.skills.includes("Open Source") || p.id === "propellent-landing"
   )
@@ -76,6 +77,16 @@ export default function Page() {
   )
   const rest = PROJECTS.filter(
     (p) => !openSource.includes(p) && !client.includes(p)
+  )
+
+  // Fetch all GitHub star counts in parallel across all project groups
+  const starsMap = Object.fromEntries(
+    await Promise.all(
+      PROJECTS.map(async (p) => [
+        p.id,
+        p.github ? await getGithubStars(p.github) : null,
+      ])
+    )
   )
 
   return (
@@ -122,6 +133,7 @@ export default function Page() {
                   <ProjectCard
                     project={project}
                     hasLocalPage={!!getDocBySlug(project.id)}
+                    stars={starsMap[project.id]}
                   />
                 </li>
               ))}
@@ -160,6 +172,7 @@ export default function Page() {
                   <ProjectCard
                     project={project}
                     hasLocalPage={!!getDocBySlug(project.id)}
+                    stars={starsMap[project.id]}
                   />
                 </li>
               ))}
@@ -198,6 +211,7 @@ export default function Page() {
                   <ProjectCard
                     project={project}
                     hasLocalPage={!!getDocBySlug(project.id)}
+                    stars={starsMap[project.id]}
                   />
                 </li>
               ))}

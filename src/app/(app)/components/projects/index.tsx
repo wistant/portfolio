@@ -4,14 +4,25 @@ import { PROJECTS } from "@/data/portfolio/projects"
 import { ArrowRightIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
+import { getGithubStars } from "@/lib/github"
 import { Button } from "@/components/base/ui/button"
 
 import { Panel, PanelHeader, PanelTitle, PanelTitleSup } from "../panel"
 import { ProjectCard } from "./project-card"
 
-export function Projects() {
+export async function Projects() {
   // Show 4 projects for a balanced 2x2 grid layout
   const visibleProjects = PROJECTS.slice(0, 4)
+
+  // Fetch all GitHub star counts in parallel
+  const starsMap = Object.fromEntries(
+    await Promise.all(
+      visibleProjects.map(async (p) => [
+        p.id,
+        p.github ? await getGithubStars(p.github) : null,
+      ])
+    )
+  )
 
   return (
     <Panel id="projects">
@@ -42,6 +53,7 @@ export function Projects() {
               <ProjectCard
                 project={project}
                 hasLocalPage={!!getDocBySlug(project.id)}
+                stars={starsMap[project.id]}
               />
             </li>
           ))}

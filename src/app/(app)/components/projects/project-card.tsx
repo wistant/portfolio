@@ -13,11 +13,13 @@ import { ProjectCardPreview } from "./project-card-preview"
 interface ProjectCardProps {
   project: Project
   hasLocalPage?: boolean
+  stars?: number | null
 }
 
 export function ProjectCard({
   project,
   hasLocalPage = false,
+  stars,
 }: ProjectCardProps) {
   const router = useRouter()
   const [cardHover, setCardHover] = useState<boolean>(false)
@@ -85,6 +87,7 @@ export function ProjectCard({
         detailsLabel={detailsLabel}
         liveLink={project.link}
         github={project.github}
+        stars={stars}
       />
     </div>
   )
