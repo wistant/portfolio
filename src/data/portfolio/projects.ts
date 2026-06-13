@@ -3,7 +3,7 @@ import type { Project } from "@/types/projects"
 export const PROJECTS: Project[] = [
   {
     id: "portfolio",
-    title: "wistant.me — Portfolio & Component Registry",
+    title: "My personal portfolio",
     period: {
       start: "05.2026",
     },
