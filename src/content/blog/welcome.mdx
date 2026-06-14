@@ -1,9 +1,9 @@
 ---
 title: "Building a Pixel-Perfect Developer Portfolio and Component Registry: My Design Engineering Journey"
 description: "An in-depth look at the design engineering process, registry compilation pipeline, and aesthetic choices behind my personal space."
-image: "https://raw.githubusercontent.com/wistant/datafiles/main/portfolio/portfolio/preview-light.png"
+image: "/projects/portfolio/preview.png"
 createdAt: "2026-06-04"
-updatedAt: "2026-06-04"
+updatedAt: "2026-06-14"
 ---
 
 When I set out to build my personal site, I wanted to move away from standard pre-built landing pages. I aimed to construct a highly optimized, custom design-engineered platform that serves as both a showcase and a package distribution node.
@@ -19,7 +19,7 @@ This project’s aesthetic and structural identity is a tribute to [chanhdai.com
 Inspired by his pixel-perfect design system, I set out to reconstruct this layout from scratch, adapting it to Next.js 16 (App Router), React 19, and Tailwind CSS v4.
 
 <FramedImage
-  src="/preview.png"
+  src="/projects/portfolio/preview.png"
   alt="Developer Portfolio and Registry Preview"
 />
 
@@ -41,7 +41,10 @@ I leveraged **shadcn/ui** for basic layout structures, ensuring design system to
 
 To maintain strict Web Content Accessibility Guidelines (WCAG) without styling constraints, I used headless components from **Radix UI** and **Base UI**. These libraries handle focus rings, keyboard trap layouts, and state management for complex elements like the commands menu, tooltips, dialog modals, and custom context menus.
 
-<FramedImage src="/about.png" alt="Header and Theme Switcher Detail" />
+<FramedImage
+  src="/projects/portfolio/about.png"
+  alt="Header and Theme Switcher Detail"
+/>
 
 <br />
 
@@ -70,7 +73,10 @@ The design uses dashboard-inspired borders and screen-aligned grids. Instead of 
 
 This ensures our layout elements, such as the Profile Header and the main grid blocks, lock perfectly together on all viewports.
 
-<FramedImage src="/hero.png" alt="Dashboard Hero Grid Layout" />
+<FramedImage
+  src="/projects/portfolio/work.png"
+  alt="Dashboard Hero Grid Layout"
+/>
 
 <br />
 
@@ -98,7 +104,10 @@ transition={{
 }}
 ```
 
-<FramedImage src="/blog.png" alt="Blog and Article Feed Layout" />
+<FramedImage
+  src="/projects/portfolio/blog.png"
+  alt="Blog and Article Feed Layout"
+/>
 
 <br />
 
@@ -129,6 +138,11 @@ The registry operates as a build-step script executed before deployment:
 
 This setup lets users import complex animated elements directly into their projects via the shadcn CLI or copy-paste them with a single click.
 
+<FramedImage
+  src="/projects/portfolio/gallery.png"
+  alt="Component Registry Gallery Showcase"
+/>
+
 <br />
 
 ### Preventing Cumulative Layout Shift (CLS)
@@ -142,7 +156,10 @@ To prevent this:
 - Image styles are strictly set with `width: "100%"` and `height: "auto"` to preserve native aspect ratios while fitting container width boundaries.
 - Critical above-the-fold assets, such as the dynamic profile avatar (`AvatarLights`), are marked with `loading="eager"` and `fetchPriority="high"` to bypass lazy-loading queues.
 
-<FramedImage src="/sponsor.png" alt="Sponsorship and Contributions Panel" />
+<FramedImage
+  src="/projects/portfolio/sponsor.png"
+  alt="Sponsorship and Contributions Panel"
+/>
 
 <br />
 
