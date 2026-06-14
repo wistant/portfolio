@@ -1,5 +1,6 @@
 import "server-only"
 
+import { execSync } from "node:child_process"
 import { unstable_cache } from "next/cache"
 import { formatISO, subDays } from "date-fns"
 
@@ -29,46 +30,79 @@ function generateMockContributions(): Activity[] {
   return contributions
 }
 
-async function fetchContributions(): Promise<Activity[]> {
+async function fetchContributions(): Promise<Activity[] | null> {
+  const baseUrl =
+    process.env.GITHUB_CONTRIBUTIONS_API_URL ||
+    `https://github-contributions-api.jogruber.de`
+  const url = `${baseUrl}/v4/${GITHUB_USERNAME}?y=last`
+
+  // 1. Try native fetch first
   try {
-    const baseUrl =
-      process.env.GITHUB_CONTRIBUTIONS_API_URL ||
-      `https://github-contributions-api.jogruber.de`
-
+    const timeout = 5000
     const controller = new AbortController()
-    const timeoutId = setTimeout(() => controller.abort(), 2000)
+    const timeoutId = setTimeout(() => controller.abort(), timeout)
 
-    const res = await fetch(`${baseUrl}/v4/${GITHUB_USERNAME}?y=last`, {
+    const res = await fetch(url, {
       signal: controller.signal,
       next: { revalidate: 3600 }, // Cache at fetch level for 1 hour
     })
     clearTimeout(timeoutId)
 
-    if (!res.ok) {
-      console.warn(
-        `GitHub API responded with status ${res.status}. Falling back to mock data.`
-      )
-      return generateMockContributions()
+    if (res.ok) {
+      const data = (await res.json()) as GitHubContributionsResponse
+      if (data.contributions && data.contributions.length > 0) {
+        return data.contributions
+      }
     }
-    const data = (await res.json()) as GitHubContributionsResponse
-    if (!data.contributions || data.contributions.length === 0) {
-      return generateMockContributions()
+  } catch {
+    // Fail silently and try fallback
+  }
+
+  // 2. Try curl fallback (handles Node.js connection ETIMEDOUT bugs)
+  try {
+    const output = execSync(`curl -s "${url}"`, {
+      encoding: "utf8",
+      timeout: 5000,
+    })
+    const data = JSON.parse(output) as GitHubContributionsResponse
+    if (data.contributions && data.contributions.length > 0) {
+      return data.contributions
     }
-    return data.contributions
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error)
     console.warn(
-      `Failed to fetch GitHub contributions (${message}). Using mock data fallback.`
+      `All methods to fetch GitHub contributions failed (${message}). Using mock data fallback.`
     )
-    return generateMockContributions()
   }
+
+  return null
+}
+
+let devCachePromise: Promise<Activity[] | null> | null = null
+
+async function getCachedDevContributions(): Promise<Activity[]> {
+  if (!devCachePromise) {
+    devCachePromise = fetchContributions()
+  }
+  const data = await devCachePromise
+  if (data) {
+    return data
+  }
+  // Clear on failure so subsequent reloads will retry fetching
+  devCachePromise = null
+  return generateMockContributions()
+}
+
+async function getProductionContributions(): Promise<Activity[]> {
+  const data = await fetchContributions()
+  return data || generateMockContributions()
 }
 
 export const getGitHubContributions =
   process.env.NODE_ENV === "development"
-    ? fetchContributions
+    ? getCachedDevContributions
     : unstable_cache(
-        fetchContributions,
+        getProductionContributions,
         ["github-contributions"],
         { revalidate: 86400 } // Cache for 1 day in production
       )

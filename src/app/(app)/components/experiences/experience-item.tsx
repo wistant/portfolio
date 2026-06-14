@@ -1,4 +1,3 @@
-import Image from "next/image"
 import { addQueryParams } from "@/utils/url"
 
 import type { Experience } from "@/types/experiences"
@@ -15,15 +14,10 @@ export function ExperienceItem({ experience }: { experience: Experience }) {
       <div className="flex items-center gap-3">
         <div className="flex size-6 shrink-0 items-center justify-center select-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg]:text-muted-foreground [&_svg:not([class*='size-'])]:size-5">
           {experience.companyLogo ? (
-            <Image
+            <img
               src={experience.companyLogo}
               alt={`${experience.companyName} logo`}
-              width={24}
-              height={24}
-              quality={100}
-              className="rounded-full"
-              style={{ width: "auto", height: "auto" }}
-              unoptimized
+              className="size-full rounded-full object-cover"
               aria-hidden
             />
           ) : (

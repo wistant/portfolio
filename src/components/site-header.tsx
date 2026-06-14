@@ -36,7 +36,7 @@ export function SiteHeader() {
       <div className="screen-line-top screen-line-bottom mx-auto flex h-12 items-center justify-between gap-2 border-x border-line px-2 group-has-data-[slot=layout-wide]/layout:container after:z-1 after:transition-[background-color] sm:gap-4 md:max-w-3xl">
         <BrandContextMenu>
           <Link href="/" aria-label="Home">
-            <WistantMark className="h-8 shrink-0" />
+            <WistantMark className="size-8 shrink-0" />
           </Link>
         </BrandContextMenu>
 

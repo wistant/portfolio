@@ -20,4 +20,6 @@ export type TechStack = {
   theme?: boolean
   /** GitHub username/organization or repository to fetch logo dynamically. */
   github?: string
+  /** If false, this item will not appear in the homepage Tech Stack list (it's just a tech tag). */
+  showInStack?: boolean
 }

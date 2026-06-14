@@ -1,53 +1,99 @@
 ---
 title: "wistant.me : Developer Portfolio & Component Registry"
 description: "A pixel-perfect developer portfolio, blog, and component registry built with Next.js 16 (App Router), Tailwind CSS v4, and Fumadocs."
-image: "https://raw.githubusercontent.com/wistant/datafiles/main/projects/portfolio/preview-light.png"
+image: "/projects/portfolio/preview.png"
 category: "projects"
 projectType: "both"
-webImage: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=1200&q=80"
-mobileImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80"
-webUrl: "wistant.me"
+webImage: "/projects/portfolio/preview.png"
+mobileImage: "/projects/portfolio/preview-light.png"
+webUrl: "https://wistant.me"
 githubUrl: "https://github.com/wistant/portfolio"
 createdAt: "2026-05-20"
-updatedAt: "2026-06-13"
+updatedAt: "2026-06-14"
 ---
 
 Welcome to **wistant.me**, the official digital home, blog, and custom component registry of **Wistant Kode**.
 
-This project serves as a highly optimized, responsive showcase of engineering projects, architectural writings, and reusable UI components. It is built using the latest modern React and web technologies to ensure exceptional performance, premium typography, and seamless transitions.
+This project is not just a personal landing page; it is a labor of design engineering passion. It is a highly optimized, fully responsive playground that merges dashboard-inspired grid symmetry with smooth, physical animations and an embedded code distribution engine.
 
-<br />
+Whoever reads this should know: every line, every border, and every spring animation curve was crafted with a relentless obsession for UI excellence.
 
-### Core Tech Stack
+---
 
-- **Framework:** Next.js 16 (App Router) leveraging React Server Components (RSC) and static page generation.
-- **Styling:** Tailwind CSS v4 featuring native CSS variables, container queries, and sleek dark/light mode configurations.
-- **Components:** Radix UI, Base UI, Magic UI, and shadcn/ui.
-- **Content:** Markdown (MDX) handled with gray-matter and Fumadocs content parsers.
-- **Package Manager:** pnpm.
-- **Deployment:** Vercel.
+## 🎨 The Genesis: A Passion for Pure UI/UX and Grid Symmetry
 
-<br />
+Most personal sites use generic templates or basic component libraries. For **wistant.me**, I wanted to build something that feels alive—a space inspired by terminal panels, developer dashboards, and pixel-aligned grids.
 
-### Custom Component Registry
+Inspired by design pioneers like Chanh Dai, I designed a custom grid layout from scratch. Instead of using generic CSS borders, the grid dividers (e.g. `.screen-line-top` and `.screen-line-bottom`) are engineered using repeating linear gradients to render custom pixel dashes. This creates a dashboard layout that locks perfectly on all viewports, providing a consistent structural frame.
 
-One of the highlight features of **wistant.me** is its embedded shadcn-like component registry. Instead of just showing code blocks, users can directly preview and install custom UI components, hooks, blocks, and libraries using the shadcn CLI or the site's direct copy controls.
+<FramedImage
+  src="/projects/portfolio/work.png"
+  alt="Dashboard Workspace Hero Grid Layout"
+/>
 
-The registry is divided into:
+---
 
-- `registry:component` — Advanced UI blocks with smooth animations.
-- `registry:hook` — Custom React hooks for gesture, layout, and event handlers.
-- `registry:block` — Larger sections (e.g. Hero, Bento grids).
-- `registry:lib` — Utility functions.
+## ⚡ The Elements: Crafting the Perfect Micro-Interactions
 
-<br />
+A premium user interface is defined by its details. Every hover state and transaction on this site has been optimized with spring-physics calculations rather than generic CSS durations:
 
-### Atomic Commit & Pipeline Orchestration
+### 1. The Interactive Profile Bio & About Panel
 
-To maintain a flawless codebase, the project utilizes a custom tooling suite located in `/tooling`:
+The top section features a gorgeous profile card. It incorporates an interactive `AvatarLights` profile image with custom hover-lighting effects, verified badges, real-time timezone calculators, name pronunciation audio, and animated text flips that slide effortlessly.
 
-- `tooling/push.sh` — Ensures format, lint, typecheck, and changeset updates are fully validated before any push.
-- `tooling/sync.sh` — Provides a rebase-based upstream sync mechanism.
-- `tooling/make-release-description.sh` — Automatically constructs release notes from git commits.
+<FramedImage
+  src="/projects/portfolio/about.png"
+  alt="Profile Bio and Verified About Panel"
+/>
 
-Built with absolute performance and modern styling in mind.
+### 2. The Active Console Footer Status Bar
+
+To match the header's layout, the footer utilizes a signature `h-12` console status bar enclosed in pixel lines. It acts as an active terminal widget:
+
+- **SYS: ACTIVE** — A glowing, pulsing green LED indicating system health.
+- **Social Links** — Minimalist social icons with custom background hover highlights (`hover:scale-108 hover:bg-muted/40`).
+- **Command Shortcuts** — A live indicator reminding users that pressing `⌘K` opens the search console.
+
+<FramedImage
+  src="/projects/portfolio/preview.png"
+  alt="Interactive Terminal Status Bar Footer"
+/>
+
+---
+
+## 📦 The Component Distribution Engine
+
+Beyond writing articles, the site is designed to distribute React primitives. I built an AST-based compilation pipeline that acts as a custom component registry:
+
+- **Component Source:** Advanced animated components, custom hooks, and blocks are written inside `src/registry/`.
+- **AST Parsing Script:** A compiler script (`pnpm registry:build`) parses the React files, inspects imports, and resolves internal package dependencies.
+- **Manifest Generation:** The compiler outputs JSON manifests to `/public/r/[name].json`, enabling direct imports via the shadcn CLI or one-click copy installations.
+
+<FramedImage
+  src="/projects/portfolio/blog.png"
+  alt="Blog and Article Listing Feed"
+/>
+
+<FramedImage
+  src="/projects/portfolio/gallery.png"
+  alt="Component Showcase Gallery View"
+/>
+
+---
+
+## 🛠️ The Atomic Commit Discipline & Pipeline Orchestration
+
+For me, clean code is just as important as clean UI. The repository is governed by the **Atomic Commit Protocol**. Every commit represents a single, isolated logical intention (e.g., `feat`, `fix`, `ui`, `refactor`).
+
+To enforce this discipline, I built a custom pipeline wrapper under `/tooling`:
+
+- `tooling/push.sh` — Run pre-push checks (Prettier format, ESLint, TypeScript check, changesets) to guarantee zero regressions.
+- `tooling/sync.sh` — Ensures rebase-based upstream synchronizations.
+- `tooling/make-release-description.sh` — Automatically generates release notes from semantic commits.
+
+<FramedImage
+  src="/projects/portfolio/sponsor.png"
+  alt="Sponsorship Panel and Contribution Graph"
+/>
+
+This site represents my journey as a **Design Engineer**—where strict front-end performance metrics meet aesthetic passion.

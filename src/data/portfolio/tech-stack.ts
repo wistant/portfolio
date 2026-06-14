@@ -151,6 +151,41 @@ export const TECH_STACK: TechStack[] = [
     href: "https://vercel.com/",
     categories: ["Dev Tools"],
   },
+  {
+    key: "baseui",
+    title: "Base UI",
+    href: "https://base-ui.com/",
+    categories: ["Frontend"],
+    showInStack: false,
+  },
+  {
+    key: "magicui",
+    title: "Magic UI",
+    href: "https://magicui.design/",
+    categories: ["Frontend"],
+    showInStack: false,
+  },
+  {
+    key: "radixui",
+    title: "Radix UI",
+    href: "https://www.radix-ui.com/",
+    categories: ["Frontend"],
+    showInStack: false,
+  },
+  {
+    key: "shadcnui",
+    title: "shadcn/ui",
+    href: "https://ui.shadcn.com/",
+    categories: ["Frontend"],
+    showInStack: false,
+  },
+  {
+    key: "opensource",
+    title: "Open Source",
+    href: "https://opensource.org/",
+    categories: ["Dev Tools"],
+    showInStack: false,
+  },
 ]
 
 export const LOCAL_ICONS: Record<string, string> = {
@@ -179,6 +214,11 @@ export const LOCAL_ICONS: Record<string, string> = {
   turborepo: "/icons/turborepo.svg",
   githubactions: "/icons/github-actions.svg",
   vercel: "/icons/vercel-icon.svg",
+  baseui: "/icons/base-ui.svg",
+  magicui: "/icons/magic-ui.svg",
+  radixui: "/icons/radix-ui.svg",
+  shadcnui: "/icons/shadcn-ui.svg",
+  opensource: "/icons/opensource.svg",
 }
 
 export const aliasMap: Record<string, string> = {
@@ -221,6 +261,21 @@ export const aliasMap: Record<string, string> = {
   tailwindcssv3: "tailwindcss",
   vite: "vite",
   vitejs: "vite",
+  baseui: "baseui",
+  "base ui": "baseui",
+  "base-ui": "baseui",
+  magicui: "magicui",
+  "magic ui": "magicui",
+  "magic-ui": "magicui",
+  radixui: "radixui",
+  "radix ui": "radixui",
+  "radix-ui": "radixui",
+  shadcnui: "shadcnui",
+  "shadcn ui": "shadcnui",
+  "shadcn-ui": "shadcnui",
+  "shadcn/ui": "shadcnui",
+  opensource: "opensource",
+  "open source": "opensource",
 }
 
 export function findTechBySkill(skill: string) {
