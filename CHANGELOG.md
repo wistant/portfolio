@@ -1,5 +1,23 @@
 # portfolio
 
+## 1.0.6-rc.4
+
+### Patch Changes
+
+- 60786a8: - 2df0669: release: switch 1.0.6-beta.3 from beta to rc
+  - 5ccaa8a: style(style): format tech-stack.ts
+  - 46ba451: style(components): format tech-tag.tsx
+  - 10b53ad: style(components): format providers.tsx
+  - fcc293c: style(components): format keyboard-shortcuts.tsx
+  - a43b5fa: style(app): format project-card.tsx
+  - 3c7352a: style(app): format experience-position-item.tsx
+  - f36bd6b: ui(layout): enable global lenis smooth scrolling
+  - 2e7c191: style(icons): optimize and add local svg icons
+  - 81eb06b: chore(projects): update projects metadata and remove zadark
+  - d7a2d4a: ui(nav): conditionally display sponsors links and shortcuts
+  - 4651ca6: feat(sponsors): hide page and exclude from sitemap when empty
+  - 637b466: feat(tech-stack): use local icons and filter primary skills
+
 ## 1.0.6-beta.3
 
 ### Patch Changes
