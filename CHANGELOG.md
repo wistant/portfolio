@@ -1,5 +1,78 @@
 # portfolio
 
+## 1.0.6
+
+### Patch Changes
+
+- 35d8bbc: - release: switch 1.0.5 from Stable to alpha
+  - style(components): format tech-tag.tsx
+  - style(app): format site-footer.tsx
+  - style(app): format project-item.tsx
+  - style(app): format experience-position-item.tsx
+  - ui(footer): remove interactive logotype from footer
+  - feat(tech-stack): add html, css, prisma, and typeorm with local icon resolution
+  - feat(experiences): render work experience and project tags as tech stack badges
+  - ui(tech-stack): make stack items and image logos rectangular with rounded-xs shape
+  - ui(tech-stack): group stack items with tooltips and rectangular badges
+- 116f912: - release: switch 1.0.6-alpha.0 from alpha to beta
+  - feat(projects): add dynamic themeColor radial glow background and border accent animation
+  - refactor(projects): decompose ProjectCard into modular preview, header, and action subcomponents
+  - ui(projects): remove popup dialog and route card clicks to details page
+  - fix(projects): solve client-side bundler error by passing hasLocalPage prop to ProjectCard
+  - style(projects): apply prettier code formatting to project files
+  - ui(projects): render projects page categories as grids of ProjectCards
+  - ui(projects): render homepage projects as a 2x2 grid of ProjectCards
+  - ui(projects): add ProjectCard component with rich hover animations and modal dialog
+  - refactor(projects): extend project types and data with card metadata
+- e57d9d5: - style(style): format tech-stack.ts
+  - style(components): format tech-tag.tsx
+  - style(app): format tech-stack.tsx
+  - style(app): format project-card.tsx
+  - style(app): format project-card-preview.tsx
+  - style(app): format page.tsx
+  - feat(tech-stack): centralize icon mappings, add vercel and github actions, and support logos for all tags
+  - fix(providers): suppress next-themes hydration and script console errors in dev
+  - ui(projects): configure 'current'/'completed' status values and display status only in header
+  - ui(projects): fix project card alignment and height in grid
+  - ui(projects): align project card grid visual separation and breakpoints with blog list
+  - feat(projects): boost extracted color saturation and add diverse pattern variations based on project ID hash
+  - feat(projects): add automatic dominant color extraction for project card backgrounds
+  - fix(fetch): add 2-second timeout to external fetches and simplify log output
+- 9baa7fd: - style(app): format page.tsx
+  - content(projects): remove placeholder quaric and zadark template projects
+  - content(projects): revamp all descriptions, pin only portfolio and shoperzz
+  - feat(projects): auto-sort by pin+date, logo fallback in preview and OG metadata
+- dde9698: - 07f465f: feat(data): update site data
+  - 9207484: feat(projects): update projects data
+  - b3376b7: feat(projects): show projectImage/logo as cover on slug page when MDX image is absent
+  - 4ed20d0: fix(tooling): prefix commit hash in changeset body entries
+  - 24dfba7: style(style): format github.ts
+  - 61f9b77: style(app): format project-card-preview.tsx
+  - 7bbc36f: style(app): format project-card-actions.tsx
+  - ab19b99: style(app): format index.tsx
+  - f71eb99: style(app): format page.tsx
+  - 1ad9a3a: style(style): format github.ts
+  - 5bdcb9f: style(app): format project-card-preview.tsx
+  - 9043fe9: style(app): format project-card-actions.tsx
+  - c6c315a: style(app): format index.tsx
+  - 21e18ef: style(app): format page.tsx
+  - c437ec2: ui(projects): add github icon next to stars in preview badge
+  - 0064353: ui(projects): move github stars badge to top-left of preview card
+  - c8c6d0f: feat(projects): show live GitHub star count on project cards
+- 60786a8: - 2df0669: release: switch 1.0.6-beta.3 from beta to rc
+  - 5ccaa8a: style(style): format tech-stack.ts
+  - 46ba451: style(components): format tech-tag.tsx
+  - 10b53ad: style(components): format providers.tsx
+  - fcc293c: style(components): format keyboard-shortcuts.tsx
+  - a43b5fa: style(app): format project-card.tsx
+  - 3c7352a: style(app): format experience-position-item.tsx
+  - f36bd6b: ui(layout): enable global lenis smooth scrolling
+  - 2e7c191: style(icons): optimize and add local svg icons
+  - 81eb06b: chore(projects): update projects metadata and remove zadark
+  - d7a2d4a: ui(nav): conditionally display sponsors links and shortcuts
+  - 4651ca6: feat(sponsors): hide page and exclude from sitemap when empty
+  - 637b466: feat(tech-stack): use local icons and filter primary skills
+
 ## 1.0.6-rc.4
 
 ### Patch Changes
