@@ -14,7 +14,7 @@ updatedAt: "2026-06-14"
 
 Welcome to **wistant.me**, the official digital home, blog, and custom component registry of **Wistant Kode**.
 
-This project is not just a personal landing page; it is a labor of design engineering passion. It is a highly optimized, fully responsive playground that merges dashboard-inspired grid symmetry with smooth, physical animations and an embedded code distribution engine. 
+This project is not just a personal landing page; it is a labor of design engineering passion. It is a highly optimized, fully responsive playground that merges dashboard-inspired grid symmetry with smooth, physical animations and an embedded code distribution engine.
 
 Whoever reads this should know: every line, every border, and every spring animation curve was crafted with a relentless obsession for UI excellence.
 
@@ -38,6 +38,7 @@ Inspired by design pioneers like Chanh Dai, I designed a custom grid layout from
 A premium user interface is defined by its details. Every hover state and transaction on this site has been optimized with spring-physics calculations rather than generic CSS durations:
 
 ### 1. The Interactive Profile Bio & About Panel
+
 The top section features a gorgeous profile card. It incorporates an interactive `AvatarLights` profile image with custom hover-lighting effects, verified badges, real-time timezone calculators, name pronunciation audio, and animated text flips that slide effortlessly.
 
 <FramedImage
@@ -46,7 +47,9 @@ The top section features a gorgeous profile card. It incorporates an interactive
 />
 
 ### 2. The Active Console Footer Status Bar
+
 To match the header's layout, the footer utilizes a signature `h-12` console status bar enclosed in pixel lines. It acts as an active terminal widget:
+
 - **SYS: ACTIVE** — A glowing, pulsing green LED indicating system health.
 - **Social Links** — Minimalist social icons with custom background hover highlights (`hover:scale-108 hover:bg-muted/40`).
 - **Command Shortcuts** — A live indicator reminding users that pressing `⌘K` opens the search console.
@@ -80,9 +83,10 @@ Beyond writing articles, the site is designed to distribute React primitives. I 
 
 ## 🛠️ The Atomic Commit Discipline & Pipeline Orchestration
 
-For me, clean code is just as important as clean UI. The repository is governed by the **Atomic Commit Protocol**. Every commit represents a single, isolated logical intention (e.g., `feat`, `fix`, `ui`, `refactor`). 
+For me, clean code is just as important as clean UI. The repository is governed by the **Atomic Commit Protocol**. Every commit represents a single, isolated logical intention (e.g., `feat`, `fix`, `ui`, `refactor`).
 
 To enforce this discipline, I built a custom pipeline wrapper under `/tooling`:
+
 - `tooling/push.sh` — Run pre-push checks (Prettier format, ESLint, TypeScript check, changesets) to guarantee zero regressions.
 - `tooling/sync.sh` — Ensures rebase-based upstream synchronizations.
 - `tooling/make-release-description.sh` — Automatically generates release notes from semantic commits.
