@@ -29,13 +29,13 @@ function generateMockContributions(): Activity[] {
   return contributions
 }
 
-async function fetchContributions(): Promise<Activity[]> {
+async function fetchContributions(): Promise<Activity[] | null> {
   try {
     const baseUrl =
       process.env.GITHUB_CONTRIBUTIONS_API_URL ||
       `https://github-contributions-api.jogruber.de`
 
-    const timeout = process.env.NODE_ENV === "development" ? 800 : 2000
+    const timeout = 5000
     const controller = new AbortController()
     const timeoutId = setTimeout(() => controller.abort(), timeout)
 
@@ -49,11 +49,11 @@ async function fetchContributions(): Promise<Activity[]> {
       console.warn(
         `GitHub API responded with status ${res.status}. Falling back to mock data.`
       )
-      return generateMockContributions()
+      return null
     }
     const data = (await res.json()) as GitHubContributionsResponse
     if (!data.contributions || data.contributions.length === 0) {
-      return generateMockContributions()
+      return null
     }
     return data.contributions
   } catch (error) {
@@ -65,24 +65,35 @@ async function fetchContributions(): Promise<Activity[]> {
         `Failed to fetch GitHub contributions (${message}). Using mock data fallback.`
       )
     }
-    return generateMockContributions()
+    return null
   }
 }
 
-let devCachePromise: Promise<Activity[]> | null = null
+let devCachePromise: Promise<Activity[] | null> | null = null
 
 async function getCachedDevContributions(): Promise<Activity[]> {
   if (!devCachePromise) {
     devCachePromise = fetchContributions()
   }
-  return devCachePromise
+  const data = await devCachePromise
+  if (data) {
+    return data
+  }
+  // Clear on failure so subsequent reloads will retry fetching
+  devCachePromise = null
+  return generateMockContributions()
+}
+
+async function getProductionContributions(): Promise<Activity[]> {
+  const data = await fetchContributions()
+  return data || generateMockContributions()
 }
 
 export const getGitHubContributions =
   process.env.NODE_ENV === "development"
     ? getCachedDevContributions
     : unstable_cache(
-        fetchContributions,
+        getProductionContributions,
         ["github-contributions"],
         { revalidate: 86400 } // Cache for 1 day in production
       )
