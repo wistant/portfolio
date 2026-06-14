@@ -54,7 +54,7 @@ async function fetchContributions(): Promise<Activity[] | null> {
         return data.contributions
       }
     }
-  } catch (error) {
+  } catch {
     // Fail silently and try fallback
   }
 
