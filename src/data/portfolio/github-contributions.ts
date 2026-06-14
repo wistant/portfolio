@@ -35,8 +35,9 @@ async function fetchContributions(): Promise<Activity[]> {
       process.env.GITHUB_CONTRIBUTIONS_API_URL ||
       `https://github-contributions-api.jogruber.de`
 
+    const timeout = process.env.NODE_ENV === "development" ? 800 : 2000
     const controller = new AbortController()
-    const timeoutId = setTimeout(() => controller.abort(), 2000)
+    const timeoutId = setTimeout(() => controller.abort(), timeout)
 
     const res = await fetch(`${baseUrl}/v4/${GITHUB_USERNAME}?y=last`, {
       signal: controller.signal,
@@ -57,16 +58,29 @@ async function fetchContributions(): Promise<Activity[]> {
     return data.contributions
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error)
-    console.warn(
-      `Failed to fetch GitHub contributions (${message}). Using mock data fallback.`
-    )
+    const isAbort = error instanceof Error && error.name === "AbortError"
+
+    if (!(process.env.NODE_ENV === "development" && isAbort)) {
+      console.warn(
+        `Failed to fetch GitHub contributions (${message}). Using mock data fallback.`
+      )
+    }
     return generateMockContributions()
   }
 }
 
+let devCachePromise: Promise<Activity[]> | null = null
+
+async function getCachedDevContributions(): Promise<Activity[]> {
+  if (!devCachePromise) {
+    devCachePromise = fetchContributions()
+  }
+  return devCachePromise
+}
+
 export const getGitHubContributions =
   process.env.NODE_ENV === "development"
-    ? fetchContributions
+    ? getCachedDevContributions
     : unstable_cache(
         fetchContributions,
         ["github-contributions"],
