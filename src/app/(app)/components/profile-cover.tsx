@@ -4,6 +4,7 @@ import { useRef } from "react"
 import { useTheme } from "next-themes"
 
 import { cn } from "@/lib/utils"
+import { BannerParticles } from "@/components/banner-particles"
 import { DotGridSpotlight } from "@/components/dot-grid-spotlight"
 
 const DOT_COLOR = {
@@ -23,19 +24,32 @@ export function ProfileCover() {
   const { resolvedTheme } = useTheme()
   const theme = resolvedTheme === "dark" ? "dark" : "light"
 
+  const maskStyle = {
+    WebkitMaskImage:
+      "linear-gradient(to bottom, transparent, black 16px, black calc(100% - 16px), transparent), linear-gradient(to right, transparent, black 16px, black calc(100% - 16px), transparent)",
+    WebkitMaskComposite: "destination-in",
+    maskImage:
+      "linear-gradient(to bottom, transparent, black 16px, black calc(100% - 16px), transparent), linear-gradient(to right, transparent, black 16px, black calc(100% - 16px), transparent)",
+    maskComposite: "intersect",
+  }
+
   return (
     <div
       ref={containerRef}
       className={cn(
         "relative flex aspect-2.5/1 items-center justify-center border-x border-line select-none sm:aspect-3.5/1",
         "screen-line-top screen-line-bottom before:-top-px after:-bottom-px",
-        "overflow-hidden bg-black/0.75 dark:bg-white/1"
+        "overflow-hidden bg-background"
       )}
+      id="js-cover-mark"
     >
-      <DotGridSpotlight
-        dotColor={DOT_COLOR[theme]?.default}
-        activeDotColor={DOT_COLOR[theme]?.active}
-      />
+      <div className="absolute inset-0 h-full w-full" style={maskStyle}>
+        <DotGridSpotlight
+          dotColor={DOT_COLOR[theme]?.default}
+          activeDotColor={DOT_COLOR[theme]?.active}
+        />
+        <BannerParticles />
+      </div>
 
       {/* Creative Cyber-Premium Badges in the corners */}
       <div className="pointer-events-none absolute top-3 left-4 flex items-center gap-2 font-mono text-[9px] tracking-wider text-muted-foreground/60 select-none sm:text-[10px]">
