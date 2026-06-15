@@ -1,0 +1,333 @@
+---
+title: "Square UI: Deep-Diving Into LN Dev's Dual-Headless Next.js App Templates"
+description: "An extensive architectural analysis of Square UI, a premium open-source suite of Next.js workspaces built in parallel with Radix UI and MUI's Base UI."
+image: "https://raw.githubusercontent.com/wistant/datafiles/main/blog/squareui/banner.png"
+category: "blog"
+createdAt: "2026-06-14"
+updatedAt: "2026-06-15"
+---
+
+<FramedImage
+  src="https://raw.githubusercontent.com/wistant/datafiles/main/blog/squareui/banner.png"
+  alt="Square UI Header Banner"
+/>
+
+One of the greatest challenges in modern frontend engineering is **bridging the gap between isolated UI primitives and fully integrated workspaces.** While component libraries like shadcn/ui give us individual buttons, inputs, and dialogs, assembling them into complex, responsive, state-managed applications still takes a massive amount of time.
+
+To solve this, Cameroonian designer and software architect **Leonel Ngoya (LN Dev)** created **Square UI**—a curated, open-source collection of Next.js app templates.
+
+What makes Square UI truly unique is its **dual-framework architecture**: every core template is built in parallel using both **Radix UI** (the standard backend for shadcn/ui) and **MUI's Base UI** (an unstyled React primitive library). This makes it an invaluable reference for comparing headless APIs, event handling, and styling paradigms.
+
+Let's dive deep into the architecture, state management patterns, and catalog of this outstanding toolkit.
+
+---
+
+## 🛠️ The Core Architectural Stack
+
+Every template in this ecosystem is engineered using modern web development best practices:
+
+- **Next.js & TypeScript**: Statically optimized layouts using Next.js App Router conventions and type-safe component APIs.
+- **Tailwind CSS**: Pixel-perfect responsive styling that supports system-wide dark/light modes.
+- **Modular Zustand Stores**: Rather than using a giant global state, each template contains its own self-contained Zustand store (e.g., `bookmarks-store.ts`, `calendar-store.ts`, `emails-store.ts`). This ensures you can copy-paste a single folder into your project and it will work immediately.
+- **Recharts**: Responsive SVG charts used for complex analytics, including multi-line leads charts and budget allocation dials.
+- **TanStack Table (React Table)**: Handles heavy administrative data grids with client-side sorting, pagination, filtering, and selection.
+
+---
+
+## 📂 Deep Dive: The Template Catalog
+
+Let's walk through the core application templates in the library, analyze their folder structures, and check out their live demos.
+
+---
+
+### 1. Circle (Issue & Sprint Tracker)
+
+Inspired by Linear's high-speed workflow, **Circle** is a premium project management template designed to orchestrate software cycles, issues, and team collaborations.
+
+#### Radix UI Layout
+
+<FramedImage
+  src="https://raw.githubusercontent.com/wistant/datafiles/main/blog/squareui/circle.png"
+  alt="Circle Radix UI Layout"
+/>
+
+- **GitHub Source**: [templates/circle](https://github.com/ln-dev7/circle)
+- **Live Preview**: [circle.lndev.me](https://circle.lndev.me)
+
+#### Base UI Layout
+
+<FramedImage
+  src="https://raw.githubusercontent.com/wistant/datafiles/main/blog/squareui/circle-baseui.png"
+  alt="Circle Base UI Layout"
+/>
+
+- **GitHub Source**: [Base UI Source](https://pro.lndev.me/templates)
+
+#### Architectural Breakdown
+
+- **Layout**: Collapsible left sidebar for workspace navigation, key issue filters, and a main board utilizing a horizontal column grid.
+- **Tech Highlights**: Custom keyboard shortcut listeners, dynamic search dialogs, and drag-and-drop column boards.
+
+---
+
+### 2. Habit Tracker
+
+A gamified lifestyle application designed for completion tracking, goal streak monitoring, and metrics visualization.
+
+<FramedImage
+  src="https://raw.githubusercontent.com/wistant/datafiles/main/blog/squareui/habit-tracker.png"
+  alt="Habit Tracker Dashboard"
+/>
+
+- **GitHub Source (Radix UI)**: [templates/habit-tracker](https://github.com/ln-dev7/square-ui/tree/master/templates/habit-tracker)
+- **GitHub Source (Base UI)**: [templates-baseui/habit-tracker](https://github.com/ln-dev7/square-ui/tree/master/templates-baseui/habit-tracker)
+- **Live Preview**: [View Habit Tracker Demo](https://square-ui-habit-tracker.vercel.app)
+
+#### Architectural Breakdown
+
+- **Layout**: Two-tab panel layout separating the daily checklist from a comprehensive statistics dashboard.
+- **Tech Highlights**: Includes a Git-style contribution heatmap (using `date-fns` and custom CSS grids) to visualize completion history over the past year. Driven by a dedicated `habit-store.ts`.
+
+---
+
+### 3. File Manager & Media Vault
+
+A secure layout for organizing, uploading, and viewing digital files and media assets.
+
+<FramedImage
+  src="https://raw.githubusercontent.com/wistant/datafiles/main/blog/squareui/files.png"
+  alt="File Explorer"
+/>
+<FramedImage
+  src="https://raw.githubusercontent.com/wistant/datafiles/main/blog/squareui/media-vault.png"
+  alt="Media Vault Gallery"
+/>
+
+- **GitHub Source (Files - Radix)**: [templates/files](https://github.com/ln-dev7/square-ui/tree/master/templates/files)
+- **GitHub Source (Files - Base UI)**: [templates-baseui/files](https://github.com/ln-dev7/square-ui/tree/master/templates-baseui/files)
+- **Live Preview**: [View Files Demo](https://square-ui-files.vercel.app)
+
+#### Architectural Breakdown
+
+- **Layout**: A left sidebar with disk space indicator progress bars, a main folder/file grid, and a right slide-out drawer (`sheet.tsx`) for file metadata details.
+- **Tech Highlights**: HTML5 drag-and-drop APIs, custom layout cards, and progress bars driven by `files-store.ts`.
+
+---
+
+### 4. Rentals & Map Explorer
+
+A platform for rental property listings combined with a geospatial location-tracking dashboard.
+
+<FramedImage
+  src="https://raw.githubusercontent.com/wistant/datafiles/main/blog/squareui/rentals.png"
+  alt="Rentals Grid"
+/>
+<FramedImage
+  src="https://raw.githubusercontent.com/wistant/datafiles/main/blog/squareui/maps.png"
+  alt="Maps Dashboard Layout"
+/>
+
+- **GitHub Source (Rentals - Radix)**: [templates/rentals](https://github.com/ln-dev7/square-ui/tree/master/templates/rentals)
+- **GitHub Source (Rentals - Base UI)**: [templates-baseui/rentals](https://github.com/ln-dev7/square-ui/tree/master/templates-baseui/rentals)
+- **Live Preview (Rentals)**: [View Rentals Demo](https://square-ui-rentals.vercel.app)
+- **GitHub Source (Maps - Radix)**: [templates/maps](https://github.com/ln-dev7/square-ui/tree/master/templates/maps)
+- **GitHub Source (Maps - Base UI)**: [templates-baseui/maps](https://github.com/ln-dev7/square-ui/tree/master/templates-baseui/maps)
+- **Live Preview (Maps)**: [View Maps Demo](https://square-ui-maps.vercel.app)
+
+#### Architectural Breakdown
+
+- **Layout**: A split-screen layout. The left side handles search queries and lists properties, while the right side displays an interactive Mapbox-driven canvas with pinned coordinate markers.
+- **Tech Highlights**: Integrated price-range sliders (`slider.tsx`), zoom controls, and sidebar location bookmarkers.
+
+---
+
+### 5. Email Client
+
+A full-fledged client interface for reading, writing, and organizing messages.
+
+<FramedImage
+  src="https://raw.githubusercontent.com/wistant/datafiles/main/blog/squareui/emails.png"
+  alt="Emails Client Layout"
+/>
+
+- **GitHub Source (Radix UI)**: [templates/emails](https://github.com/ln-dev7/square-ui/tree/master/templates/emails)
+- **GitHub Source (Base UI)**: [templates-baseui/emails](https://github.com/ln-dev7/square-ui/tree/master/templates-baseui/emails)
+- **Live Preview**: [View Emails Demo](https://square-ui-emails.vercel.app)
+
+#### Architectural Breakdown
+
+- **Layout**: A classic three-pane design. A thin navigation rail on the left, an email snippet listing panel with search in the middle, and a full reading view with quick reply headers on the right.
+- **Tech Highlights**: Managed by `emails-store.ts`, featuring dynamic unread status badges and responsive bottom sheets (`drawer.tsx`) for mobile screens.
+
+---
+
+### 6. AI Chat Client
+
+A polished interface mimicking conversational ChatGPT-like layouts.
+
+<FramedImage
+  src="https://raw.githubusercontent.com/wistant/datafiles/main/blog/squareui/chat.png"
+  alt="AI Chat Interface"
+/>
+
+- **GitHub Source (Radix UI)**: [templates/chat](https://github.com/ln-dev7/square-ui/tree/master/templates/chat)
+- **Live Preview**: [View Chat Demo](https://square-ui-chat.vercel.app)
+
+#### Architectural Breakdown
+
+- **Layout**: A left sidebar for conversation history, and a centered conversation container with a floating prompt textarea at the bottom.
+- **Tech Highlights**: Auto-scrolling containers, markdown rendering, syntax code block highlighting, and quick prompt helper grids.
+
+---
+
+### 7. Marketing & CRM Dashboards (Tiers 1 to 5)
+
+An extensive collection of administrative interfaces designed for tracking campaigns, view statistics, and team operations.
+
+<FramedImage
+  src="https://raw.githubusercontent.com/wistant/datafiles/main/blog/squareui/marketing-dashboard.png"
+  alt="Marketing Dashboard Analytics"
+/>
+
+- **GitHub Source (Marketing - Radix)**: [templates/marketing-dashboard](https://github.com/ln-dev7/square-ui/tree/master/templates/marketing-dashboard)
+- **GitHub Source (Marketing - Base UI)**: [templates-baseui/marketing-dashboard](https://github.com/ln-dev7/square-ui/tree/master/templates-baseui/marketing-dashboard)
+- **Live Preview (Marketing)**: [View Marketing Demo](https://square-ui-marketing-dashboard.vercel.app)
+
+#### CRM Sales (Dashboard 2)
+
+<FramedImage
+  src="https://raw.githubusercontent.com/wistant/datafiles/main/blog/squareui/dashboard-2.png"
+  alt="CRM Dashboard 2"
+/>
+
+- **GitHub Source**: [templates/dashboard-2](https://github.com/ln-dev7/square-ui/tree/master/templates/dashboard-2)
+- **Live Preview**: [View CRM Demo](https://square-ui-dashboard-2.vercel.app)
+
+#### HR Analytics (Dashboard 3)
+
+<FramedImage
+  src="https://raw.githubusercontent.com/wistant/datafiles/main/blog/squareui/dashboard-3.png"
+  alt="HR Dashboard 3"
+/>
+
+- **GitHub Source (Radix UI)**: [templates/dashboard-3](https://github.com/ln-dev7/square-ui/tree/master/templates/dashboard-3)
+- **GitHub Source (Base UI)**: [templates-baseui/dashboard-3](https://github.com/ln-dev7/square-ui/tree/master/templates-baseui/dashboard-3)
+- **Live Preview**: [View HR Demo](https://square-ui-dashboard-3.vercel.app)
+
+#### Creator Performance (Dashboard 4)
+
+<FramedImage
+  src="https://raw.githubusercontent.com/wistant/datafiles/main/blog/squareui/dashboard-4.png"
+  alt="Campaign Dashboard 4"
+/>
+
+- **GitHub Source (Radix UI)**: [templates/dashboard-4](https://github.com/ln-dev7/square-ui/tree/master/templates/dashboard-4)
+- **GitHub Source (Base UI)**: [templates-baseui/dashboard-4](https://github.com/ln-dev7/square-ui/tree/master/templates-baseui/dashboard-4)
+- **Live Preview**: [View Creator Demo](https://square-ui-dashboard-4.vercel.app)
+
+#### Task & Project Health (Dashboard 5)
+
+<FramedImage
+  src="https://raw.githubusercontent.com/wistant/datafiles/main/blog/squareui/dashboard-5.png"
+  alt="Task Dashboard 5"
+/>
+
+- **GitHub Source (Radix UI)**: [templates/dashboard-5](https://github.com/ln-dev7/square-ui/tree/master/templates/dashboard-5)
+- **GitHub Source (Base UI)**: [templates-baseui/dashboard-5](https://github.com/ln-dev7/square-ui/tree/master/templates-baseui/dashboard-5)
+- **Live Preview**: [View Task Dashboard Demo](https://square-ui-dashboard-5.vercel.app)
+
+#### Executive (Dashboard 1)
+
+<FramedImage
+  src="https://raw.githubusercontent.com/wistant/square-ui/tree/master/templates/dashboard-1"
+  alt="Standard Dashboard 1"
+/>
+
+- **GitHub Source**: [templates/dashboard-1](https://github.com/ln-dev7/square-ui/tree/master/templates/dashboard-1)
+- **Live Preview**: [View Executive Demo](https://square-ui-dashboard-1.vercel.app)
+
+* **Key Tech & Features**: Recharts AreaCharts and BarCharts with visual gradients, stats cards with trend indicators, and data grids powered by TanStack Table.
+
+---
+
+### 8. Productivity & Schedulers (Bookmarks, Calendar & Tasks)
+
+Core productivity grids for tracking events, bookmarks, and lists.
+
+<FramedImage
+  src="https://raw.githubusercontent.com/wistant/datafiles/main/blog/squareui/bookmarks.png"
+  alt="Bookmarks Manager Layout"
+/>
+
+- **GitHub Source (Bookmarks - Radix)**: [templates/bookmarks](https://github.com/ln-dev7/square-ui/tree/master/templates/bookmarks)
+- **GitHub Source (Bookmarks - Base UI)**: [templates-baseui/bookmarks](https://github.com/ln-dev7/square-ui/tree/master/templates-baseui/bookmarks)
+- **Live Preview (Bookmarks)**: [View Bookmarks Demo](https://square-ui-bookmarks.vercel.app)
+
+#### Calendar & Event Scheduler
+
+<FramedImage
+  src="https://raw.githubusercontent.com/wistant/datafiles/main/blog/squareui/calendar.png"
+  alt="Calendar Grid Layout"
+/>
+
+- **GitHub Source (Calendar - Radix)**: [templates/calendar](https://github.com/ln-dev7/square-ui/tree/master/templates/calendar)
+- **GitHub Source (Calendar - Base UI)**: [templates-baseui/calendar](https://github.com/ln-dev7/square-ui/tree/master/templates-baseui/calendar)
+- **Live Preview (Calendar)**: [View Calendar Demo](https://square-ui-calendar.vercel.app)
+
+#### Advanced Tasks Kanban
+
+<FramedImage
+  src="https://raw.githubusercontent.com/wistant/datafiles/main/blog/squareui/tasks.png"
+  alt="Tasks Kanban Board"
+/>
+
+- **GitHub Source (Tasks - Radix)**: [templates/tasks](https://github.com/ln-dev7/square-ui/tree/master/templates/tasks)
+- **Live Preview (Tasks)**: [View Tasks Demo](https://square-ui-tasks.vercel.app)
+
+* **Key Tech & Features**: Bookmarking folder systems, calendar grids supporting week-view events, and contact lists with advanced search operations.
+
+---
+
+### 9. Specialized Niches (Atelier, Cellar, Cookbook, Skyport, Vault, Finance)
+
+Targeted dashboards custom-built for specific industries like digital asset designing, inventory logs, cooking records, secure credentials vaults, and financial flowsheets.
+
+<FramedImage
+  src="https://raw.githubusercontent.com/wistant/datafiles/main/blog/squareui/atelier.png"
+  alt="Atelier Asset Dashboard"
+/>
+<FramedImage
+  src="https://raw.githubusercontent.com/wistant/datafiles/main/blog/squareui/cellar.png"
+  alt="Cellar Log"
+/>
+<FramedImage
+  src="https://raw.githubusercontent.com/wistant/datafiles/main/blog/squareui/cookbook.png"
+  alt="Cookbook Grid"
+/>
+<FramedImage
+  src="https://raw.githubusercontent.com/wistant/datafiles/main/blog/squareui/skyport.png"
+  alt="Skyport Server Node monitor"
+/>
+<FramedImage
+  src="https://raw.githubusercontent.com/wistant/datafiles/main/blog/squareui/vault.png"
+  alt="Secure Vault"
+/>
+<FramedImage
+  src="https://raw.githubusercontent.com/wistant/datafiles/main/blog/squareui/finance-tracker.png"
+  alt="Finance Tracker spreadsheet"
+/>
+
+- **Atelier**: An asset management workspace designed for creatives.
+- **Cellar**: A structured inventory layout for wine cellars or product collections.
+- **Cookbook**: A cooking recipe catalog with categorization cards.
+- **Skyport**: A monitoring dashboard showing real-time server statuses and metrics.
+- **Vault**: A secure layout built for credential management and data protection.
+- **Finance Tracker**: A spreadsheet-like layout for expenses, investments, and payouts.
+
+---
+
+## 💎 The Value of Open Source Engineering
+
+Square UI shows what is possible when a designer's eye meets a software engineer's discipline. Leonel Ngoya has built a suite that doesn't just save time—it establishes a baseline of quality for open-source Next.js templates.
+
+To explore all the templates live, head over to [square.lndevui.com](https://square.lndevui.com/). If you want to support Leonel's work, check out [Square UI Pro](https://pro.lndev.me/) or star the project on GitHub!
