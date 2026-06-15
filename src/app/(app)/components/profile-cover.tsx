@@ -1,28 +1,18 @@
 "use client"
 
 import { useRef } from "react"
+import Image from "next/image"
 import { useTheme } from "next-themes"
 
 import { cn } from "@/lib/utils"
 import { BannerParticles } from "@/components/banner-particles"
-import { DotGridSpotlight } from "@/components/dot-grid-spotlight"
-
-const DOT_COLOR = {
-  light: {
-    default: "rgba(0, 0, 0, 0.06)",
-    active: "rgba(0, 0, 0, 0.12)",
-  },
-  dark: {
-    default: "rgba(255, 255, 255, 0.05)",
-    active: "rgba(255, 255, 255, 0.1)",
-  },
-}
 
 export function ProfileCover() {
   const containerRef = useRef<HTMLDivElement>(null)
 
   const { resolvedTheme } = useTheme()
   const theme = resolvedTheme === "dark" ? "dark" : "light"
+  const imageSrc = theme === "dark" ? "/covers/cover-dark.webp" : "/covers/cover-light.webp"
 
   const maskStyle = {
     WebkitMaskImage:
@@ -44,9 +34,16 @@ export function ProfileCover() {
       id="js-cover-mark"
     >
       <div className="absolute inset-0 h-full w-full" style={maskStyle}>
-        <DotGridSpotlight
-          dotColor={DOT_COLOR[theme]?.default}
-          activeDotColor={DOT_COLOR[theme]?.active}
+        <Image
+          width={1000}
+          height={1000}
+          className={cn(
+            "h-full w-full object-cover",
+            theme === "dark" ? "object-center" : "object-bottom"
+          )}
+          src={imageSrc}
+          alt="Hero Cover"
+          priority
         />
         <BannerParticles />
       </div>

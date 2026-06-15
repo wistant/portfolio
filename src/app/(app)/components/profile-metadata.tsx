@@ -1,14 +1,7 @@
 "use client"
 
 import { USER } from "@/data/portfolio/user"
-import { urlToName } from "@/utils/url"
-import {
-  LinkIcon,
-  MapPinIcon,
-  MarsIcon,
-  NonBinaryIcon,
-  VenusIcon,
-} from "lucide-react"
+import { MapPinIcon, MarsIcon, NonBinaryIcon, VenusIcon } from "lucide-react"
 
 import type { User } from "@/types/user"
 
@@ -53,7 +46,7 @@ export function ProfileMetadata() {
       </IntroItem>
 
       {/* Website */}
-      <IntroItem>
+      {/*<IntroItem>
         <IntroItemIcon>
           <LinkIcon className="text-[#e1b12c]!" />
         </IntroItemIcon>
@@ -62,7 +55,7 @@ export function ProfileMetadata() {
             {urlToName(USER.website)}
           </IntroItemLink>
         </IntroItemContent>
-      </IntroItem>
+      </IntroItem>*/}
 
       {/* Pronouns */}
       <IntroItem>

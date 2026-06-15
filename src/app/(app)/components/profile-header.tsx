@@ -3,7 +3,6 @@
 import { USER } from "@/data/portfolio/user"
 
 import { AvatarLights } from "@/components/avatar-lights"
-import { Button } from "@/components/base/ui/button"
 
 import { AvatarLightsToggle } from "./avatar-lights-toggle"
 import { FlipSentences } from "./flip-sentences"
@@ -14,7 +13,7 @@ export function ProfileHeader() {
   return (
     <div className="relative flex flex-col gap-4 border-x border-line p-4 select-none sm:flex-row sm:gap-6 sm:p-6">
       {/* Left side: Avatar Profile */}
-      <div className="size-24 shrink-0 rounded-xl border border-line bg-background p-1 sm:size-28">
+      <div className="size-24 shrink-0 overflow-hidden rounded-xl border border-line bg-background p-1 sm:size-28">
         <AvatarLightsToggle className="group/avatar-lights-toggle flex h-full w-full outline-none">
           <AvatarLights
             className="h-full w-full ring-border ring-offset-background group-focus-visible/avatar-lights-toggle:ring-1 group-focus-visible/avatar-lights-toggle:ring-offset-2"
@@ -56,14 +55,6 @@ export function ProfileHeader() {
                 namePronunciationUrl={USER.namePronunciationUrl}
               />
             )}
-
-            <Button
-              variant="outline"
-              size="sm"
-              className="h-8.5 rounded-lg border-line font-mono text-xs font-medium tracking-wider text-muted-foreground uppercase hover:bg-muted hover:text-foreground dark:border-input dark:bg-input/30"
-            >
-              <a href={`mailto:${atob(USER.email)}`}>contact</a>
-            </Button>
           </div>
         </div>
       </div>
