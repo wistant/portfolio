@@ -22,7 +22,7 @@ export function AvatarLights({
   return (
     <div
       className={cn(
-        "pointer-events-none relative size-30 min-[24rem]:size-32 sm:size-40",
+        "pointer-events-none relative size-full",
         roundedClass,
         className
       )}
