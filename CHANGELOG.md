@@ -1,5 +1,16 @@
 # portfolio
 
+## 1.0.7-alpha.0
+
+### Patch Changes
+
+- 4b88503: - a57b958: release: switch 1.0.6 from Stable to alpha
+  - 5ed0383: style(app): format profile-cover.tsx
+  - 7de8f5e: ui(home): assemble cover banner, compact profile header, and metadata grid on home page
+  - 7ebec4f: ui(home): create structured profile metadata grid component with actions
+  - bf606ca: ui(home): restructure profile header layout to be compact and role-focused
+  - 400fc21: feat(home): create masked profile cover banner component with canvas particles
+
 ## 1.0.6
 
 ### Patch Changes
