@@ -1,6 +1,6 @@
 ---
-title: "NestJS Architecture in Depth: From Core Design Patterns to Enterprise Scale"
-description: "A comprehensive analysis of the NestJS framework architecture, repository ecosystem, comparison with Spring Boot/Angular, dependency inversion, and enterprise-grade design patterns."
+title: "NestJS for Beginners: Building Structured Backend Applications with Node.js and TypeScript"
+description: "A beginner-friendly guide to transitioning from Express.js to NestJS. Understand Node.js fundamentals, why structured architectures matter, and how to build your first NestJS API."
 image: "https://raw.githubusercontent.com/wistant/datafiles/main/blog/nestjs/nest-og.png"
 category: "blog"
 createdAt: "2026-06-15"
@@ -9,479 +9,293 @@ updatedAt: "2026-06-15"
 
 <FramedImage
   src="https://raw.githubusercontent.com/wistant/datafiles/main/blog/nestjs/nest-og.png"
-  alt="NestJS Framework Architecture and Branding"
+  alt="NestJS Framework Architecture and Branding Logo"
 />
 
-In the Node.js ecosystem, the freedom of unconstrained development often morphs into architectural debt. For years, Express served as the default standard for building web servers, leaving the responsibility of application structure entirely to the developer. The consequence was a fragmented landscape of codebases lacking standardized boundaries, dependency management, or design patterns.
+For developers transitioning from frontend development to the backend, or for JavaScript developers looking to build robust servers, the Node.js ecosystem offers unparalleled flexibility. However, that very flexibility can become a double-edged sword when building large-scale applications.
 
-NestJS was created to resolve this architectural vacuum. Built on top of Node.js and TypeScript, it enforces a structured, highly testable, and loosely coupled design. Rather than inventing a new paradigm, it brings proven enterprise patterns—heavily inspired by Angular and Spring Boot—to the server-side JavaScript ecosystem.
+To understand why NestJS is so popular, we must first look at the foundations it is built upon: Node.js and the evolution of its web server frameworks.
 
 ---
 
-## The NestJS GitHub Ecosystem and Repository Topology
+## The Node.js Foundation: Server-Side JavaScript
 
-To truly understand NestJS, one must examine its repository structure and dependency tree. Under the `github.com/nestjs` organization, the framework is managed as a set of decoupled, modular components.
+Before Node.js was released in 2009, JavaScript was confined to running inside web browsers. Node.js changed this by wrapping Google Chrome's V8 JavaScript engine in a runtime environment that runs directly on your operating system.
 
-### Core Repository Monorepo
+<FramedImage
+  src="https://raw.githubusercontent.com/wistant/datafiles/main/blog/nestjs/nodejs.png"
+  alt="Node.js Engine Execution Environment Logo"
+/>
 
-The main NestJS framework is hosted in the `nestjs/nest` repository, structured as a monorepo containing:
+Node.js introduced several core advantages:
 
-- **@nestjs/core**: The bootstrap engine. It manages the application lifecycle, instantiates the Inversion of Control (IoC) container, processes dependency injection graphs, and resolves execution contexts.
-- **@nestjs/common**: The collection of core decorators (`@Controller`, `@Injectable`, `@Module`), abstract classes, interfaces, and utilities shared across the framework.
-- **@nestjs/microservices**: The abstraction layer for building distributed systems using transport mechanisms like gRPC, RabbitMQ, Kafka, MQTT, and Redis.
-- **@nestjs/websockets**: The real-time communications layer integrating Socket.io or WS.
+- **Single Language Stack**: Teams could write both frontend and backend code in JavaScript (and later, TypeScript).
+- **Asynchronous, Non-blocking I/O**: Instead of creating a new thread for every incoming request (which consumes significant RAM), Node.js uses a single-threaded event loop to delegate database and filesystem operations to the operating system, pulling the results back when ready.
+- **The NPM Ecosystem**: Developers gained access to the largest registry of open-source libraries in the world.
 
-### Satellite and Integration Packages
+To write a web server in raw Node.js, you would write code like this:
 
-Beyond the core monorepo, the organization maintains specialized packages that keep the framework lean while providing integration points:
+```javascript
+const http = require("http")
 
-- **@nestjs/config**: A configuration wrapper utilizing `dotenv` and supporting runtime validation via Joi or class-validator.
-- **@nestjs/swagger**: An OpenAPI documentation generator. By utilizing TypeScript AST (Abstract Syntax Tree) and decorators, it generates API documentation automatically during compilation without runtime overhead.
-- **@nestjs/cqrs**: An implementation of the Command Query Responsibility Segregation pattern, facilitating clean separation of reads and writes in complex business domains.
-- **@nestjs/passport**: An authentication abstraction layering Passport.js strategies into NestJS guards.
+const server = http.createServer((req, res) => {
+  if (req.url === "/" && req.method === "GET") {
+    res.writeHead(200, { "Content-Type": "text/plain" })
+    res.end("Hello from raw Node.js")
+  } else {
+    res.writeHead(404)
+    res.end("Not Found")
+  }
+})
+
+server.listen(3000)
+```
+
+While this works, parsing URL query parameters, handling JSON request bodies, and organizing complex routing using raw Node.js code quickly becomes unmanageable.
+
+---
+
+## The Express.js Era: Lightweight Routing and Middleware
+
+To solve the complexity of raw Node.js HTTP servers, Express.js was released. It became the default web server library for the Node.js ecosystem.
+
+<FramedImage
+  src="https://raw.githubusercontent.com/wistant/datafiles/main/blog/nestjs/expressjs.png"
+  alt="Express.js Minimal Web Server Framework Logo"
+/>
+
+Express is a **minimal, unopinionated routing and middleware framework**. It simplifies request handling by introducing routing paths and middleware chains:
+
+```javascript
+const express = require("express")
+const app = express()
+
+app.use(express.json()) // Middleware to parse JSON payloads
+
+app.get("/users", (req, res) => {
+  res.json([{ id: 1, name: "Wistant Kode" }])
+})
+
+app.listen(3000)
+```
+
+### Why Express Was a Massive Success
+
+- **Simplicity**: You can copy-paste a few lines of code and have a server running in seconds.
+- **Unopinionated Nature**: Express does not care how you structure your folders, connect to your database, validate inputs, or write business logic. It simply receives requests and sends responses.
+
+---
+
+## The Express Limitation: The Spaghetti Code Problem
+
+While Express's unopinionated design works well for small projects or microservices, it presents challenges for larger applications.
+
+Because Express provides no guidance on application structure, developers must make architectural decisions themselves. Without a strict convention, teams often struggle with:
+
+- **Spaghetti Architecture**: Controllers, database operations, validation, and business logic are frequently mixed together in single, massive files.
+- **Inconsistent Codebases**: Two different Express projects built by two different teams can look completely different. Onboarding new developers requires learning a custom, undocumented folder structure.
+- **Testing Difficulties**: Hard-coded dependencies inside files make it difficult to mock databases or external services, complicating unit testing.
+
+As a result, as an Express application grows, maintaining it and keeping it free of bugs becomes increasingly difficult.
+
+---
+
+## Enter NestJS: Introducing Structure to Node.js
+
+NestJS was created to solve the structural challenges of Express. It does not replace the underlying server libraries; instead, it wraps them in a highly organized, modular architecture.
+
+By default, NestJS uses Express under the hood to handle HTTP routing, but it layers a strict, object-oriented, TypeScript-based architecture on top of it.
+
+<FramedImage
+  src="https://raw.githubusercontent.com/wistant/datafiles/main/blog/nestjs/nest-vs-express.jpg"
+  alt="Architecture comparison between unopinionated Express and structured NestJS"
+/>
+
+### What NestJS Resolves
+
+- **Strict Conventions**: NestJS defines where code should go. Controllers handle requests, Services handle business logic, and Modules group related features.
+- **TypeScript First**: NestJS is built from the ground up with TypeScript, ensuring type safety and autocomplete support in your IDE.
+- **Built-in Dependency Injection**: Classes declare their dependencies in their constructors, and NestJS automatically instantiates them, simplifying code organization and testing.
+
+---
+
+## The Three Pillars of NestJS
+
+To build applications with NestJS, you need to understand its three primary building blocks: Controllers, Providers (Services), and Modules.
+
+### 1. Controllers (Routing and Request Handling)
+
+Controllers are responsible for handling incoming HTTP requests and returning responses to the client. They use TypeScript **decorators** (annotations starting with `@`) to map routes to class methods.
+
+```typescript
+import { Body, Controller, Get, Post } from "@nestjs/common"
+
+@Controller("users")
+export class UsersController {
+  @Get()
+  findAll(): string[] {
+    return ["User A", "User B"]
+  }
+
+  @Post()
+  create(@Body() payload: any): string {
+    return `User created successfully`
+  }
+}
+```
+
+- `@Controller('users')` registers this class to handle requests at the `/users` path.
+- `@Get()` maps GET requests to the `findAll` method.
+- `@Body()` extracts the incoming request payload.
+
+### 2. Providers and Services (Business Logic)
+
+Providers contain the business logic of your application. The most common provider is a **Service**, which handles database operations, calculations, or external API requests.
+
+Services are annotated with the `@Injectable()` decorator, which tells the NestJS framework that this class can be injected as a dependency into other classes.
+
+```typescript
+import { Injectable } from "@nestjs/common"
+
+@Injectable()
+export class UsersService {
+  private readonly users: string[] = ["Wistant Kode", "Developer"]
+
+  getAllUsers(): string[] {
+    return this.users
+  }
+
+  addUser(name: string) {
+    this.users.push(name)
+  }
+}
+```
+
+### 3. Modules (Feature Bundles)
+
+Modules are the packaging mechanism NestJS uses to organize the application. A Module is a class annotated with the `@Module()` decorator. It groups related Controllers and Providers together.
+
+Every NestJS application has at least one root module (typically `AppModule`). As your app grows, you create separate feature modules (e.g., `UsersModule`, `AuthModule`) to keep the codebase clean.
+
+```typescript
+import { Module } from "@nestjs/common"
+
+import { UsersController } from "./users.controller"
+import { UsersService } from "./users.service"
+
+@Module({
+  controllers: [UsersController],
+  providers: [UsersService],
+})
+export class UsersModule {}
+```
+
+---
+
+## Dependency Injection Made Simple
+
+One of the most powerful concepts in NestJS is **Dependency Injection (DI)**.
+
+In standard JavaScript, if your controller needs to use a service, you might instantiate it manually:
+
+```javascript
+// The manual way (Avoid this in NestJS)
+class UsersController {
+  constructor() {
+    this.usersService = new UsersService()
+  }
+}
+```
+
+This manual approach couples the controller directly to the service class, making it hard to modify or test. In NestJS, you declare the dependency in the constructor parameter, and the NestJS framework injects it automatically:
+
+```typescript
+// The NestJS way
+@Controller("users")
+export class UsersController {
+  constructor(private readonly usersService: UsersService) {}
+
+  @Get()
+  getUsers() {
+    return this.usersService.getAllUsers()
+  }
+}
+```
+
+When NestJS boots, it resolves the dependency graph:
+
+1. It sees that `UsersController` needs `UsersService`.
+2. It instantiates `UsersService` first.
+3. It creates `UsersController` and passes the service instance into its constructor automatically.
+
+This design makes unit testing straightforward because you can pass a mocked version of the service into the controller constructor without running the entire framework database connection stack.
+
+---
+
+## Bootstrapping a NestJS Project
+
+To get started, make sure you have Node.js and a package manager like `pnpm` installed. You can use the NestJS CLI to scaffold projects:
+
+```bash
+# Verify Node.js
+node --version
+
+# Bootstrap a new project using pnpm
+pnpm dlx @nestjs/cli new my-nest-app --package-manager pnpm
+cd my-nest-app
+pnpm run start:dev
+```
+
+Open your browser and visit [http://localhost:3000](http://localhost:3000) to see the running application.
+
+### Essential CLI Generators
+
+You can use the CLI to generate files rather than creating them manually. The CLI automatically imports and registers the generated classes inside the correct module:
+
+```bash
+# Generate a controller
+nest generate controller products
+
+# Generate a service
+nest generate service products
+
+# Generate a complete CRUD module with controller, service, entities, and tests
+nest generate resource products
+```
+
+---
+
+## Exploring the Under-the-Hood Ecosystem
+
+Once you are comfortable with the basics, NestJS provides a rich ecosystem of packages maintained by the official `github.com/nestjs` organization.
 
 <FramedImage
   src="https://raw.githubusercontent.com/wistant/datafiles/main/blog/nestjs/nestjs-support.png"
   alt="NestJS Platform Support and Ecosystem Integrations"
 />
 
----
+Some of the most useful modules to learn as your skills progress include:
 
-## Architectural Comparison: NestJS vs Spring Boot vs Angular
+- **@nestjs/config**: Manages environment variables and configurations securely.
+- **@nestjs/swagger**: Generates interactive OpenAPI documentation automatically using TypeScript decorators.
+- **@nestjs/common**: Houses the middleware, exception filters, pipes, and guards that govern how requests behave.
 
-NestJS is architecturally familiar to both frontend engineers experienced with Angular and backend engineers transitioning from Spring Boot. It sits at the intersection of these two paradigms.
+### The Request Lifecycle Sequence
 
-### The Angular Influence: Frontend Patterns on the Server
+When a request hits a NestJS app, it flows through a structured pipeline:
 
-NestJS borrows Angular's structural building blocks:
+1. **Middleware**: Modifies headers or logs request details.
+2. **Guards**: Handles authentication and authorization.
+3. **Interceptors (Pre-handler)**: Runs code before the controller (e.g., setup timers).
+4. **Pipes**: Validates and transforms the request body (e.g., verifying database IDs are strings).
+5. **Controller Handler**: Executes your business logic.
+6. **Interceptors (Post-handler)**: Modifies the outgoing response.
+7. **Exception Filters**: Catches and formats any errors before they reach the user.
 
-- **Modules**: Used to define cohesive blocks of functionality. Just like Angular modules, NestJS modules declare imports, exports, and providers.
-- **Dependency Injection**: Constructor-based injection is identical. NestJS resolves classes by their TypeScript type metadata at runtime, mirroring Angular's compiler behavior.
-- **Pipes and Interceptors**: Shared paradigms for data transformation and request interception.
-
-### The Spring Boot Parallel: Enterprise Java Patterns in Node.js
-
-From Spring Boot, NestJS inherits class-level annotations (decorators) to declare routing, dependency management, and middleware orchestration:
-
-- Spring's `@RestController` corresponds to NestJS's `@Controller`.
-- Spring's `@Service` or `@Component` maps directly to `@Injectable` in NestJS.
-- Spring's `@Autowired` constructor injection aligns with NestJS constructor parameter decoration.
-- Spring Configuration classes correspond to NestJS dynamic modules.
-
-| Architectural Concept      | NestJS                | Angular                   | Spring Boot                 |
-| :------------------------- | :-------------------- | :------------------------ | :-------------------------- |
-| **Modular Boundaries**     | `@Module()`           | `@NgModule()`             | `@Configuration` / Packages |
-| **Endpoint Handler**       | `@Controller()`       | N/A (Component templates) | `@RestController`           |
-| **Dependency Injection**   | `@Injectable()`       | `@Injectable()`           | `@Component` / `@Service`   |
-| **Cross-Cutting Concerns** | Interceptors / Guards | HTTP Interceptors         | Spring AOP / Filters        |
-
----
-
-## The Request Lifecycle Execution Flow
-
-Understanding the exact path a request takes through the application structure is critical for debugging, security enforcement, and validation. In NestJS, the request lifecycle follows a strict sequence:
-
-1. **Incoming Request**: Initiated by the client.
-2. **Middleware**: Executes first. Middleware has access to the raw request and response objects, and can mutate them, terminate the request, or call the `next()` middleware.
-3. **Guards**: Execute after all middleware. Guards determine if the request is authorized based on custom logic (e.g., JWT token validation, permissions). If a guard returns `false`, NestJS halts the request lifecycle immediately.
-4. **Interceptors (Pre-handler)**: Execute after guards and before the route handler. Interceptors can bind extra logic, cache data, or inspect request payloads.
-5. **Pipes**: Execute after pre-handler interceptors. Pipes are used for data transformation (e.g., casting strings to integers) and validation (using `class-validator` to ensure request bodies conform to defined DTOs).
-6. **Controller (Route Handler)**: The actual method handling the route is invoked, returning a response.
-7. **Interceptors (Post-handler)**: Execute on the return path after the controller returns. They wrap the response stream, allowing you to transform the output (e.g., wrapping JSON in a standard envelope) or handle response execution time logging.
-8. **Exception Filters**: If an exception is thrown anywhere in the lifecycle (during guards, pipes, controller, or interceptors), the exception filter catches it, formats the error payload, and returns it to the client.
-
-### Scoping and Binding Order
-
-Guards, Interceptors, Pipes, and Exception Filters can be bound at three different scopes:
-
-- **Global**: Applied to every route in the application.
-- **Controller**: Applied to all routes inside a specific class controller.
-- **Route / Method**: Applied only to a specific endpoint.
-
-The execution sequence within a category respects this scoping hierarchy. For incoming components (Guards, Interceptors, Pipes), execution moves from **Global** to **Controller** and finally to **Route**. For outgoing components (post-handler Interceptors and Exception Filters), execution bubbles back up from **Route** to **Controller** and finally to **Global**.
-
----
-
-## Dynamic Dependency Lookups via ModuleRef
-
-In standard NestJS components, dependencies are resolved automatically by the IoC container via constructor injection. However, certain advanced scenarios require programmatically retrieving providers from the DI container. The `ModuleRef` class provides this capability.
-
-### Programmatic Injection with ModuleRef
-
-You can inject `ModuleRef` directly into a class like any other provider:
-
-```typescript
-import { Injectable, OnModuleInit } from "@nestjs/common"
-import { ModuleRef } from "@nestjs/core"
-
-import { UsersService } from "./users.service"
-
-@Injectable()
-export class OrchestrationService implements OnModuleInit {
-  private usersService: UsersService
-
-  constructor(private readonly moduleRef: ModuleRef) {}
-
-  onModuleInit() {
-    // Retrieve UsersService from the current module context
-    this.usersService = this.moduleRef.get(UsersService)
-  }
-}
-```
-
-By default, `ModuleRef.get()` operates under a **strict** context, meaning it will only search for the provider inside the current module. If the provider exists in a different imported module or is registered globally, you must set the `strict` option to `false`:
-
-```typescript
-this.usersService = this.moduleRef.get(UsersService, { strict: false })
-```
-
-### Resolving Transient and Request-Scoped Providers
-
-To resolve providers registered with `TRANSIENT` or `REQUEST` scope, you must use `ModuleRef.resolve()` instead of `ModuleRef.get()`. The `resolve()` method returns a unique instance of the provider (for transient scopes) or generates a new request context sub-tree (for request-scoped providers).
-
-```typescript
-const transientServiceInstance = await this.moduleRef.resolve(TransientService)
-```
-
-### Critical Lifecycle Warning
-
-Manually resolving transient or request-scoped providers via `ModuleRef.resolve()` detaches these instances from the framework's automatic application lifecycle management. Because NestJS does not track their execution scope, standard shutdown hooks (such as `OnModuleDestroy` or `BeforeApplicationShutdown`) are not called on these dynamic instances automatically. Developers are responsible for destroying these instances manually if they contain open connections, event listeners, or memory-heavy references.
-
----
-
-## Platform-Agnostic Design and HttpServer Abstraction
-
-NestJS is architectured to be independent of specific runtime servers. The framework core does not depend on Express. Instead, it relies on an adapter design pattern.
-
-The `@nestjs/core` bootstrap engine interacts with web servers through the `HttpServer` interface. This interface abstracts operations like route registration, request body parsing, header mutation, and server port listening.
-
-By maintaining this abstraction:
-
-- Application code is completely decoupled from HTTP library quirks.
-- Unit testing is simplified, as the server adapter can be mocked or swapped out during integration tests.
-- Porting a backend codebase from an Express environment to a high-throughput Fastify execution wrapper requires editing only the bootstrap file (`src/main.ts`), without changing controller routing decorators.
-
----
-
-## Installation and Core CLI Commands
-
-NestJS requires a Node.js runtime environment. The ecosystem uses the CLI to standardize code generation and bootstrap scaffolding.
-
-<FramedImage
-  src="https://raw.githubusercontent.com/wistant/datafiles/main/blog/nestjs/nodejs.jpg"
-  alt="Node.js Engine Execution Environment"
-/>
-
-To verify your Node.js runtime, execute:
-
-```bash
-node --version
-```
-
-To create a new workspace using the NestJS CLI and `pnpm` as the package manager:
-
-```bash
-pnpm dlx @nestjs/cli new my-nest-app --package-manager pnpm
-cd my-nest-app
-pnpm run start:dev
-```
-
-### Key CLI Generators
-
-The CLI standardizes the creation of new files, ensuring they are registered in their parent modules automatically:
-
-```bash
-# Generate a complete resource folder (Controller, Service, Entity, DTO, and spec)
-nest generate resource users
-
-# Generate a standalone dynamic module
-nest generate module core
-
-# Generate an injectable service
-nest generate service auth
-```
-
----
-
-## Advanced Dependency Inversion and Dynamic Modules
-
-A central strength of NestJS is its implementation of the Dependency Inversion Principle. Instead of hard-coding dependencies, classes request them through their constructor. The NestJS IoC container resolves them during the bootstrap phase.
-
-### Custom Providers and Token Resolution
-
-While classes are usually resolved by their type, NestJS supports custom providers using string, symbol, or configuration object tokens.
-
-```typescript
-import { Inject, Module, Symbol } from "@nestjs/common"
-
-// Defining a custom configuration interface
-export interface DatabaseConfig {
-  host: string
-  port: number
-}
-
-// Token definition
-export const DATABASE_CONFIG_TOKEN = Symbol("DATABASE_CONFIG")
-
-@Injectable()
-export class DatabaseService {
-  constructor(
-    @Inject(DATABASE_CONFIG_TOKEN)
-    private readonly config: DatabaseConfig
-  ) {}
-
-  getConnectionString(): string {
-    return `mongodb://${this.config.host}:${this.config.port}/database`
-  }
-}
-```
-
-We register the custom provider inside a module using the `useValue` or `useFactory` recipes:
-
-```typescript
-@Module({
-  providers: [
-    {
-      provide: DATABASE_CONFIG_TOKEN,
-      useValue: {
-        host: "localhost",
-        port: 27017,
-      },
-    },
-    DatabaseService,
-  ],
-  exports: [DatabaseService],
-})
-export class DatabaseModule {}
-```
-
-### Dynamic Modules: Configuring Providers at Runtime
-
-Dynamic modules allow modules to accept user arguments and return custom providers dynamically. This is standard for third-party libraries or infrastructure modules (e.g., database clients, logging services, security configurations).
-
-This implementation shows a dynamic module with synchronous and asynchronous registration patterns:
-
-```typescript
-import { DynamicModule, Module, Provider, Type } from "@nestjs/common"
-
-export interface MailerOptions {
-  apiKey: string
-  sender: string
-}
-
-export interface MailerAsyncOptions {
-  useFactory: (...args: any[]) => Promise<MailerOptions> | MailerOptions
-  inject?: any[]
-}
-
-@Injectable()
-export class MailerService {
-  constructor(private readonly options: MailerOptions) {}
-
-  async sendMail(to: string, subject: string, body: string): Promise<void> {
-    // Integration logic goes here
-  }
-}
-
-@Module({})
-export class MailerModule {
-  // Synchronous registration
-  static register(options: MailerOptions): DynamicModule {
-    return {
-      module: MailerModule,
-      providers: [
-        {
-          provide: MailerOptions,
-          useValue: options,
-        },
-        MailerService,
-      ],
-      exports: [MailerService],
-    }
-  }
-
-  // Asynchronous registration for dynamic database/config injected values
-  static registerAsync(options: MailerAsyncOptions): DynamicModule {
-    const provider: Provider = {
-      provide: MailerOptions,
-      useFactory: options.useFactory,
-      inject: options.inject || [],
-    }
-
-    return {
-      module: MailerModule,
-      imports: [],
-      providers: [provider, MailerService],
-      exports: [MailerService],
-    }
-  }
-}
-```
-
----
-
-## Meta-Programming, Execution Contexts, and Guards
-
-NestJS provides two helper classes to write helpers across different network protocols: `ArgumentsHost` and `ExecutionContext`.
-
-- **ArgumentsHost**: Wraps arguments passed to the handlers. It allows extracting parameters for HTTP (request, response, next), WebSockets (client, data), or Microservices (context, data).
-- **ExecutionContext**: Inherits from `ArgumentsHost` but adds information about the class and handler function where the request is heading.
-
-### Building a Custom RBAC Guard with Metadata Inspection
-
-This guard reads custom metadata attached to target controllers or route methods using the `Reflector` class:
-
-```typescript
-// roles.decorator.ts
-import { SetMetadata } from "@nestjs/common"
-
-export const ROLES_KEY = "roles"
-export const Roles = (...roles: string[]) => SetMetadata(ROLES_KEY, roles)
-```
-
-Next, the guard evaluates whether the current context is authorized:
-
-```typescript
-// roles.guard.ts
-import { CanActivate, ExecutionContext, Injectable } from "@nestjs/common"
-import { Reflector } from "@nestjs/core"
-
-import { ROLES_KEY } from "./roles.decorator"
-
-@Injectable()
-export class RolesGuard implements CanActivate {
-  constructor(private readonly reflector: Reflector) {}
-
-  canActivate(context: ExecutionContext): boolean {
-    // Retrieve metadata from handler first, then from the controller class
-    const requiredRoles = this.reflector.getAllAndOverride<string[]>(
-      ROLES_KEY,
-      [context.getHandler(), context.getClass()]
-    )
-
-    if (!requiredRoles) {
-      return true
-    }
-
-    const request = context.switchToHttp().getRequest()
-    const user = request.user
-
-    if (!user || !user.roles) {
-      return false
-    }
-
-    return requiredRoles.some((role) => user.roles.includes(role))
-  }
-}
-```
-
----
-
-## CQRS Architecture with @nestjs/cqrs
-
-For complex domains, standard CRUD patterns can result in bloated service classes. The Command Query Responsibility Segregation (CQRS) pattern separates actions that write data (Commands) from actions that read data (Queries).
-
-### Implementation Workflow
-
-1. **Commands**: Define the intent to mutate state. They are handled by Command Handlers.
-2. **Queries**: Define the intent to retrieve data. They are handled by Query Handlers.
-3. **Events**: Fired upon state changes, handled by Event Handlers or Sagas.
-
-### Core Implementation Example
-
-Defining a command to register a new tenant workspace:
-
-```typescript
-// register-workspace.command.ts
-export class RegisterWorkspaceCommand {
-  constructor(
-    public readonly name: string,
-    public readonly ownerEmail: string
-  ) {}
-}
-```
-
-Creating the handler that contains the write operation logic:
-
-```typescript
-// register-workspace.handler.ts
-import { CommandHandler, ICommandHandler } from "@nestjs/cqrs"
-
-import { RegisterWorkspaceCommand } from "./register-workspace.command"
-
-@CommandHandler(RegisterWorkspaceCommand)
-export class RegisterWorkspaceHandler implements ICommandHandler<RegisterWorkspaceCommand> {
-  async execute(command: RegisterWorkspaceCommand): Promise<string> {
-    const { name, ownerEmail } = command
-
-    // Perform write actions (e.g., save workspace structure to DB)
-    const generatedId = "ws_dev_123456"
-
-    return generatedId
-  }
-}
-```
-
-Registering command handlers inside our domain module:
-
-```typescript
-// workspace.module.ts
-import { Module } from "@nestjs/common"
-import { CqrsModule } from "@nestjs/cqrs"
-
-import { RegisterWorkspaceHandler } from "./register-workspace.handler"
-
-@Module({
-  imports: [CqrsModule],
-  providers: [RegisterWorkspaceHandler],
-})
-export class WorkspaceModule {}
-```
-
-By decoupling reads from writes, CQRS makes codebases easier to maintain and scale.
-
----
-
-## Production Execution: Fastify vs Express
-
-NestJS is platform-agnostic. It does not bind you to Express. Instead, it abstracts server operations behind an adapter interface.
-
-While Express is standard, high-throughput production environments benefit from switching to the Fastify platform adapter. Fastify offers significantly better routing performance and lower overhead.
-
-### Swapping Adapters in main.ts
-
-To use Fastify, install the adapter package:
-
-```bash
-pnpm add @nestjs/platform-fastify
-```
-
-Then, modify the bootstrapping script in `src/main.ts`:
-
-```typescript
-import { NestFactory } from "@nestjs/core"
-import {
-  FastifyAdapter,
-  NestFastifyApplication,
-} from "@nestjs/platform-fastify"
-
-import { AppModule } from "./app.module"
-
-async function bootstrap() {
-  const app = await NestFactory.create<NestFastifyApplication>(
-    AppModule,
-    new FastifyAdapter()
-  )
-
-  await app.listen(3000, "0.0.0.0")
-}
-bootstrap()
-```
-
-This simple switch allows the server to process significantly more requests per second with lower memory consumption.
+Swapping the underlying server engine is also straightforward. If you need higher throughput, you can swap out Express for Fastify by installing `@nestjs/platform-fastify` and updating your bootstrapping configuration inside `src/main.ts`.
 
 ---
 
 ## Conclusion
 
-NestJS goes beyond simple API routing. It provides a structured, modern architecture for the Node.js ecosystem. By using modular separation, dependency inversion, dynamic module orchestration, and execution contexts, NestJS allows engineering teams to build scalable applications that are easy to test and maintain.
+NestJS helps you transition from writing server scripts to designing organized, maintainable software architectures. By providing a structured template out of the box, it allows developers to focus on writing business logic instead of organizing files, helping teams build scalable backend systems.
