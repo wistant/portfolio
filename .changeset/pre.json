@@ -5,6 +5,7 @@
     "portfolio": "1.0.7-alpha.0"
   },
   "changesets": [
-    "release-1781534669"
+    "release-1781534669",
+    "release-1781544814"
   ]
 }

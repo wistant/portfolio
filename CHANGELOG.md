@@ -1,5 +1,17 @@
 # portfolio
 
+## 1.0.7-beta.1
+
+### Patch Changes
+
+- b269228: - d9d86ac: release: switch 1.0.7-alpha.0 from alpha to beta
+  - 13d87d6: style(style): format nestjs-for-beginners-complete-guide.mdx
+  - 8e1a500: style(project): update readme preview image path and refine guide header
+  - 1621a0b: docs(blog): update squareui blog post and add new blog assets
+  - 31ebdc1: docs(blog): rewrite nestjs guide for beginners with express comparison
+  - aa7cbfe: docs(blog): add in-depth nestjs architecture guide
+  - e4c2890: docs(blog): add blog post on square ui open-source nextjs templates
+
 ## 1.0.7-alpha.0
 
 ### Patch Changes
