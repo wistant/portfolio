@@ -12,7 +12,8 @@ export function ProfileCover() {
 
   const { resolvedTheme } = useTheme()
   const theme = resolvedTheme === "dark" ? "dark" : "light"
-  const imageSrc = theme === "dark" ? "/covers/cover-dark.webp" : "/covers/cover-light.webp"
+  const imageSrc =
+    theme === "dark" ? "/covers/cover-dark.webp" : "/covers/cover-light.webp"
 
   const maskStyle = {
     WebkitMaskImage:
