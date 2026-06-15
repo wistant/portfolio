@@ -1,4 +1,4 @@
-![Wistant Portfolio Preview](./public/preview-light.png)
+![Wistant Portfolio Preview](./public/projects/portfolio/preview.png)
 
 <p align='center'>My personal hub, portfolio & blog. A place to document my projects, technical notes, and web development journey. Built with high performance and neat developer aesthetics in mind.
 </p>
