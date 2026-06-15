@@ -254,6 +254,35 @@ export const PROJECTS: Project[] = [
       "Appetite-triggering pizza delivery landing page with warm brand tones and order-flow design.",
     themeColor: "#ef4444",
   },
+  {
+    id: "theline",
+    title: "The Line — Brutalist Animation Studio Clone",
+    period: {
+      start: "06.2026",
+      end: "06.2026",
+    },
+    link: "https://theline-wistant.vercel.app",
+    github: "https://github.com/wistant/theline.awwards",
+    skills: [
+      "Open Source",
+      "TypeScript",
+      "Next.js",
+      "GSAP",
+      "Tailwind CSS",
+      "UI/UX",
+      "Landing Page",
+    ],
+    description:
+      "A pixel-perfect, media-first frontend clone of The Line Animation Studio's portfolio. Built to perfect UI/UX engineering skills on real-world production layouts, it features a custom viewfinder camera HUD (overscan boundaries, action-safe SVG guidelines, aspect crops) and dynamic on-demand lazy-loaded video previews orchestrated with GSAP timelines.",
+    projectImage:
+      "https://raw.githubusercontent.com/wistant/datafiles/main/projects/theline/header.png",
+    backgroundImage:
+      "bg-gradient-to-br from-zinc-950 via-neutral-900 to-amber-950/20",
+    status: "completed",
+    shortDescription:
+      "A high-fidelity web clone of The Line Animation Studio's portfolio with custom camera HUD overlays and GSAP timelines.",
+    themeColor: "#f59e0b",
+  },
 ].sort((a, b) => {
   // 1. Pinned first
   if (a.pinned && !b.pinned) return -1
