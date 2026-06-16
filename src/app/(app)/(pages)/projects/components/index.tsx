@@ -7,7 +7,12 @@ import { getGithubStars } from "@/lib/github"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/base/ui/button"
 
-import { Panel, PanelHeader, PanelTitle, PanelTitleSup } from "../panel"
+import {
+  Panel,
+  PanelHeader,
+  PanelTitle,
+  PanelTitleSup,
+} from "../../../../../components/panel"
 import { ProjectCard } from "./project-card"
 
 export async function Projects() {

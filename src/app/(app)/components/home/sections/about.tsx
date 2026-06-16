@@ -2,8 +2,12 @@ import { USER } from "@/data/portfolio/user"
 
 import { Prose } from "@/components/ui/typography"
 import { Markdown } from "@/components/markdown"
-
-import { Panel, PanelContent, PanelHeader, PanelTitle } from "./panel"
+import {
+  Panel,
+  PanelContent,
+  PanelHeader,
+  PanelTitle,
+} from "@/components/panel"
 
 export function About() {
   return (

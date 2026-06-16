@@ -11,7 +11,7 @@ import {
   PageHeadingTagline,
   PageHeadingTitle,
 } from "@/components/page-heading"
-import { ProjectCard } from "@/app/(app)/components/projects/project-card"
+import { ProjectCard } from "@/app/(app)/(pages)/projects/components/project-card"
 
 const title = "Projects"
 const description =

@@ -52,6 +52,7 @@ export const MOBILE_NAV: NavItem[] = [
 ]
 
 export const X_HANDLE = "@iamwistant"
+export const LINKEDIN_USERNAME = "wistant"
 export const GITHUB_USERNAME = "wistant"
 export const SOURCE_CODE_GITHUB_REPO = "portfolio"
 export const SOURCE_CODE_GITHUB_URL = "https://github.com/wistant/portfolio"

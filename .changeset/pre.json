@@ -1,8 +1,8 @@
 {
   "mode": "pre",
-  "tag": "beta",
+  "tag": "rc",
   "initialVersions": {
-    "portfolio": "1.0.7-alpha.0"
+    "portfolio": "1.0.7-beta.1"
   },
   "changesets": [
     "release-1781534669",

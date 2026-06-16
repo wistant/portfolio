@@ -12,7 +12,7 @@ import {
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 
-import { WistantMark } from "../components/wistant-mark"
+import { WistantMark } from "../../../../components/wistant-mark"
 
 export function NotFound({ className }: { className?: string }) {
   const pathname = usePathname() || ""

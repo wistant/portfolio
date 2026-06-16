@@ -4,10 +4,10 @@ import { USER } from "@/data/portfolio/user"
 
 import { AvatarLights } from "@/components/avatar-lights"
 
-import { AvatarLightsToggle } from "./avatar-lights-toggle"
-import { FlipSentences } from "./flip-sentences"
-import { PronounceMyName } from "./pronounce-my-name"
-import { VerifiedIcon } from "./verified-icon"
+import { FlipSentences } from "../../flip-sentences"
+import { VerifiedIcon } from "../../verified-icon"
+import { AvatarLightsToggle } from "./avatar-lights"
+import { PronounceMyName } from "./pronounce"
 
 export function ProfileHeader() {
   return (
