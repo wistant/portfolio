@@ -1,6 +1,6 @@
 "use client"
 
-import { StickyCard002 } from "./skiper"
+import { StickyCard002 } from "@/app/(app)/components/skiper"
 
 interface GalleryProps {
   images: string[]
