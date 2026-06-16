@@ -1,5 +1,17 @@
 # portfolio
 
+## 1.0.7-rc.3
+
+### Patch Changes
+
+- 8a4fb6e: - b4787a8: style(llms): format LLM text route endpoints with Prettier
+  - d70343f: refactor(llms): aggregate active sponsor tiers and contributions
+  - 0d19c6b: refactor(llms): aggregate full text of all professional certifications
+  - 23fceb5: docs(llms): document development tooling and atomic commit protocols
+  - 6fb1d01: docs(llms): add shadcn UI component registry compilation instructions
+  - b3db710: refactor(llms): append codebase directory map and basic command guidelines
+  - 7f083c3: refactor(llms): update general index with stack specs and source repository
+
 ## 1.0.7-rc.2
 
 ### Patch Changes
