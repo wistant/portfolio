@@ -105,6 +105,7 @@ async function getContent() {
   const latestCommit = getLatestCommitInfo()
   const blogsContent = await getMDXContentSection("blog", "blog")
   const projectsContent = await getMDXContentSection("projects", "projects")
+  const certsContent = await getMDXContentSection("certifications", "certifications")
 
   return `<SYSTEM>This document contains comprehensive information about ${USER.displayName}'s professional profile, portfolio, and blog content. It includes personal details, work experience, projects, achievements, certifications, and all published blog posts. This data is formatted for consumption by Large Language Models (LLMs) to provide accurate and up-to-date information about ${USER.displayName}'s background, skills, and expertise as a Software Architect/Engineer.</SYSTEM>
 
@@ -119,6 +120,10 @@ ${experienceText}
 ${projectsText}
 ${registryText}
 ${toolingText}
+
+## Certifications
+
+${certsContent}
 
 ## Blog Posts
 
