@@ -5,6 +5,7 @@ import { PROJECTS } from "@/data/portfolio/projects"
 import { SOCIAL_LINKS } from "@/data/portfolio/social-links"
 import { TECH_STACK } from "@/data/portfolio/tech-stack"
 import { USER } from "@/data/portfolio/user"
+import { SPONSORS } from "@/data/sponsor-data"
 import { format } from "date-fns"
 
 import { SITE_INFO } from "@/config/site"
@@ -107,6 +108,12 @@ async function getContent() {
   const projectsContent = await getMDXContentSection("projects", "projects")
   const certsContent = await getMDXContentSection("certifications", "certifications")
 
+  const sponsorsText = `## Active Sponsors
+
+Sponsors who support this open-source portfolio and registry work:
+${SPONSORS.length === 0 ? "No active public sponsors currently listed." : SPONSORS.map((item) => `- **${item.name}** (${item.tier}) - URL: ${item.url}`).join("\n")}
+`
+
   return `<SYSTEM>This document contains comprehensive information about ${USER.displayName}'s professional profile, portfolio, and blog content. It includes personal details, work experience, projects, achievements, certifications, and all published blog posts. This data is formatted for consumption by Large Language Models (LLMs) to provide accurate and up-to-date information about ${USER.displayName}'s background, skills, and expertise as a Software Architect/Engineer.</SYSTEM>
 
 # wistant.me
@@ -120,6 +127,7 @@ ${experienceText}
 ${projectsText}
 ${registryText}
 ${toolingText}
+${sponsorsText}
 
 ## Certifications
 
