@@ -26,15 +26,19 @@ export async function GET() {
 
   const content = `# wistant.me
 
-> A minimal, pixel-perfect dev portfolio, shadcn registry, and blog to showcase my work as a Software Architect/Engineer.
+> A minimal, pixel-perfect developer portfolio, shadcn component registry, and technical blog built by Wistant Kode.
 
-**Last Coded**: ${latestCommit}
+- **Stack**: Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS v4, shadcn/ui, MDX, Vercel
+- **Source Code**: https://github.com/wistant/portfolio
+- **Last Coded**: ${latestCommit}
 
-- [About](${SITE_INFO.url}/about.md): A quick intro to me, my tech stack, and how to connect.
-- [Experience](${SITE_INFO.url}/experience.md): Highlights from my career and key roles I've taken on.
-- [Projects](${SITE_INFO.url}/projects.md): Selected projects that show my skills and creativity.
-- [Awards](${SITE_INFO.url}/awards.md): My key awards and honors.
-- [Certifications](${SITE_INFO.url}/certifications.md): Certifications and credentials I've earned.
+## Navigation Index
+
+- [About](${SITE_INFO.url}/about.md): Personal developer bio, core vision, and expertise outline.
+- [Experience](${SITE_INFO.url}/experience.md): Professional work history, past engineering roles, and achievements.
+- [Projects](${SITE_INFO.url}/projects.md): Selected project descriptions and code case studies.
+- [Certifications](${SITE_INFO.url}/certifications.md): Professional credentials, certifications, and technical badges.
+- [Sponsors](${SITE_INFO.url}/sponsors.md): Sponsoring tiers, details, and active supporters list.
 
 ## Blog Posts
 
