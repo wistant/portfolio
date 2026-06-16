@@ -15,6 +15,7 @@ import { About } from "./components/home/sections/about"
 import { Experiences } from "./components/home/sections/experiences"
 import { GitHubContributions } from "./components/home/sections/github-contributions"
 import { Insights } from "./components/home/sections/insights"
+import { OpenSourceContributions } from "./components/home/sections/opensource-contributions"
 import { Sponsors } from "./components/home/sections/sponsors"
 import { TechStack } from "./components/home/sections/tech-stack"
 
@@ -38,6 +39,7 @@ export default function HomePage() {
         <BlocksSeparator />
         <BlocksSeparator />
         <About />
+        <OpenSourceContributions />
         <GitHubContributions />
         <TechStack />
         <BlocksSeparator />
