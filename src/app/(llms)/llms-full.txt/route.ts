@@ -106,7 +106,10 @@ async function getContent() {
   const latestCommit = getLatestCommitInfo()
   const blogsContent = await getMDXContentSection("blog", "blog")
   const projectsContent = await getMDXContentSection("projects", "projects")
-  const certsContent = await getMDXContentSection("certifications", "certifications")
+  const certsContent = await getMDXContentSection(
+    "certifications",
+    "certifications"
+  )
 
   const sponsorsText = `## Active Sponsors
 
