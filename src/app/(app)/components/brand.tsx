@@ -3,7 +3,7 @@ import dynamic from "next/dynamic"
 import { WistantMark } from "@/components/wistant-mark"
 import { WistantWordmark } from "@/components/wistant-wordmark"
 
-import { Panel, PanelHeader, PanelTitle } from "./panel"
+import { Panel, PanelHeader, PanelTitle } from "@/components/panel"
 
 const BrandContextMenu = dynamic(() =>
   import("@/components/brand-context-menu").then((mod) => mod.BrandContextMenu)
