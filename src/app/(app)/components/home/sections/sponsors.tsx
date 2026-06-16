@@ -5,14 +5,13 @@ import { ArrowUpRightIcon, HeartIcon } from "lucide-react"
 
 import { SPONSORSHIP_URL, UTM_PARAMS } from "@/config/site"
 import { Button } from "@/components/base/ui/button"
-
 import {
   Panel,
   PanelContent,
   PanelHeader,
   PanelTitle,
   PanelTitleSup,
-} from "./panel"
+} from "@/components/panel"
 
 export function Sponsors() {
   const featuredSponsors = SPONSORS.slice(0, 6)

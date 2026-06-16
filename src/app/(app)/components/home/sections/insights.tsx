@@ -6,7 +6,12 @@ import Grid from "@/components/charts/grid"
 import LineChart, { Line } from "@/components/charts/line-chart"
 import { ChartTooltip } from "@/components/charts/tooltip"
 
-import { Panel, PanelHeader, PanelTitle, PanelTitleSup } from "./panel"
+import {
+  Panel,
+  PanelHeader,
+  PanelTitle,
+  PanelTitleSup,
+} from "@/components/panel"
 
 export async function Insights() {
   const data = await getInsights()

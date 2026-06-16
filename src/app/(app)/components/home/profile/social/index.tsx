@@ -2,7 +2,7 @@ import { SOCIAL_LINKS } from "@/data/portfolio/social-links"
 
 import { cn } from "@/lib/utils"
 
-import { Panel } from "../panel"
+import { Panel } from "@/components/panel"
 import { SocialLinkItem } from "./social-link-item"
 
 export function SocialLinks() {

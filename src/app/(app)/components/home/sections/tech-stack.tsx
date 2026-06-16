@@ -1,6 +1,6 @@
 import { LOCAL_ICONS, TECH_STACK } from "@/data/portfolio/tech-stack"
 
-import { Panel, PanelContent } from "./panel"
+import { Panel, PanelContent } from "@/components/panel"
 
 export function TechStack() {
   return (
