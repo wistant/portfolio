@@ -2,7 +2,6 @@ import { USER } from "@/data/portfolio/user"
 
 import { Prose } from "@/components/ui/typography"
 import { Markdown } from "@/components/markdown"
-
 import {
   Panel,
   PanelContent,
