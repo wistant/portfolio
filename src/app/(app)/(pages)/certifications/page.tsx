@@ -9,11 +9,9 @@ import type { Doc } from "@/types/document"
 import { X_HANDLE } from "@/config/site"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import {
-  PageHeading,
-  PageHeadingTagline,
-  PageHeadingTitle,
-} from "@/components/page-heading"
+import { BlocksSeparator } from "@/components/blocks-separator"
+
+import CertificationsPageTitle from "./components/page-title"
 
 const title = "Certifications"
 const description =
@@ -62,12 +60,7 @@ export default function CertificationsPage() {
 
   return (
     <div className="min-h-svh space-y-8">
-      <PageHeading>
-        <PageHeadingTagline>Certifications</PageHeadingTagline>
-        <PageHeadingTitle>
-          Professional badges, certifications, and technical credentials.
-        </PageHeadingTitle>
-      </PageHeading>
+      <CertificationsPageTitle />
 
       {groupKeys.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-12 text-center select-none">
@@ -97,14 +90,14 @@ export default function CertificationsPage() {
         <div className="space-y-8">
           {groupKeys.map((groupName, index) => (
             <div key={groupName} className="space-y-8">
-              {index > 0 && <Separator />}
+              {index > 0 && <BlocksSeparator />}
               <div className="space-y-4">
                 {/* Group Title and Line Separator */}
                 <div className="flex items-center" aria-hidden="true">
                   <span className="font-mono text-xs tracking-wider text-muted-foreground/80 uppercase">
                     {groupName}
                   </span>
-                  <div className="ml-4 flex-grow border-t border-dashed border-line/60" />
+                  <div className="ml-4 grow border-t border-dashed border-line/60" />
                 </div>
 
                 {/* Grid of Certifications in this group */}
@@ -207,24 +200,4 @@ export default function CertificationsPage() {
   )
 }
 
-export function Separator({ className }: { className?: string }) {
-  return (
-    <div
-      className={cn(
-        "relative flex h-8 w-full border-x border-line",
-        "before:absolute before:left-[-100vw] before:-z-1 before:h-8 before:w-[200vw]",
-        "before:bg-[repeating-linear-gradient(315deg,var(--pattern-foreground)_0,var(--pattern-foreground)_1px,transparent_0,transparent_50%)] before:bg-size-[10px_10px] before:[--pattern-foreground:var(--color-line)]/56",
-        className
-      )}
-    >
-      <div
-        className="absolute -top-1.25 -left-1.25 z-2 flex size-2.25 border bg-background"
-        aria-hidden
-      />
-      <div
-        className="absolute -top-1.25 -right-1.25 z-2 flex size-2.25 border bg-background"
-        aria-hidden
-      />
-    </div>
-  )
-}
+

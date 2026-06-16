@@ -3,6 +3,7 @@ import { getDocsByCategory } from "@/data/doc/documents"
 import { SPONSORS } from "@/data/sponsor-data"
 
 import { cn } from "@/lib/utils"
+import { BlocksSeparator } from "@/components/blocks-separator"
 
 import { Blog } from "./(pages)/blog/components"
 import { Certifications } from "./(pages)/certifications/components"
@@ -32,73 +33,51 @@ export default function HomePage() {
         <ProfileCover />
         <ProfileHeader />
         <SocialLinks />
-        <Separator />
+        <BlocksSeparator />
 
-        <Separator />
-        <Separator />
+        <BlocksSeparator />
+        <BlocksSeparator />
         <About />
         <GitHubContributions />
         <TechStack />
-        <Separator />
+        <BlocksSeparator />
 
-        <Separator />
-        <Separator />
+        <BlocksSeparator />
+        <BlocksSeparator />
         <Experiences />
-        <Separator />
+        <BlocksSeparator />
 
         {SPONSORS.length > 0 && (
           <>
-            <Separator />
-            <Separator />
+            <BlocksSeparator />
+            <BlocksSeparator />
             <Sponsors />
-            <Separator />
+            <BlocksSeparator />
           </>
         )}
 
-        <Separator />
-        <Separator />
+        <BlocksSeparator />
+        <BlocksSeparator />
         <Blog />
-        <Separator />
+        <BlocksSeparator />
 
-        <Separator />
-        <Separator />
+        <BlocksSeparator />
+        <BlocksSeparator />
         <Projects />
-        <Separator />
+        <BlocksSeparator />
 
         {hasCerts && (
           <>
-            <Separator />
-            <Separator />
+            <BlocksSeparator />
+            <BlocksSeparator />
             <Certifications />
-            <Separator />
+            <BlocksSeparator />
           </>
         )}
 
         <Insights />
-        <Separator />
+        <BlocksSeparator />
       </div>
     </>
-  )
-}
-
-export function Separator({ className }: { className?: string }) {
-  return (
-    <div
-      className={cn(
-        "relative flex h-8 w-full border-x border-line",
-        "before:absolute before:left-[-100vw] before:-z-1 before:h-8 before:w-[200vw]",
-        "before:bg-[repeating-linear-gradient(315deg,var(--pattern-foreground)_0,var(--pattern-foreground)_1px,transparent_0,transparent_50%)] before:bg-size-[10px_10px] before:[--pattern-foreground:var(--color-line)]/56",
-        className
-      )}
-    >
-      <div
-        className="absolute -top-1.25 -left-1.25 z-2 flex size-2.25 border bg-background"
-        aria-hidden
-      />
-      <div
-        className="absolute -top-1.25 -right-1.25 z-2 flex size-2.25 border bg-background"
-        aria-hidden
-      />
-    </div>
   )
 }
