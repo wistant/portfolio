@@ -26,11 +26,30 @@ export async function GET() {
 
   const content = `# wistant.me
 
-> A minimal, pixel-perfect developer portfolio, shadcn component registry, and technical blog built by Wistant Kode.
+> A minimal, pixel-perfect developer portfolio, and technical blog built by Wistant.
 
 - **Stack**: Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS v4, shadcn/ui, MDX, Vercel
 - **Source Code**: https://github.com/wistant/portfolio
 - **Last Coded**: ${latestCommit}
+
+## Codebase Directory Map
+
+- \`src/app/\`: Application routes, App router layouts, and page entrypoints.
+- \`src/components/\`: Shared global UI components and presentation primitives.
+- \`src/content/\`: Markdown (MDX) source content for blog posts, projects, and certifications.
+- \`src/data/\`: Static portfolio data structures, tech stack list, experiences, and social links.
+- \`tooling/\`: Push orchestrator and version-intent manager automation bash scripts.
+- \`.protocols/\`: Developer quality gates, atomic commit protocols, and PR sync guidelines.
+
+## Operational Commands
+
+- \`pnpm dev\`: Spin up local Turbopack development server.
+- \`pnpm build\`: Compile and bundle optimized static pages.
+- \`pnpm check-types\`: Execute strict TypeScript type checks.
+- \`pnpm format:write\`: Format files with Prettier.
+- \`pnpm registry:build\`: Compile the shadcn component registry outputs.
+- \`pnpm push\`: Run the ssh pre-push quality gate sequence.
+- \`pnpm sync\`: Sync local commits with remote upstream.
 
 ## Navigation Index
 
