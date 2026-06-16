@@ -26,15 +26,38 @@ export async function GET() {
 
   const content = `# wistant.me
 
-> A minimal, pixel-perfect dev portfolio, shadcn registry, and blog to showcase my work as a Software Architect/Engineer.
+> A minimal, pixel-perfect developer portfolio, and technical blog built by Wistant.
 
-**Last Coded**: ${latestCommit}
+- **Stack**: Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS v4, shadcn/ui, MDX, Vercel
+- **Source Code**: https://github.com/wistant/portfolio
+- **Last Coded**: ${latestCommit}
 
-- [About](${SITE_INFO.url}/about.md): A quick intro to me, my tech stack, and how to connect.
-- [Experience](${SITE_INFO.url}/experience.md): Highlights from my career and key roles I've taken on.
-- [Projects](${SITE_INFO.url}/projects.md): Selected projects that show my skills and creativity.
-- [Awards](${SITE_INFO.url}/awards.md): My key awards and honors.
-- [Certifications](${SITE_INFO.url}/certifications.md): Certifications and credentials I've earned.
+## Codebase Directory Map
+
+- \`src/app/\`: Application routes, App router layouts, and page entrypoints.
+- \`src/components/\`: Shared global UI components and presentation primitives.
+- \`src/content/\`: Markdown (MDX) source content for blog posts, projects, and certifications.
+- \`src/data/\`: Static portfolio data structures, tech stack list, experiences, and social links.
+- \`tooling/\`: Push orchestrator and version-intent manager automation bash scripts.
+- \`.protocols/\`: Developer quality gates, atomic commit protocols, and PR sync guidelines.
+
+## Operational Commands
+
+- \`pnpm dev\`: Spin up local Turbopack development server.
+- \`pnpm build\`: Compile and bundle optimized static pages.
+- \`pnpm check-types\`: Execute strict TypeScript type checks.
+- \`pnpm format:write\`: Format files with Prettier.
+- \`pnpm registry:build\`: Compile the shadcn component registry outputs.
+- \`pnpm push\`: Run the ssh pre-push quality gate sequence.
+- \`pnpm sync\`: Sync local commits with remote upstream.
+
+## Navigation Index
+
+- [About](${SITE_INFO.url}/about.md): Personal developer bio, core vision, and expertise outline.
+- [Experience](${SITE_INFO.url}/experience.md): Professional work history, past engineering roles, and achievements.
+- [Projects](${SITE_INFO.url}/projects.md): Selected project descriptions and code case studies.
+- [Certifications](${SITE_INFO.url}/certifications.md): Professional credentials, certifications, and technical badges.
+- [Sponsors](${SITE_INFO.url}/sponsors.md): Sponsoring tiers, details, and active supporters list.
 
 ## Blog Posts
 
