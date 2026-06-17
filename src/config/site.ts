@@ -63,5 +63,4 @@ export const UTM_PARAMS = {
   utm_source: "wistant.me",
 }
 
-export const COVER_CYCLE_INTERVAL = 8000 // Interval in milliseconds to rotate cover images automatically (set to 0 to disable)
-
+export const COVER_CYCLE_INTERVAL = 500 // Interval in milliseconds to rotate cover images automatically (set to 0 to disable)
