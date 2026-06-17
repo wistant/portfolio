@@ -17,9 +17,12 @@ export function RandomBackground() {
   const [bg, setBg] = useState("")
 
   useEffect(() => {
-    // Pick a random background image on client mount
+    // Pick a random background image on client mount, wrapped in requestAnimationFrame to avoid synchronous render warning
     const randomIndex = Math.floor(Math.random() * BACKGROUNDS.length)
-    setBg(BACKGROUNDS[randomIndex])
+    const handle = requestAnimationFrame(() => {
+      setBg(BACKGROUNDS[randomIndex])
+    })
+    return () => cancelAnimationFrame(handle)
   }, [])
 
   if (!bg) return null

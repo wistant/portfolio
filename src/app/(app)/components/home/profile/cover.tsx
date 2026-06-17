@@ -16,14 +16,22 @@ const COVERS = [
 
 export function ProfileCover() {
   const containerRef = useRef<HTMLDivElement>(null)
+  const isFirstRender = useRef(true)
   const [coverIndex, setCoverIndex] = useState(0)
 
   const { resolvedTheme } = useTheme()
   const theme = resolvedTheme === "dark" ? "dark" : "light"
 
-  // Cycle cover image in a loop when theme changes
+  // Cycle cover image in a loop when theme changes, avoiding synchronous renders during initial mount
   useEffect(() => {
-    setCoverIndex((prev) => (prev + 1) % COVERS.length)
+    if (isFirstRender.current) {
+      isFirstRender.current = false
+      return
+    }
+    const handle = requestAnimationFrame(() => {
+      setCoverIndex((prev) => (prev + 1) % COVERS.length)
+    })
+    return () => cancelAnimationFrame(handle)
   }, [resolvedTheme])
 
   const imageSrc = COVERS[coverIndex]
