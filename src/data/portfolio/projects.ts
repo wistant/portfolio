@@ -23,7 +23,8 @@ export const PROJECTS: Project[] = [
     description:
       "My personal digital hub — a pixel-perfect portfolio, blog, and custom shadcn-compatible component registry. Built from scratch on Next.js 16 App Router with Tailwind CSS v4, it features atomic commit discipline, a full MDX content pipeline, and a self-hosted shadcn registry that lets visitors install components directly via the CLI.",
     logo: "https://github.com/wistant.png",
-    projectImage: "/projects/portfolio/preview.png",
+    projectImage:
+      "https://raw.githubusercontent.com/wistant/datafiles/main/projects/portfolio/banner.png",
     backgroundImage:
       "bg-gradient-to-br from-neutral-800/20 via-neutral-900 to-emerald-950/20",
     status: "current",

@@ -15,12 +15,14 @@ interface ProjectCardProps {
   project: Project
   hasLocalPage?: boolean
   stars?: number | null
+  backgrounds?: string[]
 }
 
 export function ProjectCard({
   project,
   hasLocalPage = false,
   stars,
+  backgrounds,
 }: ProjectCardProps) {
   const router = useRouter()
   const [cardHover, setCardHover] = useState<boolean>(false)
@@ -30,9 +32,6 @@ export function ProjectCard({
 
   // 2. Resolve Mockup Image
   const projectImage = project.projectImage || ""
-
-  // 3. Resolve Background Image or class
-  const backgroundImage = project.backgroundImage
 
   // 4. Resolve Tags / Skills (filter to only show primary tech skills)
   const tagList = (project.skills || []).filter(
@@ -54,13 +53,13 @@ export function ProjectCard({
       <ProjectCardPreview
         title={title}
         projectImage={projectImage}
-        backgroundImage={backgroundImage}
         pinned={project.pinned}
         cardHover={cardHover}
         themeColor={project.themeColor}
         projectId={project.id}
         logo={project.logo}
         stars={stars}
+        backgrounds={backgrounds}
       />
 
       {/* 2. Header Area */}

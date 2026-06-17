@@ -22,13 +22,13 @@ const BACKGROUNDS = [
 interface ProjectCardPreviewProps {
   title: string
   projectImage?: string
-  backgroundImage?: string
   pinned?: boolean
   cardHover: boolean
   themeColor?: string
   projectId: string
   logo?: string
   stars?: number | null
+  backgrounds?: string[]
 }
 
 // Convert RGB to HSL, boost saturation for vividness, and convert back to RGB
@@ -165,77 +165,32 @@ function parseColorToRgba(color: string, opacity: number): string {
   return color
 }
 
-// Generate distinct gradient styles based on the project ID hash
-function getBackgroundStyle(
-  color: string,
-  id: string,
-  hover: boolean
-): React.CSSProperties {
-  const alphaBase = hover ? 0.32 : 0.2
-  const alphaGlow = hover ? 0.4 : 0.24
-
-  const cBase = parseColorToRgba(color, alphaBase)
-  const cGlow = parseColorToRgba(color, alphaGlow)
-
-  // Simple string hash
-  const hash = id.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0)
-  const patternType = hash % 4
-
-  switch (patternType) {
-    case 0:
-      // Type 0: Diagonal mesh gradient
-      return {
-        background: `linear-gradient(135deg, ${cBase} 0%, transparent 60%, ${cGlow} 100%)`,
-      }
-    case 1:
-      // Type 1: Soft central radial glow with mild saturation boost on hover
-      return {
-        background: `radial-gradient(circle at 50% 30%, ${cGlow} 0%, transparent 70%)`,
-        filter: hover ? "saturate(1.2) contrast(1.05)" : undefined,
-      }
-    case 2:
-      // Type 2: Dual split glow (warm left top, cool right bottom)
-      return {
-        background: `radial-gradient(circle at 15% 20%, ${cBase} 0%, transparent 60%), radial-gradient(circle at 85% 80%, ${cGlow} 0%, transparent 60%)`,
-      }
-    case 3:
-    default:
-      // Type 3: Sweeping corner radial sweep
-      return {
-        background: `radial-gradient(circle at 80% 20%, ${cGlow} 0%, transparent 65%)`,
-      }
-  }
-}
-
 export function ProjectCardPreview({
   title,
   projectImage,
-  backgroundImage,
   pinned,
   cardHover,
   themeColor,
   projectId,
   logo,
   stars,
+  backgrounds,
 }: ProjectCardPreviewProps) {
   const [extractedColor, setExtractedColor] = useState<string | null>(null)
 
   const selectedBg = useMemo(() => {
+    const list =
+      backgrounds && backgrounds.length > 0 ? backgrounds : BACKGROUNDS
     const hash = projectId
       .split("")
       .reduce((acc, char) => acc + char.charCodeAt(0), 0)
-    return BACKGROUNDS[hash % BACKGROUNDS.length]
-  }, [projectId])
+    return list[hash % list.length]
+  }, [projectId, backgrounds])
 
   const cardVariants = {
     initial: { y: 2 },
     hover: { y: 10 },
   }
-
-  const defaultBg =
-    "bg-gradient-to-br from-indigo-955/20 via-slate-900 to-slate-950"
-  const bg = backgroundImage || defaultBg
-  const isCssGradient = bg.startsWith("bg-") || bg.startsWith("from-")
 
   // Use manual theme color if provided, otherwise the automatically extracted color
   let activeColor = themeColor || extractedColor
@@ -259,10 +214,6 @@ export function ProjectCardPreview({
     cardHover && activeColor
       ? { borderColor: parseColorToRgba(activeColor, 0.45) }
       : undefined
-
-  const dynamicBackground = activeColor
-    ? getBackgroundStyle(activeColor, projectId, cardHover)
-    : undefined
 
   return (
     <div

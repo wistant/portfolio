@@ -3,6 +3,7 @@ import { getDocBySlug } from "@/data/doc/documents"
 import { PROJECTS } from "@/data/portfolio/projects"
 
 import { X_HANDLE } from "@/config/site"
+import { getBackgroundImages } from "@/lib/backgrounds"
 import { getGithubStars } from "@/lib/github"
 import { cn } from "@/lib/utils"
 import {
@@ -66,6 +67,7 @@ export function Separator({ className }: { className?: string }) {
 }
 
 export default async function Page() {
+  const backgrounds = getBackgroundImages()
   const openSource = PROJECTS.filter(
     (p) => p.skills.includes("Open Source") || p.id === "propellent-landing"
   )
@@ -134,6 +136,7 @@ export default async function Page() {
                     project={project}
                     hasLocalPage={!!getDocBySlug(project.id)}
                     stars={starsMap[project.id]}
+                    backgrounds={backgrounds}
                   />
                 </li>
               ))}
@@ -173,6 +176,7 @@ export default async function Page() {
                     project={project}
                     hasLocalPage={!!getDocBySlug(project.id)}
                     stars={starsMap[project.id]}
+                    backgrounds={backgrounds}
                   />
                 </li>
               ))}
@@ -212,6 +216,7 @@ export default async function Page() {
                     project={project}
                     hasLocalPage={!!getDocBySlug(project.id)}
                     stars={starsMap[project.id]}
+                    backgrounds={backgrounds}
                   />
                 </li>
               ))}

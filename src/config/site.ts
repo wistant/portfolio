@@ -29,10 +29,6 @@ export const MAIN_NAV: NavItem[] = [
     title: "Certifications",
     href: "/certifications",
   },
-  {
-    title: "Open Source",
-    href: "/opensource",
-  },
   ...(SPONSORS.length > 0
     ? [
         {
@@ -66,3 +62,5 @@ export const SPONSORSHIP_URL = "https://github.com/sponsors/wistant"
 export const UTM_PARAMS = {
   utm_source: "wistant.me",
 }
+
+export const COVER_CYCLE_INTERVAL = 1000 // Interval in milliseconds to rotate cover images automatically (set to 0 to disable)
