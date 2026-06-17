@@ -7,7 +7,6 @@ import { ArrowLeftIcon, AwardIcon, ExternalLinkIcon } from "lucide-react"
 
 import type { Doc } from "@/types/document"
 import { X_HANDLE } from "@/config/site"
-import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { BlocksSeparator } from "@/components/blocks-separator"
 
