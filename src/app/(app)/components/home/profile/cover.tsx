@@ -4,9 +4,9 @@ import { useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import { useTheme } from "next-themes"
 
+import { COVER_CYCLE_INTERVAL } from "@/config/site"
 import { cn } from "@/lib/utils"
 import { BannerParticles } from "@/components/banner-particles"
-import { COVER_CYCLE_INTERVAL } from "@/config/site"
 
 const COVERS = [
   "/covers/cover1.webp",
