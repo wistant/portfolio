@@ -29,10 +29,6 @@ export const MAIN_NAV: NavItem[] = [
     title: "Certifications",
     href: "/certifications",
   },
-  {
-    title: "Open Source",
-    href: "/opensource",
-  },
   ...(SPONSORS.length > 0
     ? [
         {
