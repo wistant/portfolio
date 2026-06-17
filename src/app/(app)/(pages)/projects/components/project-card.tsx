@@ -33,9 +33,6 @@ export function ProjectCard({
   // 2. Resolve Mockup Image
   const projectImage = project.projectImage || ""
 
-  // 3. Resolve Background Image or class
-  const backgroundImage = project.backgroundImage
-
   // 4. Resolve Tags / Skills (filter to only show primary tech skills)
   const tagList = (project.skills || []).filter(
     (skill) => !!findTechBySkill(skill)
@@ -56,7 +53,6 @@ export function ProjectCard({
       <ProjectCardPreview
         title={title}
         projectImage={projectImage}
-        backgroundImage={backgroundImage}
         pinned={project.pinned}
         cardHover={cardHover}
         themeColor={project.themeColor}
