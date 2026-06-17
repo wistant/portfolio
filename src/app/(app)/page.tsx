@@ -36,7 +36,6 @@ export default function HomePage() {
         <BlocksSeparator />
         <BlocksSeparator />
         <About />
-        {/*<OpenSourceContributions />*/}
         <GitHubContributions />
         <TechStack />
         <BlocksSeparator />
