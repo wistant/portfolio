@@ -1,12 +1,23 @@
 "use client"
 
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import Image from "next/image"
 import { Pin, Star } from "lucide-react"
 import { motion } from "motion/react"
 
 import { formatStars } from "@/lib/github"
 import { Icons } from "@/components/icons"
+
+const BACKGROUNDS = [
+  "/backgrounds/image1.webp",
+  "/backgrounds/image2.webp",
+  "/backgrounds/image3.webp",
+  "/backgrounds/image4.webp",
+  "/backgrounds/image5.webp",
+  "/backgrounds/image6.webp",
+  "/backgrounds/image7.webp",
+  "/backgrounds/image8.webp",
+]
 
 interface ProjectCardPreviewProps {
   title: string
@@ -209,6 +220,13 @@ export function ProjectCardPreview({
 }: ProjectCardPreviewProps) {
   const [extractedColor, setExtractedColor] = useState<string | null>(null)
 
+  const selectedBg = useMemo(() => {
+    const hash = projectId
+      .split("")
+      .reduce((acc, char) => acc + char.charCodeAt(0), 0)
+    return BACKGROUNDS[hash % BACKGROUNDS.length]
+  }, [projectId])
+
   const cardVariants = {
     initial: { y: 2 },
     hover: { y: 10 },
@@ -272,30 +290,17 @@ export function ProjectCardPreview({
           </div>
         )}
 
-        {/* Background Gradient/Pattern/Glow */}
-        {activeColor && dynamicBackground ? (
-          <motion.div
-            style={dynamicBackground}
-            animate={{ opacity: cardHover ? 1.4 : 0.8 }}
-            transition={{ duration: 0.3 }}
-            className="absolute inset-0 h-full w-full"
+        {/* Background Image from public/backgrounds */}
+        <div className="absolute inset-0 h-full w-full opacity-65 transition-opacity duration-300 group-hover:opacity-85">
+          <Image
+            src={selectedBg}
+            alt={title}
+            fill
+            sizes="(max-width: 768px) 100vw, 50vw"
+            className="object-cover"
+            unoptimized
           />
-        ) : isCssGradient ? (
-          <div
-            className={`absolute inset-0 h-full w-full opacity-80 transition-opacity duration-300 group-hover:opacity-100 ${bg}`}
-          />
-        ) : (
-          <div className="absolute inset-0 h-full w-full opacity-80 transition-opacity duration-300 group-hover:opacity-100">
-            <Image
-              src={bg}
-              alt={title}
-              fill
-              sizes="(max-width: 768px) 100vw, 50vw"
-              className="object-cover"
-              unoptimized
-            />
-          </div>
-        )}
+        </div>
 
         {/* Foreground Project Mockup Image or Logo fallback */}
         {projectImage ? (

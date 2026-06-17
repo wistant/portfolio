@@ -2,14 +2,12 @@ import type { Metadata } from "next"
 import { getDocsByCategory } from "@/data/doc/documents"
 import { SPONSORS } from "@/data/sponsor-data"
 
-import { cn } from "@/lib/utils"
 import { BlocksSeparator } from "@/components/blocks-separator"
 
 import { Blog } from "./(pages)/blog/components"
 import { Certifications } from "./(pages)/certifications/components"
 import { Projects } from "./(pages)/projects/components"
 import { ProfileCover } from "./components/home/profile/cover"
-import { ProfileHeader } from "./components/home/profile/header"
 import { SocialLinks } from "./components/home/profile/social"
 import { About } from "./components/home/sections/about"
 import { Experiences } from "./components/home/sections/experiences"
@@ -31,13 +29,14 @@ export default function HomePage() {
     <>
       <div className="mx-auto md:max-w-3xl *:[[id]]:scroll-mt-22">
         <ProfileCover />
-        <ProfileHeader />
+        {/*<ProfileHeader />*/}
         <SocialLinks />
         <BlocksSeparator />
 
         <BlocksSeparator />
         <BlocksSeparator />
         <About />
+        {/*<OpenSourceContributions />*/}
         <GitHubContributions />
         <TechStack />
         <BlocksSeparator />
