@@ -1,19 +1,32 @@
 "use client"
 
-import { useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import { useTheme } from "next-themes"
 
 import { cn } from "@/lib/utils"
 import { BannerParticles } from "@/components/banner-particles"
 
+const COVERS = [
+  "/covers/cover1.webp",
+  "/covers/cover2.webp",
+  "/covers/cover4.webp",
+  "/covers/cover5.webp",
+]
+
 export function ProfileCover() {
   const containerRef = useRef<HTMLDivElement>(null)
+  const [coverIndex, setCoverIndex] = useState(0)
 
   const { resolvedTheme } = useTheme()
   const theme = resolvedTheme === "dark" ? "dark" : "light"
-  const imageSrc =
-    theme === "dark" ? "/covers/cover-dark.webp" : "/covers/cover-light.webp"
+
+  // Cycle cover image in a loop when theme changes
+  useEffect(() => {
+    setCoverIndex((prev) => (prev + 1) % COVERS.length)
+  }, [resolvedTheme])
+
+  const imageSrc = COVERS[coverIndex]
 
   const maskStyle = {
     WebkitMaskImage:
@@ -24,22 +37,29 @@ export function ProfileCover() {
     maskComposite: "intersect",
   }
 
+  const handleCoverClick = () => {
+    // Manually cycle through covers when clicked
+    setCoverIndex((prev) => (prev + 1) % COVERS.length)
+  }
+
   return (
     <div
       ref={containerRef}
+      onClick={handleCoverClick}
       className={cn(
-        "relative flex aspect-2.5/1 items-center justify-center border-x border-line select-none sm:aspect-3.5/1",
+        "group relative flex aspect-2.5/1 cursor-pointer items-center justify-center border-x border-line select-none sm:aspect-3.5/1",
         "screen-line-top screen-line-bottom before:-top-px after:-bottom-px",
         "overflow-hidden bg-background"
       )}
       id="js-cover-mark"
+      title="Click to cycle cover image"
     >
       <div className="absolute inset-0 h-full w-full" style={maskStyle}>
         <Image
-          width={1000}
-          height={1000}
+          width={1200}
+          height={400}
           className={cn(
-            "h-full w-full object-cover",
+            "h-full w-full object-cover transition-transform duration-500 group-hover:scale-102",
             theme === "dark" ? "object-center" : "object-bottom"
           )}
           src={imageSrc}
