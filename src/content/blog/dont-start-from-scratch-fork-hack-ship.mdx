@@ -1,0 +1,272 @@
+---
+title: "Hacking Open Source: Why You Should Stop Building From Scratch and Fork Your Way to Production"
+description: "A senior engineer's guide to leveraging open source software as a foundation, pruning dead weight, customizing Docker environments, and staying synced."
+image: "https://raw.githubusercontent.com/wistant/datafiles/main/blog/opensource/banner.jpg"
+createdAt: "2026-06-17"
+updatedAt: "2026-06-17"
+---
+
+<br />
+
+<FramedImage
+  src="/blog/opensource/banner.jpg"
+  alt="Hacking Open Source Banner"
+/>
+
+### 1. The Startup Trap: Writing Boilerplate by Default
+
+Every junior developer begins a project by typing `npm init` or running a framework generator. They believe building from scratch makes them a pure creator. It is a trap. Before writing your first line of code, ask yourself: *\"Does a solid, pre-existing open-source architecture already solve 80% of my core problems?\"* 
+
+If you are building an e-commerce platform, a content management system, or a learning tool, starting from zero is not engineering—it is vanity. A senior developer does not build routing, authentication, or basic database schemas repeatedly. They look for proven foundations. Building on top of existing open source projects allows you to skip months of boilerplate creation and focus exclusively on the remaining 20%—the custom business logic, the performance optimizations, and the visual aesthetics. 
+
+Hacking existing software requires a shift in mindset. You are not a writer starting on a blank page; you are an editor refining a draft. This approach gets your product into production in 48 hours instead of 4 weeks.
+
+<br />
+
+### 2. Standing on the Shoulders of Giants: The Monuments of Software
+
+If you think leveraging existing code is \"cheating,\" look at the history of computing. Almost every piece of software that runs the modern web was built by leveraging or adapting an existing codebase. 
+
+Consider these monuments:
+- **Linux** started as an attempt by Linus Torvalds to build a Unix-like system, heavily inspired by **Minix**. He did not reinvent operating system concepts from scratch; he built on the structural ideas that preceded him.
+- **macOS** is built on top of the **Darwin** OS, which itself is based on the **BSD** (Berkeley Software Distribution) Unix system. Apple did not write a core kernel from scratch; they leveraged BSD.
+- **Android** took the **Linux kernel** and built a mobile runtime on top of it.
+- **Next.js** took React and built a routing, server-rendering, and compilation framework. Vercel did not build a new frontend rendering engine; they wrapped React.
+
+These companies and developers did not waste time reinventing the wheel. They identified high-performance foundations, adapted them to their needs, and shipped products that changed the industry.
+
+<br />
+
+### 3. The Multi-Faceted Nature of Open Source: Run, Adapt, or Fork?
+
+You do not always need to fork a project or contribute back to benefit from it. Open source can be leveraged in multiple ways:
+
+1. **Consumption without Modification:** Many tools (like Postgres, Redis, or Nginx) should be run as-is. You do not touch their source code; you build your application using their clean public APIs.
+2. **Pluggable Extensions:** If the software is designed with a plugin architecture, write a plugin. Do not modify the core files unless absolutely necessary.
+3. **The Strategic Fork:** When you need deep, structural changes that the parent repository does not support, you fork. This is a deliberate, calculated decision to diverge from the main codebase because the parent project's roadmap does not align with your product's requirements.
+
+<br />
+
+<FramedImage
+  src="https://raw.githubusercontent.com/wistant/datafiles/main/blog/nestjs/expressjs.png"
+  alt="Express.js Minimal Web Server Framework Logo"
+/>
+
+<br />
+
+### 4. Evaluating a Repository in 5 Minutes
+
+You cannot afford to build on quicksand. Before forking a repository, you must audit its codebase health. Do not get blinded by GitHub stars; stars are marketing metrics. A repository with 10k stars but no commits in the last nine months is a liability. 
+
+Look at three key elements:
+1. **Commit Frequency & Recency:** Is there active maintenance? If the last commit is older than 6 months, expect outdated dependencies and security vulnerabilities.
+2. **Open Issues Ratio:** A high ratio of open issues to closed ones, especially issues complaining about installation failures or broken Docker setups, indicates poor Developer Experience (DX).
+3. **Licensing:** Ensure the project uses a permissive license (MIT, Apache 2.0, or BSD). Avoid copyleft licenses like GPLv3 if you plan to build proprietary extensions.
+
+Here is a quick automation script, `eval-repo.sh`, to inspect any repository directly from your terminal:
+
+```bash
+#!/usr/bin/env bash
+# eval-repo.sh - Évaluation rapide d'un dépôt GitHub
+
+set -euo pipefail
+
+if [ "$#" -ne 1 ]; then
+    echo "Usage: $0 <username/repo>"
+    exit 1
+fi
+
+REPO=$1
+API_URL="https://api.github.com/repos/$REPO"
+
+echo "=== Évaluation de https://github.com/$REPO ==="
+
+# Récupération des métadonnées du dépôt
+DATA=$(curl -s "$API_URL")
+
+if echo "$DATA" | jq -e '.message' > /dev/null; then
+    echo "Erreur : Dépôt introuvable ou limite d'API atteinte."
+    exit 1
+fi
+
+STARS=$(echo "$DATA" | jq '.stargazers_count')
+ISSUES=$(echo "$DATA" | jq '.open_issues_count')
+LICENSE=$(echo "$DATA" | jq '.license.spdx_id // "Aucune"')
+SIZE=$(echo "$DATA" | jq '.size')
+SIZE_MB=$(echo "scale=2; $SIZE/1024" | bc)
+
+# Récupération du dernier commit via l'API commits
+LAST_COMMIT_DATE=$(curl -s "$API_URL/commits?per_page=1" | jq -r '.[0].commit.committer.date')
+
+echo "⭐ Étoiles (Stars)       : $STARS"
+echo "🐛 Issues ouvertes      : $ISSUES"
+echo "📜 Licence              : $LICENSE"
+echo "📦 Taille du dépôt      : ${SIZE_MB} MB"
+echo "📅 Dernier commit       : $LAST_COMMIT_DATE"
+```
+
+<br />
+
+<FramedImage
+  src="/blog/opensource/github.jpg"
+  alt="GitHub Evaluation Process"
+/>
+
+<br />
+
+### 5. The Strategic Fork: Pruning and Customizing
+
+Once you have qualified the repository, do not clone and start hacking immediately. You need a structured workspace. Perform a clean strategic fork. 
+
+The first step after cloning is pruning. Delete what you do not need. Legacy documentation, old CI pipelines, example folders, and alternative environment files only add noise. Clean your dependencies: check the `package.json`, locate dead libraries, and run a fresh installation to test the baseline. 
+
+Next, prepare the runtime environment. Most modern open-source repositories use Docker. You must adapt the configuration to match your development and deployment workflows, clean up unused microservices, and externalize all configuration variables into a strictly managed `.env` file.
+
+```bash
+#!/usr/bin/env bash
+# git-fork-setup.sh - Commandes Git pour un fork propre avec gestion de l'upstream
+
+# 1. Cloner le fork personnel du dépôt (remplacer par votre URL)
+git clone git@github.com:wistant/shoperzz.git
+cd shoperzz
+
+# 2. Ajouter le dépôt parent d'origine comme source "upstream"
+# Cela permet de récupérer les futures mises à jour officielles du projet d'origine.
+git remote add upstream git@github.com:original-owner/shoperzz.git
+
+# 3. Vérifier les configurations distantes (origin doit être votre fork, upstream le repo d'origine)
+git remote -v
+
+# 4. Récupérer les branches et commits du dépôt d'origine
+git fetch upstream
+
+# 5. Rebaser votre branche principale locale sur les derniers changements de l'upstream
+# Le rebase évite de polluer l'historique avec des commits de fusion inutiles.
+git rebase upstream/main
+
+# 6. Pousser la base propre sur votre dépôt distant (origin)
+git push origin main
+```
+
+<br />
+
+<FramedImage
+  src="/blog/opensource/git.jpg"
+  alt="Git Syncing Strategy"
+/>
+
+<br />
+
+### 6. Real-World Case Study: Shoperzz
+
+When building Shoperzz, a headless commerce platform, we did not write a custom GraphQL backend and database connector from scratch. We selected a robust NestJS core as our baseline framework.
+
+However, the base repository was bloated. It included mock implementations for three different database engines, five payment gateway integrations that did not comply with local regulations, and heavy analytics tracking libraries.
+
+Here is what we did in the first 24 hours:
+- **Pruning:** Deleted the mock database layers, removing over 4,000 lines of dead code.
+- **Docker Adapter:** Restructured the services to run NestJS, Postgres, and Redis inside isolated networks, ensuring fast local spin-up times.
+- **Payment & Storage:** Exclusively integrated local payment gateways and replaced heavy local file storage with an S3-compatible client.
+
+The result? The startup time went from 45 seconds to under 5 seconds, and memory consumption during development fell by 60%.
+
+Here is the customized `docker-compose.yml` we shipped:
+
+```yaml
+version: '3.8'
+
+# Configuration multi-services optimisée pour Shoperzz
+# Supprimé : Mock storage drivers, dashboards d'administration tiers, configurations Prometheus.
+# Ajouté : Volumes nommés pour la persistance locale et réseaux isolés sécurisés.
+
+services:
+  # Base de données PostgreSQL
+  postgres:
+    image: postgres:15-alpine
+    container_name: shoperzz-db
+    environment:
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres_password}
+      POSTGRES_DB: ${DB_NAME:-shoperzz_dev}
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - shoperzz-network
+
+  # Cache & Session Store
+  redis:
+    image: redis:7-alpine
+    container_name: shoperzz-cache
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    volumes:
+      - redisdata:/data
+    networks:
+      - shoperzz-network
+
+  # Backend Applicatif (NestJS/TypeScript)
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: shoperzz-api
+    environment:
+      DATABASE_URL: postgres://${DB_USER:-postgres}:${DB_PASSWORD:-postgres_password}@postgres:5432/${DB_NAME:-shoperzz_dev}
+      REDIS_URL: redis://redis:6379
+      PORT: ${APP_PORT:-4000}
+    ports:
+      - "${APP_PORT:-4000}:${APP_PORT:-4000}"
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - shoperzz-network
+
+volumes:
+  pgdata:
+  redisdata:
+
+networks:
+  shoperzz-network:
+    driver: bridge
+```
+
+<br />
+
+### 7. Managing Upstream: Avoid Conflict Hell
+
+Forking means maintaining two lines of history: your custom features and the official updates from the parent repository. If you do not manage this relationship proactively, your codebase will diverge, making future security patches impossible to merge.
+
+Do not use merge commits when pulling from upstream. Merge commits create complex histories and hide conflict origins. Use Git's rebase strategy.
+
+```bash
+git fetch upstream
+git checkout main
+git rebase upstream/main
+```
+
+By rebasing, you apply your custom patches cleanly on top of the latest upstream commits. If conflicts occur, resolve them step-by-step. Keep your custom changes isolated in specific folders (like `src/custom/` or distinct submodules) to minimize changes to core files.
+
+<br />
+
+<FramedImage
+  src="/blog/opensource/fork-image.jpg"
+  alt="Fork Lifecycle"
+/>
+
+<br />
+
+### 8. Clean Cut
+
+Skip the boilerplate. Run the setup:
+
+```bash
+git clone git@github.com:wistant/shoperzz.git
+```
+
+Head over to the [Shoperzz](https://github.com/wistant/shoperzz) repository, inspect the architecture, audit the code, and spin up the services. Stop building things that already exist.
