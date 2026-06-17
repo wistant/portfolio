@@ -6,6 +6,7 @@ import { useTheme } from "next-themes"
 
 import { cn } from "@/lib/utils"
 import { BannerParticles } from "@/components/banner-particles"
+import { COVER_CYCLE_INTERVAL } from "@/config/site"
 
 const COVERS = [
   "/covers/cover1.webp",
@@ -33,6 +34,17 @@ export function ProfileCover() {
     })
     return () => cancelAnimationFrame(handle)
   }, [resolvedTheme])
+
+  // Automatic cover rotation based on configurable time interval
+  useEffect(() => {
+    if (!COVER_CYCLE_INTERVAL || COVER_CYCLE_INTERVAL <= 0) return
+
+    const interval = setInterval(() => {
+      setCoverIndex((prev) => (prev + 1) % COVERS.length)
+    }, COVER_CYCLE_INTERVAL)
+
+    return () => clearInterval(interval)
+  }, [])
 
   const imageSrc = COVERS[coverIndex]
 
