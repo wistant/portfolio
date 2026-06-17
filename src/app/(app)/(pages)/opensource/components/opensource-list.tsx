@@ -1,6 +1,7 @@
 "use client"
 
 import { useMemo, useState } from "react"
+import { CONTRIBUTION_CONFIG } from "@/data/portfolio/opensource-contributions"
 import { format } from "date-fns"
 import {
   CheckCircle2,
@@ -9,6 +10,7 @@ import {
   GitFork,
   GitMerge,
   GitPullRequest,
+  Pin,
   Search,
   X,
 } from "lucide-react"
@@ -20,7 +22,34 @@ import {
   InputGroupButton,
   InputGroupInput,
 } from "@/components/ui/input-group"
+import {
+  Collapsible,
+  CollapsibleChevronsIcon,
+} from "@/components/base/collapsible-animated"
+import {
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/base/ui/collapsible"
 import { Panel, PanelContent } from "@/components/panel"
+import { TechTag } from "@/components/tech-tag"
+
+// Helper to map repo to languages/skills
+function getSkillsForRepo(repo: string): string[] {
+  const name = repo.toLowerCase()
+  if (name.includes("nestjs/nest") || name.includes("nestjs/")) {
+    return ["TypeScript", "Node.js", "NestJS"]
+  }
+  if (name.includes("vendurehq/vendure") || name.includes("vendure/")) {
+    return ["TypeScript", "Node.js", "GraphQL", "PostgreSQL"]
+  }
+  if (name.includes("shoperzz/shoperzz") || name.includes("shoperzz/")) {
+    return ["TypeScript", "Next.js", "NestJS", "GraphQL", "React"]
+  }
+  if (name.includes("wistant/portfolio") || name.includes("portfolio")) {
+    return ["TypeScript", "Next.js", "React", "Tailwind CSS"]
+  }
+  return ["TypeScript"]
+}
 
 export function OpenSourceList({
   contributions,
@@ -32,27 +61,30 @@ export function OpenSourceList({
   const [statusFilter, setStatusFilter] = useState<
     "all" | "open" | "merged" | "closed"
   >("all")
-  const [groupByRepo, setGroupByRepo] = useState(false)
 
-  // 1. Calculate Stats
-  const stats = useMemo(() => {
-    const total = contributions.length
-    const prs = contributions.filter((c) => c.type === "pr").length
-    const issues = contributions.filter((c) => c.type === "issue").length
-    const merged = contributions.filter((c) => c.status === "merged").length
-
-    return { total, prs, issues, merged }
-  }, [contributions])
-
-  // 2. Filter list
+  // Filter contributions: exclude own repos unless included or pinned
   const filteredContributions = useMemo(() => {
+    const username = CONTRIBUTION_CONFIG.username
+
     return contributions.filter((item) => {
+      // 1. Exclude own repositories unless included or pinned
+      const repoOwner = item.repository.split("/")[0]
+      const isOwnRepo = repoOwner.toLowerCase() === username.toLowerCase()
+      const isIncluded = CONTRIBUTION_CONFIG.includePersonalRepos?.some(
+        (r) => r.toLowerCase() === item.repository.toLowerCase()
+      )
+
+      if (isOwnRepo && !isIncluded && !item.isPinned) return false
+
+      // 2. Search matches
       const matchesSearch =
         item.title.toLowerCase().includes(search.toLowerCase()) ||
         item.repository.toLowerCase().includes(search.toLowerCase())
 
+      // 3. Type matches
       const matchesType = typeFilter === "all" || item.type === typeFilter
 
+      // 4. Status matches
       const matchesStatus =
         statusFilter === "all" || item.status === statusFilter
 
@@ -60,26 +92,48 @@ export function OpenSourceList({
     })
   }, [contributions, search, typeFilter, statusFilter])
 
-  // 3. Group by Repository if toggled
+  // Group by repository and sort items in each group (pinned first)
   const groupedContributions = useMemo(() => {
-    if (!groupByRepo) return null
-
     const groups: Record<
       string,
-      { repoUrl: string; items: GitHubContribution[] }
+      { repoUrl: string; items: GitHubContribution[]; skills: string[] }
     > = {}
     filteredContributions.forEach((item) => {
       if (!groups[item.repository]) {
         groups[item.repository] = {
           repoUrl: item.repositoryUrl,
           items: [],
+          skills: getSkillsForRepo(item.repository),
         }
       }
       groups[item.repository].items.push(item)
     })
 
+    // Sort items inside each repo group: pinned first, then date desc
+    Object.values(groups).forEach((g) => {
+      g.items.sort((a, b) => {
+        if (a.isPinned && !b.isPinned) return -1
+        if (!a.isPinned && b.isPinned) return 1
+        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      })
+    })
+
     return groups
-  }, [filteredContributions, groupByRepo])
+  }, [filteredContributions])
+
+  // Calculate stats based on filtered contributions
+  const stats = useMemo(() => {
+    const total = filteredContributions.length
+    const prs = filteredContributions.filter((c) => c.type === "pr").length
+    const issues = filteredContributions.filter(
+      (c) => c.type === "issue"
+    ).length
+    const merged = filteredContributions.filter(
+      (c) => c.status === "merged"
+    ).length
+
+    return { total, prs, issues, merged }
+  }, [filteredContributions])
 
   return (
     <div className="flex flex-col gap-6">
@@ -122,8 +176,7 @@ export function OpenSourceList({
       {/* Filters Panel */}
       <Panel className="rounded-lg border border-border/80 before:content-none">
         <PanelContent className="flex flex-col gap-4 p-4">
-          <div className="flex flex-col gap-3 sm:flex-row">
-            {/* Search Input */}
+          <div className="flex gap-3">
             <div className="flex-1">
               <InputGroup className="w-full rounded-md shadow-none">
                 <InputGroupInput
@@ -147,19 +200,6 @@ export function OpenSourceList({
                 )}
               </InputGroup>
             </div>
-
-            {/* Toggle Grouping */}
-            <button
-              onClick={() => setGroupByRepo(!groupByRepo)}
-              className={`flex items-center justify-center gap-1.5 rounded-md border px-3 py-1.5 text-xs font-medium transition-colors select-none ${
-                groupByRepo
-                  ? "border-zinc-900 bg-zinc-900 text-white dark:border-zinc-100 dark:bg-zinc-100 dark:text-zinc-950"
-                  : "border-border bg-transparent text-foreground hover:bg-zinc-100 dark:hover:bg-zinc-800"
-              }`}
-            >
-              <GitFork className="size-3.5" />
-              Group by repo
-            </button>
           </div>
 
           <div className="flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-border/40 pt-1">
@@ -216,7 +256,7 @@ export function OpenSourceList({
         </PanelContent>
       </Panel>
 
-      {/* Result list */}
+      {/* Result list grouped by Repository with Collapsible */}
       <div className="flex flex-col gap-4">
         {filteredContributions.length === 0 ? (
           <div className="flex flex-col items-center justify-center rounded-lg border border-dashed border-border/80 py-12 text-center">
@@ -228,50 +268,78 @@ export function OpenSourceList({
               Try adjusting your filters or search terms.
             </p>
           </div>
-        ) : groupByRepo && groupedContributions ? (
-          /* Grouped list */
-          <div className="flex flex-col gap-6">
-            {Object.entries(groupedContributions).map(
-              ([repoName, { repoUrl, items }]) => (
-                <div key={repoName} className="flex flex-col gap-2.5">
-                  <div className="flex items-center gap-2 px-1">
-                    <a
-                      href={repoUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="font-mono text-sm font-semibold text-foreground transition-colors hover:text-zinc-600 dark:hover:text-zinc-300"
-                    >
-                      {repoName}
-                    </a>
-                    <span className="rounded-xs border border-border/50 bg-zinc-100 px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground dark:bg-zinc-900">
-                      {items.length}{" "}
-                      {items.length === 1 ? "contribution" : "contributions"}
-                    </span>
-                  </div>
-
-                  <div className="flex flex-col gap-2">
-                    {items.map((contrib) => (
-                      <ContributionRow
-                        key={contrib.id}
-                        contrib={contrib}
-                        showRepo={false}
-                      />
-                    ))}
-                  </div>
-                </div>
-              )
-            )}
-          </div>
         ) : (
-          /* Flat list */
-          <div className="flex flex-col gap-2">
-            {filteredContributions.map((contrib) => (
-              <ContributionRow
-                key={contrib.id}
-                contrib={contrib}
-                showRepo={true}
-              />
-            ))}
+          <div className="flex flex-col gap-4">
+            {Object.entries(groupedContributions).map(
+              ([repoName, { repoUrl, items, skills }]) => {
+                const owner = repoName.split("/")[0]
+                return (
+                  <div
+                    key={repoName}
+                    className="overflow-hidden rounded-lg border border-border/80 bg-white/40 dark:bg-zinc-950/20"
+                  >
+                    <Collapsible
+                      className="group/repo-collapsible"
+                      defaultOpen={true}
+                    >
+                      <CollapsibleTrigger className="block w-full p-4 text-left transition-colors outline-none hover:bg-zinc-50/50 dark:hover:bg-zinc-900/30">
+                        <div className="flex items-center justify-between gap-3">
+                          <div className="flex items-center gap-3">
+                            <img
+                              src={`https://github.com/${owner}.png`}
+                              alt={`${owner} logo`}
+                              className="size-6 rounded-full border border-border/60 object-cover"
+                              aria-hidden
+                              onError={(e) => {
+                                e.currentTarget.style.display = "none"
+                              }}
+                            />
+                            <a
+                              href={`https://github.com/${repoName}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              onClick={(e) => e.stopPropagation()} // Prevent expand on click
+                              className="font-mono text-base font-semibold tracking-tight text-foreground transition-colors hover:text-zinc-600 hover:underline dark:hover:text-zinc-300"
+                            >
+                              {repoName}
+                            </a>
+                            <span className="rounded-xs border border-border/50 bg-zinc-100 px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground dark:bg-zinc-900">
+                              {items.length}{" "}
+                              {items.length === 1
+                                ? "contribution"
+                                : "contributions"}
+                            </span>
+                          </div>
+                          <div className="shrink-0 text-muted-foreground [&_svg]:h-4 [&_svg]:w-4">
+                            <CollapsibleChevronsIcon duration={0.15} />
+                          </div>
+                        </div>
+
+                        {/* Project technologies */}
+                        {skills.length > 0 && (
+                          <div className="mt-3 flex flex-wrap gap-1.5 pl-9">
+                            {skills.map((skill) => (
+                              <TechTag key={skill} skill={skill} />
+                            ))}
+                          </div>
+                        )}
+                      </CollapsibleTrigger>
+
+                      <CollapsibleContent className="overflow-hidden border-t border-border/30">
+                        <div className="flex flex-col gap-2 bg-zinc-50/20 p-4 dark:bg-zinc-950/10">
+                          {items.map((contrib) => (
+                            <ContributionRow
+                              key={contrib.id}
+                              contrib={contrib}
+                            />
+                          ))}
+                        </div>
+                      </CollapsibleContent>
+                    </Collapsible>
+                  </div>
+                )
+              }
+            )}
           </div>
         )}
       </div>
@@ -279,13 +347,7 @@ export function OpenSourceList({
   )
 }
 
-function ContributionRow({
-  contrib,
-  showRepo,
-}: {
-  contrib: GitHubContribution
-  showRepo: boolean
-}) {
+function ContributionRow({ contrib }: { contrib: GitHubContribution }) {
   const isPR = contrib.type === "pr"
   const isMerged = contrib.status === "merged"
   const isOpen = contrib.status === "open"
@@ -315,33 +377,25 @@ function ContributionRow({
   }
 
   return (
-    <div className="group flex items-start gap-3 rounded-lg border border-border/80 bg-white/40 p-3 transition-all duration-200 hover:border-border hover:bg-zinc-50/50 dark:bg-zinc-950/20 dark:hover:bg-zinc-900/40">
+    <div className="group flex items-start gap-3 rounded-md border border-border/40 bg-white/60 p-3 transition-all duration-200 hover:border-border/80 hover:bg-white dark:bg-zinc-900/20 dark:hover:bg-zinc-900/60">
       <div className={`mt-0.5 rounded-md p-1.5 ${iconColor} shrink-0`}>
-        <Icon className="size-4" />
+        <Icon className="size-3.5" />
       </div>
 
       <div className="min-w-0 flex-1">
-        <div className="flex flex-wrap items-center gap-2">
-          {showRepo && (
+        <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+          <span className="font-mono">#{contrib.number}</span>
+          <span className="text-muted-foreground/60">•</span>
+          <span>{format(new Date(contrib.createdAt), "MMM d, yyyy")}</span>
+          {contrib.isPinned && (
             <>
-              <a
-                href={contrib.repositoryUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-mono text-xs text-muted-foreground transition-colors hover:text-foreground"
-              >
-                {contrib.repository}
-              </a>
-              <span className="text-xs text-muted-foreground/60">•</span>
+              <span className="text-muted-foreground/60">•</span>
+              <span className="flex items-center gap-0.5 font-medium text-amber-600 dark:text-amber-400">
+                <Pin className="size-3 fill-current" />
+                Pinned
+              </span>
             </>
           )}
-          <span className="text-xs text-muted-foreground">
-            #{contrib.number}
-          </span>
-          <span className="text-xs text-muted-foreground/60">•</span>
-          <span className="text-xs text-muted-foreground">
-            {format(new Date(contrib.createdAt), "MMM d, yyyy")}
-          </span>
         </div>
 
         <a

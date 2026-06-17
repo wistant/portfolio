@@ -6,15 +6,12 @@ import { GITHUB_USERNAME } from "@/config/site"
 
 export const CONTRIBUTION_CONFIG: ContributionConfig = {
   username: GITHUB_USERNAME,
-  targetRepos: [
-    "shoperzz/shoperzz",
-    "vendurehq/vendure",
-    "nestjs/nest",
-    "wistant/portfolio",
+  includePersonalRepos: [
+    "wistant/portfolio", // Explicitly show this personal repository
   ],
   pinnedPRs: [
     { owner: "shoperzz", repo: "shoperzz", number: 42 },
-    { owner: "vendurehq", repo: "vendure", number: 189 },
+    { owner: "wistant", repo: "portfolio", number: 8 },
   ],
 }
 

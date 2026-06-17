@@ -10,10 +10,11 @@ export interface GitHubContribution {
   closedAt?: string
   number: number
   labels?: Array<{ name: string; color: string }>
+  isPinned?: boolean
 }
 
 export interface ContributionConfig {
   username: string
-  targetRepos?: string[]
+  includePersonalRepos?: string[]
   pinnedPRs?: Array<{ owner: string; repo: string; number: number }>
 }

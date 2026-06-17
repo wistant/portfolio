@@ -110,6 +110,7 @@ function mapGitHubItems(
 ): GitHubContribution[] {
   return items.map((item) => {
     const repoName = getRepoName(item.repository_url)
+    const [owner, repo] = repoName.split("/")
     const isPR = !!item.pull_request
     let status: "open" | "merged" | "closed" = "open"
 
@@ -122,6 +123,13 @@ function mapGitHubItems(
     } else {
       status = item.state === "open" ? "open" : "closed"
     }
+
+    const isPinned = CONTRIBUTION_CONFIG.pinnedPRs?.some(
+      (pinned) =>
+        pinned.owner.toLowerCase() === owner.toLowerCase() &&
+        pinned.repo.toLowerCase() === repo.toLowerCase() &&
+        pinned.number === item.number
+    )
 
     return {
       id: item.id,
@@ -138,11 +146,25 @@ function mapGitHubItems(
         name: label.name,
         color: label.color,
       })),
+      isPinned,
     }
   })
 }
 
 let devCachePromise: Promise<GitHubContribution[] | null> | null = null
+
+function getMockContributionsWithPinned(): GitHubContribution[] {
+  return MOCK_CONTRIBUTIONS.map((item) => {
+    const [owner, repo] = item.repository.split("/")
+    const isPinned = CONTRIBUTION_CONFIG.pinnedPRs?.some(
+      (pinned) =>
+        pinned.owner.toLowerCase() === owner.toLowerCase() &&
+        pinned.repo.toLowerCase() === repo.toLowerCase() &&
+        pinned.number === item.number
+    )
+    return { ...item, isPinned }
+  })
+}
 
 async function getCachedDevContributions(): Promise<GitHubContribution[]> {
   if (!devCachePromise) {
@@ -153,12 +175,12 @@ async function getCachedDevContributions(): Promise<GitHubContribution[]> {
     return data
   }
   devCachePromise = null
-  return MOCK_CONTRIBUTIONS
+  return getMockContributionsWithPinned()
 }
 
 async function getProductionContributions(): Promise<GitHubContribution[]> {
   const data = await fetchOpenSourceContributions()
-  return data || MOCK_CONTRIBUTIONS
+  return data || getMockContributionsWithPinned()
 }
 
 export const getOpenSourceContributions =
