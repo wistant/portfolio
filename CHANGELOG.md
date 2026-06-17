@@ -1,5 +1,48 @@
 # portfolio
 
+## 1.0.7-rc.3
+
+### Patch Changes
+
+- 8a4fb6e: - b4787a8: style(llms): format LLM text route endpoints with Prettier
+  - d70343f: refactor(llms): aggregate active sponsor tiers and contributions
+  - 0d19c6b: refactor(llms): aggregate full text of all professional certifications
+  - 23fceb5: docs(llms): document development tooling and atomic commit protocols
+  - 6fb1d01: docs(llms): add shadcn UI component registry compilation instructions
+  - b3db710: refactor(llms): append codebase directory map and basic command guidelines
+  - 7f083c3: refactor(llms): update general index with stack specs and source repository
+
+## 1.0.7-rc.2
+
+### Patch Changes
+
+- cf9fd87: - a8dae81: release: switch 1.0.7-beta.1 from beta to rc
+  - 887f214: style(app): format page.tsx
+  - 12ae97c: style(app): format index.tsx
+  - 1831a38: style(app): format insights.tsx
+  - 2e97908: style(app): format index.tsx
+  - ff02276: style(app): format index.tsx
+  - bbea31b: style(app): format about.tsx
+  - a6077d9: style(app): format index.tsx
+  - a44e4c1: style(app): format header.tsx
+  - cf5c80c: style(app): format brand.tsx
+  - 2041333: style(app): format page.tsx
+  - 7158811: ui(button): refine styling and update config metadata
+  - 04aed37: refactor(ui): promote Panel, IconSwap, and Tabs to shared components
+  - 1c4cb5c: refactor(layout): relocate and decompose site footer and not found components
+  - 2b02c86: refactor(pages): colocate blog, projects, certifications, and sponsors components
+  - fccf989: refactor(gallery): colocate gallery component under page components
+  - f56e0d8: refactor(ui): consolidate duplicate separators into blocks-separator
+  - e8861bf: refactor(home): colocate homepage components under home subfolders
+  - f4be7c0: refactor: remove blog posts
+  - e9c2bc1: fix(welcome): resolve duplicate image key in frontmatter
+  - 99a6c23: docs(squareui): adjust creation and update dates
+  - e3a4e0e: docs(welcome): update image reference and metadata dates
+  - 83537b6: docs(blog): add design.md generative ai ui guide
+  - f1366c6: style(projects): update default thumbnail image for the line project
+  - 38e4d7e: feat(portfolio): register the line studio clone in projects data
+  - 281e87c: docs(projects): add case study for the line animation studio clone
+
 ## 1.0.7-beta.1
 
 ### Patch Changes
