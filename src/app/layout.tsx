@@ -10,6 +10,7 @@ import type { WebSite, WithContext } from "schema-dts"
 import { META_THEME_COLORS, SITE_INFO, X_HANDLE } from "@/config/site"
 import { fontVariables } from "@/lib/fonts"
 import { Providers } from "@/components/providers"
+import { RandomBackground } from "@/components/random-background"
 
 function getWebSiteJsonLd(): WithContext<WebSite> {
   return {
@@ -140,6 +141,7 @@ export default function RootLayout({
 
       <body suppressHydrationWarning>
         <Providers>
+          <RandomBackground />
           <NuqsAdapter>{children}</NuqsAdapter>
         </Providers>
       </body>
