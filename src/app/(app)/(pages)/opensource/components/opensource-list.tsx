@@ -7,7 +7,6 @@ import {
   CheckCircle2,
   CircleDot,
   Compass,
-  GitFork,
   GitMerge,
   GitPullRequest,
   Pin,
@@ -271,7 +270,7 @@ export function OpenSourceList({
         ) : (
           <div className="flex flex-col gap-4">
             {Object.entries(groupedContributions).map(
-              ([repoName, { repoUrl, items, skills }]) => {
+              ([repoName, { items, skills }]) => {
                 const owner = repoName.split("/")[0]
                 return (
                   <div
