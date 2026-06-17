@@ -1,5 +1,24 @@
 # portfolio
 
+## 1.0.7-rc.4
+
+### Patch Changes
+
+- a6cbbd9: - 3c2e204: feat(projects): assign random backgrounds from public directory to project previews
+  - e2feb6f: fix(eslint): fix cascading renders in cover and random background effects
+  - a49187f: fix(lint): resolve unused import warning in certifications page
+  - 9396562: style(format): format opensource list and page files with Prettier
+  - 7a1cd33: feat(layout): integrate RandomBackground backdrop overlay for premium look
+  - 2c3dbb9: feat(cover): implement theme cycle animation loop and click interaction for ProfileCover
+  - c14938d: style(images): compress backgrounds directory files to optimized WebP format with ffmpeg
+  - f37eff0: style(images): compress cover images to optimized WebP format with ffmpeg
+  - 8e75f23: feat(opensource): support personal repo filtering, pinned order sorting, and interactive header links
+  - fe9de76: refactor(opensource): extract project card subcomponents to client file for event handler serialization
+  - 7bb44c3: feat(opensource): implement home preview block and dedicated filters page
+  - 5fa2a65: feat(opensource): create type definitions, configuration schema and data structures
+  - f8be192: chore(git): ignore local .protocols directory
+  - 39ab176: update gitignore and remove protocols folder to project
+
 ## 1.0.7-rc.3
 
 ### Patch Changes
