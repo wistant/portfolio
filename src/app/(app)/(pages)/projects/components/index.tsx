@@ -4,6 +4,7 @@ import { PROJECTS } from "@/data/portfolio/projects"
 import { ArrowRightIcon } from "lucide-react"
 
 import { getGithubStars } from "@/lib/github"
+import { getBackgroundImages } from "@/lib/backgrounds"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/base/ui/button"
 
@@ -16,6 +17,7 @@ import {
 import { ProjectCard } from "./project-card"
 
 export async function Projects() {
+  const backgrounds = getBackgroundImages()
   // Show 4 projects for a balanced 2x2 grid layout
   const visibleProjects = PROJECTS.slice(0, 4)
 
@@ -59,6 +61,7 @@ export async function Projects() {
                 project={project}
                 hasLocalPage={!!getDocBySlug(project.id)}
                 stars={starsMap[project.id]}
+                backgrounds={backgrounds}
               />
             </li>
           ))}

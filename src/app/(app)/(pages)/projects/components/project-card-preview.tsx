@@ -29,6 +29,7 @@ interface ProjectCardPreviewProps {
   projectId: string
   logo?: string
   stars?: number | null
+  backgrounds?: string[]
 }
 
 // Convert RGB to HSL, boost saturation for vividness, and convert back to RGB
@@ -217,15 +218,17 @@ export function ProjectCardPreview({
   projectId,
   logo,
   stars,
+  backgrounds,
 }: ProjectCardPreviewProps) {
   const [extractedColor, setExtractedColor] = useState<string | null>(null)
 
   const selectedBg = useMemo(() => {
+    const list = backgrounds && backgrounds.length > 0 ? backgrounds : BACKGROUNDS
     const hash = projectId
       .split("")
       .reduce((acc, char) => acc + char.charCodeAt(0), 0)
-    return BACKGROUNDS[hash % BACKGROUNDS.length]
-  }, [projectId])
+    return list[hash % list.length]
+  }, [projectId, backgrounds])
 
   const cardVariants = {
     initial: { y: 2 },

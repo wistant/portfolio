@@ -15,12 +15,14 @@ interface ProjectCardProps {
   project: Project
   hasLocalPage?: boolean
   stars?: number | null
+  backgrounds?: string[]
 }
 
 export function ProjectCard({
   project,
   hasLocalPage = false,
   stars,
+  backgrounds,
 }: ProjectCardProps) {
   const router = useRouter()
   const [cardHover, setCardHover] = useState<boolean>(false)
@@ -61,6 +63,7 @@ export function ProjectCard({
         projectId={project.id}
         logo={project.logo}
         stars={stars}
+        backgrounds={backgrounds}
       />
 
       {/* 2. Header Area */}
