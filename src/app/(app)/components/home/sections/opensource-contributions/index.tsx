@@ -1,14 +1,8 @@
 import Link from "next/link"
-import { formatDistanceToNow } from "date-fns"
-import {
-  ArrowRight,
-  CheckCircle2,
-  CircleDot,
-  GitMerge,
-  GitPullRequest,
-  XCircle,
-} from "lucide-react"
+import { CONTRIBUTION_CONFIG } from "@/data/portfolio/opensource-contributions"
+import { ArrowRight } from "lucide-react"
 
+import type { GitHubContribution } from "@/types/opensource-contributions"
 import { getOpenSourceContributions } from "@/lib/opensource-contributions"
 import {
   Panel,
@@ -17,11 +11,67 @@ import {
   PanelTitle,
 } from "@/components/panel"
 
+import { ProjectCard } from "./client"
+
+// Helper to map repo to languages/skills
+function getSkillsForRepo(repo: string): string[] {
+  const name = repo.toLowerCase()
+  if (name.includes("nestjs/nest") || name.includes("nestjs/")) {
+    return ["TypeScript", "Node.js", "NestJS"]
+  }
+  if (name.includes("vendurehq/vendure") || name.includes("vendure/")) {
+    return ["TypeScript", "Node.js", "GraphQL"]
+  }
+  if (name.includes("shoperzz/shoperzz") || name.includes("shoperzz/")) {
+    return ["TypeScript", "Next.js", "NestJS", "GraphQL"]
+  }
+  if (name.includes("wistant/portfolio") || name.includes("portfolio")) {
+    return ["TypeScript", "Next.js", "React"]
+  }
+  return ["TypeScript"]
+}
+
 export async function OpenSourceContributions() {
   const contributions = await getOpenSourceContributions()
-  const displayContributions = contributions.slice(0, 5)
+  const username = CONTRIBUTION_CONFIG.username
 
-  if (contributions.length === 0) {
+  // Filter out personal repositories unless explicitly included or pinned
+  const filtered = contributions.filter((item) => {
+    const repoOwner = item.repository.split("/")[0]
+    const isOwnRepo = repoOwner.toLowerCase() === username.toLowerCase()
+    const isIncluded = CONTRIBUTION_CONFIG.includePersonalRepos?.some(
+      (r) => r.toLowerCase() === item.repository.toLowerCase()
+    )
+    return !isOwnRepo || isIncluded || item.isPinned
+  })
+
+  // Group and sort by repository (pinned items first inside groups)
+  const groups: Record<
+    string,
+    { items: GitHubContribution[]; skills: string[] }
+  > = {}
+  filtered.forEach((item) => {
+    if (!groups[item.repository]) {
+      groups[item.repository] = {
+        items: [],
+        skills: getSkillsForRepo(item.repository),
+      }
+    }
+    groups[item.repository].items.push(item)
+  })
+
+  // Sort items in each group: pinned first, then by date desc
+  Object.values(groups).forEach((g) => {
+    g.items.sort((a, b) => {
+      if (a.isPinned && !b.isPinned) return -1
+      if (!a.isPinned && b.isPinned) return 1
+      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    })
+  })
+
+  const displayGroups = Object.entries(groups).slice(0, 3)
+
+  if (filtered.length === 0) {
     return null
   }
 
@@ -33,103 +83,21 @@ export async function OpenSourceContributions() {
 
       <PanelContent className="flex flex-col gap-4">
         <div className="flex flex-col gap-3">
-          {displayContributions.map((contrib) => {
-            const isPR = contrib.type === "pr"
-            const isMerged = contrib.status === "merged"
-            const isOpen = contrib.status === "open"
-
-            let Icon = CircleDot
-            let iconColor = "text-green-600 dark:text-green-400 bg-green-500/10"
-
-            if (isPR) {
-              if (isMerged) {
-                Icon = GitMerge
-                iconColor =
-                  "text-purple-600 dark:text-purple-400 bg-purple-500/10"
-              } else if (isOpen) {
-                Icon = GitPullRequest
-                iconColor = "text-green-600 dark:text-green-400 bg-green-500/10"
-              } else {
-                Icon = GitPullRequest
-                iconColor = "text-red-600 dark:text-red-400 bg-red-500/10"
-              }
-            } else {
-              if (isOpen) {
-                Icon = CircleDot
-                iconColor = "text-green-600 dark:text-green-400 bg-green-500/10"
-              } else {
-                Icon = CheckCircle2
-                iconColor = "text-red-600 dark:text-red-400 bg-red-500/10"
-              }
-            }
-
-            return (
-              <div
-                key={contrib.id}
-                className="group flex items-start gap-3 rounded-lg border border-transparent p-2 transition-all duration-200 hover:border-border/60 hover:bg-zinc-50/50 dark:hover:bg-zinc-900/50"
-              >
-                <div className={`mt-0.5 rounded-md p-1.5 ${iconColor}`}>
-                  <Icon className="size-4" />
-                </div>
-
-                <div className="min-w-0 flex-1">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <a
-                      href={contrib.repositoryUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="font-mono text-xs text-muted-foreground transition-colors hover:text-foreground"
-                    >
-                      {contrib.repository}
-                    </a>
-                    <span className="text-xs text-muted-foreground/60">•</span>
-                    <span className="text-xs text-muted-foreground">
-                      #{contrib.number}
-                    </span>
-                    <span className="text-xs text-muted-foreground/60">•</span>
-                    <span className="text-xs text-muted-foreground">
-                      {formatDistanceToNow(new Date(contrib.createdAt), {
-                        addSuffix: true,
-                      })}
-                    </span>
-                  </div>
-
-                  <a
-                    href={contrib.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-1 line-clamp-2 block text-sm leading-snug font-medium text-foreground transition-colors hover:text-zinc-600 dark:hover:text-zinc-300"
-                  >
-                    {contrib.title}
-                  </a>
-
-                  {contrib.labels && contrib.labels.length > 0 && (
-                    <div className="mt-2 flex flex-wrap gap-1.5">
-                      {contrib.labels.map((label) => (
-                        <span
-                          key={label.name}
-                          className="inline-flex items-center rounded-sm px-1.5 py-0.5 text-[10px] font-medium"
-                          style={{
-                            backgroundColor: `#${label.color}15`,
-                            color: `#${label.color}`,
-                            border: `1px solid #${label.color}30`,
-                          }}
-                        >
-                          {label.name}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </div>
-            )
-          })}
+          {displayGroups.map(([repoName, { items, skills }], index) => (
+            <ProjectCard
+              key={repoName}
+              repoName={repoName}
+              items={items}
+              skills={skills}
+              defaultOpen={index === 0}
+            />
+          ))}
         </div>
 
         <div className="flex justify-end pt-1">
           <Link
             href="/opensource"
-            className="inline-flex items-center gap-1 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground"
+            className="group inline-flex items-center gap-1 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground"
           >
             View all contributions
             <ArrowRight className="size-3 transition-transform group-hover:translate-x-0.5" />
