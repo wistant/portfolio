@@ -3,8 +3,8 @@ import { getDocBySlug } from "@/data/doc/documents"
 import { PROJECTS } from "@/data/portfolio/projects"
 
 import { X_HANDLE } from "@/config/site"
-import { getGithubStars } from "@/lib/github"
 import { getBackgroundImages } from "@/lib/backgrounds"
+import { getGithubStars } from "@/lib/github"
 import { cn } from "@/lib/utils"
 import {
   PageHeading,

@@ -223,7 +223,8 @@ export function ProjectCardPreview({
   const [extractedColor, setExtractedColor] = useState<string | null>(null)
 
   const selectedBg = useMemo(() => {
-    const list = backgrounds && backgrounds.length > 0 ? backgrounds : BACKGROUNDS
+    const list =
+      backgrounds && backgrounds.length > 0 ? backgrounds : BACKGROUNDS
     const hash = projectId
       .split("")
       .reduce((acc, char) => acc + char.charCodeAt(0), 0)
@@ -234,11 +235,6 @@ export function ProjectCardPreview({
     initial: { y: 2 },
     hover: { y: 10 },
   }
-
-  const defaultBg =
-    "bg-gradient-to-br from-indigo-955/20 via-slate-900 to-slate-950"
-  const bg = backgroundImage || defaultBg
-  const isCssGradient = bg.startsWith("bg-") || bg.startsWith("from-")
 
   // Use manual theme color if provided, otherwise the automatically extracted color
   let activeColor = themeColor || extractedColor
@@ -262,10 +258,6 @@ export function ProjectCardPreview({
     cardHover && activeColor
       ? { borderColor: parseColorToRgba(activeColor, 0.45) }
       : undefined
-
-  const dynamicBackground = activeColor
-    ? getBackgroundStyle(activeColor, projectId, cardHover)
-    : undefined
 
   return (
     <div
