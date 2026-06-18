@@ -9,7 +9,7 @@ updatedAt: "2026-06-17"
 <br />
 ### 1. The Startup Trap: Writing Boilerplate by Default
 
-Every junior developer begins a project by typing `npm init` or running a framework generator. They believe building from scratch makes them a pure creator. It is a trap. Before writing your first line of code, ask yourself: *\"Does a solid, pre-existing open-source architecture already solve 80% of my core problems?\"*
+Every junior developer begins a project by typing `npm init` or running a framework generator. They believe building from scratch makes them a pure creator. It is a trap. Before writing your first line of code, ask yourself: _\"Does a solid, pre-existing open-source architecture already solve 80% of my core problems?\"_
 
 If you are building an e-commerce platform, a content management system, or a learning tool, starting from zero is not engineering—it is vanity. A senior developer does not build routing, authentication, or basic database schemas repeatedly. They look for proven foundations. Building on top of existing open source projects allows you to skip months of boilerplate creation and focus exclusively on the remaining 20%—the custom business logic, the performance optimizations, and the visual aesthetics.
 
@@ -22,6 +22,7 @@ Hacking existing software requires a shift in mindset. You are not a writer star
 You cannot afford to build on quicksand. Before forking a repository, you must audit its codebase health. Do not get blinded by GitHub stars; stars are marketing metrics. A repository with 10k stars but no commits in the last nine months is a liability.
 
 Look at three key elements:
+
 1. **Commit Frequency & Recency:** Is there active maintenance? If the last commit is older than 6 months, expect outdated dependencies and security vulnerabilities.
 2. **Open Issues Ratio:** A high ratio of open issues to closed ones, especially issues complaining about installation failures or broken Docker setups, indicates poor Developer Experience (DX).
 3. **Licensing:** Ensure the project uses a permissive license (MIT, Apache 2.0, or BSD). Avoid copyleft licenses like GPLv3 if you plan to build proprietary extensions.
@@ -95,6 +96,7 @@ When you execute this script on a reference repository like [strapi/strapi](http
 If you think leveraging existing code is \"cheating,\" look at the history of computing. Almost every piece of software that runs the modern web was built by leveraging or adapting an existing open-source codebase.
 
 Consider these industry monuments:
+
 - **Linux:** Linus Torvalds did not reinvent operating systems from scratch. He started by building a Unix-like system heavily inspired by **Minix** (created by Andrew Tanenbaum). Linus used the Minix user space and layout to compile the earliest versions of the Linux kernel.
 - **macOS:** Apple's core operating system, **Darwin**, is built on top of open-source **BSD** (Berkeley Software Distribution) Unix components. Rather than coding a kernel, scheduler, and network stack from zero, Apple engineers combined NeXTSTEP with FreeBSD to create their ecosystem.
 - **Android:** Google did not write a new driver model or process manager. They took the open-source **Linux kernel**, modified it to run on low-power devices, and built the Android runtime on top.
@@ -157,6 +159,7 @@ When building [Shoperzz](https://github.com/shoperzz/shoperzz), a headless comme
 However, the base repository was bloated. It included mock implementations for three different database engines, five payment gateway integrations that did not comply with local regulations, and heavy analytics tracking libraries.
 
 Here is what we did in the first 24 hours:
+
 - **Pruning:** Deleted the mock database layers, removing over 4,000 lines of dead code.
 - **Docker Adapter:** Restructured the services to run NestJS, Postgres, and Redis inside isolated networks, ensuring fast local spin-up times.
 - **Payment & Storage:** Exclusively integrated local payment gateways and replaced heavy local file storage with an S3-compatible client.
@@ -166,7 +169,7 @@ The result? The startup time went from 45 seconds to under 5 seconds, and memory
 Here is the customized `docker-compose.yml` we shipped:
 
 ```yaml
-version: '3.8'
+version: "3.8"
 
 # Optimized multi-service configuration for Shoperzz
 # Removed: Mock storage drivers, third-party administration dashboards, Prometheus configurations.
@@ -276,6 +279,7 @@ By rebasing, you apply your custom patches cleanly on top of the latest upstream
 Open source is a collaborative ecosystem. When you fork and adapt a project, you will inevitably uncover bugs, outdated typings, or configuration errors in the core codebase. Instead of patching them quietly inside your private repository, take the time to submit a Pull Request upstream.
 
 Keep your contributions simple and focused:
+
 - Solve one bug or add one clean typing file per PR.
 - Never mix architectural restructuring with simple bug fixes.
 - Follow the parent project's linting, formatting, and contribution guidelines.
