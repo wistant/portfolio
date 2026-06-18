@@ -1,62 +1,25 @@
 ---
 title: "Hacking Open Source: Why You Should Stop Building From Scratch and Fork Your Way to Production"
-description: "A senior engineer's guide to leveraging open source software as a foundation, pruning dead weight, customizing Docker environments, and staying synced."
+description: "A senior engineer's guide to leveraging open source software, evaluating repositories, clean fork setups, and the architectural choices behind Shoperzz."
 image: "https://raw.githubusercontent.com/wistant/datafiles/main/blog/opensource/banner.jpg"
 createdAt: "2026-06-17"
 updatedAt: "2026-06-17"
 ---
 
 <br />
-
-<FramedImage
-  src="/blog/opensource/banner.jpg"
-  alt="Hacking Open Source Banner"
-/>
-
 ### 1. The Startup Trap: Writing Boilerplate by Default
 
-Every junior developer begins a project by typing `npm init` or running a framework generator. They believe building from scratch makes them a pure creator. It is a trap. Before writing your first line of code, ask yourself: *\"Does a solid, pre-existing open-source architecture already solve 80% of my core problems?\"* 
+Every junior developer begins a project by typing `npm init` or running a framework generator. They believe building from scratch makes them a pure creator. It is a trap. Before writing your first line of code, ask yourself: *\"Does a solid, pre-existing open-source architecture already solve 80% of my core problems?\"*
 
-If you are building an e-commerce platform, a content management system, or a learning tool, starting from zero is not engineering—it is vanity. A senior developer does not build routing, authentication, or basic database schemas repeatedly. They look for proven foundations. Building on top of existing open source projects allows you to skip months of boilerplate creation and focus exclusively on the remaining 20%—the custom business logic, the performance optimizations, and the visual aesthetics. 
+If you are building an e-commerce platform, a content management system, or a learning tool, starting from zero is not engineering—it is vanity. A senior developer does not build routing, authentication, or basic database schemas repeatedly. They look for proven foundations. Building on top of existing open source projects allows you to skip months of boilerplate creation and focus exclusively on the remaining 20%—the custom business logic, the performance optimizations, and the visual aesthetics.
 
 Hacking existing software requires a shift in mindset. You are not a writer starting on a blank page; you are an editor refining a draft. This approach gets your product into production in 48 hours instead of 4 weeks.
 
 <br />
 
-### 2. Standing on the Shoulders of Giants: The Monuments of Software
+### 2. Evaluating a Repository in 5 Minutes
 
-If you think leveraging existing code is \"cheating,\" look at the history of computing. Almost every piece of software that runs the modern web was built by leveraging or adapting an existing codebase. 
-
-Consider these monuments:
-- **Linux** started as an attempt by Linus Torvalds to build a Unix-like system, heavily inspired by **Minix**. He did not reinvent operating system concepts from scratch; he built on the structural ideas that preceded him.
-- **macOS** is built on top of the **Darwin** OS, which itself is based on the **BSD** (Berkeley Software Distribution) Unix system. Apple did not write a core kernel from scratch; they leveraged BSD.
-- **Android** took the **Linux kernel** and built a mobile runtime on top of it.
-- **Next.js** took React and built a routing, server-rendering, and compilation framework. Vercel did not build a new frontend rendering engine; they wrapped React.
-
-These companies and developers did not waste time reinventing the wheel. They identified high-performance foundations, adapted them to their needs, and shipped products that changed the industry.
-
-<br />
-
-### 3. The Multi-Faceted Nature of Open Source: Run, Adapt, or Fork?
-
-You do not always need to fork a project or contribute back to benefit from it. Open source can be leveraged in multiple ways:
-
-1. **Consumption without Modification:** Many tools (like Postgres, Redis, or Nginx) should be run as-is. You do not touch their source code; you build your application using their clean public APIs.
-2. **Pluggable Extensions:** If the software is designed with a plugin architecture, write a plugin. Do not modify the core files unless absolutely necessary.
-3. **The Strategic Fork:** When you need deep, structural changes that the parent repository does not support, you fork. This is a deliberate, calculated decision to diverge from the main codebase because the parent project's roadmap does not align with your product's requirements.
-
-<br />
-
-<FramedImage
-  src="https://raw.githubusercontent.com/wistant/datafiles/main/blog/nestjs/expressjs.png"
-  alt="Express.js Minimal Web Server Framework Logo"
-/>
-
-<br />
-
-### 4. Evaluating a Repository in 5 Minutes
-
-You cannot afford to build on quicksand. Before forking a repository, you must audit its codebase health. Do not get blinded by GitHub stars; stars are marketing metrics. A repository with 10k stars but no commits in the last nine months is a liability. 
+You cannot afford to build on quicksand. Before forking a repository, you must audit its codebase health. Do not get blinded by GitHub stars; stars are marketing metrics. A repository with 10k stars but no commits in the last nine months is a liability.
 
 Look at three key elements:
 1. **Commit Frequency & Recency:** Is there active maintenance? If the last commit is older than 6 months, expect outdated dependencies and security vulnerabilities.
@@ -67,7 +30,7 @@ Here is a quick automation script, `eval-repo.sh`, to inspect any repository dir
 
 ```bash
 #!/usr/bin/env bash
-# eval-repo.sh - Évaluation rapide d'un dépôt GitHub
+# eval-repo.sh - Quick GitHub repository evaluation script
 
 set -euo pipefail
 
@@ -79,87 +42,117 @@ fi
 REPO=$1
 API_URL="https://api.github.com/repos/$REPO"
 
-echo "=== Évaluation de https://github.com/$REPO ==="
+echo "=== Evaluating https://github.com/$REPO ==="
 
-# Récupération des métadonnées du dépôt
+# Fetch repository metadata via curl
 DATA=$(curl -s "$API_URL")
 
 if echo "$DATA" | jq -e '.message' > /dev/null; then
-    echo "Erreur : Dépôt introuvable ou limite d'API atteinte."
+    echo "Error: Repository not found or API limit reached."
     exit 1
 fi
 
 STARS=$(echo "$DATA" | jq '.stargazers_count')
 ISSUES=$(echo "$DATA" | jq '.open_issues_count')
-LICENSE=$(echo "$DATA" | jq '.license.spdx_id // "Aucune"')
+LICENSE=$(echo "$DATA" | jq '.license.spdx_id // "None"')
 SIZE=$(echo "$DATA" | jq '.size')
 SIZE_MB=$(echo "scale=2; $SIZE/1024" | bc)
 
-# Récupération du dernier commit via l'API commits
+# Fetch the last commit date using the commits API
 LAST_COMMIT_DATE=$(curl -s "$API_URL/commits?per_page=1" | jq -r '.[0].commit.committer.date')
 
-echo "⭐ Étoiles (Stars)       : $STARS"
-echo "🐛 Issues ouvertes      : $ISSUES"
-echo "📜 Licence              : $LICENSE"
-echo "📦 Taille du dépôt      : ${SIZE_MB} MB"
-echo "📅 Dernier commit       : $LAST_COMMIT_DATE"
+echo "⭐ Stars              : $STARS"
+echo "🐛 Open Issues        : $ISSUES"
+echo "📜 License            : $LICENSE"
+echo "📦 Repository Size    : ${SIZE_MB} MB"
+echo "📅 Last Commit        : $LAST_COMMIT_DATE"
+```
+
+#### Script Output Example
+
+When you execute this script on a reference repository like [strapi/strapi](https://github.com/strapi/strapi), here is the output you will see in your console:
+
+```text
+=== Evaluating https://github.com/strapi/strapi ===
+⭐ Stars              : 62453
+🐛 Open Issues        : 842
+📜 License            : EE-Sub-MIT-1.0
+📦 Repository Size    : 142.60 MB
+📅 Last Commit        : 2026-06-16T21:40:12Z
 ```
 
 <br />
 
 <FramedImage
-  src="/blog/opensource/github.jpg"
-  alt="GitHub Evaluation Process"
+  src="https://raw.githubusercontent.com/wistant/datafiles/main/blog/opensource/github.jpg"
+  alt="Real terminal output of eval-repo.sh run on strapi/strapi"
 />
+
+<br />
+
+### 3. Standing on the Shoulders of Giants: The Monuments of Software
+
+If you think leveraging existing code is \"cheating,\" look at the history of computing. Almost every piece of software that runs the modern web was built by leveraging or adapting an existing open-source codebase.
+
+Consider these industry monuments:
+- **Linux:** Linus Torvalds did not reinvent operating systems from scratch. He started by building a Unix-like system heavily inspired by **Minix** (created by Andrew Tanenbaum). Linus used the Minix user space and layout to compile the earliest versions of the Linux kernel.
+- **macOS:** Apple's core operating system, **Darwin**, is built on top of open-source **BSD** (Berkeley Software Distribution) Unix components. Rather than coding a kernel, scheduler, and network stack from zero, Apple engineers combined NeXTSTEP with FreeBSD to create their ecosystem.
+- **Android:** Google did not write a new driver model or process manager. They took the open-source **Linux kernel**, modified it to run on low-power devices, and built the Android runtime on top.
+- **Next.js:** Vercel did not build a proprietary DOM diffing engine. They leveraged **React**, added routing, compilation, and SSR wrappers, and built a framework that now powers millions of sites.
+
+These companies and developers did not waste time reinventing the wheel. They identified high-performance foundations, adapted them to their needs, and shipped products that changed the industry.
+
+<br />
+
+### 4. The Multi-Faceted Nature of Open Source: Run, Adapt, or Fork?
+
+You do not always need to fork a project or contribute back to benefit from it. Open source can be leveraged in multiple ways depending on your architecture constraints:
+
+1. **Consumption without Modification:** Many tools (like Postgres, Redis, or Nginx) should be run as-is. You do not touch their source code; you build your application using their clean public APIs.
+2. **Pluggable Extensions:** If the software is designed with a plugin architecture, write a plugin. Do not modify the core files unless absolutely necessary.
+3. **The Strategic Fork:** When you need deep, structural changes that the parent repository does not support, you fork. This is a deliberate, calculated decision to diverge from the main codebase because the parent project's roadmap does not align with your product's requirements.
 
 <br />
 
 ### 5. The Strategic Fork: Pruning and Customizing
 
-Once you have qualified the repository, do not clone and start hacking immediately. You need a structured workspace. Perform a clean strategic fork. 
+Once you have qualified the repository, do not clone and start hacking immediately. You need a structured workspace. Perform a clean strategic fork.
 
-The first step after cloning is pruning. Delete what you do not need. Legacy documentation, old CI pipelines, example folders, and alternative environment files only add noise. Clean your dependencies: check the `package.json`, locate dead libraries, and run a fresh installation to test the baseline. 
+The first step after cloning is pruning. Delete what you do not need. Legacy documentation, old CI pipelines, example folders, and alternative environment files only add noise. Clean your dependencies: check the `package.json`, locate dead libraries, and run a fresh installation to test the baseline.
 
 Next, prepare the runtime environment. Most modern open-source repositories use Docker. You must adapt the configuration to match your development and deployment workflows, clean up unused microservices, and externalize all configuration variables into a strictly managed `.env` file.
 
 ```bash
 #!/usr/bin/env bash
-# git-fork-setup.sh - Commandes Git pour un fork propre avec gestion de l'upstream
+# git-fork-setup.sh - Git commands for a clean fork setup with upstream management
 
-# 1. Cloner le fork personnel du dépôt (remplacer par votre URL)
+# 1. Clone the personal fork of the repository (replace with your URL)
 git clone git@github.com:wistant/shoperzz.git
 cd shoperzz
 
-# 2. Ajouter le dépôt parent d'origine comme source "upstream"
-# Cela permet de récupérer les futures mises à jour officielles du projet d'origine.
+# 2. Add the original parent repository as a remote named "upstream"
+# This allows you to pull future updates and security patches from the original project.
 git remote add upstream git@github.com:original-owner/shoperzz.git
 
-# 3. Vérifier les configurations distantes (origin doit être votre fork, upstream le repo d'origine)
+# 3. Verify remote configurations (origin should point to your fork, upstream to the parent repo)
 git remote -v
 
-# 4. Récupérer les branches et commits du dépôt d'origine
+# 4. Fetch branches and commits from the parent repository
 git fetch upstream
 
-# 5. Rebaser votre branche principale locale sur les derniers changements de l'upstream
-# Le rebase évite de polluer l'historique avec des commits de fusion inutiles.
+# 5. Rebase your local main branch onto the latest upstream updates
+# Rebasing keeps a clean history without creating unnecessary merge commits.
 git rebase upstream/main
 
-# 6. Pousser la base propre sur votre dépôt distant (origin)
+# 6. Push the clean base to your remote fork (origin)
 git push origin main
 ```
 
 <br />
 
-<FramedImage
-  src="/blog/opensource/git.jpg"
-  alt="Git Syncing Strategy"
-/>
-
-<br />
-
 ### 6. Real-World Case Study: Shoperzz
 
-When building Shoperzz, a headless commerce platform, we did not write a custom GraphQL backend and database connector from scratch. We selected a robust NestJS core as our baseline framework.
+When building [Shoperzz](https://github.com/shoperzz/shoperzz), a headless commerce platform, we did not write a custom GraphQL backend and database connector from scratch. We selected a robust NestJS core as our baseline framework.
 
 However, the base repository was bloated. It included mock implementations for three different database engines, five payment gateway integrations that did not comply with local regulations, and heavy analytics tracking libraries.
 
@@ -175,12 +168,12 @@ Here is the customized `docker-compose.yml` we shipped:
 ```yaml
 version: '3.8'
 
-# Configuration multi-services optimisée pour Shoperzz
-# Supprimé : Mock storage drivers, dashboards d'administration tiers, configurations Prometheus.
-# Ajouté : Volumes nommés pour la persistance locale et réseaux isolés sécurisés.
+# Optimized multi-service configuration for Shoperzz
+# Removed: Mock storage drivers, third-party administration dashboards, Prometheus configurations.
+# Added: Named volumes for local persistence and secure isolated networks.
 
 services:
-  # Base de données PostgreSQL
+  # PostgreSQL Database Service
   postgres:
     image: postgres:15-alpine
     container_name: shoperzz-db
@@ -195,7 +188,7 @@ services:
     networks:
       - shoperzz-network
 
-  # Cache & Session Store
+  # Cache & Session Store Service
   redis:
     image: redis:7-alpine
     container_name: shoperzz-cache
@@ -206,7 +199,7 @@ services:
     networks:
       - shoperzz-network
 
-  # Backend Applicatif (NestJS/TypeScript)
+  # Applicative Backend (NestJS/TypeScript)
   app:
     build:
       context: .
@@ -238,11 +231,28 @@ networks:
 
 <br />
 
-### 7. Managing Upstream: Avoid Conflict Hell
+### 7. The Industry Monuments: The Birth of Strapi
+
+This approach is not isolated to personal side-projects. Take [Strapi](https://github.com/strapi/strapi), now one of the industry's leading open-source headless CMS.
+
+In 2015, three freelance developers in France were exhausted by the limitations of traditional content management systems like WordPress. They did not set out to rewrite database query parsers, HTTP request handlers, or client-side rendering engines from scratch. Instead, they built on top of the established Node.js ecosystem and React, using existing open-source libraries as baseline modules. By focusing their creative energy on the developer interface and content-type builders rather than low-level infrastructure, they shipped a product that grew into a massive startup with millions of downloads.
+
+This is the power of open-source leverage: standing on robust foundations to solve a specific pain point instead of reinventing the stack.
+
+<br />
+
+<FramedImage
+  src="https://raw.githubusercontent.com/wistant/datafiles/main/blog/nestjs/expressjs.png"
+  alt="Strapi GitHub Repository Interface"
+/>
+
+<br />
+
+### 8. Managing Upstream: Avoid Conflict Hell
 
 Forking means maintaining two lines of history: your custom features and the official updates from the parent repository. If you do not manage this relationship proactively, your codebase will diverge, making future security patches impossible to merge.
 
-Do not use merge commits when pulling from upstream. Merge commits create complex histories and hide conflict origins. Use Git's rebase strategy.
+Do not use merge commits when pulling from upstream. Merge commits create complex histories and hide conflict origins. Use Git's [official rebase documentation](https://git-scm.com/docs/git-rebase) strategy.
 
 ```bash
 git fetch upstream
@@ -250,18 +260,38 @@ git checkout main
 git rebase upstream/main
 ```
 
-By rebasing, you apply your custom patches cleanly on top of the latest upstream commits. If conflicts occur, resolve them step-by-step. Keep your custom changes isolated in specific folders (like `src/custom/` or distinct submodules) to minimize changes to core files.
+By rebasing, you apply your custom patches cleanly on top of the latest upstream commits. If conflicts occur, resolve them step-by-step. Keep your custom changes isolated in specific folders to minimize changes to core files.
 
 <br />
 
 <FramedImage
-  src="/blog/opensource/fork-image.jpg"
-  alt="Fork Lifecycle"
+  src="https://raw.githubusercontent.com/wistant/datafiles/main/blog/opensource/git.jpg"
+  alt="Diagram illustrating the git fork, upstream, and rebase sync flow"
 />
 
 <br />
 
-### 8. Clean Cut
+### 9. Contributing Back to Upstream
+
+Open source is a collaborative ecosystem. When you fork and adapt a project, you will inevitably uncover bugs, outdated typings, or configuration errors in the core codebase. Instead of patching them quietly inside your private repository, take the time to submit a Pull Request upstream.
+
+Keep your contributions simple and focused:
+- Solve one bug or add one clean typing file per PR.
+- Never mix architectural restructuring with simple bug fixes.
+- Follow the parent project's linting, formatting, and contribution guidelines.
+
+Contributing back establishes your engineering reputation on GitHub, builds trust, and ensures that the core codebase evolves alongside your custom implementation.
+
+<br />
+
+<FramedImage
+  src="https://raw.githubusercontent.com/wistant/datafiles/main/blog/opensource/fork-image.jpg"
+  alt="Diagram illustrating the fork, modify, PR, and merge lifecycle"
+/>
+
+<br />
+
+### 10. Clean Cut
 
 Skip the boilerplate. Run the setup:
 
@@ -269,4 +299,4 @@ Skip the boilerplate. Run the setup:
 git clone git@github.com:wistant/shoperzz.git
 ```
 
-Head over to the [Shoperzz](https://github.com/wistant/shoperzz) repository, inspect the architecture, audit the code, and spin up the services. Stop building things that already exist.
+Head over to the [Shoperzz](https://github.com/shoperzz/shoperzz) repository, inspect the architecture, audit the code, and spin up the services. Stop building things that already exist.
