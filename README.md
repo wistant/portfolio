@@ -17,6 +17,7 @@
 ---
 
 ### Repository Statistics
+
 ![GitHub Stars](https://img.shields.io/github/stars/wistant/portfolio.svg?style=flat-square&color=3B82F6)
 ![GitHub Forks](https://img.shields.io/github/forks/wistant/portfolio.svg?style=flat-square&color=10B981)
 ![Watchers](https://img.shields.io/github/watchers/wistant/portfolio.svg?style=flat-square&color=8B5CF6)
@@ -28,6 +29,7 @@
 ![License](https://img.shields.io/github/license/wistant/portfolio.svg?style=flat-square&color=6B7280)
 
 ### Tech Stack & Badges
+
 ![Package mgr · pnpm](https://img.shields.io/badge/Package_mgr-pnpm-F69220?style=flat-square&logo=pnpm&logoColor=white)
 ![Language · TypeScript](https://img.shields.io/badge/Language-TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)
 ![Framework · Next.js](https://img.shields.io/badge/Framework-Next.js-000000?style=flat-square&logo=nextdotjs&logoColor=white)
@@ -42,12 +44,14 @@
 ![Agent-friendly AGENTS.md](https://img.shields.io/badge/Agent--friendly-AGENTS.md-D97757?style=flat-square&logoColor=white)
 
 ### NPM Distribution & Downloads
+
 ![npm Version](https://img.shields.io/npm/v/portfolio.svg?style=flat-square&color=3B82F6)
 ![npm Weekly Downloads](https://img.shields.io/npm/dw/portfolio.svg?style=flat-square&color=10B981)
 ![npm Dependents](https://img.shields.io/npm/dependents/portfolio.svg?style=flat-square&color=8B5CF6)
 ![npm Node](https://img.shields.io/node/v/portfolio.svg?style=flat-square&color=F59E0B)
 
 ### Community & Sponsors
+
 ![Discord Members](https://img.shields.io/discord/members/wistant.svg?style=flat-square&color=7289DA&logo=discord&logoColor=white)
 ![GitHub Sponsors](https://img.shields.io/badge/Sponsor-GitHub-ea4aaa?style=flat-square&logo=githubsponsors&logoColor=white)
 [![Homepage](https://img.shields.io/badge/Homepage-link-2563eb?style=flat-square)](https://wistant.me)
