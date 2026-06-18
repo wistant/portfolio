@@ -1,5 +1,89 @@
 # portfolio
 
+## 1.0.7
+
+### Patch Changes
+
+- 4b88503: - a57b958: release: switch 1.0.6 from Stable to alpha
+  - 5ed0383: style(app): format profile-cover.tsx
+  - 7de8f5e: ui(home): assemble cover banner, compact profile header, and metadata grid on home page
+  - 7ebec4f: ui(home): create structured profile metadata grid component with actions
+  - bf606ca: ui(home): restructure profile header layout to be compact and role-focused
+  - 400fc21: feat(home): create masked profile cover banner component with canvas particles
+- b269228: - d9d86ac: release: switch 1.0.7-alpha.0 from alpha to beta
+  - 13d87d6: style(style): format nestjs-for-beginners-complete-guide.mdx
+  - 8e1a500: style(project): update readme preview image path and refine guide header
+  - 1621a0b: docs(blog): update squareui blog post and add new blog assets
+  - 31ebdc1: docs(blog): rewrite nestjs guide for beginners with express comparison
+  - aa7cbfe: docs(blog): add in-depth nestjs architecture guide
+  - e4c2890: docs(blog): add blog post on square ui open-source nextjs templates
+- cf9fd87: - a8dae81: release: switch 1.0.7-beta.1 from beta to rc
+  - 887f214: style(app): format page.tsx
+  - 12ae97c: style(app): format index.tsx
+  - 1831a38: style(app): format insights.tsx
+  - 2e97908: style(app): format index.tsx
+  - ff02276: style(app): format index.tsx
+  - bbea31b: style(app): format about.tsx
+  - a6077d9: style(app): format index.tsx
+  - a44e4c1: style(app): format header.tsx
+  - cf5c80c: style(app): format brand.tsx
+  - 2041333: style(app): format page.tsx
+  - 7158811: ui(button): refine styling and update config metadata
+  - 04aed37: refactor(ui): promote Panel, IconSwap, and Tabs to shared components
+  - 1c4cb5c: refactor(layout): relocate and decompose site footer and not found components
+  - 2b02c86: refactor(pages): colocate blog, projects, certifications, and sponsors components
+  - fccf989: refactor(gallery): colocate gallery component under page components
+  - f56e0d8: refactor(ui): consolidate duplicate separators into blocks-separator
+  - e8861bf: refactor(home): colocate homepage components under home subfolders
+  - f4be7c0: refactor: remove blog posts
+  - e9c2bc1: fix(welcome): resolve duplicate image key in frontmatter
+  - 99a6c23: docs(squareui): adjust creation and update dates
+  - e3a4e0e: docs(welcome): update image reference and metadata dates
+  - 83537b6: docs(blog): add design.md generative ai ui guide
+  - f1366c6: style(projects): update default thumbnail image for the line project
+  - 38e4d7e: feat(portfolio): register the line studio clone in projects data
+  - 281e87c: docs(projects): add case study for the line animation studio clone
+- 8a4fb6e: - b4787a8: style(llms): format LLM text route endpoints with Prettier
+  - d70343f: refactor(llms): aggregate active sponsor tiers and contributions
+  - 0d19c6b: refactor(llms): aggregate full text of all professional certifications
+  - 23fceb5: docs(llms): document development tooling and atomic commit protocols
+  - 6fb1d01: docs(llms): add shadcn UI component registry compilation instructions
+  - b3db710: refactor(llms): append codebase directory map and basic command guidelines
+  - 7f083c3: refactor(llms): update general index with stack specs and source repository
+- a6cbbd9: - 3c2e204: feat(projects): assign random backgrounds from public directory to project previews
+  - e2feb6f: fix(eslint): fix cascading renders in cover and random background effects
+  - a49187f: fix(lint): resolve unused import warning in certifications page
+  - 9396562: style(format): format opensource list and page files with Prettier
+  - 7a1cd33: feat(layout): integrate RandomBackground backdrop overlay for premium look
+  - 2c3dbb9: feat(cover): implement theme cycle animation loop and click interaction for ProfileCover
+  - c14938d: style(images): compress backgrounds directory files to optimized WebP format with ffmpeg
+  - f37eff0: style(images): compress cover images to optimized WebP format with ffmpeg
+  - 8e75f23: feat(opensource): support personal repo filtering, pinned order sorting, and interactive header links
+  - fe9de76: refactor(opensource): extract project card subcomponents to client file for event handler serialization
+  - 7bb44c3: feat(opensource): implement home preview block and dedicated filters page
+  - 5fa2a65: feat(opensource): create type definitions, configuration schema and data structures
+  - f8be192: chore(git): ignore local .protocols directory
+  - 39ab176: update gitignore and remove protocols folder to project
+
+## 1.0.7-rc.4
+
+### Patch Changes
+
+- a6cbbd9: - 3c2e204: feat(projects): assign random backgrounds from public directory to project previews
+  - e2feb6f: fix(eslint): fix cascading renders in cover and random background effects
+  - a49187f: fix(lint): resolve unused import warning in certifications page
+  - 9396562: style(format): format opensource list and page files with Prettier
+  - 7a1cd33: feat(layout): integrate RandomBackground backdrop overlay for premium look
+  - 2c3dbb9: feat(cover): implement theme cycle animation loop and click interaction for ProfileCover
+  - c14938d: style(images): compress backgrounds directory files to optimized WebP format with ffmpeg
+  - f37eff0: style(images): compress cover images to optimized WebP format with ffmpeg
+  - 8e75f23: feat(opensource): support personal repo filtering, pinned order sorting, and interactive header links
+  - fe9de76: refactor(opensource): extract project card subcomponents to client file for event handler serialization
+  - 7bb44c3: feat(opensource): implement home preview block and dedicated filters page
+  - 5fa2a65: feat(opensource): create type definitions, configuration schema and data structures
+  - f8be192: chore(git): ignore local .protocols directory
+  - 39ab176: update gitignore and remove protocols folder to project
+
 ## 1.0.7-rc.3
 
 ### Patch Changes
