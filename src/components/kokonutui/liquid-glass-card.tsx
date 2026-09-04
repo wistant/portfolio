@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 /**
  * @author: @dorianbaffier
@@ -9,31 +9,31 @@
  * @website: https://kokonutui.com
  * @github: https://github.com/kokonut-labs/kokonutui
  */
+import React from "react"
+import Image from "next/image"
+import { cva, type VariantProps } from "class-variance-authority"
+import { ArrowLeft, ArrowRight, Pause, Play } from "lucide-react"
 
-import { cva, type VariantProps } from "class-variance-authority";
-import { ArrowLeft, ArrowRight, Pause, Play } from "lucide-react";
-import Image from "next/image";
-import React from "react";
-import { Button, type ButtonProps } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils"
+import { Button, type ButtonProps } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
 
 // Constants for better maintainability
 const GLASS_SHADOW_LIGHT =
-  "shadow-[0_0_6px_rgba(0,0,0,0.03),0_2px_6px_rgba(0,0,0,0.08),inset_3px_3px_0.5px_-3px_rgba(0,0,0,0.9),inset_-3px_-3px_0.5px_-3px_rgba(0,0,0,0.85),inset_1px_1px_1px_-0.5px_rgba(0,0,0,0.6),inset_-1px_-1px_1px_-0.5px_rgba(0,0,0,0.6),inset_0_0_6px_6px_rgba(0,0,0,0.12),inset_0_0_2px_2px_rgba(0,0,0,0.06),0_0_12px_rgba(255,255,255,0.15)]";
+  "shadow-[0_0_6px_rgba(0,0,0,0.03),0_2px_6px_rgba(0,0,0,0.08),inset_3px_3px_0.5px_-3px_rgba(0,0,0,0.9),inset_-3px_-3px_0.5px_-3px_rgba(0,0,0,0.85),inset_1px_1px_1px_-0.5px_rgba(0,0,0,0.6),inset_-1px_-1px_1px_-0.5px_rgba(0,0,0,0.6),inset_0_0_6px_6px_rgba(0,0,0,0.12),inset_0_0_2px_2px_rgba(0,0,0,0.06),0_0_12px_rgba(255,255,255,0.15)]"
 
 const GLASS_SHADOW_DARK =
-  "dark:shadow-[0_0_8px_rgba(0,0,0,0.03),0_2px_6px_rgba(0,0,0,0.08),inset_3px_3px_0.5px_-3.5px_rgba(255,255,255,0.09),inset_-3px_-3px_0.5px_-3.5px_rgba(255,255,255,0.85),inset_1px_1px_1px_-0.5px_rgba(255,255,255,0.6),inset_-1px_-1px_1px_-0.5px_rgba(255,255,255,0.6),inset_0_0_6px_6px_rgba(255,255,255,0.12),inset_0_0_2px_2px_rgba(255,255,255,0.06),0_0_12px_rgba(0,0,0,0.15)]";
+  "dark:shadow-[0_0_8px_rgba(0,0,0,0.03),0_2px_6px_rgba(0,0,0,0.08),inset_3px_3px_0.5px_-3.5px_rgba(255,255,255,0.09),inset_-3px_-3px_0.5px_-3.5px_rgba(255,255,255,0.85),inset_1px_1px_1px_-0.5px_rgba(255,255,255,0.6),inset_-1px_-1px_1px_-0.5px_rgba(255,255,255,0.6),inset_0_0_6px_6px_rgba(255,255,255,0.12),inset_0_0_2px_2px_rgba(255,255,255,0.06),0_0_12px_rgba(0,0,0,0.15)]"
 
-const GLASS_SHADOW = `${GLASS_SHADOW_LIGHT} ${GLASS_SHADOW_DARK}`;
+const GLASS_SHADOW = `${GLASS_SHADOW_LIGHT} ${GLASS_SHADOW_DARK}`
 
-const DEFAULT_GLASS_FILTER_SCALE = 30;
-const BUTTON_GLASS_FILTER_SCALE = 70;
+const DEFAULT_GLASS_FILTER_SCALE = 30
+const BUTTON_GLASS_FILTER_SCALE = 70
 
 // Shared glass filter component
 interface GlassFilterProps {
-  id: string;
-  scale?: number;
+  id: string
+  scale?: number
 }
 
 const GlassFilter = React.memo(
@@ -75,8 +75,8 @@ const GlassFilter = React.memo(
       </defs>
     </svg>
   )
-);
-GlassFilter.displayName = "GlassFilter";
+)
+GlassFilter.displayName = "GlassFilter"
 
 // Liquid Button - extends shadcn Button with glass effect
 const liquidButtonVariants = cva("relative transition-transform duration-300", {
@@ -89,11 +89,11 @@ const liquidButtonVariants = cva("relative transition-transform duration-300", {
   defaultVariants: {
     liquidVariant: "default",
   },
-});
+})
 
 export type LiquidButtonProps = ButtonProps & {
-  liquidVariant?: "default" | "none";
-};
+  liquidVariant?: "default" | "none"
+}
 
 function LiquidButton({
   className,
@@ -101,7 +101,7 @@ function LiquidButton({
   children,
   ...props
 }: LiquidButtonProps) {
-  const filterId = React.useId();
+  const filterId = React.useId()
 
   return (
     <>
@@ -123,7 +123,7 @@ function LiquidButton({
       </Button>
       <GlassFilter id={filterId} scale={BUTTON_GLASS_FILTER_SCALE} />
     </>
-  );
+  )
 }
 
 // Liquid Glass Card - extends shadcn Card with glass effect
@@ -141,12 +141,12 @@ const liquidGlassCardVariants = cva(
       glassSize: "default",
     },
   }
-);
+)
 
 export type LiquidGlassCardProps = React.HTMLAttributes<HTMLDivElement> &
   VariantProps<typeof liquidGlassCardVariants> & {
-    glassEffect?: boolean;
-  };
+    glassEffect?: boolean
+  }
 
 function LiquidGlassCard({
   className,
@@ -155,7 +155,7 @@ function LiquidGlassCard({
   children,
   ...props
 }: LiquidGlassCardProps) {
-  const filterId = React.useId();
+  const filterId = React.useId()
 
   return (
     <Card
@@ -183,34 +183,34 @@ function LiquidGlassCard({
 
       <div className="pointer-events-none absolute inset-0 z-20 rounded-lg bg-gradient-to-r from-transparent via-black/5 to-transparent opacity-0 transition-opacity duration-200 group-hover:opacity-100 dark:via-white/5" />
     </Card>
-  );
+  )
 }
 
 // Demo: Music Player Card
-const TOTAL_DURATION = 45;
-const VOLUME_BAR_COUNT = 8;
-const SEEK_JUMP_SECONDS = 5;
-const TIMER_INTERVAL_MS = 1000;
-const STATIC_BAR_HEIGHT = "6px";
-const MIN_TIME = 0;
-const BAR_DELAY_INCREMENT = 0.1;
-const PROGRESS_PERCENTAGE_MULTIPLIER = 100;
+const TOTAL_DURATION = 45
+const VOLUME_BAR_COUNT = 8
+const SEEK_JUMP_SECONDS = 5
+const TIMER_INTERVAL_MS = 1000
+const STATIC_BAR_HEIGHT = "6px"
+const MIN_TIME = 0
+const BAR_DELAY_INCREMENT = 0.1
+const PROGRESS_PERCENTAGE_MULTIPLIER = 100
 
 const formatTime = (timeInSeconds: number): string => {
-  const minutes = Math.floor(timeInSeconds / 60);
-  const seconds = Math.floor(timeInSeconds % 60);
-  return `${minutes}:${seconds.toString().padStart(2, "0")}`;
-};
+  const minutes = Math.floor(timeInSeconds / 60)
+  const seconds = Math.floor(timeInSeconds % 60)
+  return `${minutes}:${seconds.toString().padStart(2, "0")}`
+}
 
 interface VolumeBarsProps {
-  isPlaying: boolean;
+  isPlaying: boolean
 }
 
 const VolumeBars = React.memo(({ isPlaying }: VolumeBarsProps) => {
   const bars = Array.from({ length: VOLUME_BAR_COUNT }, (_, i) => ({
     id: `bar-${i}`,
     delay: i * BAR_DELAY_INCREMENT,
-  }));
+  }))
 
   return (
     <div className="pointer-events-none flex h-8 w-10 items-end gap-0.5">
@@ -229,47 +229,44 @@ const VolumeBars = React.memo(({ isPlaying }: VolumeBarsProps) => {
         />
       ))}
     </div>
-  );
-});
-VolumeBars.displayName = "VolumeBars";
+  )
+})
+VolumeBars.displayName = "VolumeBars"
 
 interface ProgressBarProps {
-  currentTime: number;
-  totalDuration: number;
-  onSeek: (newTime: number) => void;
+  currentTime: number
+  totalDuration: number
+  onSeek: (newTime: number) => void
 }
 
 const ProgressBar = React.memo(
   ({ currentTime, totalDuration, onSeek }: ProgressBarProps) => {
     const progress =
-      (currentTime / totalDuration) * PROGRESS_PERCENTAGE_MULTIPLIER;
+      (currentTime / totalDuration) * PROGRESS_PERCENTAGE_MULTIPLIER
 
     const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
-      const bar = e.currentTarget;
-      const rect = bar.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const percent = x / rect.width;
+      const bar = e.currentTarget
+      const rect = bar.getBoundingClientRect()
+      const x = e.clientX - rect.left
+      const percent = x / rect.width
       const newTime = Math.min(
         Math.max(MIN_TIME, percent * totalDuration),
         totalDuration
-      );
-      onSeek(newTime);
-    };
+      )
+      onSeek(newTime)
+    }
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
       if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        const newTime = Math.min(
-          currentTime + SEEK_JUMP_SECONDS,
-          totalDuration
-        );
-        onSeek(newTime);
+        e.preventDefault()
+        const newTime = Math.min(currentTime + SEEK_JUMP_SECONDS, totalDuration)
+        onSeek(newTime)
       }
-    };
+    }
 
     return (
       <>
-        <div className="flex justify-between font-medium text-xs text-zinc-500 dark:text-zinc-400">
+        <div className="flex justify-between text-xs font-medium text-zinc-500 dark:text-zinc-400">
           <span className="tabular-nums">{formatTime(currentTime)}</span>
           <span className="tabular-nums">{formatTime(totalDuration)}</span>
         </div>
@@ -290,43 +287,43 @@ const ProgressBar = React.memo(
           />
         </div>
       </>
-    );
+    )
   }
-);
-ProgressBar.displayName = "ProgressBar";
+)
+ProgressBar.displayName = "ProgressBar"
 
 export function NotificationCenter() {
-  const [isPlaying, setIsPlaying] = React.useState(true);
-  const [currentTime, setCurrentTime] = React.useState(MIN_TIME);
+  const [isPlaying, setIsPlaying] = React.useState(true)
+  const [currentTime, setCurrentTime] = React.useState(MIN_TIME)
 
   React.useEffect(() => {
     if (!isPlaying || currentTime >= TOTAL_DURATION) {
-      return;
+      return
     }
 
     const intervalId = setInterval(() => {
       setCurrentTime((prev) => {
         if (prev >= TOTAL_DURATION) {
-          setIsPlaying(false);
-          return TOTAL_DURATION;
+          setIsPlaying(false)
+          return TOTAL_DURATION
         }
-        return prev + 1;
-      });
-    }, TIMER_INTERVAL_MS);
+        return prev + 1
+      })
+    }, TIMER_INTERVAL_MS)
 
-    return () => clearInterval(intervalId);
-  }, [isPlaying, currentTime]);
+    return () => clearInterval(intervalId)
+  }, [isPlaying, currentTime])
 
   const handlePlayPause = () => {
-    setIsPlaying((prev) => !prev);
-  };
+    setIsPlaying((prev) => !prev)
+  }
 
   const handleSeek = (newTime: number) => {
-    setCurrentTime(newTime);
+    setCurrentTime(newTime)
     if (newTime < TOTAL_DURATION && !isPlaying) {
-      setIsPlaying(true);
+      setIsPlaying(true)
     }
-  };
+  }
 
   return (
     <div className="w-full max-w-sm">
@@ -343,7 +340,7 @@ export function NotificationCenter() {
           </div>
 
           <div className="flex-1 overflow-hidden">
-            <h3 className="overflow-hidden text-ellipsis whitespace-nowrap font-semibold text-lg text-zinc-900 dark:text-white">
+            <h3 className="overflow-hidden text-lg font-semibold text-ellipsis whitespace-nowrap text-zinc-900 dark:text-white">
               Glow
             </h3>
             <p className="mt-0.5 text-sm text-zinc-600 dark:text-zinc-400">
@@ -413,8 +410,8 @@ export function NotificationCenter() {
         </div>
       </LiquidGlassCard>
     </div>
-  );
+  )
 }
 
-export { LiquidButton, LiquidGlassCard };
-export default NotificationCenter;
+export { LiquidButton, LiquidGlassCard }
+export default NotificationCenter
