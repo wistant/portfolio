@@ -1,5 +1,8 @@
+"use client"
+
 import React from "react"
 import { findTechBySkill, LOCAL_ICONS } from "@/data/portfolio/tech-stack"
+import { motion } from "motion/react"
 
 import { Tag } from "@/components/ui/tag"
 
@@ -13,7 +16,10 @@ export function TechTag({ skill }: { skill: string }) {
   const localIcon = LOCAL_ICONS[tech.key]
 
   return (
-    <a
+    <motion.a
+      whileHover={{ scale: 1.05, y: -1 }}
+      whileTap={{ scale: 0.95 }}
+      transition={{ duration: 0.15, ease: "easeOut" }}
       href={tech.href}
       target="_blank"
       rel="noopener"
@@ -28,6 +34,6 @@ export function TechTag({ skill }: { skill: string }) {
         />
       )}
       {tech.title}
-    </a>
+    </motion.a>
   )
 }

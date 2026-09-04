@@ -18,6 +18,8 @@ interface ProjectCardProps {
   backgrounds?: string[]
 }
 
+import { motion } from "motion/react"
+
 export function ProjectCard({
   project,
   hasLocalPage = false,
@@ -43,7 +45,9 @@ export function ProjectCard({
   const detailsLabel = hasLocalPage ? "Read Case Study" : "View Live Site"
 
   return (
-    <div
+    <motion.div
+      whileHover={{ y: -3 }}
+      transition={{ duration: 0.2, ease: "easeOut" }}
       onMouseEnter={() => setCardHover(true)}
       onMouseLeave={() => setCardHover(false)}
       onClick={() => router.push(detailsHref)}
@@ -91,6 +95,6 @@ export function ProjectCard({
         liveLink={project.link}
         github={project.github}
       />
-    </div>
+    </motion.div>
   )
 }

@@ -1,5 +1,8 @@
+"use client"
+
 import { addQueryParams } from "@/utils/url"
 import { ArrowUpRightIcon } from "lucide-react"
+import { motion } from "motion/react"
 
 import type { SocialLink } from "@/types/social-links"
 import { UTM_PARAMS } from "@/config/site"
@@ -9,9 +12,11 @@ export function SocialLinkItem({ icon, title, href }: SocialLink) {
   const isInvertible = title === "X" || title === "GitHub"
 
   return (
-    <div
+    <motion.div
+      whileHover="hover"
+      whileTap={{ scale: 0.98 }}
       className={cn(
-        "relative flex cursor-pointer items-center gap-4 p-4 pr-2 transition-[background-color] ease-out hover:bg-accent-muted"
+        "group relative flex cursor-pointer items-center gap-4 p-4 pr-2 transition-[background-color] ease-out hover:bg-accent-muted"
       )}
     >
       <div className="relative size-8 shrink-0 [--image-radius:var(--radius-lg)]">
@@ -37,7 +42,14 @@ export function SocialLinkItem({ icon, title, href }: SocialLink) {
         </a>
       </h3>
 
-      <ArrowUpRightIcon className="size-4 text-muted-foreground" />
-    </div>
+      <motion.div
+        variants={{
+          hover: { x: 2, y: -2 },
+        }}
+        transition={{ duration: 0.15, ease: "easeOut" }}
+      >
+        <ArrowUpRightIcon className="size-4 text-muted-foreground transition-colors group-hover:text-foreground" />
+      </motion.div>
+    </motion.div>
   )
 }
