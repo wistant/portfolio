@@ -27,6 +27,7 @@
     "@react-bits": "https://reactbits.dev/r/{name}.json",
     "@soundcn": "https://soundcn.xyz/r/{name}.json",
     "@bklit": "https://ui.bklit.com/r/{name}.json",
-    "@magicui": "https://magicui.design/r/{name}"
+    "@magicui": "https://magicui.design/r/{name}",
+    "@kokonutui": "https://kokonutui.com/r/{name}.json"
   }
 }

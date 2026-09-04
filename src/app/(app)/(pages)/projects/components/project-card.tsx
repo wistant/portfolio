@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { findTechBySkill } from "@/data/portfolio/tech-stack"
+import { motion } from "motion/react"
 
 import type { Project } from "@/types/projects"
 import { TechTag } from "@/components/tech-tag"
@@ -43,7 +44,9 @@ export function ProjectCard({
   const detailsLabel = hasLocalPage ? "Read Case Study" : "View Live Site"
 
   return (
-    <div
+    <motion.div
+      whileHover={{ y: -3 }}
+      transition={{ duration: 0.2, ease: "easeOut" }}
       onMouseEnter={() => setCardHover(true)}
       onMouseLeave={() => setCardHover(false)}
       onClick={() => router.push(detailsHref)}
@@ -91,6 +94,6 @@ export function ProjectCard({
         liveLink={project.link}
         github={project.github}
       />
-    </div>
+    </motion.div>
   )
 }

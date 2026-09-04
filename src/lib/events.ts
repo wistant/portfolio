@@ -41,7 +41,6 @@ export type Event = z.infer<typeof eventSchema>
 export function trackEvent(input: Event) {
   const event = eventSchema.parse(input)
   if (event) {
-    console.log("trackEvent:", event)
     posthog.capture(event.name, event.properties)
     op.track(event.name, event.properties)
   }
