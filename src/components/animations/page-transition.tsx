@@ -2,7 +2,7 @@
 
 import React from "react"
 import { usePathname } from "next/navigation"
-import { motion, AnimatePresence } from "motion/react"
+import { AnimatePresence, motion } from "motion/react"
 
 export function PageTransition({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
