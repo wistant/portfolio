@@ -29,7 +29,7 @@ export function ExperiencePositionItem({
   return (
     <Collapsible
       className="group/experience-position relative"
-      defaultOpen={position.isExpanded}
+      defaultOpen={position.isExpanded ?? false}
       disabled={!position.description}
     >
       <div className="pointer-events-none absolute bottom-0 left-3 hidden h-px w-3 bg-border group-last/experience-position:flex" />
