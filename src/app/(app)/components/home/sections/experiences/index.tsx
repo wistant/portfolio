@@ -2,7 +2,11 @@ import { EXPERIENCES } from "@/data/portfolio/experiences"
 import { ChevronDownIcon } from "lucide-react"
 
 import type { Experience } from "@/types/experiences"
-import { FadeIn, StaggerGroup, StaggerItem } from "@/components/animations/fade-in"
+import {
+  FadeIn,
+  StaggerGroup,
+  StaggerItem,
+} from "@/components/animations/fade-in"
 import { Button } from "@/components/base/ui/button"
 import {
   Collapsible,
