@@ -1,7 +1,7 @@
 import { USER } from "@/data/portfolio/user"
 
-import { FadeIn } from "@/components/animations/fade-in"
 import { Prose } from "@/components/ui/typography"
+import { FadeIn } from "@/components/animations/fade-in"
 import { Markdown } from "@/components/markdown"
 import {
   Panel,
