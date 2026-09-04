@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { findTechBySkill } from "@/data/portfolio/tech-stack"
+import { motion } from "motion/react"
 
 import type { Project } from "@/types/projects"
 import { TechTag } from "@/components/tech-tag"
@@ -17,8 +18,6 @@ interface ProjectCardProps {
   stars?: number | null
   backgrounds?: string[]
 }
-
-import { motion } from "motion/react"
 
 export function ProjectCard({
   project,
