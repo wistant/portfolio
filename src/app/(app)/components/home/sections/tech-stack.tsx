@@ -3,7 +3,11 @@
 import { LOCAL_ICONS, TECH_STACK } from "@/data/portfolio/tech-stack"
 import { motion } from "motion/react"
 
-import { FadeIn, StaggerGroup, StaggerItem } from "@/components/animations/fade-in"
+import {
+  FadeIn,
+  StaggerGroup,
+  StaggerItem,
+} from "@/components/animations/fade-in"
 import { Panel, PanelContent } from "@/components/panel"
 
 export function TechStack() {
