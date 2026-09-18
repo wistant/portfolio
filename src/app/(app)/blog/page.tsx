@@ -3,12 +3,12 @@ import type { Metadata } from "next"
 import { getDocsByCategory } from "@/data/doc/documents"
 
 import { X_HANDLE } from "@/config/site"
+import { PageContainer } from "@/components/page-container"
 import {
   PageHeading,
   PageHeadingTagline,
   PageHeadingTitle,
 } from "@/components/page-heading"
-import { PageContainer } from "@/components/page-container"
 
 import { PostList } from "./components/post-list"
 import { PostListWithSearch } from "./components/post-list-with-search"
