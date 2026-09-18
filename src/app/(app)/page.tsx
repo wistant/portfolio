@@ -6,7 +6,6 @@ import { BlocksSeparator } from "@/components/blocks-separator"
 
 import { Blog } from "./blog/components"
 import { Certifications } from "./certifications/components"
-import { Projects } from "./projects/components"
 import { ProfileCover } from "./components/home/profile/cover"
 import { SocialLinks } from "./components/home/profile/social"
 import { About } from "./components/home/sections/about"
@@ -15,6 +14,7 @@ import { GitHubContributions } from "./components/home/sections/github-contribut
 import { Insights } from "./components/home/sections/insights"
 import { Sponsors } from "./components/home/sections/sponsors"
 import { TechStack } from "./components/home/sections/tech-stack"
+import { Projects } from "./projects/components"
 
 export const metadata: Metadata = {
   alternates: {
