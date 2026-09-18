@@ -1,5 +1,49 @@
 # portfolio
 
+## 1.0.8-alpha.0
+
+### Patch Changes
+
+- 7e284fb: - da66b38: release: switch 1.0.7 from Stable to alpha
+  - 1db1369: style(components): format liquid-glass-card.tsx
+  - 3f816fa: style(components): format page-transition.tsx
+  - eac7226: style(app): format tech-stack.tsx
+  - 557ca3d: style(app): format index.tsx
+  - fb087d5: style(app): format about.tsx
+  - a559ff6: style(app): format project-card.tsx
+  - 5898dfc: refactor(ui): remove obsolete theme-toggle component
+  - 97c7ea7: refactor(analytics): remove debug console log in trackEvent
+  - 113dfe8: refactor(home): remove commented out ProfileHeader component
+  - e576d6f: chore(icons): remove unused brand icons from public
+  - cfc908b: ui(sections): integrate fade-in and hover motion animations across pages
+  - 0651130: ui(animations): add entrance and page transition components
+  - 522aa22: ui(kokonutui): add liquid-glass-card component
+  - 127e3b2: fix(experiences): set default isExpanded state to false
+  - 10aaca6: ui(contribution-graph): adjust level color fill themes
+  - 334ccc2: ui(button): export ButtonProps type
+  - ff32db8: ui(card): refactor spacing variables and footer layout
+  - 5d075cb: chore(config): add kokonutui registry to components.json
+  - 4be230f: style(style): format dont-start-from-scratch-fork-hack-ship.mdx
+  - 25a76b9: style(readme): format README.md
+  - 92364c2: docs(readme): clean layout structure and categorize badges
+  - 9619baa: feat(blog): restore historical computing examples in open source guide
+  - da4d756: chore(assets): add local image assets for the open source blog post
+  - a5e5356: feat(blog): publish guide on hacking open source architectures
+- 5508e9d: - 1a22dac: style(app): format page.tsx
+  - 513bf3e: style(app): format page.tsx
+  - 47ba04c: style(app): format index.tsx
+  - d36099a: style(app): format page.tsx
+  - e25dc08: style(app): format page.tsx
+  - 44bd868: style(app): format all-certifications.tsx
+  - 9cdc356: style(app): format page.tsx
+  - c16cb14: style(app): format post-list.tsx
+  - 760bbbd: style(app): format all-posts.tsx
+  - df45a66: feat(doc-layout): add DocHeaderSpacer component
+  - c45acd5: refactor(animations): extend StaggerGroup and StaggerItem with polymorphic as prop
+  - 66029cb: refactor(routing): flatten (docs) and (pages) route groups into direct segments
+  - c447e3c: style(style): format dont-start-from-scratch-fork-hack-ship.mdx
+  - 25c66af: style(readme): format README.md
+
 ## 1.0.7
 
 ### Patch Changes
