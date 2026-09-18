@@ -4,13 +4,13 @@ import type { Metadata } from "next"
 
 import { X_HANDLE } from "@/config/site"
 import MasonryGallery from "@/components/mvpblocks/masonry-grid-1"
+import { PageContainer } from "@/components/page-container"
 import {
   PageHeading,
   PageHeadingDescription,
   PageHeadingTagline,
   PageHeadingTitle,
 } from "@/components/page-heading"
-import { PageContainer } from "@/components/page-container"
 
 const title = "Gallery"
 const description =
