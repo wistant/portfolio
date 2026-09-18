@@ -6,15 +6,19 @@ import { ArrowRightIcon } from "lucide-react"
 import { getBackgroundImages } from "@/lib/backgrounds"
 import { getGithubStars } from "@/lib/github"
 import { cn } from "@/lib/utils"
-import { FadeIn } from "@/components/animations/fade-in"
+import {
+  FadeIn,
+  StaggerGroup,
+  StaggerItem,
+} from "@/components/animations/fade-in"
 import { Button } from "@/components/base/ui/button"
-
 import {
   Panel,
   PanelHeader,
   PanelTitle,
   PanelTitleSup,
-} from "../../../../../components/panel"
+} from "@/components/panel"
+
 import { ProjectCard } from "./project-card"
 
 export async function Projects() {
@@ -49,9 +53,14 @@ export async function Projects() {
             <div className="border-l border-line"></div>
           </div>
 
-          <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <StaggerGroup
+            as="ul"
+            staggerDelay={0.08}
+            className="grid grid-cols-1 gap-4 sm:grid-cols-2"
+          >
             {visibleProjects.map((project) => (
-              <li
+              <StaggerItem
+                as="li"
                 key={project.id}
                 className={cn(
                   "max-sm:screen-line-top max-sm:screen-line-bottom",
@@ -65,9 +74,9 @@ export async function Projects() {
                   stars={starsMap[project.id]}
                   backgrounds={backgrounds}
                 />
-              </li>
+              </StaggerItem>
             ))}
-          </ul>
+          </StaggerGroup>
         </div>
 
         {PROJECTS.length > 4 && (

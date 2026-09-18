@@ -9,6 +9,7 @@ import { SPONSOR_TIERS } from "@/types/sponsor-types"
 import { SPONSORSHIP_URL, UTM_PARAMS, X_HANDLE } from "@/config/site"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/base/ui/button"
+import { PageContainer } from "@/components/page-container"
 import {
   PageHeading,
   PageHeadingDescription,
@@ -65,7 +66,7 @@ export default function Page() {
   }
 
   return (
-    <div>
+    <PageContainer>
       <PageHeading>
         <PageHeadingTagline>Sponsors</PageHeadingTagline>
         <PageHeadingTitle>Backed by the community.</PageHeadingTitle>
@@ -99,7 +100,7 @@ export default function Page() {
       </div>
 
       <div className="screen-line-top h-4" />
-    </div>
+    </PageContainer>
   )
 }
 

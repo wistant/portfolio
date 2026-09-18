@@ -5,12 +5,17 @@ import { format } from "date-fns"
 import { AwardIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
+import { StaggerGroup, StaggerItem } from "@/components/animations/fade-in"
 
 export default function AllCertifications() {
   const allCerts = getDocsByCategory("certifications")
 
   return (
-    <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+    <StaggerGroup
+      as="ul"
+      staggerDelay={0.08}
+      className="grid grid-cols-1 gap-4 sm:grid-cols-2"
+    >
       {allCerts.slice(0, 4).map((cert) => {
         const logoUrl = cert.metadata.logo
         const dateStr = cert.metadata.createdAt
@@ -18,7 +23,8 @@ export default function AllCertifications() {
           : ""
 
         return (
-          <li
+          <StaggerItem
+            as="li"
             key={cert.slug}
             className={cn(
               "max-sm:screen-line-top max-sm:screen-line-bottom",
@@ -72,9 +78,9 @@ export default function AllCertifications() {
                 <span className="font-mono">→</span>
               </Link>
             </div>
-          </li>
+          </StaggerItem>
         )
       })}
-    </ul>
+    </StaggerGroup>
   )
 }

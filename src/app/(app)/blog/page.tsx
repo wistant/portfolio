@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 import { getDocsByCategory } from "@/data/doc/documents"
 
 import { X_HANDLE } from "@/config/site"
+import { PageContainer } from "@/components/page-container"
 import {
   PageHeading,
   PageHeadingTagline,
@@ -46,7 +47,7 @@ export default function Page() {
   const allPosts = getDocsByCategory("blog")
 
   return (
-    <div className="min-h-svh">
+    <PageContainer className="min-h-svh">
       <PageHeading>
         <PageHeadingTagline>Blog</PageHeadingTagline>
         <PageHeadingTitle>
@@ -71,6 +72,6 @@ export default function Page() {
       </Suspense>
 
       <div className="h-4" />
-    </div>
+    </PageContainer>
   )
 }

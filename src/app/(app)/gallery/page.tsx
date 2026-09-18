@@ -4,6 +4,7 @@ import type { Metadata } from "next"
 
 import { X_HANDLE } from "@/config/site"
 import MasonryGallery from "@/components/mvpblocks/masonry-grid-1"
+import { PageContainer } from "@/components/page-container"
 import {
   PageHeading,
   PageHeadingDescription,
@@ -55,7 +56,7 @@ export default function Page() {
   }
 
   return (
-    <div>
+    <PageContainer>
       <PageHeading>
         <PageHeadingTagline>Gallery</PageHeadingTagline>
         <PageHeadingTitle>Visual captures & memories.</PageHeadingTitle>
@@ -71,6 +72,6 @@ export default function Page() {
       <MasonryGallery images={images} />
 
       <div className="screen-line-top h-4" />
-    </div>
+    </PageContainer>
   )
 }

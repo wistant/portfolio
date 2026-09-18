@@ -15,7 +15,7 @@ export function TechStack() {
     <FadeIn>
       <Panel id="stack" className="before:content-none">
         <PanelContent>
-          <StaggerGroup className="flex flex-wrap gap-2">
+          <StaggerGroup className="flex flex-wrap gap-2" staggerDelay={0.025}>
             {TECH_STACK.filter((tech) => tech.showInStack !== false).map(
               (tech) => {
                 const localIcon = LOCAL_ICONS[tech.key]

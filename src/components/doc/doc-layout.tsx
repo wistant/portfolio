@@ -60,3 +60,19 @@ export function DocRightCol({
     />
   )
 }
+
+export function DocHeaderSpacer({
+  className,
+  ...props
+}: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="doc-header-spacer"
+      className={cn(
+        "mx-auto h-12 border-x border-line md:max-w-3xl",
+        className
+      )}
+      {...props}
+    />
+  )
+}

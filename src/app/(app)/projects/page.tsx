@@ -6,13 +6,15 @@ import { X_HANDLE } from "@/config/site"
 import { getBackgroundImages } from "@/lib/backgrounds"
 import { getGithubStars } from "@/lib/github"
 import { cn } from "@/lib/utils"
+import { StaggerGroup, StaggerItem } from "@/components/animations/fade-in"
+import { PageContainer } from "@/components/page-container"
 import {
   PageHeading,
   PageHeadingDescription,
   PageHeadingTagline,
   PageHeadingTitle,
 } from "@/components/page-heading"
-import { ProjectCard } from "@/app/(app)/(pages)/projects/components/project-card"
+import { ProjectCard } from "@/app/(app)/projects/components/project-card"
 
 const title = "Projects"
 const description =
@@ -92,7 +94,7 @@ export default async function Page() {
   )
 
   return (
-    <div className="min-h-svh">
+    <PageContainer className="min-h-svh">
       <PageHeading>
         <PageHeadingTagline>Projects</PageHeadingTagline>
         <PageHeadingTitle>
@@ -122,9 +124,14 @@ export default async function Page() {
               <div className="border-l border-line"></div>
             </div>
 
-            <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <StaggerGroup
+              as="ul"
+              staggerDelay={0.06}
+              className="grid grid-cols-1 gap-4 sm:grid-cols-2"
+            >
               {openSource.map((project) => (
-                <li
+                <StaggerItem
+                  as="li"
                   key={project.id}
                   className={cn(
                     "max-sm:screen-line-top max-sm:screen-line-bottom",
@@ -138,9 +145,9 @@ export default async function Page() {
                     stars={starsMap[project.id]}
                     backgrounds={backgrounds}
                   />
-                </li>
+                </StaggerItem>
               ))}
-            </ul>
+            </StaggerGroup>
           </div>
         </div>
       )}
@@ -162,9 +169,14 @@ export default async function Page() {
               <div className="border-l border-line"></div>
             </div>
 
-            <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <StaggerGroup
+              as="ul"
+              staggerDelay={0.06}
+              className="grid grid-cols-1 gap-4 sm:grid-cols-2"
+            >
               {client.map((project) => (
-                <li
+                <StaggerItem
+                  as="li"
                   key={project.id}
                   className={cn(
                     "max-sm:screen-line-top max-sm:screen-line-bottom",
@@ -178,9 +190,9 @@ export default async function Page() {
                     stars={starsMap[project.id]}
                     backgrounds={backgrounds}
                   />
-                </li>
+                </StaggerItem>
               ))}
-            </ul>
+            </StaggerGroup>
           </div>
         </div>
       )}
@@ -202,9 +214,14 @@ export default async function Page() {
               <div className="border-l border-line"></div>
             </div>
 
-            <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <StaggerGroup
+              as="ul"
+              staggerDelay={0.06}
+              className="grid grid-cols-1 gap-4 sm:grid-cols-2"
+            >
               {rest.map((project) => (
-                <li
+                <StaggerItem
+                  as="li"
                   key={project.id}
                   className={cn(
                     "max-sm:screen-line-top max-sm:screen-line-bottom",
@@ -218,14 +235,14 @@ export default async function Page() {
                     stars={starsMap[project.id]}
                     backgrounds={backgrounds}
                   />
-                </li>
+                </StaggerItem>
               ))}
-            </ul>
+            </StaggerGroup>
           </div>
         </div>
       )}
 
       <div className="h-4" />
-    </div>
+    </PageContainer>
   )
 }
