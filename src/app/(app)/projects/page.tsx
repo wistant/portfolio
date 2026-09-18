@@ -6,14 +6,14 @@ import { X_HANDLE } from "@/config/site"
 import { getBackgroundImages } from "@/lib/backgrounds"
 import { getGithubStars } from "@/lib/github"
 import { cn } from "@/lib/utils"
+import { StaggerGroup, StaggerItem } from "@/components/animations/fade-in"
+import { PageContainer } from "@/components/page-container"
 import {
   PageHeading,
   PageHeadingDescription,
   PageHeadingTagline,
   PageHeadingTitle,
 } from "@/components/page-heading"
-import { PageContainer } from "@/components/page-container"
-import { StaggerGroup, StaggerItem } from "@/components/animations/fade-in"
 import { ProjectCard } from "@/app/(app)/projects/components/project-card"
 
 const title = "Projects"
