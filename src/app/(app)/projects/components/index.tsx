@@ -6,15 +6,19 @@ import { ArrowRightIcon } from "lucide-react"
 import { getBackgroundImages } from "@/lib/backgrounds"
 import { getGithubStars } from "@/lib/github"
 import { cn } from "@/lib/utils"
-import { FadeIn, StaggerGroup, StaggerItem } from "@/components/animations/fade-in"
+import {
+  FadeIn,
+  StaggerGroup,
+  StaggerItem,
+} from "@/components/animations/fade-in"
 import { Button } from "@/components/base/ui/button"
-
 import {
   Panel,
   PanelHeader,
   PanelTitle,
   PanelTitleSup,
 } from "@/components/panel"
+
 import { ProjectCard } from "./project-card"
 
 export async function Projects() {
