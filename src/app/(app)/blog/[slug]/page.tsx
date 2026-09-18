@@ -24,6 +24,7 @@ import {
   DocContainer,
   DocContentCol,
   DocGrid,
+  DocHeaderSpacer,
   DocLeftCol,
   DocRightCol,
 } from "@/components/doc/doc-layout"
@@ -140,6 +141,8 @@ export default async function Page({ params }: PageProps<"/blog/[slug]">) {
         previous={previous ? `/blog/${previous.slug}` : null}
         next={next ? `/blog/${next.slug}` : null}
       />
+
+      <DocHeaderSpacer />
 
       <DocPageRoot>
         <DocContainer>

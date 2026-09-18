@@ -9,6 +9,7 @@ import type { Doc } from "@/types/document"
 import { X_HANDLE } from "@/config/site"
 import { Button } from "@/components/ui/button"
 import { BlocksSeparator } from "@/components/blocks-separator"
+import { PageContainer } from "@/components/page-container"
 
 import CertificationsPageTitle from "./components/page-title"
 
@@ -58,7 +59,7 @@ export default function CertificationsPage() {
   const groupKeys = Object.keys(groupedCerts)
 
   return (
-    <div className="min-h-svh space-y-8">
+    <PageContainer className="min-h-svh space-y-8">
       <CertificationsPageTitle />
 
       {groupKeys.length === 0 ? (
@@ -195,6 +196,6 @@ export default function CertificationsPage() {
       )}
 
       <div className="h-4" />
-    </div>
+    </PageContainer>
   )
 }

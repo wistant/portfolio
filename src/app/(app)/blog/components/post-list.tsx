@@ -1,5 +1,9 @@
 import type { Doc } from "@/types/document"
 import { cn } from "@/lib/utils"
+import {
+  StaggerGroup,
+  StaggerItem,
+} from "@/components/animations/fade-in"
 import { PostItem } from "@/components/post-item"
 
 export function PostList({ posts }: { posts: Doc[] }) {
@@ -10,9 +14,14 @@ export function PostList({ posts }: { posts: Doc[] }) {
         <div className="border-l border-line" />
       </div>
 
-      <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <StaggerGroup
+        as="ul"
+        staggerDelay={0.06}
+        className="grid grid-cols-1 gap-4 sm:grid-cols-2"
+      >
         {posts.map((post, index) => (
-          <li
+          <StaggerItem
+            as="li"
             key={post.slug}
             className={cn(
               "max-sm:screen-line-top max-sm:screen-line-bottom",
@@ -23,7 +32,7 @@ export function PostList({ posts }: { posts: Doc[] }) {
               post={post}
               imageLoading={index <= 3 ? "eager" : "lazy"}
             />
-          </li>
+          </StaggerItem>
         ))}
 
         {posts.length === 0 && (
@@ -31,7 +40,8 @@ export function PostList({ posts }: { posts: Doc[] }) {
             <p className="font-mono text-sm">No posts found.</p>
           </li>
         )}
-      </ul>
+      </StaggerGroup>
     </div>
   )
 }
+

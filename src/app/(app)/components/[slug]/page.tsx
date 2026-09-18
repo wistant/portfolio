@@ -7,10 +7,9 @@ import {
   getDocBySlug,
   getDocsByCategory,
 } from "@/data/doc/documents"
-import { PROJECTS } from "@/data/portfolio/projects"
 import { USER } from "@/data/portfolio/user"
 import { getTableOfContents } from "fumadocs-core/content/toc"
-import { ArrowLeftIcon, ArrowRightIcon, LinkIcon } from "lucide-react"
+import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react"
 import type { BlogPosting as PageSchema, WithContext } from "schema-dts"
 
 import type { Doc } from "@/types/document"
@@ -29,14 +28,13 @@ import {
   DocContainer,
   DocContentCol,
   DocGrid,
+  DocHeaderSpacer,
   DocLeftCol,
   DocRightCol,
 } from "@/components/doc/doc-layout"
 import { LLMCopyButtonWithViewOptions } from "@/components/doc/doc-page-actions"
 import { DocPageRoot } from "@/components/doc/doc-page-root"
 import { DocShareMenu } from "@/components/doc/doc-share-menu"
-import { FramedImage } from "@/components/embed"
-import { Icons } from "@/components/icons"
 import { MDX } from "@/components/mdx"
 import { TOCInline } from "@/components/toc-inline"
 import { TOCMinimap } from "@/components/toc-minimap"
@@ -46,29 +44,26 @@ export const dynamic = "force-static"
 export const dynamicParams = true
 
 export async function generateStaticParams() {
-  const docs = getDocsByCategory("projects")
+  const docs = getDocsByCategory("components")
   return docs.map((doc) => ({ slug: doc.slug }))
 }
 
 export async function generateMetadata({
   params,
-}: PageProps<"/projects/[slug]">): Promise<Metadata> {
+}: PageProps<"/components/[slug]">): Promise<Metadata> {
   const slug = (await params).slug
   const doc = getDocBySlug(slug)
 
-  if (!doc || doc.metadata.category !== "projects") {
+  if (!doc || doc.metadata.category !== "components") {
     return notFound()
   }
 
   const { title, description, image, createdAt, updatedAt } = doc.metadata
 
-  const projectData = PROJECTS.find((p) => p.id === slug)
-  const postUrl = getDocUrl(doc)
+  const postUrl = `/components/${doc.slug}`
   const ogImage =
     image ||
-    (projectData?.logo
-      ? projectData.logo
-      : `/og/simple?title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}`)
+    `/og/simple?title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}`
 
   return {
     title,
@@ -97,10 +92,7 @@ export async function generateMetadata({
   }
 }
 
-function getPageJsonLd(
-  doc: Doc,
-  logoFallback?: string
-): WithContext<PageSchema> {
+function getPageJsonLd(doc: Doc): WithContext<PageSchema> {
   return {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -108,9 +100,8 @@ function getPageJsonLd(
     description: doc.metadata.description,
     image:
       doc.metadata.image ||
-      logoFallback ||
       `/og/simple?title=${encodeURIComponent(doc.metadata.title)}&description=${encodeURIComponent(doc.metadata.description)}`,
-    url: `${SITE_INFO.url}${getDocUrl(doc)}`,
+    url: `${SITE_INFO.url}/components/${doc.slug}`,
     datePublished: new Date(doc.metadata.createdAt).toISOString(),
     dateModified: new Date(doc.metadata.updatedAt).toISOString(),
     author: {
@@ -122,19 +113,30 @@ function getPageJsonLd(
   }
 }
 
-export default async function Page({ params }: PageProps<"/projects/[slug]">) {
+export default async function Page({
+  params,
+}: PageProps<"/components/[slug]">) {
   const slug = (await params).slug
   const doc = getDocBySlug(slug)
 
-  if (!doc || doc.metadata.category !== "projects") {
+  if (!doc) {
+    notFound()
+  }
+
+  if (doc.metadata.category !== "components") {
     notFound()
   }
 
   const toc = getTableOfContents(doc.content)
 
-  const allProjects = getDocsByCategory("projects")
-  const { previous, next } = findNeighbour(allProjects, slug)
-  const projectData = PROJECTS.find((p) => p.id === slug)
+  const allDocs = getDocsByCategory("components")
+    .slice()
+    .sort((a, b) =>
+      a.metadata.title.localeCompare(b.metadata.title, "en", {
+        sensitivity: "base",
+      })
+    )
+  const { previous, next } = findNeighbour(allDocs, slug)
 
   return (
     <>
@@ -142,17 +144,16 @@ export default async function Page({ params }: PageProps<"/projects/[slug]">) {
         id="schema-jsonld"
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(getPageJsonLd(doc, projectData?.logo)).replace(
-            /</g,
-            "\\u003c"
-          ),
+          __html: JSON.stringify(getPageJsonLd(doc)).replace(/</g, "\\u003c"),
         }}
       />
 
       <DocKeyboardShortcuts
-        previous={previous ? `/projects/${previous.slug}` : null}
-        next={next ? `/projects/${next.slug}` : null}
+        previous={previous ? `/components/${previous.slug}` : null}
+        next={next ? `/components/${next.slug}` : null}
       />
+
+      <DocHeaderSpacer />
 
       <DocPageRoot>
         <DocContainer>
@@ -165,19 +166,22 @@ export default async function Page({ params }: PageProps<"/projects/[slug]">) {
               size="sm"
               asChild
             >
-              <Link href="/projects">
+              <Link href="/components">
                 <ArrowLeftIcon />
-                Projects
+                Components
               </Link>
             </Button>
 
             <div className="flex items-center gap-2">
               <LLMCopyButtonWithViewOptions
-                markdownUrl={`${getDocUrl(doc)}.mdx`}
-                isComponent={false}
+                markdownUrl={`/components/${doc.slug}.mdx`}
+                isComponent
               />
 
-              <DocShareMenu title={doc.metadata.title} url={getDocUrl(doc)} />
+              <DocShareMenu
+                title={doc.metadata.title}
+                url={`/components/${doc.slug}`}
+              />
 
               {previous && (
                 <Tooltip>
@@ -190,8 +194,8 @@ export default async function Page({ params }: PageProps<"/projects/[slug]">) {
                         asChild
                       >
                         <Link
-                          href={`/projects/${previous.slug}`}
-                          aria-label="Previous Project"
+                          href={`/components/${previous.slug}`}
+                          aria-label="Previous Component"
                         >
                           <ArrowLeftIcon />
                         </Link>
@@ -200,7 +204,7 @@ export default async function Page({ params }: PageProps<"/projects/[slug]">) {
                   />
                   <TooltipContent className="pr-2 pl-3">
                     <div className="flex items-center gap-3">
-                      Previous Project
+                      Previous Component
                       <Kbd>
                         <ArrowLeftIcon />
                       </Kbd>
@@ -220,8 +224,8 @@ export default async function Page({ params }: PageProps<"/projects/[slug]">) {
                         asChild
                       >
                         <Link
-                          href={`/projects/${next.slug}`}
-                          aria-label="Next Project"
+                          href={`/components/${next.slug}`}
+                          aria-label="Next Component"
                         >
                           <ArrowRightIcon />
                         </Link>
@@ -230,7 +234,7 @@ export default async function Page({ params }: PageProps<"/projects/[slug]">) {
                   />
                   <TooltipContent className="pr-2 pl-3">
                     <div className="flex items-center gap-3">
-                      Next Project
+                      Next Component
                       <Kbd>
                         <ArrowRightIcon />
                       </Kbd>
@@ -244,48 +248,18 @@ export default async function Page({ params }: PageProps<"/projects/[slug]">) {
           <div className="screen-line-top screen-line-bottom">
             <div
               className={cn(
-                "h-8",
-                "before:absolute before:left-[-100vw] before:-z-1 before:h-full before:w-[200vw]",
+                "h-8 before:absolute before:left-[-100vw] before:-z-1 before:h-full before:w-[200vw]",
                 "before:bg-[repeating-linear-gradient(315deg,var(--pattern-foreground)_0,var(--pattern-foreground)_1px,transparent_0,transparent_50%)] before:bg-size-[10px_10px] before:[--pattern-foreground:var(--color-line)]/56"
               )}
             />
           </div>
 
-          <div
+          <h1
             data-slot="doc-title"
-            className="screen-line-bottom flex flex-col justify-between gap-4 px-4 py-4 md:flex-row md:items-center md:py-6"
+            className="screen-line-bottom px-4 text-3xl font-semibold tracking-tight text-balance"
           >
-            <h1 className="text-3xl font-semibold tracking-tight text-balance">
-              {doc.metadata.title}
-            </h1>
-
-            <div className="flex shrink-0 items-center gap-2">
-              {doc.metadata.webUrl && (
-                <Button variant="outline" size="sm" asChild className="gap-2">
-                  <a
-                    href={doc.metadata.webUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <LinkIcon className="size-4" />
-                    <span>Live Demo</span>
-                  </a>
-                </Button>
-              )}
-              {doc.metadata.githubUrl && (
-                <Button variant="outline" size="sm" asChild className="gap-2">
-                  <a
-                    href={doc.metadata.githubUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Icons.github className="size-4" />
-                    <span>GitHub</span>
-                  </a>
-                </Button>
-              )}
-            </div>
-          </div>
+            {doc.metadata.title}
+          </h1>
         </DocContainer>
 
         <DocGrid>
@@ -296,21 +270,6 @@ export default async function Page({ params }: PageProps<"/projects/[slug]">) {
               <p className="text-muted-foreground">
                 {doc.metadata.description}
               </p>
-
-              {(doc.metadata.image ||
-                projectData?.projectImage ||
-                projectData?.logo) && (
-                <FramedImage
-                  src={
-                    doc.metadata.image ||
-                    projectData?.projectImage ||
-                    projectData?.logo ||
-                    ""
-                  }
-                  alt={doc.metadata.title}
-                  className="my-6 aspect-[1570/760] w-full object-cover"
-                />
-              )}
 
               <TOCInline className="lg:hidden" items={toc} />
 
@@ -329,8 +288,4 @@ export default async function Page({ params }: PageProps<"/projects/[slug]">) {
       </DocPageRoot>
     </>
   )
-}
-
-function getDocUrl(doc: Doc) {
-  return `/projects/${doc.slug}`
 }

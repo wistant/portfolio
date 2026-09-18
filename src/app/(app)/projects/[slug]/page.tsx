@@ -2,10 +2,15 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import Script from "next/script"
-import { findNeighbour, getAllDocs, getDocBySlug } from "@/data/doc/documents"
+import {
+  findNeighbour,
+  getDocBySlug,
+  getDocsByCategory,
+} from "@/data/doc/documents"
+import { PROJECTS } from "@/data/portfolio/projects"
 import { USER } from "@/data/portfolio/user"
 import { getTableOfContents } from "fumadocs-core/content/toc"
-import { ArrowLeftIcon, ArrowRightIcon, ExternalLinkIcon } from "lucide-react"
+import { ArrowLeftIcon, ArrowRightIcon, LinkIcon } from "lucide-react"
 import type { BlogPosting as PageSchema, WithContext } from "schema-dts"
 
 import type { Doc } from "@/types/document"
@@ -24,6 +29,7 @@ import {
   DocContainer,
   DocContentCol,
   DocGrid,
+  DocHeaderSpacer,
   DocLeftCol,
   DocRightCol,
 } from "@/components/doc/doc-layout"
@@ -31,6 +37,7 @@ import { LLMCopyButtonWithViewOptions } from "@/components/doc/doc-page-actions"
 import { DocPageRoot } from "@/components/doc/doc-page-root"
 import { DocShareMenu } from "@/components/doc/doc-share-menu"
 import { FramedImage } from "@/components/embed"
+import { Icons } from "@/components/icons"
 import { MDX } from "@/components/mdx"
 import { TOCInline } from "@/components/toc-inline"
 import { TOCMinimap } from "@/components/toc-minimap"
@@ -40,28 +47,29 @@ export const dynamic = "force-static"
 export const dynamicParams = true
 
 export async function generateStaticParams() {
-  const docs = getAllDocs()
-  return docs
-    .filter((doc) => doc.metadata.category === "certifications")
-    .map((doc) => ({ slug: doc.slug }))
+  const docs = getDocsByCategory("projects")
+  return docs.map((doc) => ({ slug: doc.slug }))
 }
 
 export async function generateMetadata({
   params,
-}: PageProps<"/certifications/[slug]">): Promise<Metadata> {
+}: PageProps<"/projects/[slug]">): Promise<Metadata> {
   const slug = (await params).slug
   const doc = getDocBySlug(slug)
 
-  if (!doc || doc.metadata.category !== "certifications") {
+  if (!doc || doc.metadata.category !== "projects") {
     return notFound()
   }
 
   const { title, description, image, createdAt, updatedAt } = doc.metadata
 
+  const projectData = PROJECTS.find((p) => p.id === slug)
   const postUrl = getDocUrl(doc)
   const ogImage =
     image ||
-    `/og/simple?title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}`
+    (projectData?.logo
+      ? projectData.logo
+      : `/og/simple?title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}`)
 
   return {
     title,
@@ -90,7 +98,10 @@ export async function generateMetadata({
   }
 }
 
-function getPageJsonLd(doc: Doc): WithContext<PageSchema> {
+function getPageJsonLd(
+  doc: Doc,
+  logoFallback?: string
+): WithContext<PageSchema> {
   return {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -98,6 +109,7 @@ function getPageJsonLd(doc: Doc): WithContext<PageSchema> {
     description: doc.metadata.description,
     image:
       doc.metadata.image ||
+      logoFallback ||
       `/og/simple?title=${encodeURIComponent(doc.metadata.title)}&description=${encodeURIComponent(doc.metadata.description)}`,
     url: `${SITE_INFO.url}${getDocUrl(doc)}`,
     datePublished: new Date(doc.metadata.createdAt).toISOString(),
@@ -111,22 +123,19 @@ function getPageJsonLd(doc: Doc): WithContext<PageSchema> {
   }
 }
 
-export default async function CertificationPage({
-  params,
-}: PageProps<"/certifications/[slug]">) {
+export default async function Page({ params }: PageProps<"/projects/[slug]">) {
   const slug = (await params).slug
   const doc = getDocBySlug(slug)
 
-  if (!doc || doc.metadata.category !== "certifications") {
+  if (!doc || doc.metadata.category !== "projects") {
     notFound()
   }
 
   const toc = getTableOfContents(doc.content)
 
-  const allCerts = getAllDocs().filter(
-    (d) => d.metadata.category === "certifications"
-  )
-  const { previous, next } = findNeighbour(allCerts, slug)
+  const allProjects = getDocsByCategory("projects")
+  const { previous, next } = findNeighbour(allProjects, slug)
+  const projectData = PROJECTS.find((p) => p.id === slug)
 
   return (
     <>
@@ -134,14 +143,19 @@ export default async function CertificationPage({
         id="schema-jsonld"
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(getPageJsonLd(doc)).replace(/</g, "\\u003c"),
+          __html: JSON.stringify(getPageJsonLd(doc, projectData?.logo)).replace(
+            /</g,
+            "\\u003c"
+          ),
         }}
       />
 
       <DocKeyboardShortcuts
-        previous={previous ? `/certifications/${previous.slug}` : null}
-        next={next ? `/certifications/${next.slug}` : null}
+        previous={previous ? `/projects/${previous.slug}` : null}
+        next={next ? `/projects/${next.slug}` : null}
       />
+
+      <DocHeaderSpacer />
 
       <DocPageRoot>
         <DocContainer>
@@ -154,9 +168,9 @@ export default async function CertificationPage({
               size="sm"
               asChild
             >
-              <Link href="/certifications">
-                <ArrowLeftIcon className="size-4" />
-                Certifications
+              <Link href="/projects">
+                <ArrowLeftIcon />
+                Projects
               </Link>
             </Button>
 
@@ -179,19 +193,19 @@ export default async function CertificationPage({
                         asChild
                       >
                         <Link
-                          href={`/certifications/${previous.slug}`}
-                          aria-label="Previous Certification"
+                          href={`/projects/${previous.slug}`}
+                          aria-label="Previous Project"
                         >
-                          <ArrowLeftIcon className="size-4" />
+                          <ArrowLeftIcon />
                         </Link>
                       </Button>
                     }
                   />
                   <TooltipContent className="pr-2 pl-3">
                     <div className="flex items-center gap-3">
-                      Previous Cert
+                      Previous Project
                       <Kbd>
-                        <ArrowLeftIcon className="size-3" />
+                        <ArrowLeftIcon />
                       </Kbd>
                     </div>
                   </TooltipContent>
@@ -209,19 +223,19 @@ export default async function CertificationPage({
                         asChild
                       >
                         <Link
-                          href={`/certifications/${next.slug}`}
-                          aria-label="Next Certification"
+                          href={`/projects/${next.slug}`}
+                          aria-label="Next Project"
                         >
-                          <ArrowRightIcon className="size-4" />
+                          <ArrowRightIcon />
                         </Link>
                       </Button>
                     }
                   />
                   <TooltipContent className="pr-2 pl-3">
                     <div className="flex items-center gap-3">
-                      Next Cert
+                      Next Project
                       <Kbd>
-                        <ArrowRightIcon className="size-3" />
+                        <ArrowRightIcon />
                       </Kbd>
                     </div>
                   </TooltipContent>
@@ -249,15 +263,27 @@ export default async function CertificationPage({
             </h1>
 
             <div className="flex shrink-0 items-center gap-2">
-              {doc.metadata.credentialUrl && (
+              {doc.metadata.webUrl && (
                 <Button variant="outline" size="sm" asChild className="gap-2">
                   <a
-                    href={doc.metadata.credentialUrl}
+                    href={doc.metadata.webUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <ExternalLinkIcon className="size-4" />
-                    <span>Verify Credential</span>
+                    <LinkIcon className="size-4" />
+                    <span>Live Demo</span>
+                  </a>
+                </Button>
+              )}
+              {doc.metadata.githubUrl && (
+                <Button variant="outline" size="sm" asChild className="gap-2">
+                  <a
+                    href={doc.metadata.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Icons.github className="size-4" />
+                    <span>GitHub</span>
                   </a>
                 </Button>
               )}
@@ -274,9 +300,16 @@ export default async function CertificationPage({
                 {doc.metadata.description}
               </p>
 
-              {doc.metadata.image && (
+              {(doc.metadata.image ||
+                projectData?.projectImage ||
+                projectData?.logo) && (
                 <FramedImage
-                  src={doc.metadata.image}
+                  src={
+                    doc.metadata.image ||
+                    projectData?.projectImage ||
+                    projectData?.logo ||
+                    ""
+                  }
                   alt={doc.metadata.title}
                   className="my-6 aspect-[1570/760] w-full object-cover"
                 />
@@ -302,5 +335,5 @@ export default async function CertificationPage({
 }
 
 function getDocUrl(doc: Doc) {
-  return `/certifications/${doc.slug}`
+  return `/projects/${doc.slug}`
 }

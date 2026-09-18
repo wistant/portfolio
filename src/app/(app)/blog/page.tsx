@@ -8,6 +8,7 @@ import {
   PageHeadingTagline,
   PageHeadingTitle,
 } from "@/components/page-heading"
+import { PageContainer } from "@/components/page-container"
 
 import { PostList } from "./components/post-list"
 import { PostListWithSearch } from "./components/post-list-with-search"
@@ -46,7 +47,7 @@ export default function Page() {
   const allPosts = getDocsByCategory("blog")
 
   return (
-    <div className="min-h-svh">
+    <PageContainer className="min-h-svh">
       <PageHeading>
         <PageHeadingTagline>Blog</PageHeadingTagline>
         <PageHeadingTitle>
@@ -71,6 +72,6 @@ export default function Page() {
       </Suspense>
 
       <div className="h-4" />
-    </div>
+    </PageContainer>
   )
 }

@@ -15,6 +15,7 @@ import {
   PageHeadingTagline,
   PageHeadingTitle,
 } from "@/components/page-heading"
+import { PageContainer } from "@/components/page-container"
 
 import { SponsorItem } from "./components/sponsor-item"
 
@@ -65,7 +66,7 @@ export default function Page() {
   }
 
   return (
-    <div>
+    <PageContainer>
       <PageHeading>
         <PageHeadingTagline>Sponsors</PageHeadingTagline>
         <PageHeadingTitle>Backed by the community.</PageHeadingTitle>
@@ -99,7 +100,7 @@ export default function Page() {
       </div>
 
       <div className="screen-line-top h-4" />
-    </div>
+    </PageContainer>
   )
 }
 

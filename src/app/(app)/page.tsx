@@ -4,9 +4,9 @@ import { SPONSORS } from "@/data/sponsor-data"
 
 import { BlocksSeparator } from "@/components/blocks-separator"
 
-import { Blog } from "./(pages)/blog/components"
-import { Certifications } from "./(pages)/certifications/components"
-import { Projects } from "./(pages)/projects/components"
+import { Blog } from "./blog/components"
+import { Certifications } from "./certifications/components"
+import { Projects } from "./projects/components"
 import { ProfileCover } from "./components/home/profile/cover"
 import { SocialLinks } from "./components/home/profile/social"
 import { About } from "./components/home/sections/about"

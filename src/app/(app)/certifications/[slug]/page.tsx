@@ -2,14 +2,10 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import Script from "next/script"
-import {
-  findNeighbour,
-  getDocBySlug,
-  getDocsByCategory,
-} from "@/data/doc/documents"
+import { findNeighbour, getAllDocs, getDocBySlug } from "@/data/doc/documents"
 import { USER } from "@/data/portfolio/user"
 import { getTableOfContents } from "fumadocs-core/content/toc"
-import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react"
+import { ArrowLeftIcon, ArrowRightIcon, ExternalLinkIcon } from "lucide-react"
 import type { BlogPosting as PageSchema, WithContext } from "schema-dts"
 
 import type { Doc } from "@/types/document"
@@ -28,12 +24,14 @@ import {
   DocContainer,
   DocContentCol,
   DocGrid,
+  DocHeaderSpacer,
   DocLeftCol,
   DocRightCol,
 } from "@/components/doc/doc-layout"
 import { LLMCopyButtonWithViewOptions } from "@/components/doc/doc-page-actions"
 import { DocPageRoot } from "@/components/doc/doc-page-root"
 import { DocShareMenu } from "@/components/doc/doc-share-menu"
+import { FramedImage } from "@/components/embed"
 import { MDX } from "@/components/mdx"
 import { TOCInline } from "@/components/toc-inline"
 import { TOCMinimap } from "@/components/toc-minimap"
@@ -43,23 +41,25 @@ export const dynamic = "force-static"
 export const dynamicParams = true
 
 export async function generateStaticParams() {
-  const docs = getDocsByCategory("components")
-  return docs.map((doc) => ({ slug: doc.slug }))
+  const docs = getAllDocs()
+  return docs
+    .filter((doc) => doc.metadata.category === "certifications")
+    .map((doc) => ({ slug: doc.slug }))
 }
 
 export async function generateMetadata({
   params,
-}: PageProps<"/components/[slug]">): Promise<Metadata> {
+}: PageProps<"/certifications/[slug]">): Promise<Metadata> {
   const slug = (await params).slug
   const doc = getDocBySlug(slug)
 
-  if (!doc || doc.metadata.category !== "components") {
+  if (!doc || doc.metadata.category !== "certifications") {
     return notFound()
   }
 
   const { title, description, image, createdAt, updatedAt } = doc.metadata
 
-  const postUrl = `/components/${doc.slug}`
+  const postUrl = getDocUrl(doc)
   const ogImage =
     image ||
     `/og/simple?title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}`
@@ -100,7 +100,7 @@ function getPageJsonLd(doc: Doc): WithContext<PageSchema> {
     image:
       doc.metadata.image ||
       `/og/simple?title=${encodeURIComponent(doc.metadata.title)}&description=${encodeURIComponent(doc.metadata.description)}`,
-    url: `${SITE_INFO.url}/components/${doc.slug}`,
+    url: `${SITE_INFO.url}${getDocUrl(doc)}`,
     datePublished: new Date(doc.metadata.createdAt).toISOString(),
     dateModified: new Date(doc.metadata.updatedAt).toISOString(),
     author: {
@@ -112,30 +112,22 @@ function getPageJsonLd(doc: Doc): WithContext<PageSchema> {
   }
 }
 
-export default async function Page({
+export default async function CertificationPage({
   params,
-}: PageProps<"/components/[slug]">) {
+}: PageProps<"/certifications/[slug]">) {
   const slug = (await params).slug
   const doc = getDocBySlug(slug)
 
-  if (!doc) {
-    notFound()
-  }
-
-  if (doc.metadata.category !== "components") {
+  if (!doc || doc.metadata.category !== "certifications") {
     notFound()
   }
 
   const toc = getTableOfContents(doc.content)
 
-  const allDocs = getDocsByCategory("components")
-    .slice()
-    .sort((a, b) =>
-      a.metadata.title.localeCompare(b.metadata.title, "en", {
-        sensitivity: "base",
-      })
-    )
-  const { previous, next } = findNeighbour(allDocs, slug)
+  const allCerts = getAllDocs().filter(
+    (d) => d.metadata.category === "certifications"
+  )
+  const { previous, next } = findNeighbour(allCerts, slug)
 
   return (
     <>
@@ -148,9 +140,11 @@ export default async function Page({
       />
 
       <DocKeyboardShortcuts
-        previous={previous ? `/components/${previous.slug}` : null}
-        next={next ? `/components/${next.slug}` : null}
+        previous={previous ? `/certifications/${previous.slug}` : null}
+        next={next ? `/certifications/${next.slug}` : null}
       />
+
+      <DocHeaderSpacer />
 
       <DocPageRoot>
         <DocContainer>
@@ -163,22 +157,19 @@ export default async function Page({
               size="sm"
               asChild
             >
-              <Link href="/components">
-                <ArrowLeftIcon />
-                Components
+              <Link href="/certifications">
+                <ArrowLeftIcon className="size-4" />
+                Certifications
               </Link>
             </Button>
 
             <div className="flex items-center gap-2">
               <LLMCopyButtonWithViewOptions
-                markdownUrl={`/components/${doc.slug}.mdx`}
-                isComponent
+                markdownUrl={`${getDocUrl(doc)}.mdx`}
+                isComponent={false}
               />
 
-              <DocShareMenu
-                title={doc.metadata.title}
-                url={`/components/${doc.slug}`}
-              />
+              <DocShareMenu title={doc.metadata.title} url={getDocUrl(doc)} />
 
               {previous && (
                 <Tooltip>
@@ -191,19 +182,19 @@ export default async function Page({
                         asChild
                       >
                         <Link
-                          href={`/components/${previous.slug}`}
-                          aria-label="Previous Component"
+                          href={`/certifications/${previous.slug}`}
+                          aria-label="Previous Certification"
                         >
-                          <ArrowLeftIcon />
+                          <ArrowLeftIcon className="size-4" />
                         </Link>
                       </Button>
                     }
                   />
                   <TooltipContent className="pr-2 pl-3">
                     <div className="flex items-center gap-3">
-                      Previous Component
+                      Previous Cert
                       <Kbd>
-                        <ArrowLeftIcon />
+                        <ArrowLeftIcon className="size-3" />
                       </Kbd>
                     </div>
                   </TooltipContent>
@@ -221,19 +212,19 @@ export default async function Page({
                         asChild
                       >
                         <Link
-                          href={`/components/${next.slug}`}
-                          aria-label="Next Component"
+                          href={`/certifications/${next.slug}`}
+                          aria-label="Next Certification"
                         >
-                          <ArrowRightIcon />
+                          <ArrowRightIcon className="size-4" />
                         </Link>
                       </Button>
                     }
                   />
                   <TooltipContent className="pr-2 pl-3">
                     <div className="flex items-center gap-3">
-                      Next Component
+                      Next Cert
                       <Kbd>
-                        <ArrowRightIcon />
+                        <ArrowRightIcon className="size-3" />
                       </Kbd>
                     </div>
                   </TooltipContent>
@@ -245,18 +236,36 @@ export default async function Page({
           <div className="screen-line-top screen-line-bottom">
             <div
               className={cn(
-                "h-8 before:absolute before:left-[-100vw] before:-z-1 before:h-full before:w-[200vw]",
+                "h-8",
+                "before:absolute before:left-[-100vw] before:-z-1 before:h-full before:w-[200vw]",
                 "before:bg-[repeating-linear-gradient(315deg,var(--pattern-foreground)_0,var(--pattern-foreground)_1px,transparent_0,transparent_50%)] before:bg-size-[10px_10px] before:[--pattern-foreground:var(--color-line)]/56"
               )}
             />
           </div>
 
-          <h1
+          <div
             data-slot="doc-title"
-            className="screen-line-bottom px-4 text-3xl font-semibold tracking-tight text-balance"
+            className="screen-line-bottom flex flex-col justify-between gap-4 px-4 py-4 md:flex-row md:items-center md:py-6"
           >
-            {doc.metadata.title}
-          </h1>
+            <h1 className="text-3xl font-semibold tracking-tight text-balance">
+              {doc.metadata.title}
+            </h1>
+
+            <div className="flex shrink-0 items-center gap-2">
+              {doc.metadata.credentialUrl && (
+                <Button variant="outline" size="sm" asChild className="gap-2">
+                  <a
+                    href={doc.metadata.credentialUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <ExternalLinkIcon className="size-4" />
+                    <span>Verify Credential</span>
+                  </a>
+                </Button>
+              )}
+            </div>
+          </div>
         </DocContainer>
 
         <DocGrid>
@@ -267,6 +276,14 @@ export default async function Page({
               <p className="text-muted-foreground">
                 {doc.metadata.description}
               </p>
+
+              {doc.metadata.image && (
+                <FramedImage
+                  src={doc.metadata.image}
+                  alt={doc.metadata.title}
+                  className="my-6 aspect-1570/760 w-full object-cover"
+                />
+              )}
 
               <TOCInline className="lg:hidden" items={toc} />
 
@@ -285,4 +302,8 @@ export default async function Page({
       </DocPageRoot>
     </>
   )
+}
+
+function getDocUrl(doc: Doc) {
+  return `/certifications/${doc.slug}`
 }

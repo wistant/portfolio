@@ -10,6 +10,7 @@ import {
   PageHeadingTagline,
   PageHeadingTitle,
 } from "@/components/page-heading"
+import { PageContainer } from "@/components/page-container"
 
 const title = "Gallery"
 const description =
@@ -55,7 +56,7 @@ export default function Page() {
   }
 
   return (
-    <div>
+    <PageContainer>
       <PageHeading>
         <PageHeadingTagline>Gallery</PageHeadingTagline>
         <PageHeadingTitle>Visual captures & memories.</PageHeadingTitle>
@@ -71,6 +72,6 @@ export default function Page() {
       <MasonryGallery images={images} />
 
       <div className="screen-line-top h-4" />
-    </div>
+    </PageContainer>
   )
 }
