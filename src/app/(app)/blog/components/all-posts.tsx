@@ -1,10 +1,7 @@
 import { getDocsByCategory } from "@/data/doc/documents"
 
 import { cn } from "@/lib/utils"
-import {
-  StaggerGroup,
-  StaggerItem,
-} from "@/components/animations/fade-in"
+import { StaggerGroup, StaggerItem } from "@/components/animations/fade-in"
 import { PostItem } from "@/components/post-item"
 
 const allPosts = getDocsByCategory("blog")
@@ -37,4 +34,3 @@ export default function AllPosts() {
     </div>
   )
 }
-
