@@ -5,10 +5,7 @@ import { format } from "date-fns"
 import { AwardIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
-import {
-  StaggerGroup,
-  StaggerItem,
-} from "@/components/animations/fade-in"
+import { StaggerGroup, StaggerItem } from "@/components/animations/fade-in"
 
 export default function AllCertifications() {
   const allCerts = getDocsByCategory("certifications")
