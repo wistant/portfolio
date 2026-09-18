@@ -9,13 +9,13 @@ import { SPONSOR_TIERS } from "@/types/sponsor-types"
 import { SPONSORSHIP_URL, UTM_PARAMS, X_HANDLE } from "@/config/site"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/base/ui/button"
+import { PageContainer } from "@/components/page-container"
 import {
   PageHeading,
   PageHeadingDescription,
   PageHeadingTagline,
   PageHeadingTitle,
 } from "@/components/page-heading"
-import { PageContainer } from "@/components/page-container"
 
 import { SponsorItem } from "./components/sponsor-item"
 
