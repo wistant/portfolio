@@ -1,9 +1,6 @@
 import type { Doc } from "@/types/document"
 import { cn } from "@/lib/utils"
-import {
-  StaggerGroup,
-  StaggerItem,
-} from "@/components/animations/fade-in"
+import { StaggerGroup, StaggerItem } from "@/components/animations/fade-in"
 import { PostItem } from "@/components/post-item"
 
 export function PostList({ posts }: { posts: Doc[] }) {
@@ -44,4 +41,3 @@ export function PostList({ posts }: { posts: Doc[] }) {
     </div>
   )
 }
-
