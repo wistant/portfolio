@@ -1,5 +1,15 @@
 # portfolio
 
+## 1.0.8-alpha.1
+
+### Patch Changes
+
+- 241ebda: - e472719: style(components): format mdx.tsx
+  - fdac338: docs(portfolio): update experiences, projects and user profile content
+  - d1e6c25: fix(ui): simplify defaultOpen condition on ExperiencePositionItem
+  - 732bc83: ui(home): reorder projects section before blog and clarify section anchors
+  - 1057258: feat(ui): add InlineTag component and integrate with Markdown/MDX renderers
+
 ## 1.0.8-alpha.0
 
 ### Patch Changes
