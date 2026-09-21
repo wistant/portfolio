@@ -43,13 +43,13 @@ and polished user experiences.
 
 I spent my early years advocating for high-performance software and
 teaching regional developers how to leverage distributed systems. Later,
-I developed a deep passion for [TypeScrit](https://github.com/topics/typescript) ecosystems and cross-platform
+I developed a deep passion for [TypeScript](https://github.com/topics/typescript) ecosystems and cross-platform
 architecture.
 
-After joining and contribuated various open-source initiatives, I decided to
-created [Shoperzz](https://github.com/shoperzz/shoperzz) an Open Source, headless e-commerce
-engine with [Vendure](https;//github.com/vendurehq/vendure) and [NestJS](https://nestjs.com)
-for TypeScrit & serious builders.
+After joining and contributing to various open-source initiatives, I decided to
+create [Shoperzz](https://github.com/shoperzz/shoperzz), an Open Source, headless e-commerce
+engine with [Vendure](https://github.com/vendurehq/vendure) and [NestJS](https://nestjs.com)
+for TypeScript & serious builders.
 `,
   avatar: "https://github.com/wistant.png",
   avatarVariants: {
