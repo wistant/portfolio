@@ -36,7 +36,7 @@ import { Callout } from "./callout"
 import { CodeTabs } from "./code-tabs"
 import { FramedImage, IframeEmbed, IphoneShowcase, YouTubeEmbed } from "./embed"
 import { Heading } from "./heading"
-import { InlineTag, Tag, Tech, Inline } from "./inline-tag"
+import { Inline, InlineTag, Tag, Tech } from "./inline-tag"
 import { mdxCodeBlockComponents } from "./mdx-code-block"
 
 const components: MDXRemoteProps["components"] = {
