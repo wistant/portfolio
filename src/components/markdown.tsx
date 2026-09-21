@@ -7,10 +7,30 @@ import { UTM_PARAMS } from "@/config/site"
 import { rehypeAddQueryParams } from "@/lib/rehype-add-query-params"
 import { InlineTag } from "@/components/inline-tag"
 
-export function Markdown({
-  components,
-  ...props
-}: React.ComponentProps<typeof MarkdownAsync>) {
+type MarkdownProps = React.ComponentProps<typeof MarkdownAsync>
+type MarkdownComponents = NonNullable<MarkdownProps["components"]>
+type TagProps = React.ComponentProps<typeof InlineTag> & { node?: unknown }
+
+function renderTag(props: TagProps) {
+  const { node, ...rest } = props
+  void node
+  return <InlineTag {...rest} />
+}
+
+export function Markdown({ components, ...props }: MarkdownProps) {
+  const mergedComponents: MarkdownComponents = {
+    a: renderTag,
+    tag: renderTag,
+    Tag: renderTag,
+    inline: renderTag,
+    Inline: renderTag,
+    tech: renderTag,
+    Tech: renderTag,
+    inlinetag: renderTag,
+    InlineTag: renderTag,
+    ...components,
+  } as unknown as MarkdownComponents
+
   return (
     <MarkdownAsync
       remarkPlugins={[remarkGfm]}
@@ -19,22 +39,8 @@ export function Markdown({
         [rehypeExternalLinks, { target: "_blank", rel: "nofollow noopener" }],
         [rehypeAddQueryParams, UTM_PARAMS],
       ]}
-      components={
-        {
-          a: (aProps: any) => <InlineTag {...aProps} />,
-          tag: (tProps: any) => <InlineTag {...tProps} />,
-          Tag: (tProps: any) => <InlineTag {...tProps} />,
-          inline: (tProps: any) => <InlineTag {...tProps} />,
-          Inline: (tProps: any) => <InlineTag {...tProps} />,
-          tech: (tProps: any) => <InlineTag {...tProps} />,
-          Tech: (tProps: any) => <InlineTag {...tProps} />,
-          inlinetag: (tProps: any) => <InlineTag {...tProps} />,
-          InlineTag: (tProps: any) => <InlineTag {...tProps} />,
-          ...components,
-        } as any
-      }
+      components={mergedComponents}
       {...props}
     />
   )
 }
-

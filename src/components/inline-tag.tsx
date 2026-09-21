@@ -1,10 +1,10 @@
 "use client"
 
 import * as React from "react"
+
 import { cn } from "@/lib/utils"
 
-export interface InlineTagProps
-  extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+export interface InlineTagProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   /** Explicit icon: local icon name (e.g. "react", "typescript"), remote URL, or emoji */
   icon?: string
   /** Text label to display if children is not provided */
@@ -115,12 +115,21 @@ function extractDomain(urlStr: string): string | null {
   }
 }
 
-function extractText(node: any): string {
+interface ElementWithProps {
+  children?: React.ReactNode
+  src?: unknown
+}
+
+function extractText(node: React.ReactNode): string {
   if (!node) return ""
   if (typeof node === "string" || typeof node === "number") return String(node)
-  if (Array.isArray(node)) return node.map((item) => extractText(item)).join("")
-  if (React.isValidElement(node) && (node.props as any)?.children) {
-    return extractText((node.props as any).children)
+  if (Array.isArray(node)) {
+    return (node as React.ReactNode[])
+      .map((child) => extractText(child))
+      .join("")
+  }
+  if (React.isValidElement<ElementWithProps>(node) && node.props.children) {
+    return extractText(node.props.children)
   }
   return ""
 }
@@ -133,7 +142,11 @@ function resolveIconSource(
   iconProp?: string,
   href?: string,
   labelText?: string
-): { type: "emoji" | "svg-string" | "img" | "none"; src?: string; emoji?: string } {
+): {
+  type: "emoji" | "svg-string" | "img" | "none"
+  src?: string
+  emoji?: string
+} {
   // 1. Explicit icon takes top priority
   if (iconProp) {
     const trimmed = iconProp.trim()
@@ -142,7 +155,11 @@ function resolveIconSource(
       return { type: "emoji", emoji: trimmed }
     }
 
-    if (trimmed.startsWith("http://") || trimmed.startsWith("https://") || trimmed.startsWith("/")) {
+    if (
+      trimmed.startsWith("http://") ||
+      trimmed.startsWith("https://") ||
+      trimmed.startsWith("/")
+    ) {
       return { type: "img", src: trimmed }
     }
 
@@ -205,11 +222,19 @@ function resolveIconSource(
   return { type: "none" }
 }
 
-function hasImageChild(node: any): boolean {
+function hasImageChild(node: React.ReactNode): boolean {
   if (!node) return false
-  if (React.isValidElement(node)) {
+  if (React.isValidElement<ElementWithProps>(node)) {
+    const type = node.type
     const typeName =
-      typeof node.type === "string" ? node.type : (node.type as any)?.name || ""
+      typeof type === "string"
+        ? type
+        : typeof type === "function"
+          ? type.name
+          : typeof type === "object" && type !== null && "displayName" in type
+            ? String((type as { displayName?: unknown }).displayName ?? "")
+            : ""
+
     if (
       typeName === "img" ||
       typeName === "picture" ||
@@ -218,11 +243,11 @@ function hasImageChild(node: any): boolean {
     ) {
       return true
     }
-    if ((node.props as any)?.src) return true
-    if ((node.props as any)?.children) return hasImageChild((node.props as any).children)
+    if (node.props.src) return true
+    if (node.props.children) return hasImageChild(node.props.children)
   }
   if (Array.isArray(node)) {
-    return node.some(hasImageChild)
+    return (node as React.ReactNode[]).some((child) => hasImageChild(child))
   }
   return false
 }
@@ -284,7 +309,7 @@ export function InlineTag({
     if (iconInfo.type === "svg-string" && svg) {
       return (
         <span
-          className="inline-flex size-[1.15em] shrink-0 items-center justify-center rounded-[3px] border border-border/40 bg-zinc-100 p-[1.5px] overflow-hidden align-[-0.18em] dark:bg-zinc-800/80 [&_svg]:size-full"
+          className="inline-flex size-[1.15em] shrink-0 items-center justify-center overflow-hidden rounded-[3px] border border-border/40 bg-zinc-100 p-[1.5px] align-[-0.18em] dark:bg-zinc-800/80 [&_svg]:size-full"
           dangerouslySetInnerHTML={{ __html: svg }}
           aria-hidden="true"
         />
@@ -294,7 +319,7 @@ export function InlineTag({
     if (iconInfo.type === "img" && iconInfo.src) {
       return (
         <span
-          className="inline-flex size-[1.15em] shrink-0 items-center justify-center rounded-[3px] border border-border/40 bg-zinc-100 p-[1.5px] overflow-hidden align-[-0.18em] shadow-xs select-none dark:bg-zinc-800/80"
+          className="inline-flex size-[1.15em] shrink-0 items-center justify-center overflow-hidden rounded-[3px] border border-border/40 bg-zinc-100 p-[1.5px] align-[-0.18em] shadow-xs select-none dark:bg-zinc-800/80"
           aria-hidden="true"
         >
           <img
@@ -329,7 +354,7 @@ export function InlineTag({
         )}
         {...props}
       >
-        <span className="self-center inline-flex shrink-0 no-underline">
+        <span className="inline-flex shrink-0 self-center no-underline">
           {renderIconBadge()}
         </span>
         <span className="underline decoration-border/80 underline-offset-[3px] transition-colors group-hover:decoration-foreground">
@@ -347,7 +372,7 @@ export function InlineTag({
         className
       )}
     >
-      <span className="self-center inline-flex shrink-0">
+      <span className="inline-flex shrink-0 self-center">
         {renderIconBadge()}
       </span>
       <span>{displayText}</span>
