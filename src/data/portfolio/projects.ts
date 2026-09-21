@@ -7,7 +7,7 @@ export const PROJECTS: Project[] = [
     period: {
       start: "05.2026",
     },
-    link: "https://wistant.me",
+    link: "https://wistant.xyz",
     github: "https://github.com/wistant/portfolio",
     skills: [
       "Open Source",
@@ -21,7 +21,7 @@ export const PROJECTS: Project[] = [
       "Framer Motion",
     ],
     description:
-      "My personal digital hub — a pixel-perfect portfolio, blog, and custom shadcn-compatible component registry. Built from scratch on Next.js 16 App Router with Tailwind CSS v4, it features atomic commit discipline, a full MDX content pipeline, and a self-hosted shadcn registry that lets visitors install components directly via the CLI.",
+      "My personal digital hub — a pixel-perfect portfolio & blog. Built from scratch on Next.js 16 App Router with Tailwind CSS v4, it features atomic commit discipline, a full MDX content pipeline, and a self-hosted shadcn registry that lets visitors install components directly via the CLI.",
     logo: "https://github.com/wistant.png",
     projectImage:
       "https://raw.githubusercontent.com/wistant/datafiles/main/projects/portfolio/banner.png",

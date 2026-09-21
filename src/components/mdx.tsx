@@ -36,9 +36,15 @@ import { Callout } from "./callout"
 import { CodeTabs } from "./code-tabs"
 import { FramedImage, IframeEmbed, IphoneShowcase, YouTubeEmbed } from "./embed"
 import { Heading } from "./heading"
+import { Inline, InlineTag, Tag, Tech } from "./inline-tag"
 import { mdxCodeBlockComponents } from "./mdx-code-block"
 
 const components: MDXRemoteProps["components"] = {
+  a: (props: React.ComponentProps<"a">) => <InlineTag {...props} />,
+  InlineTag,
+  Tag,
+  Tech,
+  Inline,
   h1: (props: React.ComponentProps<"h1">) => <Heading as="h1" {...props} />,
   h2: (props: React.ComponentProps<"h2">) => <Heading as="h2" {...props} />,
   h3: (props: React.ComponentProps<"h3">) => <Heading as="h3" {...props} />,

@@ -31,17 +31,25 @@ export default function HomePage() {
         <ProfileCover />
         <SocialLinks />
         <BlocksSeparator />
+        <BlocksSeparator />
+        <BlocksSeparator />
 
-        <BlocksSeparator />
-        <BlocksSeparator />
+        {/*Header of portfolio*/}
         <About />
         <GitHubContributions />
         <TechStack />
         <BlocksSeparator />
 
+        {/*Experiences*/}
         <BlocksSeparator />
         <BlocksSeparator />
         <Experiences />
+        <BlocksSeparator />
+
+        {/*Projects*/}
+        <BlocksSeparator />
+        <BlocksSeparator />
+        <Projects />
         <BlocksSeparator />
 
         {SPONSORS.length > 0 && (
@@ -53,18 +61,15 @@ export default function HomePage() {
           </>
         )}
 
+        {/* Blog */}
         <BlocksSeparator />
         <BlocksSeparator />
         <Blog />
         <BlocksSeparator />
 
-        <BlocksSeparator />
-        <BlocksSeparator />
-        <Projects />
-        <BlocksSeparator />
-
         {hasCerts && (
           <>
+            {/*Certifications*/}
             <BlocksSeparator />
             <BlocksSeparator />
             <Certifications />
