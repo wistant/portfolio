@@ -1,8 +1,8 @@
 "use client"
 
+import { useState } from "react"
 import Image from "next/image"
 import { motion } from "motion/react"
-import { useState } from "react"
 
 interface PhotoStackProps {
   images: [string, string, string]
@@ -28,7 +28,9 @@ export function PhotoStack({ images }: PhotoStackProps) {
               rotate: isHovered ? 0 : RESTING_ROTATIONS[i],
               y: isHovered ? -12 : isOther ? 4 : 0,
               scale: isHovered ? 1.07 : isOther ? 0.95 : 1,
-              filter: isOther ? "brightness(0.6) saturate(0.6)" : "brightness(1) saturate(1)",
+              filter: isOther
+                ? "brightness(0.6) saturate(0.6)"
+                : "brightness(1) saturate(1)",
             }}
             transition={{ type: "spring", stiffness: 300, damping: 26 }}
             className="relative cursor-pointer"
