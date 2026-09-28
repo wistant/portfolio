@@ -6,8 +6,7 @@ import { BlocksSeparator } from "@/components/blocks-separator"
 
 import { Blog } from "./blog/components"
 import { Certifications } from "./certifications/components"
-import { ProfileCover } from "./components/home/profile/cover"
-import { SocialLinks } from "./components/home/profile/social"
+import { ProfileHeroServer } from "./components/home/profile/profile-hero-server"
 import { About } from "./components/home/sections/about"
 import { Experiences } from "./components/home/sections/experiences"
 import { GitHubContributions } from "./components/home/sections/github-contributions"
@@ -28,9 +27,9 @@ export default function HomePage() {
   return (
     <>
       <div className="mx-auto md:max-w-3xl *:[[id]]:scroll-mt-22">
-        <ProfileCover />
-        <SocialLinks />
-        <BlocksSeparator />
+        {/* Hero: Polaroid photo + animated intro + social */}
+        <ProfileHeroServer />
+
         <BlocksSeparator />
         <BlocksSeparator />
 
