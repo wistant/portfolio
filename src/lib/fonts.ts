@@ -1,5 +1,5 @@
-import localFont from "next/font/local"
 import { Pacifico } from "next/font/google"
+import localFont from "next/font/local"
 import { GeistMono } from "geist/font/mono"
 import { GeistPixelSquare } from "geist/font/pixel"
 import { GeistSans } from "geist/font/sans"
