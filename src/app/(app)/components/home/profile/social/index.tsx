@@ -1,11 +1,11 @@
 "use client"
 
-import { motion, AnimatePresence } from "motion/react"
 import { useState } from "react"
-
-import { USER } from "@/data/portfolio/user"
 import { SOCIAL_LINKS } from "@/data/portfolio/social-links"
+import { USER } from "@/data/portfolio/user"
 import { addQueryParams } from "@/utils/url"
+import { AnimatePresence, motion } from "motion/react"
+
 import { UTM_PARAMS } from "@/config/site"
 
 // Per-platform short label for the pill
@@ -67,7 +67,7 @@ function HoverCard({
       </div>
 
       {/* Info */}
-      <div className="px-4 pb-4 pt-2">
+      <div className="px-4 pt-2 pb-4">
         <p className="font-semibold text-foreground">{USER.displayName}</p>
         <p className="text-sm text-muted-foreground">{subtitle}</p>
 
@@ -156,7 +156,7 @@ function SocialPill({
 
 export function SocialLinks() {
   return (
-    <div className="flex flex-wrap items-center justify-center gap-2 px-4 pb-2 pt-1">
+    <div className="flex flex-wrap items-center justify-center gap-2 px-4 pt-1 pb-2">
       {SOCIAL_LINKS.map((link, i) => (
         <SocialPill
           key={link.id ?? link.title}
