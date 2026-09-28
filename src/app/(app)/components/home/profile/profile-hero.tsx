@@ -2,12 +2,12 @@
 
 import { useEffect, useMemo, useState } from "react"
 import Image from "next/image"
-import { motion, AnimatePresence } from "motion/react"
-import { MailIcon } from "lucide-react"
-
-import { USER } from "@/data/portfolio/user"
 import { SOCIAL_LINKS } from "@/data/portfolio/social-links"
+import { USER } from "@/data/portfolio/user"
 import { addQueryParams } from "@/utils/url"
+import { MailIcon } from "lucide-react"
+import { AnimatePresence, motion } from "motion/react"
+
 import { UTM_PARAMS } from "@/config/site"
 
 const GREETINGS = [
@@ -62,11 +62,9 @@ function Polaroid({
   const filename = src.split("/").pop() ?? "me_01.jpeg"
 
   const sizeClass =
-    typeof size === "string" ? SIZE_CLASSES[size] ?? SIZE_CLASSES.md : ""
+    typeof size === "string" ? (SIZE_CLASSES[size] ?? SIZE_CLASSES.md) : ""
   const sizeStyle =
-    typeof size === "number"
-      ? { width: `min(100%, ${size}px)` }
-      : undefined
+    typeof size === "number" ? { width: `min(100%, ${size}px)` } : undefined
 
   return (
     <motion.div
@@ -82,7 +80,7 @@ function Polaroid({
       onClick={onNext}
       title="Click to cycle photo"
       style={sizeStyle}
-      className={`group relative cursor-pointer select-none rounded-xs bg-white p-3 pb-8 shadow-[0_16px_36px_rgba(0,0,0,0.14)] ring-1 ring-black/5 dark:bg-neutral-100 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)] dark:ring-white/10 sm:p-3.5 sm:pb-9 shrink-0 ${sizeClass}`}
+      className={`group relative shrink-0 cursor-pointer rounded-xs bg-white p-3 pb-8 shadow-[0_16px_36px_rgba(0,0,0,0.14)] ring-1 ring-black/5 select-none sm:p-3.5 sm:pb-9 dark:bg-neutral-100 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)] dark:ring-white/10 ${sizeClass}`}
     >
       {/* Photo frame */}
       <div className="relative aspect-[3/4] w-full overflow-hidden rounded-xs bg-neutral-200">
@@ -100,7 +98,7 @@ function Polaroid({
               alt={USER.displayName}
               fill
               sizes="(max-width: 768px) 250px, 300px"
-              className="object-cover grayscale contrast-[1.05] brightness-[0.98] transition-transform duration-700 ease-out group-hover:scale-105"
+              className="object-cover brightness-[0.98] contrast-[1.05] grayscale transition-transform duration-700 ease-out group-hover:scale-105"
               priority
             />
           </motion.div>
@@ -155,20 +153,16 @@ export function ProfileHero({
   }, [])
 
   return (
-    <section className="flex flex-col items-center gap-8 px-4 pt-8 pb-4 md:flex-row md:items-center md:justify-between md:gap-8 lg:gap-10 md:pt-12">
+    <section className="flex flex-col items-center gap-8 px-4 pt-8 pb-4 md:flex-row md:items-center md:justify-between md:gap-8 md:pt-12 lg:gap-10">
       {/* Polaroid with configurable size */}
-      <div className="shrink-0 flex justify-center">
-        <Polaroid
-          src={activePhoto}
-          size={photoSize}
-          onNext={handleNextPhoto}
-        />
+      <div className="flex shrink-0 justify-center">
+        <Polaroid src={activePhoto} size={photoSize} onNext={handleNextPhoto} />
       </div>
 
       {/* Text content on right on desktop, centered on mobile */}
-      <div className="flex flex-1 flex-col items-center text-center md:items-start md:text-left gap-3.5 min-w-0">
+      <div className="flex min-w-0 flex-1 flex-col items-center gap-3.5 text-center md:items-start md:text-left">
         {/* Animated Greeting */}
-        <div className="relative flex h-14 sm:h-16 items-center overflow-hidden">
+        <div className="relative flex h-14 items-center overflow-hidden sm:h-16">
           <AnimatePresence mode="wait">
             <motion.span
               key={GREETINGS[greetingIdx]}
@@ -176,7 +170,7 @@ export function ProfileHero({
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -16 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
-              className="font-serif text-4xl sm:text-5xl italic tracking-tight text-muted-foreground/60 select-none leading-none py-1"
+              className="py-1 font-serif text-4xl leading-none tracking-tight text-muted-foreground/60 italic select-none sm:text-5xl"
             >
               {GREETINGS[greetingIdx]}
             </motion.span>
@@ -184,12 +178,12 @@ export function ProfileHero({
         </div>
 
         {/* Name */}
-        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-foreground flex items-center gap-2">
+        <h1 className="flex items-center gap-2 text-2xl font-bold tracking-tight text-foreground sm:text-3xl lg:text-4xl">
           <span>I am {USER.displayName}</span>
           <motion.span
             whileHover={{ rotate: [0, 16, -10, 16, -6, 12, 0] }}
             transition={{ duration: 0.6 }}
-            className="inline-block cursor-grab select-none text-2xl sm:text-3xl"
+            className="inline-block cursor-grab text-2xl select-none sm:text-3xl"
             role="img"
             aria-label="waving hand"
           >
@@ -198,11 +192,13 @@ export function ProfileHero({
         </h1>
 
         {/* Age & Rotating Role Ticker */}
-        <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 text-sm sm:text-base text-muted-foreground font-medium">
-          <span className="font-semibold text-foreground/90">{age} years old</span>
+        <div className="flex flex-wrap items-center justify-center gap-2 text-sm font-medium text-muted-foreground sm:text-base md:justify-start">
+          <span className="font-semibold text-foreground/90">
+            {age} years old
+          </span>
           <span className="opacity-30">/</span>
           <span className="text-muted-foreground/70">Role:</span>
-          <div className="relative h-6 overflow-hidden flex items-center">
+          <div className="relative flex h-6 items-center overflow-hidden">
             <AnimatePresence mode="wait">
               <motion.span
                 key={ROLES[roleIdx]}
@@ -219,12 +215,12 @@ export function ProfileHero({
         </div>
 
         {/* Bio - larger, comfortable and legible */}
-        <p className="text-base sm:text-lg leading-relaxed text-muted-foreground/90">
+        <p className="text-base leading-relaxed text-muted-foreground/90 sm:text-lg">
           {USER.bio}
         </p>
 
         {/* Action + Social Links strictly on a single line */}
-        <div className="flex items-center gap-1.5 pt-1.5 flex-nowrap overflow-x-auto max-w-full">
+        <div className="flex max-w-full flex-nowrap items-center gap-1.5 overflow-x-auto pt-1.5">
           <motion.a
             href="mailto:d2lzdGFudGtvZGVAcHJvdG9ubWFpbC5jb20="
             whileHover={{ scale: 1.04 }}
@@ -236,7 +232,7 @@ export function ProfileHero({
             <span className="text-[10px]">👋</span>
           </motion.a>
 
-          <div className="h-4 w-px bg-line shrink-0 mx-0.5" />
+          <div className="mx-0.5 h-4 w-px shrink-0 bg-line" />
 
           {SOCIAL_LINKS.map((link) => (
             <motion.a
