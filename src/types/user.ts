@@ -32,6 +32,12 @@ export type User = {
   }[]
   /** Rich about section; supports Markdown */
   about: string
+  /** Preferred photo filename or path for the hero polaroid (e.g., "1.jpg" or "/gallery/1.jpg") */
+  heroPhoto?: string
+  /** Birth date in YYYY-MM-DD for dynamic age calculation */
+  birthDate?: string
+  /** Size for the hero photo: "sm" | "md" | "lg" | "xl" or custom width in pixels */
+  heroPhotoSize?: "sm" | "md" | "lg" | "xl" | number
   /** Public URL to avatar image */
   avatar: string
   /** Different avatar variants based on theme and lighting */

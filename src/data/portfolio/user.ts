@@ -41,6 +41,9 @@ In this new era of AI, I orchestrate a highly optimized workflow: I leverage [Cl
 
 This philosophy is best demonstrated by [Shoperzz](https://github.com/shoperzz/shoperzz). Instead of building yet another monolithic application, I architected Shoperzz as a highly scalable, headless e-commerce engine leveraging [Vendure](https://github.com/vendurehq/vendure) and [NestJS](https://nestjs.com). It was built with a clear business intent: empowering serious builders with composable, enterprise-ready tools that reduce time-to-market without sacrificing performance. Shoperzz is the culmination of my product engineering mindset - abstracting away complexity to deliver a clean, powerful, and maintainable core infrastructure.
 `,
+  heroPhoto: "1.jpg", // Choose any photo from public/gallery/ (e.g. "1.jpg", "2.webp", "IMG_3078.JPG", etc.)
+  heroPhotoSize: "md", // Choose size: "sm" | "md" | "lg" | "xl" or custom width in px (e.g. 260)
+  birthDate: "2006-09-11", // Dynamic age calculation (September 11, 2006)
   avatar: "https://github.com/wistant.png",
   avatarVariants: {
     lightOff: "https://github.com/wistant.png",

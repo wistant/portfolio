@@ -15,7 +15,7 @@ export function About() {
     <FadeIn>
       <Panel id="about">
         <PanelHeader>
-          <PanelTitle>About me 👨‍💻</PanelTitle>
+          <PanelTitle></PanelTitle>
         </PanelHeader>
 
         <PanelContent>
