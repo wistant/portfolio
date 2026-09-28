@@ -72,5 +72,6 @@ This philosophy is best demonstrated by [Shoperzz](https://github.com/shoperzz/s
     "Azure",
     "Performance Optimization",
   ],
-  dateCreated: "2026-05-02", // YYYY-MM-DD
+  dateCreated: "2026-05-02",
+  pronouns: ""
 }
