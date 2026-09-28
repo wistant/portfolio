@@ -73,5 +73,5 @@ This philosophy is best demonstrated by [Shoperzz](https://github.com/shoperzz/s
     "Performance Optimization",
   ],
   dateCreated: "2026-05-02",
-  pronouns: ""
+  pronouns: "",
 }
