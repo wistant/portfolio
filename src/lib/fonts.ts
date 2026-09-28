@@ -1,4 +1,5 @@
 import localFont from "next/font/local"
+import { Pacifico } from "next/font/google"
 import { GeistMono } from "geist/font/mono"
 import { GeistPixelSquare } from "geist/font/pixel"
 import { GeistSans } from "geist/font/sans"
@@ -7,6 +8,12 @@ import { cn } from "@/lib/utils"
 
 const fontSans = GeistSans
 const fontMono = GeistMono
+
+const fontPacifico = Pacifico({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-pacifico",
+})
 
 const fontSerif = localFont({
   src: "../assets/fonts/charter_regular.woff2",
@@ -41,8 +48,10 @@ export const fontVariables = cn(
   fontSans.variable,
   fontMono.variable,
   fontSerif.variable,
+  fontPacifico.variable,
   GeistPixelSquare.variable,
   pixelatedMSSansSerif.variable,
   "[--font-sans:var(--font-geist-sans)]",
-  "[--font-mono:var(--font-geist-mono)]"
+  "[--font-mono:var(--font-geist-mono)]",
+  "[--font-pacifico:var(--font-pacifico)]"
 )
