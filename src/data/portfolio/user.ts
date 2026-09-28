@@ -6,8 +6,7 @@ export const USER: User = {
   displayName: "Wistant",
   username: "wistant",
   gender: "male",
-  pronouns: "he/him",
-  bio: "Product vision first. I architect resilient systems and orchestrate AI to deliver scalable, high-impact digital solutions.",
+  bio: "Good code is a commodity. Product vision, system architecture, and solving real-world problems are what I pour all my passion and energy into. Welcome to my space.",
   flipSentences: [
     "Software Architect",
     "Product Engineer",
@@ -28,7 +27,7 @@ export const USER: User = {
     },
   ],
   about: `
-I am **Wistant**, a Software Architect and Product Engineer, living and studying in Cameroon as a 3rd-year engineering student at [National Advanced School of Polytechnic of Douala](https://enspd-udo.cm/?utm_source=wistant.xyz) (ENSPD). Welcome to my universe and my passion - I wish you a pleasant experience exploring [wistant.xyz](https://wistant.xyz).
+I am a Software Architect and Product Engineer, living and studying in Cameroon as a 3rd-year engineering student at [National Advanced School of Polytechnic of Douala](https://enspd-udo.cm/?utm_source=wistant.xyz) (ENSPD). Welcome to my universe and my passion - I wish you a pleasant experience exploring [wistant.xyz](https://wistant.xyz).
 
 My journey began with an early, deep-rooted love for Open Source - a passion that shaped my vision of collaborative, high-performance software. I started as a full-stack developer and evolved into a software architect. Over the past 2+ years, I've shipped scalable platforms across Web, Mobile, and Desktop, contributed heavily to Open Source, and thrown myself into hackathons for the thrill of building under pressure.
 
@@ -41,9 +40,8 @@ In this new era of AI, I orchestrate a highly optimized workflow: I leverage [Cl
 
 This philosophy is best demonstrated by [Shoperzz](https://github.com/shoperzz/shoperzz). Instead of building yet another monolithic application, I architected Shoperzz as a highly scalable, headless e-commerce engine leveraging [Vendure](https://github.com/vendurehq/vendure) and [NestJS](https://nestjs.com). It was built with a clear business intent: empowering serious builders with composable, enterprise-ready tools that reduce time-to-market without sacrificing performance. Shoperzz is the culmination of my product engineering mindset - abstracting away complexity to deliver a clean, powerful, and maintainable core infrastructure.
 `,
-  heroPhoto: "1.jpg", // Choose any photo from public/gallery/ (e.g. "1.jpg", "2.webp", "IMG_3078.JPG", etc.)
+  heroPhoto: "5.webp", // Choose any photo from public/gallery/ (e.g. "1.jpg", "2.webp", "IMG_3078.JPG", etc.)
   heroPhotoSize: "md", // Choose size: "sm" | "md" | "lg" | "xl" or custom width in px (e.g. 260)
-  birthDate: "2006-09-11", // Dynamic age calculation (September 11, 2006)
   avatar: "https://github.com/wistant.png",
   avatarVariants: {
     lightOff: "https://github.com/wistant.png",
