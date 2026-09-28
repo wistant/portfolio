@@ -11,7 +11,9 @@ export function ProfilePhotoStack() {
     images = fs
       .readdirSync(galleryDir)
       .filter((f) => /\.(jpg|jpeg|png|webp|gif)$/i.test(f))
-      .sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: "base" }))
+      .sort((a, b) =>
+        a.localeCompare(b, undefined, { numeric: true, sensitivity: "base" })
+      )
       .slice(0, 3)
       .map((f) => `/gallery/${f}`)
   } catch {
