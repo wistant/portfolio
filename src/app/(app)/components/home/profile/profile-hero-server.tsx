@@ -1,7 +1,7 @@
 import fs from "fs"
 import path from "path"
-
 import { USER } from "@/data/portfolio/user"
+
 import { ProfileHero } from "./profile-hero"
 
 export function ProfileHeroServer() {
@@ -12,7 +12,9 @@ export function ProfileHeroServer() {
     const files = fs
       .readdirSync(galleryDir)
       .filter((f) => /\.(jpg|jpeg|png|webp|gif)$/i.test(f))
-      .sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: "base" }))
+      .sort((a, b) =>
+        a.localeCompare(b, undefined, { numeric: true, sensitivity: "base" })
+      )
 
     photos = files.map((f) => `/gallery/${f}`)
   } catch {
