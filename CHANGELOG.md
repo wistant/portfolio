@@ -1,5 +1,27 @@
 # portfolio
 
+## 1.0.8-beta.2
+
+### Patch Changes
+
+- a31304f: - 15e900c: docs(portfolio): update user profile information and about section
+  - 6c4d4ce: fix: lint and correct disposition code
+- d0b5767: - 0e99dee: release: switch 1.0.8-alpha.1 from alpha to beta
+  - 531c5cc: style(style): format fonts.ts
+  - c25969c: style(style): format user.ts
+  - 327c0dc: style(app): format index.tsx
+  - a16cca6: style(app): format profile-photo-stack.tsx
+  - 244e32c: style(app): format profile-hero.tsx
+  - b1956ca: style(app): format profile-hero-server.tsx
+  - 634953a: style(app): format photo-stack.tsx
+  - 5710887: fix: declare a const USER as a no pronouns
+  - 57b4fb5: feat: update personnal BIO
+  - cf2e853: feat(home): integrate profile hero into main layout and update user config
+  - 3043bda: feat(profile): introduce profile hero components and gallery assets
+  - f188f01: refactor(social): redesign social links as interactive pills
+  - d5abc16: docs(readme): rewrite README with personal bio
+  - 73665e3: release: 1.0.8-alpha.1 (alpha)
+
 ## 1.0.8-alpha.1
 
 ### Patch Changes
