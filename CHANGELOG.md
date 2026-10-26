@@ -1,5 +1,15 @@
 # portfolio
 
+## 1.0.8-rc.3
+
+### Patch Changes
+
+- e107762: - 6ad490b: release: switch 1.0.8-beta.2 from beta to rc
+  - bf4c943: style(components): format contribution-graph.tsx
+  - 91ff753: style(app): format graph.tsx
+  - c8a9b22: docs(portfolio): update user profile bio, pronouns and streak theme
+  - 8bb9872: feat(ui): add color themes support for github contribution graph
+
 ## 1.0.8-beta.2
 
 ### Patch Changes
