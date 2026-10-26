@@ -74,7 +74,12 @@ const DEFAULT_LABELS: Labels = {
   },
 }
 
-export type GraphColorTheme = "green" | "monochrome" | "blue" | "purple" | "orange"
+export type GraphColorTheme =
+  | "green"
+  | "monochrome"
+  | "blue"
+  | "purple"
+  | "orange"
 
 export const GRAPH_THEMES: Record<GraphColorTheme, string> = {
   green: cn(
@@ -358,8 +363,14 @@ export const ContributionGraphBlock = ({
   className,
   ...props
 }: ContributionGraphBlockProps) => {
-  const { blockSize, blockMargin, blockRadius, labelHeight, maxLevel, colorTheme } =
-    useContributionGraph()
+  const {
+    blockSize,
+    blockMargin,
+    blockRadius,
+    labelHeight,
+    maxLevel,
+    colorTheme,
+  } = useContributionGraph()
   const themeClass = GRAPH_THEMES[colorTheme] ?? GRAPH_THEMES.green
 
   if (activity.level < 0 || activity.level > maxLevel) {
