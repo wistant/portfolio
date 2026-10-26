@@ -38,6 +38,8 @@ export type User = {
   birthDate?: string
   /** Size for the hero photo: "sm" | "md" | "lg" | "xl" or custom width in pixels */
   heroPhotoSize?: "sm" | "md" | "lg" | "xl" | number
+  /** Color theme for GitHub contribution streaks */
+  githubStreakTheme?: "green" | "blue" | "monochrome" | "purple" | "orange"
   /** Public URL to avatar image */
   avatar: string
   /** Different avatar variants based on theme and lighting */

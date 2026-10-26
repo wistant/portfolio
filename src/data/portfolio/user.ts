@@ -6,6 +6,7 @@ export const USER: User = {
   displayName: "Wistant",
   username: "wistant",
   gender: "male",
+  pronouns: "he/him",
   bio: "Good code is a commodity. Product vision, system architecture, and solving real-world problems are what I pour all my passion and energy into. Welcome to my space.",
   flipSentences: [
     "Software Architect",
@@ -27,7 +28,7 @@ export const USER: User = {
     },
   ],
   about: `
-I am a Software Architect and Product Engineer, living and studying in Cameroon as a 3rd-year engineering student at [National Advanced School of Polytechnic of Douala](https://enspd-udo.cm/?utm_source=wistant.xyz) (ENSPD). Welcome to my universe and my passion - I wish you a pleasant experience exploring [wistant.xyz](https://wistant.xyz).
+I am a Software Architect and Product Engineer, living and studying in Cameroon as a 3rd-year engineering student at [National School of Polytechnic of Douala](https://enspd-udo.cm/?utm_source=wistant.xyz) (ENSPD). Welcome to my universe and my passion - I wish you a pleasant experience exploring [wistant.xyz](https://wistant.xyz).
 
 My journey began with an early, deep-rooted love for Open Source - a passion that shaped my vision of collaborative, high-performance software. I started as a full-stack developer and evolved into a software architect. Over the past 2+ years, I've shipped scalable platforms across Web, Mobile, and Desktop, contributed heavily to Open Source, and thrown myself into hackathons for the thrill of building under pressure.
 
@@ -42,6 +43,7 @@ This philosophy is best demonstrated by [Shoperzz](https://github.com/shoperzz/s
 `,
   heroPhoto: "5.webp", // Choose any photo from public/gallery/ (e.g. "1.jpg", "2.webp", "IMG_3078.JPG", etc.)
   heroPhotoSize: "md", // Choose size: "sm" | "md" | "lg" | "xl" or custom width in px (e.g. 260)
+  githubStreakTheme: "green", // Choose between: "green", "blue", "monochrome", "purple", "orange"
   avatar: "https://github.com/wistant.png",
   avatarVariants: {
     lightOff: "https://github.com/wistant.png",
@@ -73,5 +75,4 @@ This philosophy is best demonstrated by [Shoperzz](https://github.com/shoperzz/s
     "Performance Optimization",
   ],
   dateCreated: "2026-05-02",
-  pronouns: "",
 }

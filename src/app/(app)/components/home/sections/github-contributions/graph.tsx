@@ -1,6 +1,7 @@
 "use client"
 
 import { use } from "react"
+import { USER } from "@/data/portfolio/user"
 import { addQueryParams } from "@/utils/url"
 import { format } from "date-fns"
 import { LoaderIcon } from "lucide-react"
@@ -35,6 +36,7 @@ export function GitHubContributionGraph({
       blockSize={13}
       blockMargin={3}
       blockRadius={2}
+      colorTheme={USER.githubStreakTheme ?? "green"}
       aria-label="GitHub Contributions Graph"
     >
       <ContributionGraphCalendar
