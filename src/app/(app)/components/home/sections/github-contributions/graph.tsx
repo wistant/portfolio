@@ -1,12 +1,12 @@
 "use client"
 
 import { use } from "react"
+import { USER } from "@/data/portfolio/user"
 import { addQueryParams } from "@/utils/url"
 import { format } from "date-fns"
 import { LoaderIcon } from "lucide-react"
 
 import { GITHUB_USERNAME, UTM_PARAMS } from "@/config/site"
-import { USER } from "@/data/portfolio/user"
 import {
   Tooltip,
   TooltipContent,
