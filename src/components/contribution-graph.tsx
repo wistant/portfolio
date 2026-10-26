@@ -74,13 +74,45 @@ const DEFAULT_LABELS: Labels = {
   },
 }
 
-const THEME = cn(
-  'data-[level="0"]:fill-[#ebedf0] dark:data-[level="0"]:fill-[#161b22]',
-  'data-[level="1"]:fill-[#d1d5db] dark:data-[level="1"]:fill-[#374151]',
-  'data-[level="2"]:fill-[#9ca3af] dark:data-[level="2"]:fill-[#6b7280]',
-  'data-[level="3"]:fill-[#4b5563] dark:data-[level="3"]:fill-[#9ca3af]',
-  'data-[level="4"]:fill-[#111827] dark:data-[level="4"]:fill-[#f3f4f6]'
-)
+export type GraphColorTheme = "green" | "monochrome" | "blue" | "purple" | "orange"
+
+export const GRAPH_THEMES: Record<GraphColorTheme, string> = {
+  green: cn(
+    'data-[level="0"]:fill-[#ebedf0] dark:data-[level="0"]:fill-[#161b22]',
+    'data-[level="1"]:fill-[#9be9a8] dark:data-[level="1"]:fill-[#0e4429]',
+    'data-[level="2"]:fill-[#40c463] dark:data-[level="2"]:fill-[#006d32]',
+    'data-[level="3"]:fill-[#30a14e] dark:data-[level="3"]:fill-[#26a641]',
+    'data-[level="4"]:fill-[#216e39] dark:data-[level="4"]:fill-[#39d353]'
+  ),
+  monochrome: cn(
+    'data-[level="0"]:fill-[#ebedf0] dark:data-[level="0"]:fill-[#161b22]',
+    'data-[level="1"]:fill-[#d1d5db] dark:data-[level="1"]:fill-[#374151]',
+    'data-[level="2"]:fill-[#9ca3af] dark:data-[level="2"]:fill-[#6b7280]',
+    'data-[level="3"]:fill-[#4b5563] dark:data-[level="3"]:fill-[#9ca3af]',
+    'data-[level="4"]:fill-[#111827] dark:data-[level="4"]:fill-[#f3f4f6]'
+  ),
+  blue: cn(
+    'data-[level="0"]:fill-[#ebedf0] dark:data-[level="0"]:fill-[#161b22]',
+    'data-[level="1"]:fill-[#93c5fd] dark:data-[level="1"]:fill-[#1e3a8a]',
+    'data-[level="2"]:fill-[#60a5fa] dark:data-[level="2"]:fill-[#1d4ed8]',
+    'data-[level="3"]:fill-[#3b82f6] dark:data-[level="3"]:fill-[#2563eb]',
+    'data-[level="4"]:fill-[#1d4ed8] dark:data-[level="4"]:fill-[#3b82f6]'
+  ),
+  purple: cn(
+    'data-[level="0"]:fill-[#ebedf0] dark:data-[level="0"]:fill-[#161b22]',
+    'data-[level="1"]:fill-[#d8b4fe] dark:data-[level="1"]:fill-[#4c1d95]',
+    'data-[level="2"]:fill-[#c084fc] dark:data-[level="2"]:fill-[#6d28d9]',
+    'data-[level="3"]:fill-[#a855f7] dark:data-[level="3"]:fill-[#7c3aed]',
+    'data-[level="4"]:fill-[#7e22ce] dark:data-[level="4"]:fill-[#a855f7]'
+  ),
+  orange: cn(
+    'data-[level="0"]:fill-[#ebedf0] dark:data-[level="0"]:fill-[#161b22]',
+    'data-[level="1"]:fill-[#fdba74] dark:data-[level="1"]:fill-[#7c2d12]',
+    'data-[level="2"]:fill-[#fb923c] dark:data-[level="2"]:fill-[#9a3412]',
+    'data-[level="3"]:fill-[#f97316] dark:data-[level="3"]:fill-[#c2410c]',
+    'data-[level="4"]:fill-[#c2410c] dark:data-[level="4"]:fill-[#f97316]'
+  ),
+}
 
 type ContributionGraphContextType = {
   data: Activity[]
@@ -97,6 +129,7 @@ type ContributionGraphContextType = {
   year: number
   width: number
   height: number
+  colorTheme: GraphColorTheme
 }
 
 const ContributionGraphContext =
@@ -242,6 +275,7 @@ export type ContributionGraphProps = HTMLAttributes<HTMLDivElement> & {
   totalCount?: number
   weekStart?: WeekDay
   children: ReactNode
+  colorTheme?: GraphColorTheme
   className?: string
 }
 
@@ -256,6 +290,7 @@ export const ContributionGraph = ({
   style = {},
   totalCount: totalCountProp = undefined,
   weekStart = 0,
+  colorTheme = "green",
   className,
   ...props
 }: ContributionGraphProps) => {
@@ -298,6 +333,7 @@ export const ContributionGraph = ({
         year,
         width,
         height,
+        colorTheme,
       }}
     >
       <div
@@ -322,8 +358,9 @@ export const ContributionGraphBlock = ({
   className,
   ...props
 }: ContributionGraphBlockProps) => {
-  const { blockSize, blockMargin, blockRadius, labelHeight, maxLevel } =
+  const { blockSize, blockMargin, blockRadius, labelHeight, maxLevel, colorTheme } =
     useContributionGraph()
+  const themeClass = GRAPH_THEMES[colorTheme] ?? GRAPH_THEMES.green
 
   if (activity.level < 0 || activity.level > maxLevel) {
     throw new RangeError(
@@ -333,7 +370,7 @@ export const ContributionGraphBlock = ({
 
   return (
     <rect
-      className={cn(THEME, className)}
+      className={cn(themeClass, className)}
       data-count={activity.count}
       data-date={activity.date}
       data-level={activity.level}
@@ -353,6 +390,7 @@ export type ContributionGraphCalendarProps = Omit<
   "children"
 > & {
   hideMonthLabels?: boolean
+  colorTheme?: GraphColorTheme
   className?: string
   children: (props: {
     activity: Activity
@@ -475,7 +513,9 @@ export const ContributionGraphLegend = ({
   children,
   ...props
 }: ContributionGraphLegendProps) => {
-  const { labels, maxLevel, blockSize, blockRadius } = useContributionGraph()
+  const { labels, maxLevel, blockSize, blockRadius, colorTheme } =
+    useContributionGraph()
+  const themeClass = GRAPH_THEMES[colorTheme] ?? GRAPH_THEMES.green
 
   return (
     <div
@@ -492,7 +532,7 @@ export const ContributionGraphLegend = ({
           <svg height={blockSize} key={level} width={blockSize}>
             <title>{`${level} contributions`}</title>
             <rect
-              className={cn(THEME)}
+              className={cn(themeClass)}
               data-level={level}
               height={blockSize}
               rx={blockRadius}

@@ -6,6 +6,7 @@ import { format } from "date-fns"
 import { LoaderIcon } from "lucide-react"
 
 import { GITHUB_USERNAME, UTM_PARAMS } from "@/config/site"
+import { USER } from "@/data/portfolio/user"
 import {
   Tooltip,
   TooltipContent,
@@ -35,6 +36,7 @@ export function GitHubContributionGraph({
       blockSize={13}
       blockMargin={3}
       blockRadius={2}
+      colorTheme={USER.githubStreakTheme ?? "green"}
       aria-label="GitHub Contributions Graph"
     >
       <ContributionGraphCalendar
